@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">-->
+	<install type="component" version="0.0.0.1" method="upgrade">
+	<name>Raid Planner</name>
+		<creationDate>March 2011</creationDate>
+		<author>Taracque</author>
+		<authorUrl>http://taracque.hu</authorUrl>
+		<copyright>Copyright (c) 2011, © Taracque</copyright>
+		<license>GPL</license>
+		<version>0.0.0.1</version>
+		<description>Raid Planner and organizer component.</description>
+
+		<administration>
+			<menu img="components/com_raidplanner/assets/images/raidplanner-favicon.png">Raid Planner</menu>
+			<submenu>
+				<menu view="raids" img="components/com_raidplanner/assets/images/event.png">Raids</menu>
+				<menu view="charcters" img="components/com_raidplanner/assets/images/roster.png">Characters</menu>
+				<menu view="groups" img="components/com_raidplanner/assets/images/groups.png">Groups</menu>
+				<menu view="roles" img="components/com_raidplanner/assets/images/roles.png">Roles</menu>
+				<menu view="classes" img="components/com_raidplanner/assets/images/classes.png">Classes</menu>
+			</submenu>
+		</administration>
+	</install>

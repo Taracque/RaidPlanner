@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="component" version="1.5.0">
+        <name>Raid Planner</name>
+        <creationDate>2011-03-05</creationDate>
+        <author>Taracque</author>
+        <authorEmail>taracque@taracque.hu</authorEmail>
+        <authorUrl>http://taracque.hu</authorUrl>
+        <copyright>Copyright Info</copyright>
+        <license>GPU GPL v3 http://www.gnu.org/licenses/gpl.html</license>
+        <version>0.1</version>
+        <releaseDate>2011-03-22</releaseDate>
+        <releaseType>Major release</releaseType>
+        <downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.1.zip</downloadUrl>
+        <!-- The description is optional and defaults to the name -->
+        <description>Raid Planner component for Joomla 1.5, to organize WoW raids</description>
+        <!-- Install Database Section -->
+        <install>
+                <sql>
+                        <file driver="mysql" charset="utf8">install.mysql.utf8.sql</file>
+                        <file driver="mysql">install.mysql.nonutf8.sql</file>
+                </sql>
+        </install>
+        <uninstall>
+                <sql>
+                        <file driver="mysql" charset="utf8">uninstall.mysql.utf8.sql</file>
+                        <file driver="mysql">uninstall.mysql.nonutf8.sql</file>
+                </sql>
+        </uninstall>
+        <files>
+                <filename>index.html</filename>
+                <filename>helloworld.php</filename>
+                <folder>views</folder>
+        </files>
+        <!-- Site Main Language File Copy Section -->
+        <languages>
+                <language tag="en-GB">en-GB.com_test.ini</language>
+                <language tag="de-DE">de-DE.com_test.ini</language>
+                <language tag="nl-NL">nl-NL.com_test.ini</language>
+        </languages>
+        <!-- Site Main Media File Copy Section -->
+        <media destination="com_helloworld">
+                <filename>image.png</filename>
+                <filename>flash.swf</filename>
+        </media>
+        <administration>
+                <!-- Administration Menu Section -->
+                <!-- Name to display at the component menu. Should be the same as the extension commercial name -->
+                <menu img="components/com_helloworld/images/helloworld_icon.png">Raid Planner</menu>
+                <submenu>
+                        <!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
+                        <menu link="option=com_helloworld&amp;controller=config">Configuration</menu>
+                        <!-- Instead of link you can specify individual link attributes -->
+                        <menu img="icon" task="hello" controller="z" view="a" layout="b" sub="c">Hello Again!</menu>
+                        <menu view="test" layout="foo">Testing Foo Layout</menu>
+                </submenu>
+                <!-- Administration Main File Copy Section -->
+                <!-- Note the folder attribute: This attribute describes the folder
+                        to copy FROM in the package to install therefore files copied
+                        in this section are copied from /admin/ in the package -->
+                <files folder="admin">
+                        <filename>index.html</filename>
+                        <filename>admin.helloworld.php</filename>
+                </files>
+                <!-- Administration Language File Copy Section -->
+                <languages folder="admin">
+                        <language tag="en-GB">en-GB.com_helloworld.ini</language>
+                        <language tag="de-DE">de-DE.com_helloworld.ini</language>
+                        <language tag="nl-NL">nl-NL.com_helloworld.ini</language>
+                </languages>
+                <!-- Administration Main Media File Copy Section -->
+                <media folder="admin" destination="com_helloworld">
+                        <filename>admin-image.png</filename>
+                        <filename>admin-flash.swf</filename>
+                </media>
+        </administration>
+</install>

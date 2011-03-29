@@ -1,0 +1,46 @@
+<?php
+/**
+ * Raid Planner default controller
+ * 
+ * @package    RaidPlanner
+ * @subpackage Components
+ * @license		GNU/GPL
+ */
+
+// No direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
+
+jimport('joomla.application.component.controller');
+
+/**
+ * Raid Planner Component Controller
+ *
+ * @package    RaidPlanner
+ * @subpackage Components
+ */
+class RaidPlannerController extends JController
+{
+	/**
+	 * Method to display the view
+	 *
+	 * @access	public
+	 */
+	function display()
+	{
+		parent::display();
+		
+		if ($this->_task=='service') {
+			$db	=& JFactory::getDBO();
+
+			// do service things, remove unanchored database entries
+			// remove signups that doesn't have character
+			$query = 'SELECT s.raid_id,s.character_id,s.profile_id FROM #__raidplanner_signups AS s LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id WHERE c.char_name IS NULL'; 
+			$db->setQuery($query);
+			$list = $db->loadObjectList();
+			foreach ($list as $remove) {
+				$db->Execute( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+			}
+			echo JText::_('Removing unanchored signups')." : ".count($list)." ".JText::_('found'); 
+		}
+	}
+}

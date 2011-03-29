@@ -1,0 +1,57 @@
+<?php defined('_JEXEC') or die('Restricted access'); ?>
+
+<form action="index.php" method="post" name="adminForm" id="adminForm">
+<div class="col100">
+	<fieldset class="adminform">
+		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<table class="admintable">
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="role_name">
+					<?php echo JText::_( 'Role Name' ); ?>:
+				</label>
+			</td>
+			<td>
+				<input class="text_area" type="text" name="role_name" id="role_name" size="32" maxlength="250" value="<?php echo $this->role->role_name;?>" />
+			</td>
+		</tr>
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="body_color">
+					<?php echo JText::_( 'Body Color' ); ?>:
+				</label>
+			</td>
+			<td>
+				<input class="text_area" type="text" name="body_color" id="body_color" size="10" maxlength="7" value="<?php echo $this->role->body_color;?>" />
+			</td>
+		</tr>
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="header_color">
+					<?php echo JText::_( 'Header Color' ); ?>:
+				</label>
+			</td>
+			<td>
+				<input class="text_area" type="text" name="header_color" id="header_color" size="10" maxlength="7" value="<?php echo $this->role->header_color;?>" />
+			</td>
+		</tr>
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="font_color">
+					<?php echo JText::_( 'Font Color' ); ?>:
+				</label>
+			</td>
+			<td>
+				<input class="text_area" type="text" name="font_color" id="font_color" size="10" maxlength="7" value="<?php echo $this->role->font_color;?>" />
+			</td>
+		</tr>
+	</table>
+	</fieldset>
+</div>
+<div class="clr"></div>
+<input type="hidden" name="option" value="com_raidplanner" />
+<input type="hidden" name="role_id" value="<?php echo $this->role->role_id; ?>" />
+<input type="hidden" name="task" value="" />
+<input type="hidden" name="view" value="roles" />
+<input type="hidden" name="controller" value="roles" />
+</form>

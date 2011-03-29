@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+    <!-- Name of the Module -->
+        <name>Raid Planning Show</name> 
+ 
+    <!-- Name of the Author -->
+        <author>lemmi</author> 
+ 
+    <!-- Version Date of the Module -->
+        <creationDate>2010-02-27</creationDate> 
+ 
+    <!-- Copyright information -->
+        <copyright>All rights reserved by lemmi 2009.</copyright> 
+ 
+    <!-- License Information -->
+        <license>GPL 3.0</license> 
+ 
+    <!-- Author's email address -->
+        <authorEmail>mail@lemmi.ch</authorEmail> 
+ 
+    <!-- Author's website -->
+        <authorUrl>www.lemmi.ch</authorUrl> 
+ 
+    <!-- Module version number -->
+        <version>1.0.beta</version> 
+ 
+    <!-- Description of what the module does -->
+        <description>Shows the next upcoming raids based on the Joomla component Raidplanning V3.3.0 (http://rplanning4j.sourceforge.net/)</description>
+ 
+    <!-- Listing of all files that should be installed for the module to function -->
+        <files>
+        <!-- The "module" attribute signifies that this is the main controller file -->
+                <filename module="mod_raidplanningshow">mod_raidplanningshow.php</filename>
+                <filename>index.html</filename>
+                <filename>helper.php</filename>
+                <filename>tmpl/default.php</filename>
+                <filename>tmpl/index.html</filename>
+        </files>
+ 
+    <languages>
+        <!-- Any language files included with the module -->
+        <language tag="en-GB">en-GB.mod_raidplanningshow.ini</language>
+        <language tag="de-DE">de-DE.mod_raidplanningshow.ini</language>
+    </languages>
+ 
+    <!-- Optional parameters -->
+        <params>
+        <!-- parameter to allow placement of a module class suffix for the module table / xhtml display -->
+                <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+ 
+        <!-- just gives us a little room between the previous paramter and the next -->
+                <param name="@spacer" type="spacer" default="" label="" description="" />
+ 
+        <!-- A parameter that allows an administrator to modify the number of users that this module will display -->
+		 <param name="raidshowNumber" type="text" default="5" label="Show Raids" description="Number of listed Raids" />
+		 
+		 
+		 <param name="raidshowDateFormat" type="text" default="%A, %e. %B" label="Date format" description="Date format (http://ch.php.net/manual/en/function.strftime.php)" />
+
+		 <param name="raidshowDateLocal" type="text" default="de_CH.UTF8" label="Date local" description="Date local (http://php.net/manual/en/function.setlocale.php)" />
+
+		 <param name="raidshowReg" type="radio" default="1" label="Show Regristration" description="Show regristrated status">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                 </param>
+
+		 <param name="raidshowRole" type="radio" default="1" label="Show Role" description="Show raid role (confirmed by Raidleader)">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                 </param>
+
+		 <param name="raidshowRace" type="radio" default="1" label="Show Race" description="Show class and race">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+		 </param>
+		 
+		 <param name="raidshowChar" type="radio" default="1" label="Show Character" description="Show signed up character">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+		 </param>
+
+		 <param name="raidshowDate" type="radio" default="1" label="Show Today Date" description="Show today's date">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+		 </param>
+		 
+</params>
+</install>
+
