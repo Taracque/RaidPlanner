@@ -32,7 +32,7 @@ ORGANIZER:<?php echo $event[0]->raid_leader;?>
 
 DTSTART:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%SZ',0);?>
 
-DTEND:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%SZ',1);?>
+DTEND:<?php echo JHTML::_('date',$event[0]->end_time,'%Y%m%dT%H%M%SZ',0);?>
 
 SUMMARY:<?php echo $event[0]->location;?>
 

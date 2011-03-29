@@ -35,11 +35,11 @@ class RaidPlannerViewEvent extends JView
 			$this->assignRef( 'attendants' , $attendants );
 			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles($attendants) );
 			$this->assignRef( 'roles' , $model->getRoles() );
-			$this->assignRef( 'characters' , $model->getCharacters($event->minimum_level,$event->maximum_level,$event->minimum_rank) );
+			$this->assignRef( 'characters' , $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank) );
 			$this->assignRef( 'selfstatus' , $model->getUserStatus($attendants) );
 			$this->assignRef( 'isOfficer' , $model->userIsOfficer() );
 			$this->assignRef( 'canSignup' , $model->userCanSignUp( JRequest::getVar('id') ) );
-			
+
 			parent::display($tpl);
 		}
     }

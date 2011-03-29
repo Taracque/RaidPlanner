@@ -43,6 +43,7 @@ class TableRaid extends JTable
 	var $minimum_level = null;
 	var $maximum_level = null;
 	var $minimum_rank = null;
+	var $is_template = null;
 
 	/**
 	 * Constructor

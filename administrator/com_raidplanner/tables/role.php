@@ -33,6 +33,7 @@ class TableRole extends JTable
 	var $body_color = null;
 	var $header_color = null;
 	var $font_color = null;
+	var $icon_name = null;
 
 	/**
 	 * Constructor

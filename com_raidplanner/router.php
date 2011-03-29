@@ -37,17 +37,17 @@ function RaidPlannerParseRoute( $segments )
 		case 'edit':
 			$vars['view'] = 'edit';
 			$vars['task'] = $segments[1];
-			$vars['id'] = intval($segments[2]);
+			$vars['id'] = intval(@$segments[2]);
 		break;
 		case 'event':
 			$vars['view'] = 'event';
 			$vars['task'] = $segments[1];
-			$vars['id'] = intval($segments[2]);
+			$vars['id'] = intval(@$segments[2]);
 		break;
 		case 'calendar':
 			$vars['view'] = 'calendar';
 			$vars['task'] = $segments[1];
-			$vars['modalevent'] = intval($segments[2]);
+			$vars['modalevent'] = intval(@$segments[2]);
 		break;
 	}
 	return $vars;

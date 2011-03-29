@@ -45,11 +45,22 @@ class RaidPlannerController extends JController
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&month='.JRequest::getVar('month').'&modalevent='.JRequest::getVar('raid_id') ) );
 			break;
 			case 'saveevent':
-				$vName = 'calendar';
-				$vLayout = JRequest::getCmd( 'layout', 'default' );
-				$model = &$this->getModel('event');
-				$raid_id = $model->saveEvent();
-				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&month='.JRequest::getVar('month').'&modalevent='.$raid_id ) );
+				$template_id = JRequest::getVar('template_id');
+				if (intval($template_id) > 0) {
+					$vName = 'edit';
+					$mName = 'event';
+					$vLayout = JRequest::getCmd( 'layout', 'default' );
+				} else {
+					$vName = 'calendar';
+					$vLayout = JRequest::getCmd( 'layout', 'default' );
+					$model = &$this->getModel('event');
+					$raid_id = $model->saveEvent();
+					$start_time = explode( " ", JRequest::getVar('start_time', '') );
+					if ($start_time[0]=="") {
+						$start_time[0] = date("Y-m");
+					}
+					$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&month='.$start_time[0].'&modalevent='.$raid_id ) );
+				}
 			break;
 			case 'confirm':
 				$vName = 'calendar';

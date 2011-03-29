@@ -8,13 +8,21 @@
  
 $format = JText::_('DATE_FORMAT_LC1');
 $event_count = 0;
-?>
 
-<table border="0">
+$lang =& JFactory::getLanguage();
+$lang->load('com_raidplanner');
+
+$menu = &JSite::getMenu()->getItems( 'component', 'com_raidplanner', true );
+if (empty($menu)) {
+	$itemid = &JSite::getMenu()->getActive()->id;
+} else {
+	$itemid = $menu->id;
+}
+?>
+<table>
 	<?php
 	if ($raidshowDate) {
 		echo "<tr><td><strong>";
-		setlocale(LC_TIME, $raidshowDateLocal);
 		echo JHTML::_('date', 'now', $format) . "<br />";
 		echo "</strong></td></tr>";
 	}
@@ -26,28 +34,24 @@ $event_count = 0;
 	} else {
 		foreach ($items as $item) { 
 			echo "<tr>";
-			echo "<td><a href='".JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$item->raid_id)."'";
+			echo "<td><a href='".JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$item->raid_id."&Itemid=".$itemid)."'><span";
 			$tip = '';
-			if ($raidshowReg) {
+			if ( ($raidshowReg) && ($item->confirmed) ) {
 				// show if registered
-				$tip .= "";
+				$tip .= JText::_('RAIDPLANNER_CONFIRMATION_' . $item->confirmed);
 			}
-			if ($raidshowChar) {
+			if ( ($raidshowChar) && ($item->char_name) ) {
 				// show which car is registered
-				$tip .= "";
+				$tip .= $item->char_name . " ";
 			}
-			if ($raidshowRole) {
+			if ( ($raidshowRole) && ($item->role_name) ) {
 				// show registered role
-				$tip .= "";
-			}
-			if ($raidshowRace) {
-				// show registered race
-				$tip .= "";
+				$tip .= $item->role_name . " ";
 			}
 			if ($tip != '') {
 				echo ' class="hasTip" title="'.$tip.'"';
 			}
-			echo ">" . $item->location . "</a><br />";
+			echo "><strong>" . JHTML::_('date', $item->start_time, '%H:%M', true) . "</strong> " . $item->location . "</span></a><br />";
 			echo "</td></tr>";
 		}
 	}

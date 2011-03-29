@@ -51,7 +51,7 @@ class RaidPlannerViewRaid extends JView
 	
 	function getIcons()
 	{
-		$path = JPATH_BASE . DS . '..' . DS . 'media' . DS . 'com_raidplanner' . DS . 'icons';
+		$path = JPATH_BASE . DS . '..' . DS . 'images' . DS . 'raidplanner' . DS . 'raid_icons';
 		
 		$dhandle = opendir($path);
 		$files = array();

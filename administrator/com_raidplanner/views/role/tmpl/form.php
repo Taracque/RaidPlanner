@@ -45,6 +45,21 @@
 				<input class="text_area" type="text" name="font_color" id="font_color" size="10" maxlength="7" value="<?php echo $this->role->font_color;?>" />
 			</td>
 		</tr>
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="icon_name">
+					<?php echo JText::_( 'Icon' ); ?>:
+				</label>
+			</td>
+			<td>
+				<select name="icon_name" id="icon_name">
+					<option value=""></option>
+				<?php foreach ($this->icons as $icon_file => $icon_name) : ?>
+					<option value="<?php echo $icon_file;?>"<?php if($icon_file==$this->role->icon_name){?> selected="selected"<?php } ?>><?php echo $icon_name;?></option>
+				<?php endforeach; ?>
+				</select>
+			</td>
+		</tr>
 	</table>
 	</fieldset>
 </div>

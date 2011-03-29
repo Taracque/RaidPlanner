@@ -17,6 +17,16 @@
 		</tr>
 		<tr>
 			<td width="200" align="right" class="key">
+				<label for="location">
+					<?php echo JText::_( 'Template' ); ?>:
+				</label>
+			</td>
+			<td>
+				<?php echo JHTML::_('select.booleanlist', 'is_template', '', $this->raid->is_template );?>
+			</td>
+		</tr>
+		<tr>
+			<td width="200" align="right" class="key">
 				<label for="description">
 					<?php echo JText::_( 'Description' ); ?>:
 				</label>
@@ -34,6 +44,16 @@
 			</td>
 			<td>
 				<?php echo JHTML::_('calendar',$this->raid->start_time, 'start_time','%Y-%m-%d %H:%i');?>
+			</td>
+		</tr>
+		<tr>
+			<td width="200" align="right" class="key">
+				<label for="duration_mins">
+					<?php echo JText::_( 'Duration' ); ?>:<br />
+				</label>
+			</td>
+			<td>
+				<input type="text" name="duration_mins" id="duration_mins" value="<?php echo $this->raid->duration_mins;?>" size="5" />
 			</td>
 		</tr>
 		<tr>

@@ -28,18 +28,24 @@ class RaidPlannerModelEvent extends JModel
     * Gets the event specified event
     * @return array The array contains event
     */
-    function getEvent($id)
+    function getEvent($id, $asTemplate = false)
     {
     	$result = new stdClass;
     	if ($id>0) {
 			$db = & JFactory::getDBO();
 	
-			$query = "SELECT * FROM #__raidplanner_raid WHERE raid_id=".intval($id);
+			$query = "SELECT *,DATE_ADD(start_time,INTERVAL duration_mins MINUTE) AS end_time FROM #__raidplanner_raid WHERE raid_id=".intval($id);
 			
 			$db->setQuery($query);
 			$result = $db->loadObject();
+			if ($asTemplate) {
+				$result->raid_id = intval( JRequest::getVar('raid_id') );
+				$result->start_time = "0000-00-00" . substr( $result->start_time, 11 );
+				$result->invite_time = "0000-00-00" . substr( $result->start_time, 11 );
+			}
 		} else {
 			$result->start_time = '';
+			$result->duration_mins = 0;
 			$result->invite_time = '';
 			$result->raid_id = -1;
 			$result->location = '';
@@ -88,14 +94,30 @@ class RaidPlannerModelEvent extends JModel
 	function getRoles()
 	{
 		$db = & JFactory::getDBO();
-		$query = "SELECT role_name,role_id FROM #__raidplanner_role ORDER BY role_name ASC";
+		$query = "SELECT * FROM #__raidplanner_role ORDER BY role_name ASC";
 
 		$db->setQuery($query);
 		$result = $db->loadObjectList();
+		$reply = array();
+		// rekey by name
+		foreach ($result as $role) {
+			$reply[$role->role_name] = $role;
+		}
 		
-		return $result;
+		return $reply;
 	}
 	
+    function getTemplates()
+    {
+    	$db = & JFactory::getDBO();
+    	$query = "SELECT raid_id,location FROM #__raidplanner_raid WHERE is_template = 1 ORDER BY location ASC";
+    	
+    	$db->setQuery($query);
+    	$result = $db->loadObjectList();
+
+    	return $result;
+	}
+
 	function syncProfile()
 	{
 		$user =& JFactory::getUser();
@@ -123,7 +145,7 @@ class RaidPlannerModelEvent extends JModel
 	    	foreach ($charset as $userchar) {
 				$db->setQuery("SELECT name,level,genderId,raceId,classId,rank FROM #__guildroster_charinfo WHERE name=".$db->Quote($userchar));
 				$chardata = $db->loadObject();
-				if (($chardata) && ($chardata->name)) {
+				if (($chardata) && ($chardata->name) && (intval($chardata->level) > 0)) {
 					if (isset($result[$userchar])) {
 						$query = "UPDATE #__raidplanner_character SET char_level=".intval($chardata->level).",race_id=".intval($chardata->raceId).",gender_id=".(intval($chardata->genderId)+1).",rank=".intval($chardata->rank).",class_id=(SELECT class_id FROM #__raidplanner_class WHERE armory_id=".intval($chardata->classId).") WHERE profile_id=".$user->id." AND char_name=".$db->Quote($chardata->name);
 					} else {
@@ -148,9 +170,9 @@ class RaidPlannerModelEvent extends JModel
 		$charset = explode("\n",$user->getParam('characters'));
 
 		$where = " profile_id=".$user->id;
-		if ($min_level != null) { $where .= " AND char_level>=".intval($min_level); }
-		if ($max_level != null) { $where .= " AND char_level<=".intval($max_level); }
-		if ($min_rank != null) { $where .= " AND rank<=".intval($min_rank); }
+		if (($min_level != null) && ($min_level!='')) { $where .= " AND char_level>=".intval($min_level); }
+		if (($max_level != null) && ($max_level!='')) { $where .= " AND char_level<=".intval($max_level); }
+		if (($min_rank != null) && ($min_rank!='')) { $where .= " AND rank<=".intval($min_rank); }
 		$query = "SELECT character_id,char_name FROM #__raidplanner_character WHERE ".$where;
 		// reload the list
 		$db->setQuery($query);
@@ -303,25 +325,27 @@ class RaidPlannerModelEvent extends JModel
 			$db->Execute($query);
 			$raid_id = $db->insertid();
 		}
-		
-		$location = JRequest::getVar('location', null, 'STRING');
-		$description = JRequest::getVar('description', null, 'STRING');
-		$start_time =& JFactory::getDate( JRequest::getVar('start_time', null, 'STRING') , $tz );
-		$invite_time =& JFactory::getDate( JRequest::getVar('invite_time', null, 'STRING') , $tz );
-		$freeze_time = JRequest::getVar('freeze_time', null, 'INT');
-		$minimum_level = JRequest::getVar('minimum_level', null, 'INT');
-		$maximum_level = JRequest::getVar('maximum_level', null, 'INT');
-		$minimum_rank = JRequest::getVar('minimum_rank', null, 'INT');
-		$icon_name = JRequest::getVar('icon_name', null, 'STRING');
+
+		$location = JRequest::getVar('location', null, 'default', 'STRING');
+		$description = JRequest::getVar('description', null, 'default', 'STRING');
+		$start_time =& JFactory::getDate( implode(" ", JRequest::getVar('start_time', null, 'default', 'ARRAY') ) , $tz );
+		$duration_mins = JRequest::getVar('duration_mins', 0, 'default', 'INT');
+		$invite_time =& JFactory::getDate( implode(" ", JRequest::getVar('invite_time', null, 'default', 'ARRAY') ) , $tz );
+		$freeze_time = JRequest::getVar('freeze_time', null, 'default', 'INT');
+		$minimum_level = JRequest::getVar('minimum_level', null, 'default', 'INT');
+		$maximum_level = JRequest::getVar('maximum_level', null, 'default', 'INT');
+		$minimum_rank = JRequest::getVar('minimum_rank', null, 'default', 'INT');
+		$icon_name = JRequest::getVar('icon_name', null, 'default', 'STRING');
 
 		// update the record
 		$query = "UPDATE #__raidplanner_raid SET"
 				. " location=".$db->Quote($location)
 				. ",description=".$db->Quote($description)
 				. ",raid_leader=".$db->Quote($user->name)
-				. ",invite_time='".$invite_time->toMySQL()
-				. "',start_time='".$start_time->toMySQL()
-				. "',freeze_time=".intval($freeze_time)
+				. ",invite_time='".$invite_time->toMySQL()."'"
+				. ",start_time='".$start_time->toMySQL()."'"
+				. ",duration_mins=".intval($duration_mins)
+				. ",freeze_time=".intval($freeze_time)
 				. ",profile_id=".intval($user_id)
 				. ",icon_name=".$db->Quote($icon_name)
 				. ",minimum_level=".( ($minimum_level=='')?"NULL":intval($minimum_level) )

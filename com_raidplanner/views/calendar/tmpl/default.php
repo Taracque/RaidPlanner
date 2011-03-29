@@ -19,13 +19,13 @@ window.addEvent('domready',function(){
 		<td class="rp_header_left">
 			<a class="rp_button_prev" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->prevmonth);?>"> ◄ </a>
 			<a class="rp_button_next" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->nextmonth);?>"> ► </a>
-			<a class="rp_button_today" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"> Today </a>
+			<a class="rp_button_today" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"> <?php echo JText::_('Today');?> </a>
 		</td>
 		<td class="rp_header_center">
 			<h3><?php echo $this->year." ".JDate::_monthToString($this->monthonly); ?></h3>
 		</td>
 		<td class="rp_header_right">
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('Calendar Feed');?></a>
+	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('Download Calendar');?></a>
 <?php if ($this->isOfficer) { ?>
 	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new"><?php echo JText::_('New Event');?></a>
 <?php } ?>

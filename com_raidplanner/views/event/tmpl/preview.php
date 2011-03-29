@@ -12,28 +12,28 @@ $dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
 		<tr class="rp_event_details">
 			<td>
 			<?php if ($this->event->icon_name) : ?>
-				<img src="<?php echo JURI::base()."media/com_raidplanner/icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
+				<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
 			<?php endif; ?>
 				<div class="rp_event_description">
-					<strong><?php echo JText::_('RAIDPLANNER_EDIT_DESCRIPTION');?>:</strong><br />
+					<strong><?php echo JText::_('Edit');?>:</strong><br />
 					<p><?php echo $this->event->description;?></p>
 				</div>
 				<div class="rp_event_roles">
 					<ul>
 						<li>
-							<strong><?php echo JText::_('RAIDPLANNER_CONFIRMED_ROLES');?>:</strong><br />
+							<strong><?php echo JText::_('Confirmed Roles');?>:</strong><br />
 							<?php if (@$this->confirmed_roles[1]) foreach ($this->confirmed_roles[1] as $key => $role) { ?>
 								<strong><?php echo $key;?>:</strong> <?php echo $role; ?>
 							<? } ?>
 						</li>
 						<li>
-							<strong><?php echo JText::_('RAIDPLANNER_SITTING_ROLES');?>:</strong><br />
+							<strong><?php echo JText::_('Sitting Roles');?>:</strong><br />
 							<?php if (@$this->confirmed_roles[2]) foreach ($this->confirmed_roles[2] as $key => $role) { ?>
 								<strong><?php echo $key;?>:</strong> <?php echo $role; ?>
 							<? } ?>
 						</li>
 						<li>
-							<strong><?php echo JText::_('RAIDPLANNER_WAITLIST_ROLES');?>:</strong><br />
+							<strong><?php echo JText::_('Waiting Roles');?>:</strong><br />
 							<?php if (@$this->confirmed_roles[-1]) foreach ($this->confirmed_roles[-1] as $key => $role) { ?>
 								<strong><?php echo $key;?>:</strong> <?php echo $role; ?>
 							<? } ?>
@@ -48,11 +48,11 @@ $dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
 					<table>
 						<thead>
 							<tr>
-								<th><?php echo JText::_('RAIDPLANNER_NAME');?></th>
-								<th><?php echo JText::_('RAIDPLANNER_STATUS');?></th>
-								<th><?php echo JText::_('RAIDPLANNER_ROLE');?></th>
-								<th><?php echo JText::_('RAIDPLANNER_CONFIRMED');?></th>
-								<th><?php echo JText::_('RAIDPLANNER_SIGNEDUP');?></th>
+								<th><?php echo JText::_('Name');?></th>
+								<th><?php echo JText::_('Status');?></th>
+								<th><?php echo JText::_('Role');?></th>
+								<th><?php echo JText::_('Confirmed');?></th>
+								<th><?php echo JText::_('Signeup Time');?></th>
 							</tr>
 						</thead>
 						<tbody>

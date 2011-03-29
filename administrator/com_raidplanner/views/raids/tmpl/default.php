@@ -43,6 +43,9 @@
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'Minimum Rank', 'minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
+            <th width="100">
+                <?php echo JHTML::_( 'grid.sort', 'Template', 'is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
+            </th>
         </tr>            
     </thead>
     <tbody>
@@ -74,6 +77,9 @@
             </td>
             <td>
 				<?php echo $row->minimum_rank; ?>
+            </td>
+            <td>
+				<?php echo ($row->is_template) ? JText::_('Yes') : '-' ; ?>
             </td>
         </tr>
         <?php

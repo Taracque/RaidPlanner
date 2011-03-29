@@ -29,9 +29,15 @@ class RaidPlannerViewEdit extends JView
 			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&task=default&month='.JRequest::getVar('month').'&modalevent='.JRequest::getVar('id') ) );
 
 		} else {
-	
+			$template_id = JRequest::getVar('template_id');
+			if (intval($template_id) > 0) {
+				$event = $model->getEvent( $template_id , true );
+			} else {
+				$event = $model->getEvent(JRequest::getVar('id') );
+			}
 			$this->assignRef( 'icons', $this->getIcons() );
-			$this->assignRef( 'event', $model->getEvent(JRequest::getVar('id') ) );
+			$this->assignRef( 'event', $event );
+			$this->assignRef( 'templates', $model->getTemplates() );
 			
 			parent::display($tpl);
 			
@@ -68,7 +74,7 @@ class RaidPlannerViewEdit extends JView
 
 	function getIcons()
 	{
-		$path = JPATH_BASE . DS . 'media' . DS . 'com_raidplanner' . DS . 'icons';
+		$path = JPATH_BASE . DS . 'images' . DS . 'raidplanner' . DS . 'raid_icons';
 		
 		$dhandle = opendir($path);
 		$files = array();
