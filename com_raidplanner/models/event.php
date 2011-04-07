@@ -1,6 +1,6 @@
 <?php
 /**
- * Event Model for RaidPlanner Component
+ * Event Model for Raid Planner Component
  * 
  * @package    RaidPlanner
  * @subpackage Components
@@ -135,26 +135,28 @@ class RaidPlannerModelEvent extends JModel
 		if (!$profile_id) {
 			// DEFAULT GOR
 			$query = "INSERT INTO #__raidplanner_profile (profile_id, group_id) VALUES (".$user->id.", (SELECT group_id FROM #__raidplanner_groups WHERE `default`=1))";
-			$db->Execute($query);
+			$db->setQuery($query);
+			$db->query();
 		}
 
 		if ($pbroster) {
 			$query = "SELECT character_id,char_name FROM #__raidplanner_character WHERE profile_id=".$user->id;
 			$db->setQuery($query);
 			$result = $db->loadObjectList('char_name');
-	
+
 			// update character data from pbroster
 	    	foreach ($charset as $userchar) {
 				$db->setQuery("SELECT name,level,genderId,raceId,classId,rank FROM #__guildroster_charinfo WHERE name=".$db->Quote($userchar));
 				$chardata = $db->loadObject();
-				if (($chardata) && ($chardata->name) && (intval($chardata->level) > 0) && (intval($chardata->level) < 9) ) {	// do not sync community member and invalid characters
+				if (($chardata) && ($chardata->name) && (intval($chardata->level) > 0) && (intval($chardata->rank) < 9) ) {	// do not sync community member and invalid characters
 					if (isset($result[$userchar])) {
 						$query = "UPDATE #__raidplanner_character SET char_level=".intval($chardata->level).",race_id=".intval($chardata->raceId).",gender_id=".(intval($chardata->genderId)+1).",rank=".intval($chardata->rank).",class_id=(SELECT class_id FROM #__raidplanner_class WHERE armory_id=".intval($chardata->classId).") WHERE profile_id=".$user->id." AND char_name=".$db->Quote($chardata->name);
 					} else {
 						$query = "INSERT INTO #__raidplanner_character (char_name,char_level,race_id,gender_id,rank,class_id,profile_id) VALUES (".
 										$db->Quote($chardata->name).",".intval($chardata->level).",".intval($chardata->raceId).",".(intval($chardata->genderId)+1).",".(intval($chardata->rank)).",(SELECT class_id FROM #__raidplanner_class WHERE armory_id=".intval($chardata->classId)."),".$user->id.")";
 					}
-					$db->Execute($query);
+					$db->setQuery($query);
+					$db->query();
 				}
 	    	}
 		}
@@ -229,11 +231,13 @@ class RaidPlannerModelEvent extends JModel
 			
 			// throw all sigunps by same profile for same raid
 			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
-			$db->Execute($query);
-	
+			$db->setQuery($query);
+			$db->query();
+			
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
 					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
-			$db->Execute($query);
+			$db->setQuery($query);
+			$db->query();
 		}
 	}
 	
@@ -321,7 +325,8 @@ class RaidPlannerModelEvent extends JModel
 
 		foreach ($characters as $char) {
 			$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
-			$db->Execute($query);
+			$db->setQuery($query);
+			$db->query();
 		}
 	}
 	
@@ -341,7 +346,8 @@ class RaidPlannerModelEvent extends JModel
 		if ($raid_id == -1) {
 			// insert an empty record first
 			$query = "INSERT INTO #__raidplanner_raid (profile_id) VALUES (".$user_id.")";
-			$db->Execute($query);
+			$db->setQuery($query);
+			$db->query();
 			$raid_id = $db->insertid();
 		}
 
@@ -372,7 +378,8 @@ class RaidPlannerModelEvent extends JModel
 				. ",minimum_rank=".( ($minimum_rank=='')?"NULL":intval($minimum_rank) )
 				. " WHERE raid_id=".intval($raid_id);
 
-		$db->Execute($query);
+		$db->setQuery($query);
+		$db->query();
 		
 		return $raid_id;
 	}
