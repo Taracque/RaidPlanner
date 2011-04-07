@@ -25,25 +25,30 @@
 			<file driver="mysql" charset="utf8">uninstall.sql</file>
 		</sql>
 	</uninstall>
+	<installfile>
+		<filename>install.php</filename>
+	</installfile>
+	<uninstallfile>
+		<filename>uninstall.php</filename>
+	</uninstallfile>
 	<files folder="com_raidplanner">
 		<filename>controller.php</filename>
 		<filename>raidplanner.php</filename>
-		<filename>raidplanner.xml</filename>
-		<filename>router.xml</filename>
+		<filename>router.php</filename>
 		<filename>index.html</filename>
 		<folder>assets</folder>
 		<folder>models</folder>
 		<folder>views</folder>
 	</files>
 	<!-- Site Main Language File Copy Section -->
-	<languages>
+	<languages folder="language">
 		<language tag="en-GB">en-GB.com_raidplanner.ini</language>
 		<language tag="hu-HU">hu-HU.com_raidplanner.ini</language>
 	</languages>
 	<!-- Site Main Media File Copy Section -->
 	<media destination="raidplanner" folder="images">
 		<folder>raid_icons</folder>
-		<folder>flash.swf</folder>
+		<folder>role_icons</folder>
 	</media>
 	<administration>
 		<!-- Administration Menu Section -->
@@ -60,17 +65,19 @@
 		<!-- Note the folder attribute: This attribute describes the folder
 				to copy FROM in the package to install therefore files copied
 				in this section are copied from /admin/ in the package -->
-		<files folder="administrator/com_radiplanner">
+		<files folder="administrator/com_raidplanner">
 			<filename>index.html</filename>
 			<filename>raidplanner.php</filename>
 			<filename>controller.php</filename>
-			<filename>router.php</filename>
-			<filename>raidplanner.xml</filename>
 			<folder>assets</folder>
 			<folder>models</folder>
 			<folder>views</folder>
 			<folder>controllers</folder>
 			<folder>tables</folder>
+			<filename>install.php</filename>
+			<filename>uninstall.php</filename>
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
 		</files>
 		<!-- Administration Language File Copy Section -->
 		<languages folder="administrator/language">
