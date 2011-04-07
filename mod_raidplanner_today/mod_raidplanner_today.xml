@@ -1,6 +1,5 @@
-
 <install type="module" version="1.5.0" method="upgrade">
-  <name>Raid Planner Today Raid</name>
+  <name>RaidPlanner Today</name>
   <author>Taracque</author>
   <creationDate>2011-03-10</creationDate>
   <copyright>All rights reserved by Taracque, 2011</copyright>
@@ -10,16 +9,12 @@
   <version>1.0.beta</version>
   <description>Shows the raids today for RaidPlanner component</description>
   <files>
-    <filename module="mod_raidplanningshow">mod_raidplanningshow.php</filename>
+    <filename module="mod_raidplanner_today">mod_raidplanner_today.php</filename>
     <filename>index.html</filename>
     <filename>helper.php</filename>
     <filename>tmpl/default.php</filename>
     <filename>tmpl/index.html</filename>
   </files>
-  <languages>
-    <language tag="en-GB">en-GB.mod_raidplanner_today.ini</language>
-    <language tag="hu-HU">hu-HU.mod_raidplanner_today.ini</language>
-  </languages>
   <params>
     <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
     <param name="@spacer" type="spacer" default="" label="" description="" />

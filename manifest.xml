@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="update">
-	<name>Raid Planner</name>
+	<name>RaidPlanner</name>
 	<creationDate>2011-03-05</creationDate>
 	<author>Taracque</author>
 	<authorEmail>taracque@taracque.hu</authorEmail>
@@ -13,7 +13,7 @@
 	<releaseType>Major release</releaseType>
 	<downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.1.zip</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
-	<description>Raid Planner component for Joomla 1.5, to organize WoW raids</description>
+	<description>RaidPlanner component for Joomla 1.5, to organize WoW raids</description>
 	<!-- Install Database Section -->
 	<install>
 		<sql>
@@ -25,12 +25,8 @@
 			<file driver="mysql" charset="utf8">uninstall.sql</file>
 		</sql>
 	</uninstall>
-	<installfile>
-		<filename>install.php</filename>
-	</installfile>
-	<uninstallfile>
-		<filename>uninstall.php</filename>
-	</uninstallfile>
+	<installfile>install.php</installfile>
+	<uninstallfile>install.php</uninstallfile>
 	<files folder="com_raidplanner">
 		<filename>controller.php</filename>
 		<filename>raidplanner.php</filename>
@@ -75,7 +71,6 @@
 			<folder>controllers</folder>
 			<folder>tables</folder>
 			<filename>install.php</filename>
-			<filename>uninstall.php</filename>
 			<filename>install.sql</filename>
 			<filename>uninstall.sql</filename>
 		</files>

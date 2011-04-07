@@ -31,4 +31,3 @@ $items = ModRaidPlannerTodayHelper::getItems($raidshowNumber, $user_id);
 
 // include the template for display
 require(JModuleHelper::getLayoutPath('mod_raidplanner_today'));
-?>

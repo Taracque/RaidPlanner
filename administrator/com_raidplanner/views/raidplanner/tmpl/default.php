@@ -1,8 +1,12 @@
 <h3>RaidPlanner</h3>
 <p>Raid organizer component, can cooperate with <a href="http://pixelbyte.dk/index.php/pbroster-download" target="_blank">PB-Roster</a> component to automatically update characters.</p>
-<p>If <a href="http://pixelbyte.dk/index.php/pbroster-download" target="_blank">UserMeta</a> plugin is installed, and users has a <code>characters</code> attribute added (and characters are spearated by newline), characters are automatically assigned to Joomla Users, add this to user.xml file:<br/>
+<p>If <a href="http://joomlacode.org/gf/project/usermeta/" target="_blank">UserMeta</a> plugin is installed, and users has a <code>characters</code> attribute added (and characters are spearated by newline), characters are automatically assigned to Joomla Users, add this to user.xml file:<br/>
 <code>
 &lt;param name="characters" type="textarea" default="" label="Characters" description="Characters, separated by newline!" rows="5" cols="60" /&gt;
+</code>
+Personal calendar can be subscribed, if <code>calendar_secret</code> is filled for a user. To add this field to the users, add the following line to the user.xml file:
+<code>
+&lt;param name="calendar_secret" type="password" default="" label="Calendar secret" description="Secret for calendar subscription" /&gt;
 </code>
 </p>
 
