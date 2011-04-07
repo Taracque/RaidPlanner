@@ -1,8 +1,9 @@
 <?php
 /**
+ * Edit View class for the RaidPlanner Component
+ *
  * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_1
  * @license    GNU/GPL
 */
  
@@ -11,12 +12,6 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.view');
- 
-/**
- * HTML View class for the RaidPlanner Component
- *
- * @package    RaidPlanner
- */
  
 class RaidPlannerViewEdit extends JView
 {
@@ -38,7 +33,8 @@ class RaidPlannerViewEdit extends JView
 			$this->assignRef( 'icons', $this->getIcons() );
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'templates', $model->getTemplates() );
-			
+			$this->assignRef( 'candelete', $model->canDelete( $event->raid_id ) );
+
 			parent::display($tpl);
 			
 			/* display the event in detail */

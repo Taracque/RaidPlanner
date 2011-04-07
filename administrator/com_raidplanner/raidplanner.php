@@ -2,7 +2,6 @@
 /**
  * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_5
  * @license    GNU/GPL
 */
  

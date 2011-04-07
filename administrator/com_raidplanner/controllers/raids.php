@@ -1,22 +1,15 @@
 <?php
 /**
- * Hello Controller for Hello World Component
+ * Raids Controller for RaidPlanner Component
  * 
- * @package    Joomla.Tutorials
+ * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_4
  * @license		GNU/GPL
  */
 
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-/**
- * Hello Hello Controller
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
- */
 class RaidPlannerControllerRaids extends RaidPlannerController
 {
 	/**

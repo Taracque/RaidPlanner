@@ -1,10 +1,9 @@
 <?php
 /**
- * Raids Model for RaidPlanner Component
+ * Classes Model for RaidPlanner Component
  * 
- * @package    Raids
+ * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_5
  * @license        GNU/GPL
  */
  
@@ -13,16 +12,10 @@ defined('_JEXEC') or die();
  
 jimport( 'joomla.application.component.model' );
  
-/**
- * Hello Model
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
- */
 class RaidPlannerModelClasses extends JModel
 {
     /**
-     * Hellos data array
+     * Data array
      *
      * @var array
      */
@@ -41,7 +34,7 @@ class RaidPlannerModelClasses extends JModel
     }
  
     /**
-     * Retrieves the hello data
+     * Retrieves the data
      * @return array Array of objects containing the data from the database
      */
     function getData()

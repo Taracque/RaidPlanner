@@ -1,10 +1,9 @@
 <?php
 /**
- * Raids View for RaidPlanner Component
+ * Roles View for RaidPlanner Component
  * 
  * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_5
  * @license        GNU/GPL
  */
  
@@ -12,19 +11,10 @@
 defined('_JEXEC') or die();
  
 jimport( 'joomla.application.component.view' );
- 
-/**
- * Raids View
- *
- * @package    RaidPlanner
- * @subpackage Components
- */
+
 class RaidPlannerViewRoles extends JView
 {
-    /**
-     * Hellos view display method
-     * @return void
-     **/
+
     function display($tpl = null)
     {
     

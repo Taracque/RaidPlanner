@@ -1,10 +1,11 @@
 <?php
 /**
+ * Calendat View for RaidPlanner Component
+ *
  * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_1
  * @license    GNU/GPL
-*/
+ */
  
 // no direct access
  
@@ -13,14 +14,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
-JHTML::_('behavior.modal', 'a.modal', array('size' => array('x' => 750,'y' => 500)));
+JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => 750,'y' => 500)));
 
-/**
- * HTML View class for the RaidPlanner Component
- *
- * @package    RaidPlanner
- */
- 
 class RaidPlannerViewCalendar extends JView
 {
     function display($tpl = null)
@@ -45,7 +40,16 @@ class RaidPlannerViewCalendar extends JView
 		$year = date("Y",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$monthonly = date("m",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$shift = date("w",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
-
+		
+		$user =& JFactory::getUser();
+		if ($user->getParam('calendar_secret', '') != '') {
+			$calendar_mode = 'subscribe';
+			$this->assignRef( 'user_id', $user->id );
+			$this->assignRef( 'calendar_secret', $user->getParam('calendar_secret', '') );
+		} else {
+			$calendar_mode = 'download';
+		}
+		$this->assignRef( 'calendar_mode', $calendar_mode );
 		$this->assignRef( 'month', $month );
 		$this->assignRef( 'prevmonth', $prevmonth );
 		$this->assignRef( 'nextmonth', $nextmonth );

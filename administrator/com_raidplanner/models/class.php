@@ -1,10 +1,9 @@
 <?php
 /**
- * Raids Model for RaidPlanner Component
+ * Class Model for RaidPlanner Component
  * 
- * @package    Raids
+ * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_5
  * @license        GNU/GPL
  */
  
@@ -13,12 +12,6 @@ defined('_JEXEC') or die();
  
 jimport( 'joomla.application.component.model' );
  
-/**
- * Hello Model
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
- */
 class RaidPlannerModelClass extends JModel
 {
 
@@ -30,13 +23,6 @@ class RaidPlannerModelClass extends JModel
 		$this->setId((int)$array[0]);
 	}
 
-	/**
-	 * Method to set the hello identifier
-	 *
-	 * @access	public
-	 * @param	int Hello identifier
-	 * @return	void
-	 */
 	function setId($id)
 	{
 		// Set id and wipe data
@@ -44,10 +30,6 @@ class RaidPlannerModelClass extends JModel
 		$this->_data	= null;
 	}
 
-	/**
-	 * Method to get a hello
-	 * @return object with data
-	 */
 	function &getData()
 	{
 		// Load the data
@@ -77,13 +59,13 @@ class RaidPlannerModelClass extends JModel
 
 		$data = JRequest::get( 'post' );
 
-		// Bind the form fields to the hello table
+		// Bind the form fields to the table
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
 
-		// Make sure the hello record is valid
+		// Make sure the record is valid
 		if (!$row->check()) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;

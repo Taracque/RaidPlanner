@@ -15,24 +15,22 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:<?php echo $config->getValue( 'config.sitename' ); ?>
 
-X-WR-TIMEZONE:GMT
+X-WR-TIMEZONE:Europe/London
 X-ORIGINAL-URL:<?php echo JURI::base() . JRoute::_('index.php'); ?>
 
 X-WR-CALDESC:<?php echo $config->getValue( 'config.sitename' ); ?> raidplanner
-BEGIN:VTIMEZONE
-TZID:GMT
-END:VTIMEZONE
 <?php foreach ($this->events as $event):?>
+<?php if ($event[0]->raid_id):?>
 BEGIN:VEVENT
 UID:RPEVENTID<?php echo $event[0]->raid_id;?>
 
-DTSTAMP:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%SZ',0);?>
+DTSTAMP;TZID=Europe/London:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%S',0);?>
 
 ORGANIZER:<?php echo $event[0]->raid_leader;?>
 
-DTSTART:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%SZ',0);?>
+DTSTART;TZID=Europe/London:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%S',0);?>
 
-DTEND:<?php echo JHTML::_('date',$event[0]->end_time,'%Y%m%dT%H%M%SZ',0);?>
+DTEND;TZID=Europe/London:<?php echo JHTML::_('date',$event[0]->end_time,'%Y%m%dT%H%M%S',0);?>
 
 SUMMARY:<?php echo $event[0]->location;?>
 
@@ -42,10 +40,11 @@ URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplan
 
 BEGIN:VALARM
 ACTION:AUDIO
-TRIGGER:<?php echo JHTML::_('date',$event[0]->invite_time,'%Y%m%dT%H%M%SZ',0);?>
+TRIGGER;TZID=Europe/London:<?php echo JHTML::_('date',$event[0]->invite_time,'%Y%m%dT%H%M%S',0);?>
 
 REPEAT:1
 END:VALARM
 END:VEVENT
+<?php endif; ?>
 <?php endforeach; ?>
 END:VCALENDAR

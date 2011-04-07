@@ -25,7 +25,14 @@ window.addEvent('domready',function(){
 			<h3><?php echo $this->year." ".JDate::_monthToString($this->monthonly); ?></h3>
 		</td>
 		<td class="rp_header_right">
+<?php if ($this->calendar_mode == 'subscribe') : ?>
+	<label>
+		<?php echo JText::_('Subscribe Calendar URL');?>:<br />
+		<input type="text" value="<?php echo JURI::base()."index.php?option=com_raidplanner&view=feed&task=feed&user=".$this->user_id."&secret=".$this->calendar_secret;?>" size="40" />
+	</label>
+<?php else: ?>
 	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('Download Calendar');?></a>
+<?php endif; ?>
 <?php if ($this->isOfficer) { ?>
 	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new"><?php echo JText::_('New Event');?></a>
 <?php } ?>
@@ -61,16 +68,12 @@ window.addEvent('domready',function(){
 					?>
 								<div class="event">
 									<?php if($this->canView) { ?>
-									<a class="modal" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id); ?>">
+									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id); ?>">
 									<?php } else { ?>
 									<a>
 									<?php } ?>
 										<strong><?php
-											echo JHTML::_('date', $event->start_time, '%H');
-											$mins = date("i", $event->start_time);
-											if ($mins!=0) {
-												echo $mins;
-											}
+											echo JHTML::_('date', $event->start_time, '%H:%M');
 										?></strong> <?php echo $event->location;?>
 									</a>
 								</div>

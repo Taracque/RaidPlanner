@@ -7,9 +7,9 @@ defined('_JEXEC') or die('Restricted access');
 $dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
 $hasChars = !empty($this->characters);
 ?>
-<table class="rp_container" onload="javascript:addTips('.rp_container');">
-	<tr class="rp_header">
-		<td>
+<table class="rp_header_container">
+	<tr>
+		<td class="rp_header">
 		<?php if ($this->event->icon_name) : ?>
 			<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
 		<?php endif; ?>
@@ -27,15 +27,25 @@ $hasChars = !empty($this->characters);
 				</li>
 			</ul>
 		</td>
-	</tr>
-	<tr class="rp_event_details">
-		<td>
-			<div class="rp_event_description">
-				<strong><?php echo JText::_('Description');?>:</strong><br />
-				<p><?php echo $this->event->description;?></p>
-			</div>
+		<td rowspan="3">
 			<div class="rp_event_roles">
 				<ul>
+					<li>
+						<strong><?php echo JText::_('Attending Roles');?> (<?php echo array_sum(@$this->confirmed_roles[0]);?>):</strong><br />
+						<?php if (@$this->confirmed_roles[0]) : ?>
+							<?php foreach ($this->confirmed_roles[0] as $key => $role) : ?>
+								<?php if ($this->roles[$key]->icon_name != '') : ?>
+								<img src="<?php echo JURI::base()."images/raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+								<?php else: ?>
+								<strong><?php echo $key;?></strong>
+								<?php endif; ?>
+								: <?php echo $role; ?>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</li>
+					<li>
+						<hr />
+					</li>
 					<li>
 						<strong><?php echo JText::_('Confirmed roles');?>:</strong><br />
 						<?php if (@$this->confirmed_roles[1]) : ?>
@@ -79,6 +89,16 @@ $hasChars = !empty($this->characters);
 			</div>
 		</td>
 	</tr>
+	<tr class="rp_event_details">
+		<td>
+			<div class="rp_event_description">
+				<strong><?php echo JText::_('Description');?>:</strong><br />
+				<p><?php echo $this->event->description;?></p>
+			</div>
+		</td>
+	</tr>
+</table>
+<table class="rp_container">
 	<tr class="rp_event_buttons">
 		<td>
 			<div>
@@ -107,7 +127,9 @@ $hasChars = !empty($this->characters);
 						<tr>
 							<td>
 								<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
-								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>"><?php echo $attendant->char_name;?></a>
+								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
+									<strong><?php echo $attendant->char_name;?></strong>
+								</a>
 							</td>
 							<td><a href="#" onclick="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');" id="att_char_queue_<?php echo $attendant->character_id;?>" class="attendance<?php if ($attendant->comments!='') { ?> rp_tooltips" title="<?php echo $attendant->comments;?><?php } ?>"><?php echo JText::_('RAIDPLANNER_STATUS_'.$attendant->queue); ?></a></td>
 							<td style="color:<?php echo $this->roles[$attendant->role_name]->font_color;?>;background-color:<?php echo $this->roles[$attendant->role_name]->body_color;?>;"><?php
@@ -168,14 +190,18 @@ $hasChars = !empty($this->characters);
 					<tr>
 						<td>
 							<ul class="queue">
-								<li><label><input type="radio" name="queue" value="1" <?php if ($this->selfstatus->queue==1) { ?>checked="checked"<?php } ?> /><?php echo JText::_('RAIDPLANNER_STATUS_1');?></label></li>
+								<li><label><input type="radio" name="queue" value="1" <?php if (($this->selfstatus->queue==1) || (intval(@$this->selfstatus->queue)==0)) { ?>checked="checked"<?php } ?> /><?php echo JText::_('RAIDPLANNER_STATUS_1');?></label></li>
 								<li><label><input type="radio" name="queue" value="-1" <?php if ($this->selfstatus->queue==-1) { ?>checked="checked"<?php } ?> /><?php echo JText::_('RAIDPLANNER_STATUS_-1');?></label></li>
 								<li><label><input type="radio" name="queue" value="2" <?php if ($this->selfstatus->queue==2) { ?>checked="checked"<?php } ?> /><?php echo JText::_('RAIDPLANNER_STATUS_2');?></label></li>
 							</ul>
 						</td>
 						<td>
 							<ul class="role">
-							<?php foreach ($this->roles as $role) { ?>
+							<?php foreach ($this->roles as $role) {
+								if (intval($this->selfstatus->role_id)==0) {
+									$this->selfstatus->role_id=$role->role_id;
+								}
+							?>
 								<li><label><input type="radio" name="role" value="<?php echo $role->role_id;?>" <?php if ($this->selfstatus->role_id==$role->role_id) { ?>checked="checked"<?php } ?> /><?php echo $role->role_name;?></label></li>
 							<?php } ?>
 							</ul>

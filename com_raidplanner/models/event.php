@@ -1,10 +1,9 @@
 <?php
 /**
- * Raid Planner for Raid Planner Component
+ * Event Model for RaidPlanner Component
  * 
  * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_2
  * @license    GNU/GPL
  */
  
@@ -15,12 +14,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.model' );
 jimport( 'joomla.application.component.helper' );
 
-/**
- * Hello Model
- *
- * @package    RaidPlanner
- * @subpackage Components
- */
 class RaidPlannerModelEvent extends JModel
 {
 
@@ -63,12 +56,13 @@ class RaidPlannerModelEvent extends JModel
     	$db = & JFactory::getDBO();
 
     	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
-    				cl.class_name,cl.class_color,c.char_level,s.profile_id,s.role_id
+    				cl.class_name,cl.class_color,c.char_level,s.profile_id,s.role_id,s.queue
     			FROM #__raidplanner_signups AS s 
     				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
     				LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id
 					LEFT JOIN #__raidplanner_role AS r ON r.role_id=s.role_id
-   				WHERE raid_id=".intval($id);
+   				WHERE s.raid_id=".intval($id)."
+   				ORDER BY s.confirmed DESC, s.queue DESC,r.role_name DESC";
     	
     	$db->setQuery($query);
     	$result = $db->loadObjectList('profile_id');
@@ -85,6 +79,14 @@ class RaidPlannerModelEvent extends JModel
 					$roles[$signup->confirmed][$signup->role_name] = 1;
 				} else {
 					$roles[$signup->confirmed][$signup->role_name] ++;
+				}
+			}
+			// attendance total 0 index
+			if ($signup->queue == 1) {
+				if (!isset($roles[0][$signup->role_name])) {
+					$roles[0][$signup->role_name] = 1;
+				} else {
+					$roles[0][$signup->role_name] ++;
 				}
 			}
 		}
@@ -145,7 +147,7 @@ class RaidPlannerModelEvent extends JModel
 	    	foreach ($charset as $userchar) {
 				$db->setQuery("SELECT name,level,genderId,raceId,classId,rank FROM #__guildroster_charinfo WHERE name=".$db->Quote($userchar));
 				$chardata = $db->loadObject();
-				if (($chardata) && ($chardata->name) && (intval($chardata->level) > 0)) {
+				if (($chardata) && ($chardata->name) && (intval($chardata->level) > 0) && (intval($chardata->level) < 9) ) {	// do not sync community member and invalid characters
 					if (isset($result[$userchar])) {
 						$query = "UPDATE #__raidplanner_character SET char_level=".intval($chardata->level).",race_id=".intval($chardata->raceId).",gender_id=".(intval($chardata->genderId)+1).",rank=".intval($chardata->rank).",class_id=(SELECT class_id FROM #__raidplanner_class WHERE armory_id=".intval($chardata->classId).") WHERE profile_id=".$user->id." AND char_name=".$db->Quote($chardata->name);
 					} else {
@@ -254,6 +256,22 @@ class RaidPlannerModelEvent extends JModel
 		return ($this->getPermission('edit_raids_any') || ($this->getPermission('edit_raids_own') && ($own_raid)));
 	}
 	
+	function canDelete($raid_id = null) {
+		$own_raid = false;
+
+		if ($raid_id>0) {
+			$db = & JFactory::getDBO();
+			$user =& JFactory::getUser();
+			$user_id = $user->id;
+
+			$query = "SELECT profile_id FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
+			$db->setQuery($query);
+			$own_raid = ($db->loadResult() == $user_id);
+		}
+
+		return ($this->getPermission('delete_raid_any') || ($this->getPermission('delete_raid_own') && ($own_raid)));
+	}
+	
 	function userCanSignUp($raid_id = null) {
 		$can_signup = false;
 		if ($raid_id>0) {
@@ -282,9 +300,10 @@ class RaidPlannerModelEvent extends JModel
 			$db = & JFactory::getDBO();
 			$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
 			$db->setQuery($query);
-
-			$reply = ($db->loadResult() == "1");
-		}		
+			
+			$dbreply = ($db->loadResultArray());
+			$reply = ($dbreply[0] === "1");
+		}
 		return $reply;
 	}
 	
@@ -357,4 +376,26 @@ class RaidPlannerModelEvent extends JModel
 		
 		return $raid_id;
 	}
+	
+	function deleteEvent() {
+		$raid_id = JRequest::getVar('raid_id', null, 'INT');
+		if (!$this->canDelete($raid_id)) {
+			return false;
+		}
+
+		$db = & JFactory::getDBO();
+
+		// delete the record
+		$query = "DELETE FROM #__raidplanner_raid WHERE raid_id=".intval($raid_id);
+		$db->setQuery($query);
+		$db->query();
+
+		$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id);
+		$db->setQuery($query);
+		$db->query();
+		
+		return true;
+
+	}
+
 }

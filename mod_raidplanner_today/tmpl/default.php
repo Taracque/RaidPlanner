@@ -6,7 +6,7 @@
  * Function to get a list for a label
  */
  
-$format = JText::_('DATE_FORMAT_LC1');
+$format = JText::_('DATE_FORMAT_LC');
 $event_count = 0;
 
 $lang =& JFactory::getLanguage();

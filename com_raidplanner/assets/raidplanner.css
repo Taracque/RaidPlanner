@@ -1,6 +1,12 @@
-.rp_container {
-	min-width: 730px;
+.rp_container,.rp_header_container {
+	min-width: 700px;
 	width: 100%;
+}
+.rp_container td,.rp_header_container td {
+	vertical-align: top;
+}
+.rp_header_container {
+	border-bottom: 1px inset #ccc;
 }
 .rp_header td {
 	width: 33%;
@@ -10,7 +16,7 @@
 	text-align: left;
 }
 .rp_header_left a, a.rp_button {
-	background: #E8E8E8;;
+	background: #E8E8E8;
 	border-color: #777;
 	color: #333;
 	display: block;
@@ -126,23 +132,22 @@
 	list-style-type: none;
 	padding: 0;
 }
-
+.rp_event_details {
+	border: 1px solid #33383C;
+}
 .rp_event_description {
 	display: block;
 	float: left;
-	width: 49%;
+	min-height: 50px;
 }
 
 .rp_event_roles {
 	display: block;
 	float: right;
-	width: 49%;
+	width: 100%;
+	vertical-align:text-top;
 }
 
-.rp_event_details {
-	height: 100px;
-	vertical-align: top;
-}
 .rp_event_buttons div a {
 	color: #bbb;
 	display: block;
@@ -210,6 +215,7 @@
 .rp_event_attendants td .rp_tooltips, .rp_event_attendants td .attendance {
 	cursor: default;
 	text-decoration: none;
+	font-size:110%;
 }
 
 .rp_event_attendants td .attendance.rp_tooltips {

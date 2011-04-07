@@ -1,10 +1,9 @@
 <?php
 /**
- * Raid Planner for Raid Planner Component
+ * RaidPlanner Model for RaidPlanner Component
  * 
  * @package    RaidPlanner
  * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_2
  * @license    GNU/GPL
  */
  
@@ -14,12 +13,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
  
-/**
- * Hello Model
- *
- * @package    RaidPlanner
- * @subpackage Components
- */
 class RaidPlannerModelRaidPlanner extends JModel
 {
 
@@ -27,7 +20,7 @@ class RaidPlannerModelRaidPlanner extends JModel
     * Gets the events for the given month +-2 weeks
     * @return array The array contains event
     */
-    function getEvents($year_month = null)
+    function getEvents($year_month = null, $user_id = null)
     {
     	$db = & JFactory::getDBO();
     	if ($year_month == null) {
@@ -37,7 +30,11 @@ class RaidPlannerModelRaidPlanner extends JModel
 	    	$query = "SELECT raid_id,location,status,raid_leader,UNIX_TIMESTAMP(start_time) AS start_time,UNIX_TIMESTAMP(DATE_ADD(start_time,INTERVAL duration_mins MINUTE)) AS end_time FROM #__raidplanner_raid ORDER BY start_time ASC";
     	}
 		else if ($year_month=='own') {
-    		$user = & JFactory::getUser();
+			if (!$user_id) {
+    			$user = & JFactory::getUser();
+    		} else {
+    			$user =& JUser::getInstance( intval( $user_id ) );
+    		}
 	    	$query = "SELECT r.raid_id,r.location,r.status,r.raid_leader,UNIX_TIMESTAMP(r.start_time) AS start_time,UNIX_TIMESTAMP(DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE)) AS end_time,r.description,r.invite_time
 	    				FROM #__raidplanner_signups AS s
 	    				LEFT JOIN #__raidplanner_raid AS r ON r.raid_id=s.raid_id
