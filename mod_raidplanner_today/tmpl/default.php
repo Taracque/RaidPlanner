@@ -1,7 +1,7 @@
-<?php defined('_JEXEC') or die('Restricted access'); // no direct access ?>
-<?php /* echo JText::_('TOPIC TEXT'); */ ?>
-
 <?php
+defined('_JEXEC') or die('Restricted access');
+// no direct access
+
 /*
  * Function to get a list for a label
  */

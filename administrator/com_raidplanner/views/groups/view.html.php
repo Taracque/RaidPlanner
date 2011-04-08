@@ -18,7 +18,7 @@ class RaidPlannerViewGroups extends JView
     function display($tpl = null)
     {
     
-        JToolBarHelper::title( JText::_( 'RaidPlanner' ), 'generic.png' );
+        JToolBarHelper::title( JText::_( 'Groups' ), 'generic.png' );
         JToolBarHelper::makeDefault('setDefault');
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();

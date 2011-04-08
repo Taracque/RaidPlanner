@@ -68,7 +68,7 @@
 					<thead style="display:block;width:300px;">
 						<tr>
 							<th width="20">&nbsp;</th>
-							<th width="280"><?php echo JText::_( 'Permission' ); ?></th>
+							<th width="280"><?php echo JText::_( 'Permissions' ); ?></th>
 						</tr>
 					</thead>
 					<tbody style="height:200px;overflow:scroll;display:block;width:300px;">

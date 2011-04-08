@@ -18,7 +18,7 @@ class RaidPlannerViewRoles extends JView
     function display($tpl = null)
     {
     
-        JToolBarHelper::title( JText::_( 'RaidPlanner' ), 'generic.png' );
+        JToolBarHelper::title( JText::_( 'Roles' ), 'generic.png' );
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();

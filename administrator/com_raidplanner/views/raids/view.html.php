@@ -18,7 +18,7 @@ class RaidPlannerViewRaids extends JView
     function display($tpl = null)
     {
     
-        JToolBarHelper::title( JText::_( 'RaidPlanner' ), 'generic.png' );
+        JToolBarHelper::title( JText::_( 'Raids' ), 'generic.png' );
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();
@@ -34,19 +34,19 @@ class RaidPlannerViewRaids extends JView
         // Get data from the model
         $raids =& $this->get( 'Data');
 		$pagination =& $this->get('Pagination');
- 
+
         $this->assignRef( 'raids', $raids );
-		$this->assignRef('pagination', $pagination);
+		$this->assignRef( 'pagination', $pagination);
 
 		 /* Call the state object */
 		$state =& $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
-		$lists['search'] = $state->get( 'filter_search' );;
-		$lists['start_time_min'] = $state->get( 'filter_start_time_min' );;
-		$lists['start_time_max'] = $state->get( 'filter_start_time_max' );;
-		$lists['order_Dir'] = $state->get( 'filter_order_Dir' );
-		$lists['order']     = $state->get( 'filter_order' );
+		$lists['search'] = $state->get( 'filter_raid_search' );;
+		$lists['start_time_min'] = $state->get( 'filter_raid_start_time_min' );;
+		$lists['start_time_max'] = $state->get( 'filter_raid_start_time_max' );;
+		$lists['order_Dir'] = $state->get( 'filter_raid_order_Dir' );
+		$lists['order']     = $state->get( 'filter_raid_order' );
 		
 		$this->assignRef( 'lists', $lists );
 

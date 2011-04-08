@@ -21,6 +21,13 @@ class RaidPlannerViewCalendar extends JView
     function display($tpl = null)
     {
 		$eventmodel = &$this->getModel('event');
+
+		if ($eventmodel->getPermission('view_calendar') != 1) {
+			// redirect to the index page
+			$app = &JFactory::getApplication();
+			$msg = JText::_('Access Forbidden');
+			$app->redirect( JRoute::_(''), $msg);
+		}
 		
 		$eventmodel->syncProfile();
 		$canView = ($eventmodel->getPermission('view_raids') == 1);

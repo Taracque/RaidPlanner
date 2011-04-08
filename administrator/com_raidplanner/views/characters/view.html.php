@@ -18,7 +18,7 @@ class RaidPlannerViewCharacters extends JView
     function display($tpl = null)
     {
     
-        JToolBarHelper::title( JText::_( 'RaidPlanner' ), 'generic.png' );
+        JToolBarHelper::title( JText::_( 'Characters' ), 'generic.png' );
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();
@@ -33,9 +33,23 @@ class RaidPlannerViewCharacters extends JView
 
         // Get data from the model
         $characters =& $this->get( 'Data');
- 
+ 		$pagination =& $this->get('Pagination');
+
         $this->assignRef( 'characters', $characters );
- 
+ 		$this->assignRef( 'pagination', $pagination);
+ 		
+		 /* Call the state object */
+		$state =& $this->get( 'state' );
+		
+		/* Get the values from the state object that were inserted in the model's construct function */
+		$lists['search'] = $state->get( 'filter_char_search' );;
+		$lists['level_min'] = $state->get( 'filter_char_level_min' );;
+		$lists['level_max'] = $state->get( 'filter_char_level_max' );;
+		$lists['order_Dir'] = $state->get( 'filter_char_order_Dir' );
+		$lists['order']     = $state->get( 'filter_char_order' );
+		
+		$this->assignRef( 'lists', $lists );
+
         parent::display($tpl);
     }
 }

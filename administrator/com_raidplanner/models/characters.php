@@ -20,7 +20,79 @@ class RaidPlannerModelCharacters extends JModel
      * @var array
      */
     var $_data;
- 
+ 	var $_total = null;
+	var $_pagination = null;
+
+	function __construct()
+	{
+		parent::__construct();
+		
+		$option = JRequest::getCmd('option');
+		$app = &JFactory::getApplication();
+
+		$filter_char_order     = $app->getUserStateFromRequest( $option.'filter_char_order', 'filter_char_order', 'level', 'cmd' );
+		$filter_char_order_Dir = $app->getUserStateFromRequest( $option.'filter_char_order_Dir', 'filter_char_order_Dir', 'asc', 'word' );
+		$filter_char_search		= $app->getUserStateFromRequest( $option.'filter_char_search',	'search', '',	'string');
+		$filter_char_level_min	= $app->getUserStateFromRequest( $option.'filter_char_level_min',	'level_min', null,	'int');
+		$filter_char_level_max	= $app->getUserStateFromRequest( $option.'filter_char_level_max',	'level_max', null,	'int');
+
+		// Get pagination request variables
+		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
+		$limitstart = JRequest::getVar('limitstart', 0, '', 'int');
+		
+		// In case limit has been changed, adjust it
+		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+		
+		$this->setState('limit', $limit);
+		$this->setState('limitstart', $limitstart);
+		$this->setState('filter_char_order', $filter_char_order);
+		$this->setState('filter_char_order_Dir', $filter_char_order_Dir);
+		$this->setState('filter_char_search', $filter_char_search);
+		$this->setState('filter_char_level_min', $filter_char_level_min);
+		$this->setState('filter_char_level_max', $filter_char_level_max);
+	}
+
+	function _buildContentOrderBy()
+	{
+		$orderby = '';
+		$filter_char_order     = $this->getState('filter_char_order');
+		$filter_char_order_Dir = $this->getState('filter_char_order_Dir');
+		
+		/* Error handling is never a bad thing*/
+		if(!empty($filter_char_order) && !empty($filter_char_order_Dir) ){
+				$orderby = ' ORDER BY '.$filter_char_order.' '.$filter_char_order_Dir;
+		}
+
+		return $orderby;
+	}
+
+	function _buildQueryWhere()
+	{
+		$db	=& JFactory::getDBO();
+		
+		$filter_char_level_min = $this->getState('filter_char_level_min');
+		$filter_char_level_max = $this->getState('filter_char_level_max');
+		$filter_char_search = $this->getState('filter_char_search');
+
+		$where = '';
+		
+		$where_arr = array();
+		if ($filter_char_level_min>0) {
+			$where_arr[] = "c.char_level >= ".$db->Quote($filter_char_level_min);
+		}
+		if ($filter_char_level_max!='') {
+			$where_arr[] = "c.char_level <= ".$db->Quote($filter_char_level_max);
+		}
+		if ($filter_char_search!='') {
+			$where_arr[] = "(c.char_name LIKE '%".$db->getEscaped($filter_char_search)."%' OR u.name LIKE '%".$db->getEscaped($filter_char_search)."%')";
+		}
+		if (!empty($where_arr)) {
+			$where = " WHERE ".implode(" AND ",$where_arr);
+		}
+		
+		return $where;
+	}
+
     /**
      * Returns the query
      * @return string The query to be used to retrieve the rows from the database
@@ -33,6 +105,7 @@ class RaidPlannerModelCharacters extends JModel
             . ' LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id'
             . ' LEFT JOIN #__raidplanner_race AS rc ON rc.race_id = c.race_id'
             . ' LEFT JOIN #__raidplanner_gender AS ge ON ge.gender_id = c.gender_id'
+            . $this->_buildQueryWhere();
         ;
         return $query;
     }
@@ -47,9 +120,30 @@ class RaidPlannerModelCharacters extends JModel
         if (empty( $this->_data ))
         {
             $query = $this->_buildQuery();
-            $this->_data = $this->_getList( $query );
+            $this->_data = $this->_getList( $query , $this->getState('limitstart'), $this->getState('limit') );
         }
 
         return $this->_data;
     }
+    
+	function getTotal()
+	{
+		// Load the content if it doesn't already exist
+		if (empty($this->_total)) {
+			$query = $this->_buildQuery();
+			$this->_total = $this->_getListCount($query);    
+		}
+		return $this->_total;
+	}
+
+	function getPagination()
+	{
+		// Load the content if it doesn't already exist
+		if (empty($this->_pagination)) {
+			jimport('joomla.html.pagination');
+			$this->_pagination = new JPagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit') );
+		}
+		return $this->_pagination;
+	}
+
 }

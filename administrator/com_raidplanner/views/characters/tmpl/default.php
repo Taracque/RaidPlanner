@@ -1,6 +1,22 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 <form action="index.php" method="post" name="adminForm">
 <div id="editcell">
+	<table>
+		<tr>
+			<td width="100%">
+				<?php echo JText::_( 'Filter' ); ?>:
+				<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
+				<?php echo JText::_('Level'); ?>:
+				<input type="text" name="level_min" id="level_min" value="<?php echo htmlspecialchars($this->lists['level_min']);?>" class="text_area" onchange="document.adminForm.submit();" />
+				-
+				<input type="text" name="level_max" id="level_max" value="<?php echo htmlspecialchars($this->lists['level_max']);?>" class="text_area" onchange="document.adminForm.submit();" />
+			</td>
+			<td nowrap="nowrap">
+				<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
+				<button onclick="document.getElementById('search').value='';document.getElementById('level_min').value='';document.getElementById('level_max').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+			</td>
+		</tr>
+	</table>
     <table class="adminlist">
     <thead>
         <tr>
@@ -11,28 +27,29 @@
                 <?php echo JText::_( 'ID' ); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Character Name' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Character Name', 'c.char_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JText::_( 'User' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'User', 'u.name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Class' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Class', 'c.class_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Rank' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Rank', 'c.rank', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Gender' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Gender', 'c.gender', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Race' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Race', 'rc.race_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Level' ); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Level', 'c.char_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
         </tr>            
     </thead>
+    <tbody>
     <?php
     $k = 0;
     $i = 0;
@@ -73,9 +90,16 @@
         $k = 1 - $k;
     }
     ?>
+    </tbody>
+	<tfoot>
+		<tr>
+			<td colspan="9"><?php echo $this->pagination->getListFooter(); ?></td>
+		</tr>
+	</tfoot>
     </table>
 </div>
- 
+<input type="hidden" name="filter_char_order" value="<?php echo $this->lists['order']; ?>" />
+<input type="hidden" name="filter_char_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
 <input type="hidden" name="option" value="com_raidplanner" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />

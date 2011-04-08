@@ -57,10 +57,6 @@ class RaidPlannerModelGroup extends JModel
 	function store()
 	{	
 		$row =& $this->getTable();
-		if ($this->_id==0) {
-			$this->_id = $row->group_id;
-		}
-
 		$data = JRequest::get( 'post' );
 
 		// store membership and permission
@@ -73,6 +69,9 @@ class RaidPlannerModelGroup extends JModel
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
+		}
+		if ($this->_id==0) {
+			$this->_id = $row->group_id;
 		}
 
 		// Make sure the record is valid
@@ -94,16 +93,19 @@ class RaidPlannerModelGroup extends JModel
 		
 		// Store permissions
 		$query = "DELETE FROM #__raidplanner_permissions WHERE group_id = ".$row->group_id;
-		$this->_db->Execute($query);
+		$this->_db->setQuery($query);
+		$this->_db->query();
 		foreach ($permissions as $permission_name => $permission_value) {
 			$query = "INSERT INTO #__raidplanner_permissions (permission_name, permission_value, group_id) VALUES (".$this->_db->Quote($permission_name).",".intval($permission_value).",".$row->group_id.")";
-			$this->_db->Execute($query);
+			$this->_db->setQuery($query);
+			$this->_db->query();
 		}
 		
 		// Store members
 		foreach ($members as $member) {
 			$query = "REPLACE INTO #__raidplanner_profile SET group_id = ".$row->group_id.", profile_id = ".intval($member);
-			$this->_db->Execute($query);
+			$this->_db->setQuery($query);
+			$this->_db->query();
 		}
 		return true;
 	}
@@ -111,7 +113,8 @@ class RaidPlannerModelGroup extends JModel
 	function setDefault()
 	{
 		$query = "UPDATE #__raidplanner_groups SET `default`=(group_id = ".$this->_id.")";
-		$this->_db->Execute($query);
+		$this->_db->setQuery($query);
+		$this->_db->query();
 
 		return true;
 	}
@@ -172,9 +175,7 @@ class RaidPlannerModelGroup extends JModel
 			'view_raids'	=>	0,
 			'view_calendar'	=>	0,
 			'edit_raids_own'	=>	0,
-			'edit_subscriptions_own'	=>	0,
 			'edit_raids_any'	=>	0,
-			'edit_subscriptions_any'	=>	0,
 			'delete_raid_own'	=>	0,
 			'delete_raid_any'	=>	0
 		);

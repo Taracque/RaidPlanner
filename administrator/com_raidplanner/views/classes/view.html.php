@@ -1,6 +1,6 @@
 <?php
 /**
- * Raids View for RaidPlanner Component
+ * Classes View for RaidPlanner Component
  * 
  * @package    RaidPlanner
  * @subpackage Components
@@ -18,7 +18,7 @@ class RaidPlannerViewClasses extends JView
     function display($tpl = null)
     {
     
-        JToolBarHelper::title( JText::_( 'RaidPlanner' ), 'generic.png' );
+        JToolBarHelper::title( JText::_( 'Classes' ), 'generic.png' );
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();
