@@ -7,10 +7,10 @@ require_once(dirname(__FILE__).DS.'helper.php');
 
 
 //get user ID
-$mainframe =& JFactory::getApplication('site');
-$mainframe->initialise();
+$app =& JFactory::getApplication('site');
+$app->initialise();
 
-$mainframe->route();
+$app->route();
 $user =& JFactory::getUser();
 $user_id = ($user->id);
 

@@ -42,7 +42,7 @@
 		<language tag="hu-HU">hu-HU.com_raidplanner.ini</language>
 	</languages>
 	<!-- Site Main Media File Copy Section -->
-	<media destination="raidplanner" folder="images">
+	<media destination="../images/raidplanner" folder="images">
 		<folder>raid_icons</folder>
 		<folder>role_icons</folder>
 	</media>

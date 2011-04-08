@@ -20,8 +20,8 @@ class RaidPlannerViewEdit extends JView
 		$model = &$this->getModel();
 
 		if (! $model->userIsOfficer( JRequest::getVar('id') ) ) {
-			$mainframe = JFactory::getApplication();
-			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&task=default&month='.JRequest::getVar('month').'&modalevent='.JRequest::getVar('id') ) );
+			$app = JFactory::getApplication();
+			$app->redirect(JRoute::_('index.php?option=com_raidplanner&task=default&month='.JRequest::getVar('month').'&modalevent='.JRequest::getVar('id') ) );
 
 		} else {
 			$template_id = JRequest::getVar('template_id');
@@ -79,8 +79,7 @@ class RaidPlannerViewEdit extends JView
 			while (false !== ($fname = readdir($dhandle))) {
 				// if the file is not this file, and does not start with a '.' or '..',
 				// then store it for later display
-				if (($fname != '.') && ($fname != '..') &&
-				($fname != basename($_SERVER['PHP_SELF']))) {
+				if (($fname != '.') && ($fname != '..')) {
 					// store the filename
 					if (!is_dir( $path . DS . $fname )) {
 						$info = pathinfo( $path . DS . $fname );

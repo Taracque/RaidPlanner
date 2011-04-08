@@ -20,8 +20,8 @@ class RaidPlannerViewEvent extends JView
 		$model = &$this->getModel();
 
 		if ( $model->getPermission('view_raids') != 1 ) {
-			$mainframe = JFactory::getApplication();
-			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
+			$app = JFactory::getApplication();
+			$app->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
 		} else {
 			$attendants = $model->getAttendants( JRequest::getVar('id') );
 			$event = $model->getEvent( JRequest::getVar('id') );
