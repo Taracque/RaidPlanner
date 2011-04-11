@@ -31,7 +31,11 @@ $hasChars = !empty($this->characters);
 			<div class="rp_event_roles">
 				<ul>
 					<li>
+<<<<<<< HEAD
 						<strong><?php echo JText::_('Attending Roles');?> (<?php echo (is_array($this->confirmed_roles[0]))?array_sum(@$this->confirmed_roles[0]):"0";?>):</strong><br />
+=======
+						<strong><?php echo JText::_('Attending Roles');?> (<?php if(is_array($this->confirmed_roles[0])) { echo array_sum(@$this->confirmed_roles[0]); } else { echo "0"; }?>):</strong><br />
+>>>>>>> fc71e8746f696f0c4e05fc985ba626ec779b4388
 						<?php if (@$this->confirmed_roles[0]) : ?>
 							<?php foreach ($this->confirmed_roles[0] as $key => $role) : ?>
 								<?php if ($this->roles[$key]->icon_name != '') : ?>
