@@ -5,7 +5,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 jimport( 'joomla.utilities.date');
-
 ?>
 <script type="text/javascript">
 <?php if ( (JRequest::getVar('modalevent')) && ($this->canView) ) { ?>
@@ -43,18 +42,18 @@ window.addEvent('domready',function(){
 			<table class="rp_calendar_body">
 				<thead>
 					<tr>
-				<?php for ($days=1;$days<8;$days++) { ?>
+				<?php for ($days=$this->params['first_dow'];$days<($this->params['first_dow']+7);$days++) { ?>
 						<th><?php echo JDate::_dayToString($days % 7);?></th>
 				<?php } ?>
 					</tr>
 				</thead>
 				<tbody>
 				<?php
-					$day = -$this->shift + 1;
+					$day = -$this->shift + $this->params['first_dow'];
 					for ($weeks=1;$weeks<7;$weeks++) {
 				?>
 					<tr>
-					<?php for ($days=1;$days<8;$days++) {
+					<?php for ($days=$this->params['first_dow'];$days<($this->params['first_dow']+7);$days++) {
 						$day++;
 						$daystamp = mktime(0, 0, 0, $this->monthonly, $day, $this->year);
 						$thedate = date("Y-m-d", $daystamp);
@@ -66,7 +65,7 @@ window.addEvent('domready',function(){
 								if (@$this->events[$thedate]) {
 									foreach ($this->events[$thedate] as $event) {
 					?>
-								<div class="event">
+								<div class="event <?php echo ($event->signed)?"signed":"unsigned";?>">
 									<?php if($this->canView) { ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id); ?>">
 									<?php } else { ?>

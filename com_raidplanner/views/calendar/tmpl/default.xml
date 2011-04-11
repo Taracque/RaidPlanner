@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<state>
+		<params>
+			<param name="load_css" type="radio" defaul="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param name="first_dow" type="radio" default="0" label="FIRST DAY OF WEEK" description="FIRST DAY OF WEEK DESCRIPTION">
+				<option value="0">SUNDAY</option>
+				<option value="1">MONDAY</option>
+			</param>
+	    </params>
+	</state>
+</metadata>

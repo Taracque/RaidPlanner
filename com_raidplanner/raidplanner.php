@@ -11,7 +11,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // add css and js
 
-JHTML::stylesheet('raidplanner.css', 'components/com_raidplanner/assets/');
+$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+if ($paramsObj->get('load_css', '1')) {
+	JHTML::stylesheet('raidplanner.css', 'components/com_raidplanner/assets/');
+}
 JHTML::script('raidplanner.js', 'components/com_raidplanner/assets/');
 
 // Require the base controller

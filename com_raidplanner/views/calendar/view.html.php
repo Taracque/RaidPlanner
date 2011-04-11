@@ -21,6 +21,10 @@ class RaidPlannerViewCalendar extends JView
     function display($tpl = null)
     {
 		$eventmodel = &$this->getModel('event');
+		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$params = array(
+			'first_dow'	=> $paramsObj->get('first_dow', 0)
+		);
 
 		if ($eventmodel->getPermission('view_calendar') != 1) {
 			// redirect to the index page
@@ -64,7 +68,7 @@ class RaidPlannerViewCalendar extends JView
 		$this->assignRef( 'year', $year);
 		$this->assignRef( 'monthonly', $monthonly);
 		$this->assignRef( 'shift', $shift);
-		
+		$this->assignRef( 'params', $params);		
         $this->assignRef( 'events', $model->getEvents() );
 
         parent::display($tpl);

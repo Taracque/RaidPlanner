@@ -123,6 +123,10 @@
 	-webkit-transition: color 0.2s ease-out;
 }
 
+.rp_calendar_body td .event.unsigned {
+	opacity: 0.8;
+}
+
 .rp_calendar_body td .event a:hover {
 	color: white;
 }
