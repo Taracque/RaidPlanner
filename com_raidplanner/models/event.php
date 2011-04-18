@@ -222,11 +222,14 @@ class RaidPlannerModelEvent extends JModel
 
 		$charset = explode("\n",$user->getParam('characters'));
 
-		$where = " profile_id=".$user->id;
-		if (($min_level != null) && ($min_level!='')) { $where .= " AND char_level>=".intval($min_level); }
-		if (($max_level != null) && ($max_level!='')) { $where .= " AND char_level<=".intval($max_level); }
-		if (($min_rank != null) && ($min_rank!='')) { $where .= " AND rank<=".intval($min_rank); }
-		$query = "SELECT character_id,char_name FROM #__raidplanner_character WHERE ".$where;
+		$where = " c.profile_id=".$user->id;
+		if (($min_level != null) && ($min_level!='')) { $where .= " AND c.char_level>=".intval($min_level); }
+		if (($max_level != null) && ($max_level!='')) { $where .= " AND c.char_level<=".intval($max_level); }
+		if (($min_rank != null) && ($min_rank!='')) { $where .= " AND c.rank<=".intval($min_rank); }
+		$query = "SELECT c.character_id,c.char_name,s.role_id 
+					FROM #__raidplanner_character AS c 
+					LEFT JOIN jos_raidplanner_signups AS s ON s.character_id=c.character_id 
+					WHERE ".$where." GROUP BY c.character_id ORDER BY s.raid_id DESC";
 		// reload the list
 		$db->setQuery($query);
 		$result = $db->loadObjectList('char_name');

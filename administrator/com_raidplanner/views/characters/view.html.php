@@ -45,8 +45,8 @@ class RaidPlannerViewCharacters extends JView
 		$lists['search'] = $state->get( 'filter_char_search' );;
 		$lists['level_min'] = $state->get( 'filter_char_level_min' );;
 		$lists['level_max'] = $state->get( 'filter_char_level_max' );;
-		$lists['order_Dir'] = $state->get( 'filter_char_order_Dir' );
-		$lists['order']     = $state->get( 'filter_char_order' );
+		$lists['order_Dir'] = $state->get( 'filter_order_Dir' );
+		$lists['order']     = $state->get( 'filter_order' );
 		
 		$this->assignRef( 'lists', $lists );
 

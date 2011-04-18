@@ -30,8 +30,8 @@ class RaidPlannerModelCharacters extends JModel
 		$option = JRequest::getCmd('option');
 		$app = &JFactory::getApplication();
 
-		$filter_char_order     = $app->getUserStateFromRequest( $option.'filter_char_order', 'filter_char_order', 'level', 'cmd' );
-		$filter_char_order_Dir = $app->getUserStateFromRequest( $option.'filter_char_order_Dir', 'filter_char_order_Dir', 'asc', 'word' );
+		$filter_char_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'level', 'cmd' );
+		$filter_char_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
 		$filter_char_search		= $app->getUserStateFromRequest( $option.'filter_char_search',	'search', '',	'string');
 		$filter_char_level_min	= $app->getUserStateFromRequest( $option.'filter_char_level_min',	'level_min', null,	'int');
 		$filter_char_level_max	= $app->getUserStateFromRequest( $option.'filter_char_level_max',	'level_max', null,	'int');
@@ -45,8 +45,8 @@ class RaidPlannerModelCharacters extends JModel
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-		$this->setState('filter_char_order', $filter_char_order);
-		$this->setState('filter_char_order_Dir', $filter_char_order_Dir);
+		$this->setState('filter_order', $filter_char_order);
+		$this->setState('filter_order_Dir', $filter_char_order_Dir);
 		$this->setState('filter_char_search', $filter_char_search);
 		$this->setState('filter_char_level_min', $filter_char_level_min);
 		$this->setState('filter_char_level_max', $filter_char_level_max);
@@ -55,12 +55,17 @@ class RaidPlannerModelCharacters extends JModel
 	function _buildContentOrderBy()
 	{
 		$orderby = '';
-		$filter_char_order     = $this->getState('filter_char_order');
-		$filter_char_order_Dir = $this->getState('filter_char_order_Dir');
+		$filter_order     = $this->getState('filter_order');
+		$filter_order_Dir = $this->getState('filter_order_Dir');
 		
 		/* Error handling is never a bad thing*/
-		if(!empty($filter_char_order) && !empty($filter_char_order_Dir) ){
-				$orderby = ' ORDER BY '.$filter_char_order.' '.$filter_char_order_Dir;
+		if (
+			(!empty($filter_order) && !empty($filter_char_order_Dir) ) &&
+			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender', 'rc.race_name', 'c.char_level') ) ) &&
+			(in_array($filter_order_Dir, array('asc', 'desc') ) )
+		) {
+		
+			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
 		}
 
 		return $orderby;
@@ -119,7 +124,7 @@ class RaidPlannerModelCharacters extends JModel
         // Lets load the data if it doesn't already exist
         if (empty( $this->_data ))
         {
-            $query = $this->_buildQuery();
+            $query = $this->_buildQuery(). $this->_buildContentOrderBy();
             $this->_data = $this->_getList( $query , $this->getState('limitstart'), $this->getState('limit') );
         }
 

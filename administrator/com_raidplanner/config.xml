@@ -1,0 +1,12 @@
+<root>
+	<params>
+		<param type="radio" name="load_css" default="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param type="radio" name="use_pbroster" default="1" label="PBROSTER INTEGRATION">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+	</params>
+</root>

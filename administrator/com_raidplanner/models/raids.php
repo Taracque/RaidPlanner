@@ -30,8 +30,8 @@ class RaidPlannerModelRaids extends JModel
 		$option = JRequest::getCmd('option');
 		$app = &JFactory::getApplication();
 		
-		$filter_raid_order     = $app->getUserStateFromRequest( $option.'filter_raid_order', 'filter_raid_order', 'start_time', 'cmd' );
-		$filter_raid_order_Dir = $app->getUserStateFromRequest( $option.'filter_raid_order_Dir', 'filter_raid_order_Dir', 'asc', 'word' );
+		$filter_raid_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'start_time', 'cmd' );
+		$filter_raid_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
 		$filter_raid_search		= $app->getUserStateFromRequest( $option.'filter_raid_search',	'search', '',	'string');
 		$filter_raid_start_time_min	= $app->getUserStateFromRequest( $option.'filter_raid_start_time_min',	'start_time_min', null,	'date');
 		$filter_raid_start_time_max	= $app->getUserStateFromRequest( $option.'filter_raid_start_time_max',	'start_time_max', null,	'date');
@@ -45,8 +45,8 @@ class RaidPlannerModelRaids extends JModel
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-		$this->setState('filter_raid_order', $filter_raid_order);
-		$this->setState('filter_raid_order_Dir', $filter_raid_order_Dir);
+		$this->setState('filter_order', $filter_raid_order);
+		$this->setState('filter_order_Dir', $filter_raid_order_Dir);
 		$this->setState('filter_raid_search', $filter_raid_search);
 		$this->setState('filter_raid_start_time_min', $filter_raid_start_time_min);
 		$this->setState('filter_raid_start_time_max', $filter_raid_start_time_max);
@@ -55,14 +55,17 @@ class RaidPlannerModelRaids extends JModel
 	function _buildContentOrderBy()
 	{
 		$orderby = '';
-		$filter_raid_order     = $this->getState('filter_raid_order');
-		$filter_raid_order_Dir = $this->getState('filter_raid_order_Dir');
+		$filter_order     = $this->getState('filter_order');
+		$filter_order_Dir = $this->getState('filter_order_Dir');
 		
 		/* Error handling is never a bad thing*/
-		if(!empty($filter_raid_order) && !empty($filter_raid_order_Dir) ){
-			$orderby = ' ORDER BY '.$filter_raid_order.' '.$filter_raid_order_Dir;
+		if (
+			(!empty($filter_order) && !empty($filter_order_Dir) ) &&
+			(in_array($filter_order, array('start_time', 'location', 'minimum_level', 'maximum_level', 'minimum_rank', 'is_template') ) ) &&
+			(in_array($filter_order_Dir, array('asc', 'desc') ) )
+		) {
+			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
 		}
-
 		return $orderby;
 	}
 

@@ -94,8 +94,8 @@
 		</tfoot>
     </table>
 </div>
-<input type="hidden" name="filter_raid_order" value="<?php echo $this->lists['order']; ?>" />
-<input type="hidden" name="filter_raid_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
+<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
+<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
 <input type="hidden" name="option" value="com_raidplanner" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />

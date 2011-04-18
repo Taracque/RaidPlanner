@@ -33,7 +33,7 @@
                 <?php echo JHTML::_( 'grid.sort', 'User', 'u.name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Class', 'c.class_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Class', 'cl.class_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'Rank', 'c.rank', $this->lists['order_Dir'], $this->lists['order']); ?>
@@ -98,8 +98,8 @@
 	</tfoot>
     </table>
 </div>
-<input type="hidden" name="filter_char_order" value="<?php echo $this->lists['order']; ?>" />
-<input type="hidden" name="filter_char_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
+<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
+<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
 <input type="hidden" name="option" value="com_raidplanner" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />
