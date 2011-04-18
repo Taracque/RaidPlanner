@@ -256,3 +256,7 @@ a.rp_button.edit, a.rp_button.new {
 	border: 2px solid #33383C;
 	border-radius: 4px 4px;
 }
+
+.rp_history_editor {
+	float: right;
+}

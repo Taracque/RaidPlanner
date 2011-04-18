@@ -214,7 +214,7 @@ class RaidPlannerModelEvent extends JModel
 	/**
 	* Gets the list of user's characters
 	*/
-	function getCharacters($min_level = null, $max_level = null, $min_rank = null) {
+	function getCharacters($min_level = null, $max_level = null, $min_rank = null, $everyone = false) {
 		$user =& JFactory::getUser();
 		$db = & JFactory::getDBO();
 		
@@ -222,14 +222,17 @@ class RaidPlannerModelEvent extends JModel
 
 		$charset = explode("\n",$user->getParam('characters'));
 
-		$where = " c.profile_id=".$user->id;
+		if (!$everyone) {
+			$where = " c.profile_id=".$user->id;
+		} else {
+			$where = " 1=1";
+		}
 		if (($min_level != null) && ($min_level!='')) { $where .= " AND c.char_level>=".intval($min_level); }
 		if (($max_level != null) && ($max_level!='')) { $where .= " AND c.char_level<=".intval($max_level); }
 		if (($min_rank != null) && ($min_rank!='')) { $where .= " AND c.rank<=".intval($min_rank); }
-		$query = "SELECT c.character_id,c.char_name,s.role_id 
+		$query = "SELECT c.character_id,c.char_name,c.profile_id
 					FROM #__raidplanner_character AS c 
-					LEFT JOIN jos_raidplanner_signups AS s ON s.character_id=c.character_id 
-					WHERE ".$where." GROUP BY c.character_id ORDER BY s.raid_id DESC";
+					WHERE ".$where." ORDER BY c.char_name ASC";
 		// reload the list
 		$db->setQuery($query);
 		$result = $db->loadObjectList('char_name');
@@ -246,21 +249,6 @@ class RaidPlannerModelEvent extends JModel
 		$charlist = $charlist + $result;
 
     	return $charlist;
-	}
-
-	function getCharRoles($char_array)
-	{
-		$db = & JFactory::getDBO();
-		$result = array();
-		
-		// set last role for the characters
-		foreach ($char_array as $char) {
-			$query = "SELECT role_name FROM #__raidplanner_signups WHERE character_id=".$char->character_id." ORDER BY raid_id DESC LIMIT 1";
-			$db->setQuery($query);
-			$result[$char_id] = $db->loadResult();
-		}
-		
-		return ($result);
 	}
 
 	function getUserStatus($attendants,$user_id = null)
@@ -389,11 +377,48 @@ class RaidPlannerModelEvent extends JModel
 		$roles = JRequest::getVar('role', null, 'ARRAY');
 		$confirm = JRequest::getVar('confirm', null, 'ARRAY');
 		$characters = JRequest::getVar('characters', null, 'ARRAY');
-
+		$history = trim( JRequest::getVar('history', null, 'STRING') );
+		
 		foreach ($characters as $char) {
-			$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+			if (intval(@$roles[intval($char)])==0) {
+				$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+			} else {
+				$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+			}
 			$db->setQuery($query);
 			$db->query();
+		}
+
+		$query = "DELETE FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);
+		$db->setQuery($query);
+		$db->query();
+
+		// save history if not empty
+		if ($history!='') {
+			$query = "INSERT INTO #__raidplanner_history SET raid_id=".intval($raid_id).", history=".$db->Quote($history);
+			$db->setQuery($query);
+			$db->query();
+		}
+		
+		// add new_character if there's one
+		$new_char_id = JRequest::getVar('new_character', null, 'INT');
+		if ($new_char_id > 0) {
+			$query = "SELECT profile_id FROM #__raidplanner_character WHERE character_id=".$new_char_id;
+			$db->setQuery($query);
+			$profile_id = $db->loadResult();
+			if ($profile_id>0) {
+				$new_queue = JRequest::getVar('new_queue', null, 'INT');
+				$new_role = JRequest::getVar('new_role', null, 'INT');
+				
+				$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
+				$db->setQuery($query);
+				$db->query();
+				
+				$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
+						"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",'',NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+				$db->setQuery($query);
+				$db->query();
+			}
 		}
 	}
 	

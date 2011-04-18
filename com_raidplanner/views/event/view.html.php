@@ -31,15 +31,25 @@ class RaidPlannerViewEvent extends JView
 			$attendants = $model->getAttendants( JRequest::getVar('id') );
 			$event = $model->getEvent( JRequest::getVar('id') );
 			$characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank);
-			
+			$isOfficer = $model->userIsOfficer();
+			if ($isOfficer) {
+				$all_characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank,true);
+				foreach($all_characters as $all_key => $all_char) {
+					if(isset($attendants[$all_char->profile_id])) {
+						unset($all_characters[$all_key]);
+					}
+				}
+			} else {
+				$all_characters = array();
+			}
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'attendants' , $attendants );
 			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles($attendants) );
 			$this->assignRef( 'roles' , $model->getRoles() );
 			$this->assignRef( 'characters' , $characters );
-//			$this->assignRef( 'char_roles' , $model->getCharRoles($characters) );
+			$this->assignRef( 'all_characters' , $all_characters );
 			$this->assignRef( 'selfstatus' , $model->getUserStatus($attendants) );
-			$this->assignRef( 'isOfficer' , $model->userIsOfficer() );
+			$this->assignRef( 'isOfficer' , $isOfficer );
 			$this->assignRef( 'canSignup' , $model->userCanSignUp( JRequest::getVar('id') ) );
 
 			parent::display($tpl);

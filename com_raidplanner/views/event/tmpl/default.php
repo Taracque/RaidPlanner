@@ -140,12 +140,10 @@ $hasChars = !empty($this->characters);
 									echo $attendant->role_name;
 								} else { ?>
 								<select name="role[<?php echo $attendant->character_id;?>]">
-								<?php 
-									foreach ($this->roles as $role) { ?>
+									<option value="0">-</option>
+								<?php foreach ($this->roles as $role) { ?>
 									<option value="<?php echo $role->role_id;?>" <?php if ($role->role_id==$attendant->role_id) {?>selected="selected"<?php } ?>><?php echo $role->role_name;?></option>
-								<?php
-									}
-								?>
+								<?php } ?>
 								</select>
 								<?php }							
 							?></td>
@@ -165,10 +163,52 @@ $hasChars = !empty($this->characters);
 							<td><?php echo JHTML::_('date', $attendant->timestamp, $dateFormat);?></td>
 						</tr>
 			<?php } ?>
+			<?php if ($this->isOfficer) { ?>
+						<tr>
+							<td>
+								<select name="new_character">
+									<option value=""></option>
+								<?php foreach($this->all_characters as $onechar) {?>
+									<option value="<?php echo $onechar->character_id;?>"><?php echo $onechar->char_name;?></option>
+								<?php } ?>
+								</select>
+							</td>
+							<td>
+								<select name="new_queue">
+									<?php for($i=-1;$i<=2;$i++) { if ($i!=0) { ?>
+									<option value="<?php echo $i;?>"><?php echo JText::_('RAIDPLANNER_STATUS_'.$i); ?></option>
+									<?php } } ?>
+								</select>
+							</td>
+							<td>
+								<select name="new_role">
+									<option value="0">-</option>
+								<?php foreach ($this->roles as $role) { ?>
+									<option value="<?php echo $role->role_id;?>" <?php if ($role->role_id==$attendant->role_id) {?>selected="selected"<?php } ?>><?php echo $role->role_name;?></option>
+								<?php } ?>
+								</select>
+							</td>
+							<td>
+								<select name="new_confirm">
+									<option value="0">-</option>
+									<option value="-1"><?php echo JText::_('RAIDPLANNER_CONFIRMATION_-1');?></option>
+									<option value="1"><?php echo JText::_('RAIDPLANNER_CONFIRMATION_1');?></option>
+									<option value="2"><?php echo JText::_('RAIDPLANNER_CONFIRMATION_2');?></option>
+								</select>
+							</td>
+							<td>
+							</td>
+						</tr>
+			<?php } ?>
 					</tbody>
 				</table>
 			<?php if ($this->isOfficer) { ?>
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('Save');?>" />
+				<div class="rp_history_editor">
+					<label><?php echo JText::_('History');?>:
+						<textarea style="float:right;" name="history" rows="1" cols="20"><?php echo $this->event->raid_history; ?></textarea>
+					</label>
+				</div>
 
 				<input type="hidden" name="option" value="com_raidplanner" />
 				<input type="hidden" name="controller" value="" />
