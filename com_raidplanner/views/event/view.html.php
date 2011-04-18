@@ -45,6 +45,7 @@ class RaidPlannerViewEvent extends JView
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'attendants' , $attendants );
 			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles($attendants) );
+			$this->assignRef( 'xml_history', $model->getHistory( $event->raid_id,true ) );
 			$this->assignRef( 'roles' , $model->getRoles() );
 			$this->assignRef( 'characters' , $characters );
 			$this->assignRef( 'all_characters' , $all_characters );

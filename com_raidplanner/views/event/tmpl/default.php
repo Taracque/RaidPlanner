@@ -206,7 +206,7 @@ $hasChars = !empty($this->characters);
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('Save');?>" />
 				<div class="rp_history_editor">
 					<label><?php echo JText::_('History');?>:
-						<textarea style="float:right;" name="history" rows="1" cols="20"><?php echo $this->event->raid_history; ?></textarea>
+						<textarea style="float:right;" name="history" rows="1" cols="20"><?php echo $this->xml_history; ?></textarea>
 					</label>
 				</div>
 

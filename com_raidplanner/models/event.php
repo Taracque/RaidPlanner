@@ -53,16 +53,17 @@ class RaidPlannerModelEvent extends JModel
     * Process, formats raid history XML
     * @return string HTML converted raid history
     */
-    function getHistory($raid_id)
+    function getHistory($raid_id,$xml = false)
     {
     	$html = '';
 
 		$db = & JFactory::getDBO();
 		$query = "SELECT history FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);
 		$db->setQuery($query);
-
 		$string = $db->loadResult();
-    	if ($string!='') {
+		if ($xml) {
+			$html = $string;
+		} elseif ($string!='') {
 			$xml = simplexml_load_string(str_replace("&","&amp;",$string));
 			$html .= "Start: ".$xml->start."<br />";
 			$html .= "End: ".$xml->end."<br />";
@@ -377,8 +378,8 @@ class RaidPlannerModelEvent extends JModel
 		$roles = JRequest::getVar('role', null, 'ARRAY');
 		$confirm = JRequest::getVar('confirm', null, 'ARRAY');
 		$characters = JRequest::getVar('characters', null, 'ARRAY');
-		$history = trim( JRequest::getVar('history', null, 'STRING') );
-		
+		$history = trim( JRequest::getVar('history', '', 'post', 'string', JREQUEST_ALLOWRAW ) );
+
 		foreach ($characters as $char) {
 			if (intval(@$roles[intval($char)])==0) {
 				$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
