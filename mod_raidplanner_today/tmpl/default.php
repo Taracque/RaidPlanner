@@ -1,7 +1,7 @@
-<?php
-defined('_JEXEC') or die('Restricted access');
-// no direct access
+<?php defined('_JEXEC') or die('Restricted access'); // no direct access ?>
+<?php /* echo JText::_('TOPIC TEXT'); */ ?>
 
+<?php
 /*
  * Function to get a list for a label
  */
@@ -38,7 +38,7 @@ if (empty($menu)) {
 			$tip = '';
 			if ( ($raidshowReg) && ($item->confirmed) ) {
 				// show if registered
-				$tip .= JText::_('RAIDPLANNER_CONFIRMATION_' . $item->confirmed);
+				$tip .= JText::_('RAIDPLANNER_CONFIRMATION_' . $item->confirmed) . " ";
 			}
 			if ( ($raidshowChar) && ($item->char_name) ) {
 				// show which car is registered

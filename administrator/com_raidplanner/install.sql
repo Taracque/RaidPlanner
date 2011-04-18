@@ -130,3 +130,9 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_signups` (
   KEY `raid_id` (`raid_id`),
   KEY `profile_id` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `#__raidplanner_history` (
+  `raid_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `history` text NOT NULL,
+  KEY `raid_id` (`raid_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

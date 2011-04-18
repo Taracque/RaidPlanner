@@ -102,9 +102,12 @@ $hasChars = !empty($this->characters);
 	<tr class="rp_event_buttons">
 		<td>
 			<div>
-				<a href="#" id="rp_switcher_attendants" class="active" onclick="javascript:rpSwitchTab('signup', 'attendants');return false;"><?php echo JText::_('Attendants');?></a>
+				<a href="#" id="rp_switcher_attendants" class="active rp_switchers" onclick="javascript:rpSwitchTab('attendants');return false;"><?php echo JText::_('Attendants');?></a>
 			<?php if (($hasChars) && ($this->canSignup)) { ?>
-				<a href="#" id="rp_switcher_signup" class="" onclick="javascript:rpSwitchTab('attendants', 'signup');return false;"><?php echo JText::_('Signup');?></a>
+				<a href="#" id="rp_switcher_signup" class="rp_switchers" onclick="javascript:rpSwitchTab('signup');return false;"><?php echo JText::_('Signup');?></a>
+			<?php } ?>
+			<?php if ($this->event->raid_history!='') { ?>
+				<a href="#" id="rp_switcher_history" class="rp_switchers" onclick="javascript:rpSwitchTab('history');return false;"><?php echo JText::_('History');?></a>
 			<?php } ?>
 			</div>
 		</td>
@@ -231,6 +234,15 @@ $hasChars = !empty($this->characters);
 					</tr>
 				</table>
 			</form>
+		</td>
+	</tr>
+<?php } ?>
+<?php if ($this->event->raid_history!='') { ?>
+	<tr class="rp_event_history" id="rp_event_history" style="display:none;">
+		<td>
+			<div class="rp_history_viewer" id="rp_history_viewer">
+				<?php echo $this->event->raid_history; ?>
+			</div>
 		</td>
 	</tr>
 <?php } ?>

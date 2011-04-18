@@ -65,6 +65,7 @@
 			<filename>index.html</filename>
 			<filename>raidplanner.php</filename>
 			<filename>controller.php</filename>
+			<filename>config.xml</filename>
 			<folder>assets</folder>
 			<folder>models</folder>
 			<folder>views</folder>

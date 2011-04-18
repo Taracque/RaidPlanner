@@ -8,3 +8,4 @@ DROP TABLE IF EXISTS `#__raidplanner_race`;
 DROP TABLE IF EXISTS `#__raidplanner_raid`;
 DROP TABLE IF EXISTS `#__raidplanner_role`;
 DROP TABLE IF EXISTS `#__raidplanner_signups`;
+DROP TABLE IF EXISTS `#__raidplanner_history`;

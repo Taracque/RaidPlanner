@@ -36,6 +36,7 @@ class RaidPlannerModelEvent extends JModel
 				$result->start_time = "0000-00-00" . substr( $result->start_time, 11 );
 				$result->invite_time = "0000-00-00" . substr( $result->start_time, 11 );
 			}
+			$result->raid_history = $this->getHistory($result->raid_id);
 		} else {
 			$result->start_time = '';
 			$result->duration_mins = 0;
@@ -43,8 +44,51 @@ class RaidPlannerModelEvent extends JModel
 			$result->raid_id = -1;
 			$result->location = '';
 			$result->description = '';
+			$result->raid_history = '';
 		}
     	return $result;
+    }
+    
+    /**
+    * Process, formats raid history XML
+    * @return string HTML converted raid history
+    */
+    function getHistory($raid_id)
+    {
+    	$html = '';
+
+		$db = & JFactory::getDBO();
+		$query = "SELECT history FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);
+		$db->setQuery($query);
+
+		$string = $db->loadResult();
+    	if ($string!='') {
+			$xml = simplexml_load_string(str_replace("&","&amp;",$string));
+			$html .= "Start: ".$xml->start."<br />";
+			$html .= "End: ".$xml->end."<br />";
+			$html .= "Zone: ".$xml->zone."<br />";
+			$html .= '<fieldset class="rp_history_block"><legend>Bosskills</legend><div>';
+			foreach ($xml->BossKills->children() as $bosskill) {
+				$html .= $bosskill->time . " : " . $bosskill->name . "<br />";
+			}
+			$html .= '</div></fieldset>';
+			$html .= '<fieldset class="rp_history_block"><legend>Loot</legend><div>';
+			foreach ($xml->Loot->children() as $loot) {
+				$html .= $loot->Player . " : <a href=\"http://www.wowhead.com/item=" . $loot->ItemID . "\">" .  $loot->ItemName . "</a> (" . $loot->Boss . ")<br />";
+			}
+			$html .= '</div></fieldset>';
+			$html .= '<fieldset class="rp_history_block"><legend>Character join</legend><div>';
+			foreach ($xml->Join->children() as $Join) {
+				$html .= $Join->player . " : " .  $Join->time . "<br />";
+			}
+			$html .= '</div></fieldset>';
+			$html .= '<fieldset class="rp_history_block"><legend>Character leave</legend><div>';
+			foreach ($xml->Leave->children() as $Leave) {
+				$html .= $Leave->player . " : " .  $Leave->time . "<br />";
+			}
+			$html .= '</div></fieldset>';
+		}
+		return ($html);
     }
     
     /**
@@ -126,7 +170,6 @@ class RaidPlannerModelEvent extends JModel
 		$db = & JFactory::getDBO();
 
 		$charset = explode("\n",$user->getParam('characters'));
-		$pbroster = (JComponentHelper::isEnabled('com_pbroster', true));
 
 		// check if raidplanner profile exists
 		$query = "SELECT profile_id FROM #__raidplanner_profile WHERE profile_id = ".$user->id;
@@ -139,6 +182,12 @@ class RaidPlannerModelEvent extends JModel
 			$db->query();
 		}
 
+		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		if ($paramsObj->get('use_pbroster', '1') == '1') {
+			$pbroster = (JComponentHelper::isEnabled('com_pbroster', true));
+		} else {
+			$pbroster = false;
+		}
 		if ($pbroster) {
 			$query = "SELECT character_id,char_name FROM #__raidplanner_character WHERE profile_id=".$user->id;
 			$db->setQuery($query);
@@ -192,10 +241,25 @@ class RaidPlannerModelEvent extends JModel
 			}
     	}
 		$charlist = $charlist + $result;
-		
+
     	return $charlist;
 	}
-	
+
+	function getCharRoles($char_array)
+	{
+		$db = & JFactory::getDBO();
+		$result = array();
+		
+		// set last role for the characters
+		foreach ($char_array as $char) {
+			$query = "SELECT role_name FROM #__raidplanner_signups WHERE character_id=".$char->character_id." ORDER BY raid_id DESC LIMIT 1";
+			$db->setQuery($query);
+			$result[$char_id] = $db->loadResult();
+		}
+		
+		return ($result);
+	}
+
 	function getUserStatus($attendants,$user_id = null)
 	{
 		if (!$user_id) {

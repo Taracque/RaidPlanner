@@ -125,6 +125,7 @@
 
 .rp_calendar_body td .event.unsigned {
 	opacity: 0.8;
+	filter: alpha(opacity = 80);
 }
 
 .rp_calendar_body td .event a:hover {
