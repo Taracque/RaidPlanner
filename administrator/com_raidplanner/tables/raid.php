@@ -1,15 +1,22 @@
 <?php
 /**
- * Raid table class
+ * Hello World table class
  * 
- * @package    RaidPlanner
+ * @package    Joomla.Tutorials
  * @subpackage Components
+ * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_4
  * @license		GNU/GPL
  */
 
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+/**
+ * Hello Table class
+ *
+ * @package    Joomla.Tutorials
+ * @subpackage Components
+ */
 class TableRaid extends JTable
 {
 	/**
@@ -28,6 +35,7 @@ class TableRaid extends JTable
 	var $invite_time = null;
 	var $raid_leader = null;
 	var $icon_name = null;
+
 	/**
 	* @var int
 	*/
@@ -37,6 +45,7 @@ class TableRaid extends JTable
 	var $maximum_level = null;
 	var $minimum_rank = null;
 	var $is_template = null;
+	var $invited_group_id = null;
 
 	/**
 	 * Constructor

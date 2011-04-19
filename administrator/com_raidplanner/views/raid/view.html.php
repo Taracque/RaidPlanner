@@ -1,9 +1,10 @@
 <?php
 /**
- * Raid View for RaidPlanner Component
+ * Hello View for Hello World Component
  * 
- * @package    RaidPlanner
+ * @package    Joomla.Tutorials
  * @subpackage Components
+ * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_4
  * @license		GNU/GPL
  */
 
@@ -13,9 +14,18 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view' );
 jimport( 'joomla.application.component.controller' );
 
+/**
+ * Hello View
+ *
+ * @package    Joomla.Tutorials
+ * @subpackage Components
+ */
 class RaidPlannerViewRaid extends JView
 {
-
+	/**
+	 * display method of Hello view
+	 * @return void
+	 **/
 	function display($tpl = null)
 	{
 		//get the raid
@@ -32,7 +42,9 @@ class RaidPlannerViewRaid extends JView
 			// for existing items the button is renamed `close`
 			JToolBarHelper::cancel( 'cancel', 'Close' );
 		}
+		$groups = $this->getGroupList();
 
+		$this->assignRef('groups', $groups );
 		$this->assignRef('icons', $this->getIcons() );
 		$this->assignRef('raid', $raid);
 
@@ -63,5 +75,15 @@ class RaidPlannerViewRaid extends JView
 		   closedir($dhandle);
 		}
 		return $files;
+	}
+	
+	function getGroupList()
+	{
+		$db	=& JFactory::getDBO();
+		$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
+		$db->setQuery($query);
+		$db->query();
+		
+		return $db->loadObjectList('group_id');
 	}
 }

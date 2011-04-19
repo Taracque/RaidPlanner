@@ -13,6 +13,9 @@ $hasChars = !empty($this->characters);
 		<?php if ($this->event->icon_name) : ?>
 			<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
 		<?php endif; ?>
+		<?php if ($this->isOfficer) { ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit"><?php echo JText::_('Edit');?></a></li>
+		<?php } ?>
 			<ul>
 				<li><h2><?php echo $this->event->location; ?></h2></li>
 				<li>
@@ -21,9 +24,6 @@ $hasChars = !empty($this->characters);
 					<strong><?php echo JText::_('End time');?>:</strong> <?php echo JHTML::_('date', $this->event->end_time, $dateFormat); ?></li>
 				<li>
 					<strong><?php echo JText::_('Organizer');?>:</strong> <?php echo $this->event->raid_leader;?>
-				<?php if ($this->isOfficer) { ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit"><?php echo JText::_('Edit');?></a></li>
-				<?php } ?>
 				</li>
 			</ul>
 		</td>

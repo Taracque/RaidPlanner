@@ -4,9 +4,9 @@
 <div class="col100">
 	<fieldset class="adminform">
 		<legend><?php echo JText::_( 'Details' ); ?></legend>
-		<table class="admintable" style="float:left;width:300px">
+		<table class="admintable" style="float:left;width:400px">
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="location">
 					<?php echo JText::_( 'Location' ); ?>:
 				</label>
@@ -16,7 +16,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="location">
 					<?php echo JText::_( 'Template' ); ?>:
 				</label>
@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="description">
 					<?php echo JText::_( 'Description' ); ?>:
 				</label>
@@ -36,7 +36,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="start_time">
 					<?php echo JText::_( 'Start Time' ); ?>:<br />
 					<small><?php echo JText::_( 'GMT' ); ?></small>
@@ -47,7 +47,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="duration_mins">
 					<?php echo JText::_( 'Duration' ); ?>:<br />
 				</label>
@@ -57,7 +57,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="invite_time">
 					<?php echo JText::_( 'Invite Time' ); ?>:<br />
 					<small><?php echo JText::_( 'GMT' ); ?></small>
@@ -68,7 +68,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="freeze_time">
 					<?php echo JText::_( 'Freeze timer' ); ?>:<br />
 				</label>
@@ -78,7 +78,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="raid_leader">
 					<?php echo JText::_( 'Raid Leader' ); ?>:
 				</label>
@@ -88,7 +88,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="profile_id">
 					<?php echo JText::_( 'User' ); ?>:
 				</label>
@@ -98,7 +98,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="minimum_level">
 					<?php echo JText::_( 'Level Range' ); ?>:
 				</label>
@@ -109,7 +109,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
 				<label for="minimum_rank">
 					<?php echo JText::_( 'Minimum Rank' ); ?>:
 				</label>
@@ -119,7 +119,22 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="200" align="right" class="key">
+			<td width="150" align="right" class="key">
+				<label for="invited_group_id">
+					<?php echo JText::_( 'Invited Group' ); ?>:
+				</label>
+			</td>
+			<td>
+				<select name="invited_group_id" id="invited_group_id">
+					<option value=""></option>
+				<?php foreach ($this->groups as $group_id => $group_name) : ?>
+					<option value="<?php echo $group_id;?>"<?php if($group_id==$this->raid->invited_group_id){?> selected="selected"<?php } ?>><?php echo $group_name->group_name;?></option>
+				<?php endforeach; ?>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td width="150" align="right" class="key">
 				<label for="icon_name">
 					<?php echo JText::_( 'Icon' ); ?>:
 				</label>

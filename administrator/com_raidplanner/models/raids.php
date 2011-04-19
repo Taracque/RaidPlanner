@@ -30,7 +30,7 @@ class RaidPlannerModelRaids extends JModel
 		$option = JRequest::getCmd('option');
 		$app = &JFactory::getApplication();
 		
-		$filter_raid_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'start_time', 'cmd' );
+		$filter_raid_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'r.start_time', 'cmd' );
 		$filter_raid_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
 		$filter_raid_search		= $app->getUserStateFromRequest( $option.'filter_raid_search',	'search', '',	'string');
 		$filter_raid_start_time_min	= $app->getUserStateFromRequest( $option.'filter_raid_start_time_min',	'start_time_min', null,	'date');
@@ -61,7 +61,7 @@ class RaidPlannerModelRaids extends JModel
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_order_Dir) ) &&
-			(in_array($filter_order, array('start_time', 'location', 'minimum_level', 'maximum_level', 'minimum_rank', 'is_template') ) ) &&
+			(in_array($filter_order, array('r.start_time', 'r.location', 'r.minimum_level', 'r.maximum_level', 'r.minimum_rank', 'r.is_template', 'g.group_name') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
@@ -81,13 +81,13 @@ class RaidPlannerModelRaids extends JModel
 		
 		$where_arr = array();
 		if ($filter_raid_start_time_min!='') {
-			$where_arr[] = "start_time >= ".$db->Quote($filter_raid_start_time_min);
+			$where_arr[] = "r.start_time >= ".$db->Quote($filter_raid_start_time_min);
 		}
 		if ($filter_raid_start_time_max!='') {
-			$where_arr[] = "start_time <= DATE_ADD(".$db->Quote($filter_raid_start_time_max).", INTERVAL 1 DAY)";
+			$where_arr[] = "r.start_time <= DATE_ADD(".$db->Quote($filter_raid_start_time_max).", INTERVAL 1 DAY)";
 		}
 		if ($filter_raid_search!='') {
-			$where_arr[] = "(location LIKE '%".$db->getEscaped($filter_raid_search)."%' OR description LIKE '%".$db->getEscaped($filter_raid_search)."%')";
+			$where_arr[] = "(r.location LIKE '%".$db->getEscaped($filter_raid_search)."%' OR r.description LIKE '%".$db->getEscaped($filter_raid_search)."%')";
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);
@@ -103,7 +103,9 @@ class RaidPlannerModelRaids extends JModel
     function _buildQuery()
     {
         $query = ' SELECT * '
-            . ' FROM #__raidplanner_raid ' . $this->_buildQueryWhere();
+            . ' FROM #__raidplanner_raid AS r'
+            . ' LEFT JOIN #__raidplanner_groups AS g ON g.group_id = r.invited_group_id '
+            . $this->_buildQueryWhere();
         
         return $query;
     }

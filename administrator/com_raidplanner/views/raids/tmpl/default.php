@@ -29,22 +29,25 @@
                 <?php echo JText::_( 'ID' ); ?>
             </th>
             <th width="100">
-                <?php echo JHTML::_( 'grid.sort', 'Start Time', 'start_time', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Start Time', 'r.start_time', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-            	<?php echo JHTML::_( 'grid.sort', 'Location', 'location', $this->lists['order_Dir'], $this->lists['order']); ?>
+            	<?php echo JHTML::_( 'grid.sort', 'Location', 'r.location', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Minimum Level', 'minimum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Minimum Level', 'r.minimum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Maximum Level', 'maximum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Maximum Level', 'r.maximum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Minimum Rank', 'minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Minimum Rank', 'r.minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
+            </th>
+            <th>
+                <?php echo JHTML::_( 'grid.sort', 'Invited Group', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th width="100">
-                <?php echo JHTML::_( 'grid.sort', 'Template', 'is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'Template', 'r.is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
         </tr>            
     </thead>
@@ -77,6 +80,9 @@
             </td>
             <td>
 				<?php echo $row->minimum_rank; ?>
+            </td>
+            <td>
+				<?php echo $row->group_name; ?>
             </td>
             <td>
 				<?php echo ($row->is_template) ? JText::_('Yes') : '-' ; ?>

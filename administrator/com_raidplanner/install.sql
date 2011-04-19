@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_raid` (
   `profile_id` int(10) unsigned NOT NULL DEFAULT '0',
   `is_template` tinyint(1) NOT NULL DEFAULT '0',
   `minimum_rank` int(11) DEFAULT NULL,
+  `invited_group_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`raid_id`),
   KEY `start_time` (`start_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

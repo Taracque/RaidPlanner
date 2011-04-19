@@ -32,7 +32,7 @@ class RaidPlannerViewRaids extends JView
 		JSubMenuHelper::addEntry(JText::_('Classes'), 'index.php?option=com_raidplanner&view=classes', ($view == 'classes'));
 
         // Get data from the model
-        $raids =& $this->get( 'Data');
+        $raids =& $this->get( 'Data' );
 		$pagination =& $this->get('Pagination');
 
         $this->assignRef( 'raids', $raids );
@@ -45,8 +45,8 @@ class RaidPlannerViewRaids extends JView
 		$lists['search'] = $state->get( 'filter_raid_search' );;
 		$lists['start_time_min'] = $state->get( 'filter_raid_start_time_min' );;
 		$lists['start_time_max'] = $state->get( 'filter_raid_start_time_max' );;
-		$lists['order_Dir'] = $state->get( 'filter_raid_order_Dir' );
-		$lists['order']     = $state->get( 'filter_raid_order' );
+		$lists['order_Dir'] = $state->get( 'filter_order_Dir' );
+		$lists['order']     = $state->get( 'filter_order' );
 		
 		$this->assignRef( 'lists', $lists );
 

@@ -1,15 +1,22 @@
 <?php
 /**
- * Raids Controller for RaidPlanner Component
+ * Hello Controller for Hello World Component
  * 
- * @package    RaidPlanner
+ * @package    Joomla.Tutorials
  * @subpackage Components
+ * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_4
  * @license		GNU/GPL
  */
 
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+/**
+ * Hello Hello Controller
+ *
+ * @package    Joomla.Tutorials
+ * @subpackage Components
+ */
 class RaidPlannerControllerRaids extends RaidPlannerController
 {
 	/**
@@ -23,7 +30,7 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 		// Register Extra tasks
 		$this->registerTask( 'add'  , 	'edit' );
 	}
-
+	
 	/**
 	 * display the edit form
 	 * @return void
