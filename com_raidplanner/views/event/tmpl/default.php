@@ -184,7 +184,7 @@ $hasChars = !empty($this->characters);
 								<select name="new_role">
 									<option value="0">-</option>
 								<?php foreach ($this->roles as $role) { ?>
-									<option value="<?php echo $role->role_id;?>" <?php if ($role->role_id==$attendant->role_id) {?>selected="selected"<?php } ?>><?php echo $role->role_name;?></option>
+									<option value="<?php echo $role->role_id;?>"><?php echo $role->role_name;?></option>
 								<?php } ?>
 								</select>
 							</td>

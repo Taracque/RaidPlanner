@@ -149,8 +149,10 @@
 .rp_event_roles {
 	display: block;
 	float: right;
-	width: 100%;
+	width: 180px;
 	vertical-align:text-top;
+	padding-left: 5px;
+	border-left: 1px solid #ccc;
 }
 
 .rp_event_buttons div a {

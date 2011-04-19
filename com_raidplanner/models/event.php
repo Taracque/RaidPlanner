@@ -64,28 +64,36 @@ class RaidPlannerModelEvent extends JModel
 		if ($xml) {
 			$html = $string;
 		} elseif ($string!='') {
-			$xml = simplexml_load_string(str_replace("&","&amp;",$string));
+			$xml = @simplexml_load_string(str_replace("&","&amp;",$string));
 			$html .= "Start: ".$xml->start."<br />";
 			$html .= "End: ".$xml->end."<br />";
 			$html .= "Zone: ".$xml->zone."<br />";
 			$html .= '<fieldset class="rp_history_block"><legend>Bosskills</legend><div>';
-			foreach ($xml->BossKills->children() as $bosskill) {
-				$html .= $bosskill->time . " : " . $bosskill->name . "<br />";
+			if ($xml->BossKills) {
+				foreach ($xml->BossKills->children() as $bosskill) {
+					$html .= $bosskill->time . " : " . $bosskill->name . "<br />";
+				}
 			}
 			$html .= '</div></fieldset>';
 			$html .= '<fieldset class="rp_history_block"><legend>Loot</legend><div>';
-			foreach ($xml->Loot->children() as $loot) {
-				$html .= $loot->Player . " : <a href=\"http://www.wowhead.com/item=" . $loot->ItemID . "\">" .  $loot->ItemName . "</a> (" . $loot->Boss . ")<br />";
+			if ($xml->Loot) {
+				foreach ($xml->Loot->children() as $loot) {
+					$html .= $loot->Player . " : <a href=\"http://www.wowhead.com/item=" . $loot->ItemID . "\">" .  $loot->ItemName . "</a> (" . $loot->Boss . ")<br />";
+				}
 			}
 			$html .= '</div></fieldset>';
 			$html .= '<fieldset class="rp_history_block"><legend>Character join</legend><div>';
-			foreach ($xml->Join->children() as $Join) {
-				$html .= $Join->player . " : " .  $Join->time . "<br />";
+			if ($xml->Join) {
+				foreach ($xml->Join->children() as $Join) {
+					$html .= $Join->player . " : " .  $Join->time . "<br />";
+				}
 			}
 			$html .= '</div></fieldset>';
 			$html .= '<fieldset class="rp_history_block"><legend>Character leave</legend><div>';
-			foreach ($xml->Leave->children() as $Leave) {
-				$html .= $Leave->player . " : " .  $Leave->time . "<br />";
+			if ($xml->Leave) {
+				foreach ($xml->Leave->children() as $Leave) {
+					$html .= $Leave->player . " : " .  $Leave->time . "<br />";
+				}
 			}
 			$html .= '</div></fieldset>';
 		}
