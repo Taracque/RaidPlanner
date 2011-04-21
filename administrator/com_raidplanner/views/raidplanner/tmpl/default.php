@@ -46,6 +46,14 @@ Personal calendar can be subscribed, if <code>calendar_secret</code> is filled f
 			<?php echo JText::_('Classes');?>
 		</a>
 	</div>
+
+	<div class="rp_icon_button">
+		<a href="index.php?option=com_raidplanner&view=races">
+			<span class="rp_races"></span>
+			<?php echo JText::_('Races');?>
+		</a>
+	</div>
+
 </fieldset>
 
 <fieldset>

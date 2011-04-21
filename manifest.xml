@@ -56,6 +56,7 @@
 			<menu view="groups">Groups</menu>
 			<menu view="roles">Roles</menu>
 			<menu view="classes">Classes</menu>
+			<menu view="races">Races</menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
