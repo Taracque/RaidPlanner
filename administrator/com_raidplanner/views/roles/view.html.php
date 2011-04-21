@@ -30,6 +30,7 @@ class RaidPlannerViewRoles extends JView
 		JSubMenuHelper::addEntry(JText::_('Groups'), 'index.php?option=com_raidplanner&view=groups', ($view == 'groups'));
 		JSubMenuHelper::addEntry(JText::_('Roles'), 'index.php?option=com_raidplanner&view=roles', ($view == 'roles'));
 		JSubMenuHelper::addEntry(JText::_('Classes'), 'index.php?option=com_raidplanner&view=classes', ($view == 'classes'));
+		JSubMenuHelper::addEntry(JText::_('Races'), 'index.php?option=com_raidplanner&view=races', ($view == 'races'));
 
         // Get data from the model
         $roles =& $this->get( 'Data');
