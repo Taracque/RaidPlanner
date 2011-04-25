@@ -1,3 +1,16 @@
+<?php
+/*------------------------------------------------------------------------
+# com_raidplanner - RaidPlanner Component
+# ------------------------------------------------------------------------
+# author    Taracque
+# copyright Copyright (C) 2011 Taracque. All Rights Reserved.
+# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+# Website: http://www.taracque.hu/raidplanner
+-------------------------------------------------------------------------*/
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
+?>
+
 <h3>RaidPlanner</h3>
 <p>Raid organizer component, can cooperate with <a href="http://pixelbyte.dk/index.php/pbroster-download" target="_blank">PB-Roster</a> component to automatically update characters.</p>
 <p>If <a href="http://joomlacode.org/gf/project/usermeta/" target="_blank">UserMeta</a> plugin is installed, and users has a <code>characters</code> attribute added (and characters are spearated by newline), characters are automatically assigned to Joomla Users, add this to user.xml file:<br/>

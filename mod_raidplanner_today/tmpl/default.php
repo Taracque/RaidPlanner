@@ -1,10 +1,15 @@
-<?php defined('_JEXEC') or die('Restricted access'); // no direct access ?>
-<?php /* echo JText::_('TOPIC TEXT'); */ ?>
-
 <?php
-/*
- * Function to get a list for a label
- */
+/*------------------------------------------------------------------------
+# Default Template for RaidPlanner Today Module
+# mod_raidplanner_today - RaidPlanner Today Module
+# ------------------------------------------------------------------------
+# author    Taracque
+# copyright Copyright (C) 2011 Taracque. All Rights Reserved.
+# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+# Website: http://www.taracque.hu/raidplanner
+-------------------------------------------------------------------------*/
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
  
 $format = JText::_('DATE_FORMAT_LC');
 $event_count = 0;

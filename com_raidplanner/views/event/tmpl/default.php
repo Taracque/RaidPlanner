@@ -1,8 +1,15 @@
 <?php
- 
-// No direct access
- 
-defined('_JEXEC') or die('Restricted access');
+/*------------------------------------------------------------------------
+# Event Template for RaidPlanner Component
+# com_raidplanner - RaidPlanner Component
+# ------------------------------------------------------------------------
+# author    Taracque
+# copyright Copyright (C) 2011 Taracque. All Rights Reserved.
+# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+# Website: http://www.taracque.hu/raidplanner
+-------------------------------------------------------------------------*/
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 $dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
 $hasChars = !empty($this->characters);

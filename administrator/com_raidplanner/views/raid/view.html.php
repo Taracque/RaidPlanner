@@ -1,25 +1,19 @@
 <?php
-/**
- * Hello View for Hello World Component
- * 
- * @package    Joomla.Tutorials
- * @subpackage Components
- * @link http://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_4
- * @license		GNU/GPL
- */
-
-// No direct access
+/*------------------------------------------------------------------------
+# Raid View for RaidPlanner Component
+# com_raidplanner - RaidPlanner Component
+# ------------------------------------------------------------------------
+# author    Taracque
+# copyright Copyright (C) 2011 Taracque. All Rights Reserved.
+# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+# Website: http://www.taracque.hu/raidplanner
+-------------------------------------------------------------------------*/
+// no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 jimport( 'joomla.application.component.controller' );
 
-/**
- * Hello View
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
- */
 class RaidPlannerViewRaid extends JView
 {
 	/**

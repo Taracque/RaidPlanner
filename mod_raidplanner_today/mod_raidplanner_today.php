@@ -1,6 +1,14 @@
 <?php
-//no direct access
-defined('_JEXEC') or die('Direct Access to this location is not allowed.');
+/*------------------------------------------------------------------------
+# mod_raidplanner_today - RaidPlanner Today Module
+# ------------------------------------------------------------------------
+# author    Taracque
+# copyright Copyright (C) 2011 Taracque. All Rights Reserved.
+# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+# Website: http://www.taracque.hu/raidplanner
+-------------------------------------------------------------------------*/
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // include the helper file
 require_once(dirname(__FILE__).DS.'helper.php');
