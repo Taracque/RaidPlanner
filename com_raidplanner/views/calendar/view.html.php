@@ -45,13 +45,15 @@ class RaidPlannerViewCalendar extends JView
 		}
 		$monthparts = explode("-",$month);
 		
+		$actmonth =& JFactory::getDate( $month.'-01', 0 );
+		
 		$prevmonth = date("Y-m",mktime(0,0,0,$monthparts[1]-1,1,$monthparts[0]));
 		$nextmonth = date("Y-m",mktime(0,0,0,$monthparts[1]+1,1,$monthparts[0]));
 		$lastday = date("t",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$year = date("Y",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$monthonly = date("m",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$shift = date("w",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
-		$monthname = date("F",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
+		$monthname = $actmonth->toFormat("%B");		//	date("F",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		
 		$user =& JFactory::getUser();
 		if ($user->getParam('calendar_secret', '') != '') {
