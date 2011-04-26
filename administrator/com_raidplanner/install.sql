@@ -50,6 +50,8 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_groups` (
   PRIMARY KEY (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT IGNORE INTO `#__raidplanner_groups` (`group_id`, `group_name`, `default`) VALUES (1, `Guest`, 1);
+
 CREATE TABLE IF NOT EXISTS `#__raidplanner_permissions` (
   `permission_name` varchar(45) NOT NULL DEFAULT '',
   `permission_value` tinyint(1) NOT NULL DEFAULT '0',

@@ -361,12 +361,18 @@ class RaidPlannerModelEvent extends JModel
 		$reply = false;
 		
 		if ($permission!='') {
+			$guest = false;
 			if (!$user_id) {
 				$user =& JFactory::getUser();
 				$user_id = $user->id;
+				$guest = $user->guest;
 			}
 			$db = & JFactory::getDBO();
-			$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			if ($guest) {
+				$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			} else {
+				$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS group ON group.group_id = perm.group_id WHERE group.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			}
 			$db->setQuery($query);
 			
 			$dbreply = ($db->loadResultArray());

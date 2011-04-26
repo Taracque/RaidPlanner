@@ -44,13 +44,14 @@ class RaidPlannerViewCalendar extends JView
 			$month = date("Y-m");
 		}
 		$monthparts = explode("-",$month);
-		$month = date("Y-m",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
+		
 		$prevmonth = date("Y-m",mktime(0,0,0,$monthparts[1]-1,1,$monthparts[0]));
 		$nextmonth = date("Y-m",mktime(0,0,0,$monthparts[1]+1,1,$monthparts[0]));
 		$lastday = date("t",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$year = date("Y",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$monthonly = date("m",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$shift = date("w",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
+		$monthname = date("F",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		
 		$user =& JFactory::getUser();
 		if ($user->getParam('calendar_secret', '') != '') {
@@ -61,11 +62,11 @@ class RaidPlannerViewCalendar extends JView
 			$calendar_mode = 'download';
 		}
 		$this->assignRef( 'calendar_mode', $calendar_mode );
-		$this->assignRef( 'month', $month );
 		$this->assignRef( 'prevmonth', $prevmonth );
 		$this->assignRef( 'nextmonth', $nextmonth );
 		$this->assignRef( 'lastday', $lastday);
 		$this->assignRef( 'year', $year);
+		$this->assignRef( 'monthname', $monthname);
 		$this->assignRef( 'monthonly', $monthonly);
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		

@@ -24,7 +24,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				</label>
 			</td>
 			<td>
+				<?php if ($this->group->group_name != 'Guest') : ?>
 				<input class="text_area" type="text" name="group_name" id="group_name" size="32" maxlength="250" value="<?php echo $this->group->group_name;?>" />
+				<?php else: ?>
+				<input type="hidden" name="group_name" id="group_name" value="<?php echo $this->group->group_name;?>" /><?php echo $this->group->group_name;?>
+				<?php endif; ?>
 			</td>
 		</tr>
 		<tr>
@@ -37,6 +41,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="checkbox" type="checkbox" name="default" id="default" value="1" <?php if ($this->group->default==1) {?>checked="checked"<?php }?> />
 			</td>
 		</tr>
+		<?php if ($this->group->group_name != 'Guest') : ?>
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="group_members">
@@ -69,6 +74,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				</table>
 			</td>
 		</tr>
+		<?php endif; ?>
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="group_members">
