@@ -31,19 +31,19 @@ $dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
 							<strong><?php echo JText::_('Confirmed Roles');?>:</strong><br />
 							<?php if (@$this->confirmed_roles[1]) foreach ($this->confirmed_roles[1] as $key => $role) { ?>
 								<strong><?php echo $key;?>:</strong> <?php echo $role; ?>
-							<? } ?>
+							<?php } ?>
 						</li>
 						<li>
 							<strong><?php echo JText::_('Sitting Roles');?>:</strong><br />
 							<?php if (@$this->confirmed_roles[2]) foreach ($this->confirmed_roles[2] as $key => $role) { ?>
 								<strong><?php echo $key;?>:</strong> <?php echo $role; ?>
-							<? } ?>
+							<?php } ?>
 						</li>
 						<li>
 							<strong><?php echo JText::_('Waiting Roles');?>:</strong><br />
 							<?php if (@$this->confirmed_roles[-1]) foreach ($this->confirmed_roles[-1] as $key => $role) { ?>
 								<strong><?php echo $key;?>:</strong> <?php echo $role; ?>
-							<? } ?>
+							<?php } ?>
 						</li>
 					</ul>
 				</div>

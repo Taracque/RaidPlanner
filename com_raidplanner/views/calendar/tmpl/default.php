@@ -50,7 +50,7 @@ window.addEvent('domready',function(){
 				<thead>
 					<tr>
 				<?php for ($days=$this->params['first_dow'];$days<($this->params['first_dow']+7);$days++) { ?>
-						<th><?php echo JDate::_dayToString($days % 7);?></th>
+						<th><?php echo RaidPlannerModelRaidPlanner::dayToString($days % 7);?></th>
 				<?php } ?>
 					</tr>
 				</thead>

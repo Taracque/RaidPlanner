@@ -59,4 +59,21 @@ class RaidPlannerModelRaidPlanner extends JModel
     	return $result;
 	}
 
+	/**
+	 * Translates day of week number to a string.
+	 * Joomla 1.6 compatibility, JDate::dayToString is protected
+	 */
+	public static function dayToString($day, $abbr = false)
+	{
+		switch ($day) {
+			case 0: return $abbr ? JText::_('SUN') : JText::_('SUNDAY');
+			case 1: return $abbr ? JText::_('MON') : JText::_('MONDAY');
+			case 2: return $abbr ? JText::_('TUE') : JText::_('TUESDAY');
+			case 3: return $abbr ? JText::_('WED') : JText::_('WEDNESDAY');
+			case 4: return $abbr ? JText::_('THU') : JText::_('THURSDAY');
+			case 5: return $abbr ? JText::_('FRI') : JText::_('FRIDAY');
+			case 6: return $abbr ? JText::_('SAT') : JText::_('SATURDAY');
+		}
+	}
+
 }
