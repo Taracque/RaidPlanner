@@ -49,14 +49,14 @@
 	<administration>
 		<!-- Administration Menu Section -->
 		<!-- Name to display at the component menu. Should be the same as the extension commercial name -->
-		<menu img="components/com_raidplanner/assets/images/raidplanner-favicon.png">Raid Planner</menu>
+		<menu img="components/com_raidplanner/assets/images/raidplanner-favicon.png">RaidPlanner</menu>
 		<submenu>
-			<menu view="raids">Raids</menu>
-			<menu view="characters">Characters</menu>
-			<menu view="groups">Groups</menu>
-			<menu view="roles">Roles</menu>
-			<menu view="classes">Classes</menu>
-			<menu view="races">Races</menu>
+			<menu view="raids">RAIDS</menu>
+			<menu view="characters">CHARACTERS</menu>
+			<menu view="groups">GROUPS</menu>
+			<menu view="roles">ROLES</menu>
+			<menu view="classes">CLASSES</menu>
+			<menu view="races">RACES</menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
