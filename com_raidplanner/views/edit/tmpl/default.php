@@ -24,8 +24,8 @@ switch ($version->RELEASE) {
 	break;
 }
 
-$invite_time = explode( " ", JHTML::_('date', $this->event->invite_time, $dateFormat . " " . $timeFormat ) );
-$start_time = explode( " ", JHTML::_('date', $this->event->start_time, $dateFormat . " " . $timeFormat ) );
+$invite_time = explode( " ", JHTML::_('date', $this->event->invite_time, $dateFormat . " " . $timeformat ) );
+$start_time = explode( " ", JHTML::_('date', $this->event->start_time, $dateFormat . " " . $timeformat ) );
 ?>
 <div class="rp_container">
 	<form action="<?php echo JRoute::_('index.php');?>" method="post" id="rp_edit_form">
