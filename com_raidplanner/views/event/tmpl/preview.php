@@ -59,7 +59,7 @@ $dateFormat = JText::_('DATE_FORMAT_LC2');
 								<th><?php echo JText::_('Status');?></th>
 								<th><?php echo JText::_('Role');?></th>
 								<th><?php echo JText::_('Confirmed');?></th>
-								<th><?php echo JText::_('Signeup Time');?></th>
+								<th><?php echo JText::_('Signup Time');?></th>
 							</tr>
 						</thead>
 						<tbody>
