@@ -13,7 +13,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 
 $dateFormat = JText::_('DATE_FORMAT_LC4');
-$timeFormat = "%H:%M";
+$version = new JVersion();
+switch ($version->RELEASE) {
+	case '1.6':
+		$timeformat = 'H:i';
+	break;
+	default:
+	case '1.5':
+		$timeformat = '%H:%M';
+	break;
+}
 
 $invite_time = explode( " ", JHTML::_('date', $this->event->invite_time, $dateFormat . " " . $timeFormat ) );
 $start_time = explode( " ", JHTML::_('date', $this->event->start_time, $dateFormat . " " . $timeFormat ) );
