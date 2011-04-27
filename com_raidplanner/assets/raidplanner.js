@@ -1,9 +1,13 @@
-function rpSwitchTab(switchfrom,switchto) {
-	if ($('rp_event_' + switchto) && $('rp_switcher_' + switchto) && $('rp_event_' + switchfrom) && $('rp_switcher_' + switchfrom)) {
+function rpSwitchTab(switchto) {
+	$$('.rp_switchers').each(function(el){
+		el.removeClass('active');
+		if (el.get('id')) {
+			$(el.get('id').replace('rp_switcher', 'rp_event')).setStyle('display','none');
+		}
+	});
+	if ($('rp_event_' + switchto) && $('rp_switcher_' + switchto)) {
 		$('rp_event_' + switchto).setStyle('display','');
 		$('rp_switcher_' + switchto).addClass('active');
-		$('rp_event_' + switchfrom).setStyle('display','none');
-		$('rp_switcher_' + switchfrom).removeClass('active');
 	}
 	return false;
 }
@@ -14,11 +18,12 @@ function rpShowTooltip(el) {
 		$(el).addEvent('mouseleave',function(){
 			rpHideTooltip();
 		});
-		$('rpTipWrapper').setText($(el).title);
+		$('rpTipWrapper').set('text', $(el).title);
 		pos = $(el).getPosition();
 		$('rpTip').setStyles({
 				'left': pos.x + 0,
-				'top': pos.y + 20
+				'top': pos.y + 20,
+				'visibility': 'visible'
 		});
 		$('rpTip').setOpacity(0.8);
 	}
@@ -26,6 +31,7 @@ function rpShowTooltip(el) {
 
 function rpHideTooltip() {
 	$('rpTip').setOpacity(0);
+	$('rpTip').setStyle('visibility','hidden');
 }
 
 function setupTooltip() {

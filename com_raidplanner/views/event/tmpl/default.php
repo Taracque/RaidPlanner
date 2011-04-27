@@ -11,7 +11,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
+$dateFormat = JText::_('DATE_FORMAT_LC2');
 $hasChars = !empty($this->characters);
 ?>
 <table class="rp_header_container">
@@ -141,7 +141,7 @@ $hasChars = !empty($this->characters);
 									<strong><?php echo $attendant->char_name;?></strong>
 								</a>
 							</td>
-							<td><a href="#" onclick="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');" id="att_char_queue_<?php echo $attendant->character_id;?>" class="attendance<?php if ($attendant->comments!='') { ?> rp_tooltips" title="<?php echo $attendant->comments;?><?php } ?>"><?php echo JText::_('RAIDPLANNER_STATUS_'.$attendant->queue); ?></a></td>
+							<td><a href="#" onclick="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');" id="att_char_queue_<?php echo $attendant->character_id;?>" class="attendance<?php if ($attendant->comments!='') { ?> rp_tooltips" title="<?php echo htmlspecialchars( $attendant->comments, ENT_QUOTES, 'UTF-8' );?><?php } ?>"><?php echo JText::_('RAIDPLANNER_STATUS_'.$attendant->queue); ?></a></td>
 							<td style="color:<?php echo $this->roles[$attendant->role_name]->font_color;?>;background-color:<?php echo $this->roles[$attendant->role_name]->body_color;?>;"><?php
 								if (!$this->isOfficer) {
 									echo $attendant->role_name;
@@ -221,7 +221,6 @@ $hasChars = !empty($this->characters);
 				<input type="hidden" name="controller" value="" />
 				<input type="hidden" name="task" value="confirm" />
 				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
-				<input type="hidden" name="month" value="<?php echo JHTML::_('date', $this->event->start_time, '%Y-%m'); ?>" />
 			<?php } ?>
 			</form>
 		</td>
@@ -276,7 +275,6 @@ $hasChars = !empty($this->characters);
 							<input type="hidden" name="controller" value="" />
 							<input type="hidden" name="task" value="signup" />
 							<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
-							<input type="hidden" name="month" value="<?php echo JHTML::_('date', $this->event->start_time, '%Y-%m'); ?>" />
 						</td>
 					</tr>
 				</table>

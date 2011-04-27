@@ -11,7 +11,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
+$dateFormat = JText::_('DATE_FORMAT_LC2');
 ?>
 <fieldset class="rp_preview">
 	<legend><?php echo JText::_('Preview');?></legend>
@@ -68,7 +68,7 @@ $dateFormat = JText::_('DATE_FORMAT_LC4')." %H:%M";
 							<tr>
 								<td><input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" /><span style="color:<?php echo $attendant->class_color;?>" class="hasTip" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>"><?php echo $attendant->char_name;?></span></td>
 								<td><?php echo JText::_('RAIDPLANNER_STATUS_'.$attendant->queue); ?></td>
-								<td><span <?php if ($attendant->comments!='') { ?>class="hasTip" title="<?php echo $attendant->comments;?>"<?php } ?>><?php echo $attendant->role_name; ?></span></td>
+								<td><span <?php if ($attendant->comments!='') { ?>class="hasTip" title="<?php echo htmlspecialchars( $attendant->comments, ENT_QUOTES, 'UTF-8' );?>"<?php } ?>><?php echo $attendant->role_name; ?></span></td>
 								<td><?php echo JText::_('RAIDPLANNER_CONFIRMATION_'.$attendant->confirmed); ?></td>
 								<td><?php echo JHTML::_('date', $attendant->timestamp, $dateFormat);?></td>
 							</tr>

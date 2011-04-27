@@ -36,12 +36,23 @@ class RaidPlannerViewCalendar extends JView
     	
 		$eventmodel = &$this->getModel('event');
 		$canView = ($eventmodel->getPermission('view_raids') == 1);
-		$this->assignRef( 'canView', $canView );
-		$this->assignRef( 'tzoffset', $tz );
-		$this->assignRef( 'tzname', $tzname );
+		$version = new JVersion();
+		switch ($version->RELEASE) {
+			case '1.6':
+				$dateformat = 'Ymd\THis';
+			break;
+			default:
+			case '1.5':
+				$dateformat = '%Y%m%dT%H%M%S';
+			break;
+		}
 		
 		$model = &$this->getModel();
 		
+		$this->assignRef( 'canView', $canView );
+		$this->assignRef( 'tzoffset', $tz );
+		$this->assignRef( 'tzname', $tzname );
+		$this->assignRef( 'dateformat', $dateformat );
         $this->assignRef( 'events', $model->getEvents('own', $user->id) );
 
         parent::display($tpl);

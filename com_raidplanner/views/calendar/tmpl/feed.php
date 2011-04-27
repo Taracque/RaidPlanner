@@ -32,13 +32,13 @@ X-WR-CALDESC:<?php echo $config->getValue( 'config.sitename' ); ?> raidplanner
 BEGIN:VEVENT
 UID:RPEVENTID<?php echo $event[0]->raid_id;?>
 
-DTSTAMP;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%S', $this->tzoffset);?>
+DTSTAMP;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->start_time, $this->dateformat, $this->tzoffset);?>
 
 ORGANIZER:<?php echo $event[0]->raid_leader;?>
 
-DTSTART;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->start_time,'%Y%m%dT%H%M%S', $this->tzoffset);?>
+DTSTART;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->start_time, $this->dateformat, $this->tzoffset);?>
 
-DTEND;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->end_time,'%Y%m%dT%H%M%S', $this->tzoffset);?>
+DTEND;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->end_time, $this->dateformat, $this->tzoffset);?>
 
 SUMMARY:<?php echo $event[0]->location;?>
 
@@ -48,7 +48,7 @@ URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplan
 
 BEGIN:VALARM
 ACTION:AUDIO
-TRIGGER;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->invite_time,'%Y%m%dT%H%M%S', $this->tzoffset);?>
+TRIGGER;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->invite_time, $this->dateformat, $this->tzoffset);?>
 
 REPEAT:1
 END:VALARM

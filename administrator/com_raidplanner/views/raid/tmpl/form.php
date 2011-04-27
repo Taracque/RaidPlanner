@@ -55,7 +55,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				</label>
 			</td>
 			<td>
-				<?php echo JHTML::_('calendar',$this->raid->start_time, 'start_time','%Y-%m-%d %H:%i');?>
+				<?php echo JHTML::_('calendar',$this->raid->start_time, 'start_time', $this->dateformat );?>
 			</td>
 		</tr>
 		<tr>
@@ -76,7 +76,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				</label>
 			</td>
 			<td>
-				<?php echo JHTML::_('calendar',$this->raid->invite_time, 'invite_time','%Y-%m-%d %H:%i');?>
+				<?php echo JHTML::_('calendar',$this->raid->invite_time, 'invite_time', $this->dateformat );?>
 			</td>
 		</tr>
 		<tr>

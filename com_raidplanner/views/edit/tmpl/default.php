@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 
-$dateFormat = JText::_('%Y-%m-%d');
+$dateFormat = JText::_('DATE_FORMAT_LC4');
 $timeFormat = "%H:%M";
 
 $invite_time = explode( " ", JHTML::_('date', $this->event->invite_time, $dateFormat . " " . $timeFormat ) );

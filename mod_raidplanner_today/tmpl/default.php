@@ -23,6 +23,18 @@ if (empty($menu)) {
 } else {
 	$itemid = $menu->id;
 }
+
+$version = new JVersion();
+switch ($version->RELEASE) {
+	case '1.6':
+		$timeformat = 'H:i';
+	break;
+	default:
+	case '1.5':
+		$timeformat = '%H:%M';
+	break;
+}
+
 ?>
 <table>
 	<?php
@@ -56,7 +68,7 @@ if (empty($menu)) {
 			if ($tip != '') {
 				echo ' class="hasTip" title="'.$tip.'"';
 			}
-			echo "><strong>" . JHTML::_('date', $item->start_time, '%H:%M', true) . "</strong> " . $item->location . "</span></a><br />";
+			echo "><strong>" . JHTML::_('date', $item->start_time, $timeformat, true) . "</strong> " . $item->location . "</span></a><br />";
 			echo "</td></tr>";
 		}
 	}

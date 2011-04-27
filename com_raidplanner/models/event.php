@@ -13,6 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
 jimport( 'joomla.application.component.helper' );
+jimport( 'joomla.utilities.date' );
 
 class RaidPlannerModelEvent extends JModel
 {
@@ -349,7 +350,8 @@ class RaidPlannerModelEvent extends JModel
 			$db = & JFactory::getDBO();
 			$user =& JFactory::getUser();
 			$user_id = $user->id;
-			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '".JHTML::_('date', null, '%Y-%m-%d %H:%M')."' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
+			$date = new JDate();
+			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . $date->toMySQL() . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
 			$db->setQuery($query);
 			if ($db->loadResult() == 1) {
 				$can_signup = $this->getPermission('allow_signup', $user_id);

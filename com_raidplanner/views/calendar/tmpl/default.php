@@ -79,7 +79,7 @@ window.addEvent('domready',function(){
 									<a>
 									<?php } ?>
 										<strong><?php
-											echo JHTML::_('date', $event->start_time, '%H:%M');
+											echo JHTML::_('date', $event->start_time, $this->timeformat );
 										?></strong> <?php echo $event->location;?>
 									</a>
 								</div>

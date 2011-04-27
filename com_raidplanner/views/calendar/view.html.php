@@ -63,6 +63,18 @@ class RaidPlannerViewCalendar extends JView
 		} else {
 			$calendar_mode = 'download';
 		}
+		
+		$version = new JVersion();
+		switch ($version->RELEASE) {
+			case '1.6':
+				$timeformat = 'H:i';
+			break;
+			default:
+			case '1.5':
+				$timeformat = '%H:%M';
+			break;
+		}
+
 		$this->assignRef( 'calendar_mode', $calendar_mode );
 		$this->assignRef( 'prevmonth', $prevmonth );
 		$this->assignRef( 'nextmonth', $nextmonth );
@@ -73,6 +85,7 @@ class RaidPlannerViewCalendar extends JView
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		
         $this->assignRef( 'events', $model->getEvents() );
+		$this->assignRef( 'timeformat', $timeformat );
 
         parent::display($tpl);
     }

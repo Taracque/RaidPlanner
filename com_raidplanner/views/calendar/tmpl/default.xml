@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
+	<view title="RAIDPLANNER_CALENDAR_VIEW">
+    	<message><![CDATA[RAIDPLANNER_CALENDAR_VIEW_DESC]]></message>
+	</view>
 	<state>
 		<params>
 			<param name="load_css" type="radio" defaul="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
@@ -12,4 +15,16 @@
 			</param>
 	    </params>
 	</state>
+	<fields name="params">
+		<fieldset name="basic">
+			<field name="load_css" type="radio" defaul="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</field>
+			<field name="first_dow" type="radio" default="0" label="FIRST DAY OF WEEK" description="FIRST DAY OF WEEK DESCRIPTION">
+				<option value="0">SUNDAY</option>
+				<option value="1">MONDAY</option>
+			</field>
+		</fieldset>
+	</fields>
 </metadata>

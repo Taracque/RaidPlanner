@@ -20,9 +20,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
 				<?php echo JText::_('Start time'); ?>:
 				<?php
-					echo JHTML::_('calendar', $this->lists['start_time_min'], 'start_time_min', 'start_time_min', '%Y-%m-%d' );
+					echo JHTML::_('calendar', $this->lists['start_time_min'], 'start_time_min', 'start_time_min', JText::_('DATE_FORMAT_LC4') );
 				?> - <?php
-					echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', '%Y-%m-%d' );
+					echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', JText::_('DATE_FORMAT_LC4') );
 				?>
 			</td>
 			<td nowrap="nowrap">

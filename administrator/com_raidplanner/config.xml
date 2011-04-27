@@ -1,4 +1,5 @@
-<root>
+<?xml version="1.0" encoding="utf-8"?>
+<config>
 	<params>
 		<param type="radio" name="load_css" default="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
 			<option value="0">No</option>
@@ -9,4 +10,14 @@
 			<option value="1">Yes</option>
 		</param>
 	</params>
-</root>
+	<fieldset name="settings">
+		<field type="radio" name="load_css" default="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		<field type="radio" name="use_pbroster" default="1" label="PBROSTER INTEGRATION">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+	</fieldset>
+</config>
