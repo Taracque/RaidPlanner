@@ -79,7 +79,12 @@ class RaidPlannerViewEdit extends JView
 			while (false !== ($fname = readdir($dhandle))) {
 				// if the file is not this file, and does not start with a '.' or '..',
 				// then store it for later display
-				if (($fname != '.') && ($fname != '..')) {
+				if (
+					($fname != '.') && 
+					($fname != '..') &&
+					($fname != 'index.html') &&
+					($fname != basename($_SERVER['PHP_SELF']))
+				) {
 					// store the filename
 					if (!is_dir( $path . DS . $fname )) {
 						$info = pathinfo( $path . DS . $fname );
