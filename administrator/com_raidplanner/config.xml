@@ -15,7 +15,7 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
-		<field type="radio" name="use_pbroster" default="1" label="PBROSTER INTEGRATION">
+		<field type="radio" name="use_pbroster" default="1" label="PBROSTER INTEGRATION" description="PBROSTER INTEGRATION DESCRIPTION">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>

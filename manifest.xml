@@ -76,8 +76,8 @@
 		</files>
 		<!-- Administration Language File Copy Section -->
 		<languages folder="administrator/language">
-			<language tag="hu-HU">en-GB.com_raidplanner.ini</language>
-			<language tag="en-GB">hu-HU.com_raidplanner.ini</language>
+			<language tag="en-GB">en-GB.com_raidplanner.ini</language>
+			<language tag="hu-HU">hu-HU.com_raidplanner.ini</language>
 		</languages>
 	</administration>
 </install>
