@@ -76,4 +76,27 @@ class RaidPlannerModelRaidPlanner extends JModel
 		}
 	}
 
+	/**
+	 * Translates month number to string
+	 * Joomla 1.6 compatibility, JDate::monthToString is protected
+	 */
+	public static function monthToString($month, $abbr = false)
+	{
+		switch ($month)
+		{
+			case 1:  return $abbr ? JText::_('JANUARY_SHORT')   : JText::_('JANUARY');
+			case 2:  return $abbr ? JText::_('FEBRUARY_SHORT')  : JText::_('FEBRUARY');
+			case 3:  return $abbr ? JText::_('MARCH_SHORT')     : JText::_('MARCH');
+			case 4:  return $abbr ? JText::_('APRIL_SHORT')     : JText::_('APRIL');
+			case 5:  return $abbr ? JText::_('MAY_SHORT')       : JText::_('MAY');
+			case 6:  return $abbr ? JText::_('JUNE_SHORT')      : JText::_('JUNE');
+			case 7:  return $abbr ? JText::_('JULY_SHORT')      : JText::_('JULY');
+			case 8:  return $abbr ? JText::_('AUGUST_SHORT')    : JText::_('AUGUST');
+			case 9:  return $abbr ? JText::_('SEPTEMBER_SHORT')  : JText::_('SEPTEMBER');
+			case 10: return $abbr ? JText::_('OCTOBER_SHORT')   : JText::_('OCTOBER');
+			case 11: return $abbr ? JText::_('NOVEMBER_SHORT')  : JText::_('NOVEMBER');
+			case 12: return $abbr ? JText::_('DECEMBER_SHORT')  : JText::_('DECEMBER');
+		}
+	}
+
 }

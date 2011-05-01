@@ -28,7 +28,7 @@ window.addEvent('domready',function(){
 			<a class="rp_button_today" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"> <?php echo JText::_('Today');?> </a>
 		</td>
 		<td class="rp_header_center">
-			<h3><?php echo $this->year." ".$this->monthname; ?></h3>
+			<h3><?php echo $this->year." ".RaidPlannerModelRaidPlanner::monthToString($this->monthname); ?></h3>
 		</td>
 		<td class="rp_header_right">
 <?php if ($this->calendar_mode == 'subscribe') : ?>
