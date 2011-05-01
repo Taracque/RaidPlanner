@@ -56,7 +56,7 @@ window.addEvent('domready',function(){
 				</thead>
 				<tbody>
 				<?php
-					$day = -$this->shift + $this->params['first_dow'];
+					$day = ( -$this->shift + ( $this->params['first_dow'] - 7)) % 7;
 					for ($weeks=1;$weeks<7;$weeks++) {
 				?>
 					<tr>
