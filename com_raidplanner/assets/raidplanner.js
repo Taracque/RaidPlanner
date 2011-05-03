@@ -1,23 +1,3 @@
-if (MooTools.version=='1.3') {
-	SqueezeBox.handlers.extend({
-		ajax: function(url) {
-			var options = this.options.ajaxOptions || {};
-			this.asset = new Request.HTML($merge({
-				method: 'get',
-				evalScripts: false,
-				onSuccess: function(responseTree, responseElements, responseHTML, responseJavaScript) {
-					this.applyContent(responseHTML);
-					if (options.evalScripts !== null && options.evalScripts) $exec(responseJavaScript);
-					this.fireEvent('onAjax', [responseTree, responseElements, responseHTML, responseJavaScript]);
-					this.asset = null;
-				}.bind(this),
-				onFailure: this.onError.bind(this)
-			}, this.options.ajaxOptions));
-			this.asset.send.delay(10, this.asset, [{url: url}]);
-		}
-	}); 
-}
-
 function rpSwitchTab(switchto) {
 	$$('.rp_switchers').each(function(el){
 		el.removeClass('active');
@@ -73,5 +53,24 @@ function setupTooltip() {
 }
 
 window.addEvent('domready',function() {
+	if (MooTools.version=='1.3') {
+		SqueezeBox.handlers.extend({
+			ajax: function(url) {
+				var options = this.options.ajaxOptions || {};
+				this.asset = new Request.HTML($merge({
+					method: 'get',
+					evalScripts: false,
+					onSuccess: function(responseTree, responseElements, responseHTML, responseJavaScript) {
+						this.applyContent(responseHTML);
+						if (options.evalScripts !== null && options.evalScripts) $exec(responseJavaScript);
+						this.fireEvent('onAjax', [responseTree, responseElements, responseHTML, responseJavaScript]);
+						this.asset = null;
+					}.bind(this),
+					onFailure: this.onError.bind(this)
+				}, this.options.ajaxOptions));
+				this.asset.send.delay(10, this.asset, [{url: url}]);
+			}
+		}); 
+	}
 	setupTooltip();
 });
