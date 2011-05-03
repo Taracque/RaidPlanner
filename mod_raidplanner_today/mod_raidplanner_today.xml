@@ -1,4 +1,4 @@
-<install type="module" version="1.5.0" method="upgrade">
+<install type="module" version="1.5.0" method="upgrade" client="site">
   <name>RaidPlanner Today</name>
   <author>Taracque</author>
   <creationDate>2011-03-10</creationDate>

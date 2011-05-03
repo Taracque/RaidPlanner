@@ -18,10 +18,10 @@ $hasChars = !empty($this->characters);
 	<tr>
 		<td class="rp_header">
 		<?php if ($this->event->icon_name) : ?>
-			<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
+			<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" style="float:left; margin: 0 5px 5px 0;" alt="<?php echo $this->event->icon_name; ?>" />
 		<?php endif; ?>
 		<?php if ($this->isOfficer) { ?>
-			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit"><?php echo JText::_('Edit');?></a></li>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit"><?php echo JText::_('Edit');?></a>
 		<?php } ?>
 			<ul>
 				<li><h2><?php echo $this->event->location; ?></h2></li>
