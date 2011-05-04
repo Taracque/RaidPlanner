@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="user">
+	<name>plg_user_raidplanner</name>
+	<author>Taracque</author>
+	<creationDate>May 2011</creationDate>
+	<copyright>(C) 2011 Taracque. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>taracque@taracque.hu</authorEmail>
+	<authorUrl>taracque.hu</authorUrl>
+	<version>1.6.0</version>
+	<description>PLG_USER_RAIDPLANNER_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="raidplanner">raidplanner.php</filename>
+		<filename>index.html</filename>
+		<folder>profiles</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_user_raidplanner.ini</language>
+		<language tag="en-GB">en-GB.plg_user_raidplanner.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="register-require-user" type="spacer" label="PLG_USER_RAIDPLANNER_FIELD_NAME_REGISTER_REQUIRE_USER" />
+				<field name="register-require_raidplanner" default="0" type="list" description="PLG_USER_RAIDPLANNER_FIELDS_REGISTER_DESC" label="PLG_USER_RAIDPLANNER_FIELDS_REGISTER_LABEL">
+					<option value="2">JOPTION_REQUIRED</option>
+					<option value="1">JOPTION_OPTIONAL</option>
+					<option value="0">JDISABLED</option>
+				</field>
+				<field name="profile-require-user" type="spacer" label="PLG_USER_RAIDPLANNER_FIELD_NAME_PROFILE_REQUIRE_USER" />
+				<field name="profile-require_raidplanner" default="1" type="list" description="PLG_USER_RAIDPLANNER_FIELDS_PROFILE_DESC" label="PLG_USER_RAIDPLANNER_FIELDS_PROFILE_LABEL">
+					<option value="2">JOPTION_REQUIRED</option>
+					<option value="1">JOPTION_OPTIONAL</option>
+					<option value="0">JDISABLED</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

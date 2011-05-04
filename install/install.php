@@ -17,21 +17,34 @@ function com_install()
     $installer = & JInstaller::getInstance();
     $source = $installer->getPath('source');
 
-	$msg = '';
+	$out = '';
 
-	$moduleInstaller = new JInstaller();
-	
-	if ( $moduleInstaller->install($source . DS . 'mod_raidplanner_today') ) {
+	$extInstaller = new JInstaller();
+
+	// intsall RaidPlanner Today Module
+	if ( $extInstaller->install($source . DS . 'mod_raidplanner_today') ) {
 		// module installed
-		$out = 'RaidPlanner Today module installed!';
+		$out .= 'RaidPlanner Today module installed!<br />';
 	} else {
-		$out = 'RaidPlanner Today module installation failed!';
+		$out .= 'RaidPlanner Today module installation failed!<br />';
 	}
+	
+	// intsall RaidPlanner User Plugin (just for J 1.6!)
+	$version = new JVersion();
+	if ($version->RELEASE == '1.6') {
+		if ( $extInstaller->install($source . DS . 'plg_raidplanner') ) {
+			// module installed
+			$out .= 'RaidPlanner User plugin installed!<br />';
+		} else {
+			$out .= 'RaidPlanner User plugin installation failed!<br />';
+		}
+	}	
+	
 	$installer->set('message', $out);
 }
 
 function com_uninstall()
 {
     $installer = & JInstaller::getInstance();
-	$installer->set('message', 'RaidPlanner Today module needs to be removed manualy!');
+	$installer->set('message', 'RaidPlanner Today module, and RaidPlanner user plugins needs to be removed manualy!');
 }

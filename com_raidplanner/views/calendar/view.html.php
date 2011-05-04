@@ -51,16 +51,7 @@ class RaidPlannerViewCalendar extends JView
 		$year = date("Y",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$monthonly = date("m",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
 		$shift = date("w",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
-		
-		$user =& JFactory::getUser();
-		if ($user->getParam('calendar_secret', '') != '') {
-			$calendar_mode = 'subscribe';
-			$this->assignRef( 'user_id', $user->id );
-			$this->assignRef( 'calendar_secret', $user->getParam('calendar_secret', '') );
-		} else {
-			$calendar_mode = 'download';
-		}
-		
+
 		$version = new JVersion();
 		switch ($version->RELEASE) {
 			case '1.6':
@@ -72,6 +63,15 @@ class RaidPlannerViewCalendar extends JView
 			break;
 		}
 
+		$user =& JFactory::getUser();
+		if ($user->getParam('calendar_secret', '') != '') {
+			$calendar_mode = 'subscribe';
+			$this->assignRef( 'user_id', $user->id );
+			$this->assignRef( 'calendar_secret', $user->getParam('calendar_secret', '') );
+		} else {
+			$calendar_mode = 'download';
+		}
+		
 		$this->assignRef( 'calendar_mode', $calendar_mode );
 		$this->assignRef( 'prevmonth', $prevmonth );
 		$this->assignRef( 'nextmonth', $nextmonth );
