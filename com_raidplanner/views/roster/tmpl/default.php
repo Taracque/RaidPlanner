@@ -15,18 +15,26 @@ jimport( 'joomla.utilities.date');
 ?>
 <table class="rp_container">
 	<tr class="rp_header">
-		<td class="rp_header_center">
+		<td class="rp_header_center" colspan="6">
 			<h3>Roster</h3>
 		</td>
 	</tr>
+	<tr class="rp_header">
+		<td class="rp_header">NAME</td>
+		<td class="rp_header">LEVEL</td>
+		<td class="rp_header">GENDER</td>
+		<td class="rp_header">RACE</td>
+		<td class="rp_header">CLASS</td>
+		<td class="rp_header">RANK</td>
+	</tr>
 	<?php foreach($this->characters as $character) : ?>
 	<tr class="rp_roster">
-		<td><?php echo $character->char_name; ?></td>
-		<td><?php echo $character->char_level; ?></td>
-		<td><?php echo $character->gender_name; ?></td>
-		<td><?php echo $character->race_name; ?></td>
-		<td><?php echo $character->class_name; ?></td>
-		<td><?php echo $character->rank; ?></td>
+		<td><?php echo $character['char_name']; ?></td>
+		<td><?php echo $character['char_level']; ?></td>
+		<td><?php echo $character['gender_name']; ?></td>
+		<td><?php echo $character['race_name']; ?></td>
+		<td><?php echo $character['class_name']; ?></td>
+		<td><?php echo $character['rank']; ?></td>
 	</tr>
 	<?php endforeach; ?>
 </table>

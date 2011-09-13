@@ -219,7 +219,7 @@ class RaidPlannerModelEvent extends JModel
 			$db->setQuery($query);
 			$profile_id = $db->loadResult();
 			if (!$profile_id) {
-				// DEFAULT GOR
+				// DEFAULT GROUP
 				$query = "INSERT INTO #__raidplanner_profile (profile_id, group_id) VALUES (".$user->id.", (SELECT group_id FROM #__raidplanner_groups WHERE `default`=1))";
 				$db->setQuery($query);
 				$db->query();
