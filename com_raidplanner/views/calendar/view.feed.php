@@ -38,12 +38,12 @@ class RaidPlannerViewCalendar extends JView
 		$canView = ($eventmodel->getPermission('view_raids') == 1);
 		$version = new JVersion();
 		switch ($version->RELEASE) {
-			case '1.6':
-				$dateformat = 'Ymd\THis';
-			break;
-			default:
 			case '1.5':
 				$dateformat = '%Y%m%dT%H%M%S';
+			break;
+			default:
+			case '1.6':
+				$dateformat = 'Ymd\THis';
 			break;
 		}
 		

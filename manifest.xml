@@ -13,7 +13,7 @@
 	<releaseType>Major release</releaseType>
 	<downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.1.zip</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
-	<description>RaidPlanner component for Joomla 1.5, to organize WoW raids</description>
+	<description>RaidPlanner component for Joomla, to organize WoW raids</description>
 	<!-- Install Database Section -->
 	<install>
 		<sql>

@@ -31,7 +31,7 @@ function com_install()
 	
 	// intsall RaidPlanner User Plugin (just for J 1.6!)
 	$version = new JVersion();
-	if ($version->RELEASE == '1.6') {
+	if ($version->RELEASE >= '1.6') {
 		if ( $extInstaller->install($source . DS . 'plg_raidplanner') ) {
 			// module installed
 			$out .= 'RaidPlanner User plugin installed!<br />';

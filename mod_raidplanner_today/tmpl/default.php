@@ -26,12 +26,12 @@ if (empty($menu)) {
 
 $version = new JVersion();
 switch ($version->RELEASE) {
-	case '1.6':
-		$timeformat = 'H:i';
-	break;
-	default:
 	case '1.5':
 		$timeformat = '%H:%M';
+	break;
+	default:
+	case '1.6':
+		$timeformat = 'H:i';
 	break;
 }
 

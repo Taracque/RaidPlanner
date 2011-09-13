@@ -39,12 +39,12 @@ class RaidPlannerViewRaid extends JView
 		$groups = $this->getGroupList();
 		$version = new JVersion();
 		switch ($version->RELEASE) {
-			case '1.6':
-				$dateformat = 'Y-m-d H:i';
-			break;
-			default:
 			case '1.5':
 				$dateformat = '%Y-%m-%d %H:%M';
+			break;
+			default:
+			case '1.6':
+				$dateformat = 'Y-m-d H:i';
 			break;
 		}
 		
