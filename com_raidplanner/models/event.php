@@ -195,32 +195,6 @@ class RaidPlannerModelEvent extends JModel
 			}
 	
 			$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
-			if ($paramsObj->get('use_pbroster', '1') == '1') {
-				$pbroster = (JComponentHelper::isEnabled('com_pbroster', true));
-			} else {
-				$pbroster = false;
-			}
-			if ($pbroster) {
-				$query = "SELECT character_id,char_name FROM #__raidplanner_character WHERE profile_id=".$user->id;
-				$db->setQuery($query);
-				$result = $db->loadObjectList('char_name');
-	
-				// update character data from pbroster
-				foreach ($charset as $userchar) {
-					$db->setQuery("SELECT name,level,genderId,raceId,classId,rank FROM #__guildroster_charinfo WHERE name=".$db->Quote($userchar));
-					$chardata = $db->loadObject();
-					if (($chardata) && ($chardata->name) && (intval($chardata->level) > 0) && (intval($chardata->rank) < 9) ) {	// do not sync community member and invalid characters
-						if (isset($result[$userchar])) {
-							$query = "UPDATE #__raidplanner_character SET char_level=".intval($chardata->level).",race_id=".intval($chardata->raceId).",gender_id=".(intval($chardata->genderId)+1).",rank=".intval($chardata->rank).",class_id=(SELECT class_id FROM #__raidplanner_class WHERE armory_id=".intval($chardata->classId).") WHERE profile_id=".$user->id." AND char_name=".$db->Quote($chardata->name);
-						} else {
-							$query = "INSERT INTO #__raidplanner_character (char_name,char_level,race_id,gender_id,rank,class_id,profile_id) VALUES (".
-											$db->Quote($chardata->name).",".intval($chardata->level).",".intval($chardata->raceId).",".(intval($chardata->genderId)+1).",".(intval($chardata->rank)).",(SELECT class_id FROM #__raidplanner_class WHERE armory_id=".intval($chardata->classId)."),".$user->id.")";
-						}
-						$db->setQuery($query);
-						$db->query();
-					}
-				}
-			}
 		}
 	}
 	
