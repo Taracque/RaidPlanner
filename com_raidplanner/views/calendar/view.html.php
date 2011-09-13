@@ -81,6 +81,7 @@ class RaidPlannerViewCalendar extends JView
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		
         $this->assignRef( 'events', $model->getEvents( $month . "-01" ) );
+        $this->assignRef( 'eventmodel', $eventmodel );
 		$this->assignRef( 'timeformat', $timeformat );
 
         parent::display($tpl);

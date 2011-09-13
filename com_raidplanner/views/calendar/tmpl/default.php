@@ -59,7 +59,7 @@ window.addEvent('domready',function(){
 					$day = ( -$this->shift + ( $this->params['first_dow'] - 7)) % 7;
 					for ($weeks=1;$weeks<7;$weeks++) {
 				?>
-					<tr>
+					<tr class="<?php if (date("W", mktime(0, 0, 0, date("m"), date("d") + $this->params['first_dow'], date("Y"))) == date("W", mktime(0, 0, 0, $this->monthonly, $day + 3, $this->year)) ) { echo "curweek"; } ?>">
 					<?php for ($days=$this->params['first_dow'];$days<($this->params['first_dow']+7);$days++) {
 						$day++;
 						$daystamp = mktime(0, 0, 0, $this->monthonly, $day, $this->year);
@@ -67,7 +67,10 @@ window.addEvent('domready',function(){
 						$dom = date("j",$daystamp);
 					?>
 						<td class="<?php if ($thedate==date("Y-m-d")) {?>today <?php } ?><?php if ($this->monthonly!=date("m", $daystamp)) {?>noncurrent <?php } ?>">
-							<span class="day_no"><?php echo $dom; ?></span>
+							<?php
+								$onvacation = $this->eventmodel->usersOnVacation($thedate);
+							?>
+							<span class="day_no <?php if ($onvacation) {?>hasTip" title="<strong><?php echo JText::_('On Vacation');?></strong><br /><?php echo implode(", ",$onvacation); }?>"><?php echo $dom; ?></span>
 							<div class="events"><?php
 								if (@$this->events[$thedate]) {
 									foreach ($this->events[$thedate] as $event) {

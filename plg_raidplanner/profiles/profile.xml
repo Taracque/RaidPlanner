@@ -4,6 +4,7 @@
 		<fieldset name="raidplanner" label="PLG_USER_RAIDPLANNER_SLIDER_LABEL">
 			<field name="characters" type="textarea" id="characters" description="PLG_USER_RAIDPLANNER_FIELD_CHARACTERS_DESC" filter="string" label="PLG_USER_RAIDPLANNER_FIELD_CHARACTERS_LABEL" message="PLG_USER_RAIDPLANNER_FIELD_CHARACTERS_MESSAGE" rows="5" cols="20" />
 			<field name="calendar_secret" type="text" id="calendar_secret" description="PLG_USER_RAIDPLANNER_FIELD_CALENDAR_SECRET_DESC" filter="string" label="PLG_USER_RAIDPLANNER_FIELD_CALENDAR_SECRET_LABEL" message="PLG_USER_RAIDPLANNER_FIELD_CALENDAR_SECRET_MESSAGE" size="30" />
+			<field name="vacation" type="textarea" id="vacation" description="PLG_USER_RAIDPLANNER_FIELD_VACATION_DESC" filter="string" label="PLG_USER_RAIDPLANNER_FIELD_VACATION_LABEL" message="PLG_USER_RAIDPLANNER_FIELD_VACATION_MESSAGE" size="30" />
 		</fieldset>
 	</fields>
 </form>

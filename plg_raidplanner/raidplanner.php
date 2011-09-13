@@ -38,6 +38,7 @@
 
 			$data->raidplanner['characters'] = $juser->getParam('characters', '');
 			$data->raidplanner['calendar_secret'] = $juser->getParam('calendar_secret', '');
+			$data->raidplanner['vacation'] = $juser->getParam('vacation', '');
 		} 
 		return true;
 	}
@@ -72,9 +73,11 @@
 			if ($this->params->get('profile-require_raidplanner', 1) > 0) {
 				$form->setFieldAttribute('characters', 'required', $this->params->get('profile-require_raidplanner') == 2, 'profile');
 				$form->setFieldAttribute('calendar_secret', 'required', $this->params->get('profile-require_raidplanner') == 2, 'profile');
+				$form->setFieldAttribute('vacation', 'required', $this->params->get('profile-require_raidplanner') == 2, 'profile');
 			} else {
 				$form->removeField('characters', 'profile');
 				$form->removeField('calendar_secret', 'profile');
+				$form->removeField('vacation', 'profile');
 			}
 		}
  
@@ -89,9 +92,11 @@
 			if ($this->params->get('register-require_raidplanner', 1) > 0) {
 				$form->setFieldAttribute('characters', 'required', $this->params->get('register-require_raidplanner') == 2, 'profile');
 				$form->setFieldAttribute('calendar_secret', 'required', $this->params->get('register-require_raidplanner') == 2, 'profile');
+				$form->setFieldAttribute('vacation', 'required', $this->params->get('register-require_raidplanner') == 2, 'profile');
 			} else {
 				$form->removeField('characters', 'profile');
 				$form->removeField('calendar_secret', 'profile');
+				$form->removeField('vacation', 'profile');
 			}
 		}
 	}

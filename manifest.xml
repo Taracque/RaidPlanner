@@ -78,6 +78,8 @@
 		<languages folder="administrator/language">
 			<language tag="en-GB">en-GB.com_raidplanner.ini</language>
 			<language tag="hu-HU">hu-HU.com_raidplanner.ini</language>
+			<language tag="en-GB">en-GB.com_raidplanner.sys.ini</language>
+			<language tag="hu-HU">hu-HU.com_raidplanner.sys.ini</language>
 		</languages>
 	</administration>
 </install>

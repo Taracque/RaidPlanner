@@ -88,7 +88,12 @@ class RaidPlannerController extends JController
 			break;
 			default:
 			case 'default':
-				$vName = 'calendar';
+				if (JRequest::getVar('view') == 'roster') {
+					$vName = 'roster';
+					$mName = 'roster';
+				} else {
+					$vName = 'calendar';
+				}
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 			break;
 		}

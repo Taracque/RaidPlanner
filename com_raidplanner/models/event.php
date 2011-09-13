@@ -35,7 +35,7 @@ class RaidPlannerModelEvent extends JModel
 			if ($asTemplate) {
 				$result->raid_id = intval( JRequest::getVar('raid_id') );
 				$result->start_time = "0000-00-00" . substr( $result->start_time, 11 );
-				$result->invite_time = "0000-00-00" . substr( $result->start_time, 11 );
+				$result->invite_time = "0000-00-00" . substr( $result->invite_time, 11 );
 			}
 			$result->raid_history = $this->getHistory($result->raid_id);
 		} else {
@@ -50,6 +50,37 @@ class RaidPlannerModelEvent extends JModel
     	return $result;
     }
     
+    /**
+    * Get list of users which are on vacation
+    * @return array user names
+    */
+    function usersOnVacation( $date )
+    {
+    	$onvacation = array();
+		$db = & JFactory::getDBO();
+
+		/* quick and dirty query on users */
+		$query = "SELECT id,name FROM #__users WHERE params LIKE '%vacation=2%' ORDER BY id ASC";
+		$db->setQuery($query);
+		$results = $db->loadObjectList();
+		foreach ($results as $result) {
+			$user =& JUser::getInstance( $result->id );
+			$vac = $user->getParam('vacation', '');
+			$vacs = explode("\n", $vac);
+			foreach ($vacs as $vac)
+			{
+				$vac_period = explode(" ", $vac);
+				if (($vac_period[0]<= $date) && ($vac_period[1] >= $date)) {
+					$onvacation[] = $user->name;
+					break;
+				}
+			}
+		}
+
+    	return $onvacation;
+    
+    }
+
     /**
     * Process, formats raid history XML
     * @return string HTML converted raid history
@@ -372,12 +403,13 @@ class RaidPlannerModelEvent extends JModel
 		$confirm = JRequest::getVar('confirm', null, 'ARRAY');
 		$characters = JRequest::getVar('characters', null, 'ARRAY');
 		$history = trim( JRequest::getVar('history', '', 'post', 'string', JREQUEST_ALLOWRAW ) );
+		$queues = JRequest::getVar('queue', null, 'ARRAY');
 
 		foreach ($characters as $char) {
 			if (intval(@$roles[intval($char)])==0) {
 				$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
 			} else {
-				$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+				$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."',queue='".intval(@$queues[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
 			}
 			$db->setQuery($query);
 			$db->query();
