@@ -14,6 +14,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
+JHTML::_('behavior.tooltip');
+
 JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => 750,'y' => 500)));
 
 class RaidPlannerViewCalendar extends JView

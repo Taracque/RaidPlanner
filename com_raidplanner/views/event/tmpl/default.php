@@ -92,6 +92,14 @@ $hasChars = !empty($this->characters);
 							<?php endforeach; ?>
 						<?php endif; ?>
 					</li>
+					<?php if (@$this->onvacation) :?>
+					<li>
+						<strong><?php echo JText::_('Users on vacation');?>:</strong><br />
+						<?php foreach ($this->onvacation as $vacationusers) : ?>
+						<?php echo $vacationusers; ?> 
+						<?php endforeach; ?>
+					</li>
+					<?php endif; ?>
 				</ul>
 			</div>
 		</td>

@@ -47,6 +47,7 @@ class RaidPlannerViewEvent extends JView
 			$this->assignRef( 'selfstatus' , $model->getUserStatus($attendants) );
 			$this->assignRef( 'isOfficer' , $isOfficer );
 			$this->assignRef( 'canSignup' , $model->userCanSignUp( JRequest::getVar('id') ) );
+			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
 
 			parent::display($tpl);
 		}
