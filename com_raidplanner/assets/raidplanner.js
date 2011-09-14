@@ -53,7 +53,8 @@ function setupTooltip() {
 }
 
 window.addEvent('domready',function() {
-	if (MooTools.version=='1.3') {
+    var RE_VERSION = /^1.3/;
+	if (RE_VERSION.test(MooTools.version)) {
 		SqueezeBox.handlers.extend({
 			ajax: function(url) {
 				var options = this.options.ajaxOptions || {};
