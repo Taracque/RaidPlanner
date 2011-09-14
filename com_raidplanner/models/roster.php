@@ -38,7 +38,14 @@ class RaidPlannerModelRoster extends JModel
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		if ($paramsObj->get('armory_sync', '1'))
 		{
-			if ( (intval($paramsObj->get('last_sync',''))) < ( time() - ( (intval($paramsObj->get('sync_interval','4'))) * 60 * 60)) )
+			$db = & JFactory::getDBO();
+			$query = "SELECT guild_id, (DATE_ADD(lastSync, INTERVAL ".intval( $paramsObj->get('sync_interval',4) )." HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_name=".$db->Quote( $paramsObj->get('armory_guild', '') )." ORDER BY guild_id ASC LIMIT 1"; 
+			$db->setQuery($query);
+			$tmp = $db->loadObject();
+			$guild_id = $tmp->guild_id;
+			$needsync = $tmp->needSync;
+
+			if ( ( !$guild_id ) || ( $needsync<=0 ) )
 			{
 				$url = $paramsObj->get('armory_region', 'eu').".battle.net/api/wow/guild/";
 				$url .= $paramsObj->get('armory_realm', '') . "/";
@@ -66,10 +73,25 @@ class RaidPlannerModelRoster extends JModel
 				$url_string = curl_exec($ch);
 				curl_close($ch);
 	
-				$db = & JFactory::getDBO();
 	
 				$data = json_decode($url_string);
-				$data = json_decode($url_string);
+
+				if (!$guild_id)
+				{
+					$query = "INSERT INTO #__raidplanner_guild (guild_name, guild_realm, guild_region, guild_level, lastSync)
+								VALUES (".$db->Quote($data->name).", ".$db->Quote($data->realm).", ".$db->Quote($paramsObj->get('armory_region', 'eu')).", ".$db->Quote($data->level).", NOW())";
+				} else {
+					$query = "UPDATE #__raidplanner_guild SET
+								guild_name=".$db->Quote($data->name).",
+								guild_realm=".$db->Quote($data->realm).",
+								guild_region=".$db->Quote($paramsObj->get('armory_region', 'eu')).",
+								guild_level=".$db->Quote($data->level).",
+								lastSync=NOW(),
+								WHERE guild_id=".intval($guild_id);
+				}
+				$db->setQuery($query);
+				$db->query();
+
 				foreach($data->members as $member)
 				{
 					// check if character exists
@@ -85,13 +107,14 @@ class RaidPlannerModelRoster extends JModel
 					}
 					$query = "UPDATE #__raidplanner_character SET class_id='".intval($member->character->class)."'
 																,race_id='".intval($member->character->race)."'
-																,gender_id='".intval($member->character->gender)."'
+																,gender_id='".(intval($member->character->gender) + 1)."'
 																,char_level='".intval($member->character->level)."'
 																WHERE character_id=".$char_id;
 					$db->setQuery($query);
 					$db->query();
 				}
-				$paramsObj->set('last_sync',time());
+				
+				// store sync info in database
 				echo "ARMORY SYNCED (".$url.")";
 			}
 		}
