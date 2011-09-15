@@ -53,8 +53,7 @@ function setupTooltip() {
 }
 
 window.addEvent('domready',function() {
-    var RE_VERSION = /^1.3/;
-	if (RE_VERSION.test(MooTools.version)) {
+	if ((MooTools.version >= '1.3') && (typeof(SqueezBox)!='undefined')) {
 		SqueezeBox.handlers.extend({
 			ajax: function(url) {
 				var options = this.options.ajaxOptions || {};
@@ -72,6 +71,28 @@ window.addEvent('domready',function() {
 				this.asset.send.delay(10, this.asset, [{url: url}]);
 			}
 		}); 
+	}
+	if ($('roster_table')) {
+		if ((MooTools.version >= '1.2.4') && (typeof(HtmlTable)!='undefined')) {
+			var rosterTable = new HtmlTable(
+				$('roster_table'),
+				{
+					properties: {
+						border: 0,
+						cellspacing: 1,
+						cellpadding: 5
+					},
+					sortable :true,
+					zebra: true,
+					selectable: true,
+					allowMultiSelect: false,
+					paginate:true,
+					paginateRows:25,
+					paginationControlPages:25,
+					filterEl:$('roster_filter')
+	        	}
+			).updatePagination();
+		}
 	}
 	setupTooltip();
 });

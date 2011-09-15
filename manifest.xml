@@ -8,7 +8,7 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.1</version>
+	<version>0.2</version>
 	<releaseDate>2011-03-22</releaseDate>
 	<releaseType>Major release</releaseType>
 	<downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.1.zip</downloadUrl>
@@ -20,6 +20,11 @@
 			<file driver="mysql" charset="utf8">install/install.sql</file>
 		</sql>
 	</install>
+	<update>
+		<schemas>
+			<schemapath type="mysql">install/updates</schemapath>
+		</schemas>
+	</update>
     <uninstall>
 		<sql>
 			<file driver="mysql" charset="utf8">install/uninstall.sql</file>
@@ -45,6 +50,7 @@
 	<media destination="../images/raidplanner" folder="images">
 		<folder>raid_icons</folder>
 		<folder>role_icons</folder>
+		<folder>tabards</folder>
 	</media>
 	<administration>
 		<!-- Administration Menu Section -->

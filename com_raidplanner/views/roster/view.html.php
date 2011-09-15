@@ -14,15 +14,19 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
+JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');
+JHTML::script('guild-tabard.js', 'components/com_raidplanner/assets/');
+
 class RaidPlannerViewRoster extends JView
 {
-    function display($tpl = null)
-    {
+	function display($tpl = null)
+	{
 		$model = &$this->getModel();
 
 		$this->assignRef( 'characters', $model->getCharacters() );
-		
-        parent::display($tpl);
-    }
-    
+		$this->assignRef( 'guildinfo', $model->getGuildInfo() );
+
+		parent::display($tpl);
+	}
+
 }

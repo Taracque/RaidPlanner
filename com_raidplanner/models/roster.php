@@ -33,6 +33,16 @@ class RaidPlannerModelRoster extends JModel
 		return ( $db->loadAssocList('character_id') );
 	}
 
+	public function getGuildInfo()
+	{
+		$db = & JFactory::getDBO();
+		$query = "SELECT * FROM #__raidplanner_guild ORDER BY guild_id ASC LIMIT 1";
+		$db->setQuery($query);
+		$tmp = $db->loadObject();
+		$tmp->params = json_decode($tmp->params);
+		return ( $tmp );
+	}
+
 	private function armorySync()
 	{
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
@@ -67,28 +77,38 @@ class RaidPlannerModelRoster extends JModel
 				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 15);
 				curl_setopt ($ch, CURLOPT_USERAGENT, $browser);
 				
-				// Throttle requests and try avoid Armory tmp bans.
-				sleep(1);
-				
 				$url_string = curl_exec($ch);
 				curl_close($ch);
 	
 	
 				$data = json_decode($url_string);
-
+				if (json_last_error() != JSON_ERROR_NONE)
+				{
+					die('JSON ERROR');
+					return null;
+				}
 				if (!$guild_id)
 				{
-					$query = "INSERT INTO #__raidplanner_guild (guild_name, guild_realm, guild_region, guild_level, lastSync)
-								VALUES (".$db->Quote($data->name).", ".$db->Quote($data->realm).", ".$db->Quote($paramsObj->get('armory_region', 'eu')).", ".$db->Quote($data->level).", NOW())";
-				} else {
-					$query = "UPDATE #__raidplanner_guild SET
+					$query = "INSERT INTO #__raidplanner_guild (guild_name) VALUES (".$db->Quote($data->name).")";
+					$db->setQuery($query);
+					$db->query();
+					$guild_id=$db->insertid();
+				}
+				$params = array(
+					'achievementPoints' => $data->achievementPoints,
+					'side'		=> ($data->side==0)?"Alliance":"Horde",
+					'emblem'	=> $data->emblem
+				);
+				
+				$query = "UPDATE #__raidplanner_guild SET
 								guild_name=".$db->Quote($data->name).",
 								guild_realm=".$db->Quote($data->realm).",
 								guild_region=".$db->Quote($paramsObj->get('armory_region', 'eu')).",
 								guild_level=".$db->Quote($data->level).",
-								lastSync=NOW(),
+								params=".$db->Quote(json_encode($params)).",
+								lastSync=NOW()
 								WHERE guild_id=".intval($guild_id);
-				}
+				echo $query;
 				$db->setQuery($query);
 				$db->query();
 
@@ -109,13 +129,12 @@ class RaidPlannerModelRoster extends JModel
 																,race_id='".intval($member->character->race)."'
 																,gender_id='".(intval($member->character->gender) + 1)."'
 																,char_level='".intval($member->character->level)."'
+																,rank='".intval($member->rank)."'
+																,guild_id='".intval($guild_id)."'
 																WHERE character_id=".$char_id;
 					$db->setQuery($query);
 					$db->query();
 				}
-				
-				// store sync info in database
-				echo "ARMORY SYNCED (".$url.")";
 			}
 		}
 	}

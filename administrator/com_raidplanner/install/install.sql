@@ -142,13 +142,13 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_history` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_guild` (
-  `guild_id` INT NOT NULL AUTO_INCREMENT,
-  `guild_name` VARCHAR( 80 ) NOT NULL DEFAULT '',
-  `guild_realm` VARCHAR( 80 ) NOT NULL DEFAULT '',
-  `guild_region` VARCHAR( 10 ) NOT NULL DEFAULT '',
-  `guild_level` INT NOT NULL DEFAULT '0',
-  `lastSync` TIMESTAMP NULL DEFAULT NULL,
-  `params` TEXT NOT NULL DEFAULT '',
+  `guild_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `guild_name` varchar(80) NOT NULL DEFAULT '',
+  `guild_realm` varchar(80) NOT NULL DEFAULT '',
+  `guild_region` varchar(10) NOT NULL DEFAULT '',
+  `guild_level` int(10) NOT NULL DEFAULT '0',
+  `lastSync` timestamp NULL DEFAULT NULL,
+  `params` text NOT NULL,
   PRIMARY KEY (`guild_id`),
-  key `lastSync` (  `lastSync` )
-) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+  KEY `lastSync` (`lastSync`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
