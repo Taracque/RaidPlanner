@@ -41,30 +41,49 @@ HtmlTable = Class.refactor(HtmlTable, {
         classHeaderPaginationContorlLI:'li-pagination-control',
         classHeaderNumOfRowsContorlUL:'ul-numOfRows-control',
         classHeaderNumOfRowsContorlLI:'li-numOfRows-control',
+        classHeaderFilterContorlDiv:'div-filter-control',
         controlDiv:null,
-        filterEl:null
+        pageCtrl:null,
+        rowsCtrl:null,
+        filterable:true,
+        filterEl:null,
+        strings:{
+            next:'Next',
+            previous:'Previous',
+            rows:'Rows',
+            search : 'Search…'
+        }
 	},
 
 	initialize: function(){
 		this.previous.apply(this, arguments);
 		if (this.occluded) return this.occluded;
+
+		var numOfHeaders = this.thead.rows[0].getElements('th').length;
+		var tr = new Element('tr',{'class':this.options.classHeaderPaginationContorlTR});
+		tr.inject(this.thead.rows[0], 'before');
+		var th = new Element('th',{'class':this.options.classHeaderPaginationContorlTH}).inject(tr);
+		th.addClass(this.options.classNoSort);//to avoid sorting on the control header click
+		th.setProperty('colspan',numOfHeaders);
+		var controlDiv = new Element('div',{'class':this.options.classHeaderPaginationContorlDiv}).inject(th);
+		this.options.controlDiv = controlDiv;
+
+		this.options.pageCtrl = new Element('ul',{'class':this.options.classHeaderPaginationContorlUL}).inject(this.options.controlDiv);
+		
+		if(this.options.filterable){
+			this.options.filterEl = new Element('input',{'type':'text','size':20});
+			this.options.filterEl.addEvent('keyup',(function(e){ this.filter(this.options.filterEl.get('value')); }).bind(this));
+			var div = new Element('div',{'class':this.options.classHeaderFilterContorlDiv}).inject(this.options.controlDiv);
+			this.options.filterEl.inject(div);
+			new OverText(this.options.filterEl,{textOverride:this.options.strings.search});
+		}
+
+		this.options.rowsCtrl = new Element('ul',{'class':this.options.classHeaderNumOfRowsContorlUL}).inject(this.options.controlDiv);
+
 		if(this.options.paginate){
 			if(this.paginationInitialized==null){
 				this.paginationInitialized = true;
-				if(this.thead.rows.length>0){
-					var numOfHeaders = this.thead.rows[0].getElements('th').length;
-					var tr = new Element('tr',{'class':this.options.classHeaderPaginationContorlTR});
-					tr.inject(this.thead.rows[0], 'before');
-					var th = new Element('th',{'class':this.options.classHeaderPaginationContorlTH}).inject(tr);
-					th.addClass(this.options.classNoSort);//to avoid sorting on the control header click
-					th.setProperty('colspan',numOfHeaders);
-					var controlDiv = new Element('div',{'class':this.options.classHeaderPaginationContorlDiv}).inject(th);
-					this.options.controlDiv = controlDiv;
-				}
 			}
-		}
-		if(this.options.filterEl){
-			this.options.filterEl.addEvent('keyup',(function(e){ this.filter(this.options.filterEl.get('value')); }).bind(this));
 		}
 		return true;
 	},
@@ -83,7 +102,8 @@ HtmlTable = Class.refactor(HtmlTable, {
 
 	updatePaginationControl: function(){
 		if($defined((this.options.controlDiv))){
-			this.options.controlDiv.empty();
+			this.options.pageCtrl.empty();
+			this.options.rowsCtrl.empty();
 			if($defined(this.body.rows)){
 				var numOfRows = 0;
 				for (row=0;row<this.body.rows.length;row++){
@@ -96,11 +116,10 @@ HtmlTable = Class.refactor(HtmlTable, {
 					var numOfLi = Math.min(this.options.paginationControlPages, numOfPages);
 					var startIndex = Math.min((numOfPages-numOfLi),Math.max(0,this.options.paginatePage-1-Math.floor((numOfLi-1)/2)));
 					var endIndex = Math.max((numOfLi),Math.min(numOfPages,this.options.paginatePage+Math.floor((numOfLi-1)/2)));
-					var ul = new Element('ul',{'class':this.options.classHeaderPaginationContorlUL}).inject(this.options.controlDiv);
 					
-					var liPrevious = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(ul);
+					var liPrevious = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(this.options.pageCtrl);
 					var liPreviousSpan = new Element('span').inject(liPrevious);
-					liPreviousSpan.set('html','Previous');
+					liPreviousSpan.set('html',this.options.strings.previous);
 					liPrevious.store('pagination',this.options.paginatePage-1);
 					liPreviousSpan.addEvent('click',function(){
 						this.updatePagination(arguments[0].retrieve('pagination'));
@@ -111,7 +130,7 @@ HtmlTable = Class.refactor(HtmlTable, {
 
 					if((endIndex-startIndex)>1){//avoid 1 page pagination
 						for(var i=startIndex;i<endIndex;i++){
-							var li = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(ul);
+							var li = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(this.options.pageCtrl);
 							var span = new Element('span').inject(li);
 							span.set('html',i+1);
 							li.store('pagination',i+1);
@@ -125,9 +144,9 @@ HtmlTable = Class.refactor(HtmlTable, {
 						}
 					}
 					
-					var liNext = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(ul);
+					var liNext = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(this.options.pageCtrl);
 					var liNextSpan = new Element('span').inject(liNext);
-					liNextSpan.set('html','Next');
+					liNextSpan.set('html',this.options.strings.next);
 					liNext.store('pagination',this.options.paginatePage+1);
 					liNextSpan.addEvent('click',function(){
 						this.updatePagination(arguments[0].retrieve('pagination'));
@@ -138,14 +157,12 @@ HtmlTable = Class.refactor(HtmlTable, {
 
 					//add number of rows selector
 					if(this.options.paginateRowsSelector!=null && this.options.paginateRowsSelector.length>1){
-						var ulRowsControl = new Element('ul',{'class':this.options.classHeaderNumOfRowsContorlUL}).inject(this.options.controlDiv);
-						var liRows = new Element('li',{'class':this.options.classHeaderNumOfRowsContorlLI}).inject(ulRowsControl);
-						liRows.addClass('li-numOfRows-current');
-						liRows.addClass('li-numOfRows-rows');
+						var liRows = new Element('li',{'class':this.options.classHeaderNumOfRowsContorlLI}).inject(this.options.rowsCtrl);
+						liRows.addClass('static');
 						var rowSpan = new Element('span').inject(liRows);
-						rowSpan.set('html','Rows:');
+						rowSpan.set('html',this.options.strings.rows);
 						this.options.paginateRowsSelector.each(function(curVal){
-						   var li = new Element('li',{'class':this.options.classHeaderNumOfRowsContorlLI}).inject(ulRowsControl);
+						   var li = new Element('li',{'class':this.options.classHeaderNumOfRowsContorlLI}).inject(this.options.rowsCtrl);
 						   li.store('rowCount',curVal);
 						   var span = new Element('span').inject(li);
 						   span.set('html',curVal);
@@ -159,6 +176,8 @@ HtmlTable = Class.refactor(HtmlTable, {
 						   }
 						}.bind(this));
 					}
+					
+					this.options.filterEl.retrieve('OverText').reposition();
 				}
 			}
 		}

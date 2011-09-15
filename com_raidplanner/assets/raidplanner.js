@@ -72,27 +72,5 @@ window.addEvent('domready',function() {
 			}
 		}); 
 	}
-	if ($('roster_table')) {
-		if ((MooTools.version >= '1.2.4') && (typeof(HtmlTable)!='undefined')) {
-			var rosterTable = new HtmlTable(
-				$('roster_table'),
-				{
-					properties: {
-						border: 0,
-						cellspacing: 1,
-						cellpadding: 5
-					},
-					sortable :true,
-					zebra: true,
-					selectable: true,
-					allowMultiSelect: false,
-					paginate:true,
-					paginateRows:25,
-					paginationControlPages:25,
-					filterEl:$('roster_filter')
-	        	}
-			).updatePagination();
-		}
-	}
 	setupTooltip();
 });
