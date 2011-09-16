@@ -49,7 +49,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             </td>
             <td>
                 <?php if ($row->default == 1): ?>
-            	<img src="templates/khepri/images/menu/icon-16-default.png" alt="<?php echo JText::_( 'Default' );?>">
+            	<img src="templates/<?php echo JFactory::getApplication()->getTemplate();?>/images/menu/icon-16-default.png" alt="<?php echo JText::_( 'Default' );?>">
             	<?php endif; ?>
             </td>
         </tr>

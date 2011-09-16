@@ -15,7 +15,7 @@ jimport( 'joomla.utilities.date');
 ?>
 <div class="rp_roster">
 	<div class="rp_roster_header">
-		<canvas id="rp_guild_tabard" width="240" height="240">
+		<canvas id="rp_guild_tabard" width="120" height="120">
 		</canvas>
 		<script type="text/javascript">
 			window.addEvent('domready',function(){
@@ -63,7 +63,10 @@ jimport( 'joomla.utilities.date');
 			});
 		</script>
 		<h2><a href="<?php echo $this->guildinfo->params->link;?>" target="_blank"><?php echo $this->guildinfo->guild_name;?></a></h2>
-		<strong><?php echo JTEXT::_('LEVEL');?>: <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JTEXT::_('GUILD');?>, <?php echo $this->guildinfo->guild_realm;?> - <?php echo strtoupper($this->guildinfo->guild_region);?></strong>
+		<strong>
+			<?php echo JTEXT::_('LEVEL');?> <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JTEXT::_('GUILD');?><br />
+			<?php echo $this->guildinfo->guild_realm;?> - <?php echo strtoupper($this->guildinfo->guild_region);?>
+		</strong>
 	</div>
 	<div class="rp_roster_table">
 		<table class="rp_container" id="roster_table">

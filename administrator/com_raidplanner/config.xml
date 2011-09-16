@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<params>
-		<param type="radio" name="load_css" default="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
+		<param type="radio" name="load_css" default="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
@@ -12,13 +12,16 @@
 		<param type="list" name="armory_region" default="eu" label="RAIDPLANNER_ARMORY_REGION" description="RAIDPLANNER_ARMORY_REGION_DESC">
 			<option value="eu">EU</option>
 			<option value="us">US</option>
+			<option value="kr">KR</option>
+			<option value="tw">TW</option>
+			<option value="cn">CN</option>
 		</param>
 		<param type="text" name="armory_realm" default="" label="RAIDPLANNER_ARMORY_REALM" description="RAIDPLANNER_ARMORY_REALM_DESC"></param>
 		<param type="text" name="armory_guild" default="" label="RAIDPLANNER_ARMORY_GUILD" description="RAIDPLANNER_ARMORY_GUILD_DESC"></param>
 		<param type="text" name="sync_interval" default="4" label="RAIDPLANNER_SYNC_INTERVAL" description="RAIDPLANNER_SYNC_INTERVAL_DESC"></param>
 	</params>
 	<fieldset name="settings" label="RAIDPLANNER_SETTINGS">
-		<field type="radio" name="load_css" default="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
+		<field type="radio" name="load_css" default="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
@@ -31,6 +34,9 @@
 		<field type="list" name="armory_region" default="eu" label="RAIDPLANNER_ARMORY_REGION" description="RAIDPLANNER_ARMORY_REGION_DESC">
 			<option value="eu">EU</option>
 			<option value="us">US</option>
+			<option value="kr">KR</option>
+			<option value="tw">TW</option>
+			<option value="cn">CN</option>
 		</field>
 		<field type="text" name="armory_realm" default="" label="RAIDPLANNER_ARMORY_REALM" description="RAIDPLANNER_ARMORY_REALM_DESC"></field>
 		<field type="text" name="armory_guild" default="" label="RAIDPLANNER_ARMORY_GUILD" description="RAIDPLANNER_ARMORY_GUILD_DESC"></field>

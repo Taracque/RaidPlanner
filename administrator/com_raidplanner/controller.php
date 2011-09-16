@@ -30,7 +30,7 @@ class RaidPlannerController extends JController
 	{
 		parent::display();
 		
-		if ($this->_task=='service') {
+		if ($this->getTask() == 'service') {
 			$db	=& JFactory::getDBO();
 
 			// do service things, remove unanchored database entries
