@@ -77,7 +77,8 @@ function GuildTabard(canvas, tabard, jpath) {
 		}
 		new Request({
 			url: _src[count],
-			onProgress: function() {
+			method: 'get',
+			onRequest: function() {
 				_loadImage(count + 1);
 			}
 		}).send();

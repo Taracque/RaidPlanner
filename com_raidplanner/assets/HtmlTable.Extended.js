@@ -76,7 +76,9 @@ HtmlTable = Class.refactor(HtmlTable, {
 			this.options.filterEl.addEvent('keyup',(function(e){ this.filter(this.options.filterEl.get('value')); }).bind(this));
 			var div = new Element('div',{'class':this.options.classHeaderFilterContorlDiv}).inject(this.options.controlDiv);
 			this.options.filterEl.inject(div);
-			new OverText(this.options.filterEl,{textOverride:this.options.strings.search});
+			if (window.OverText){
+				new OverText(this.options.filterEl,{textOverride:this.options.strings.search});
+			}
 		}
 
 		this.options.rowsCtrl = new Element('ul',{'class':this.options.classHeaderNumOfRowsContorlUL}).inject(this.options.controlDiv);
@@ -178,7 +180,9 @@ HtmlTable = Class.refactor(HtmlTable, {
 						}.bind(this));
 					}
 					
-					this.options.filterEl.retrieve('OverText').reposition();
+					if (window.OverText){
+						this.options.filterEl.retrieve('OverText').reposition();
+					}
 				}
 			}
 		}
@@ -225,12 +229,12 @@ HtmlTable = Class.refactor(HtmlTable, {
 	},
 	zebra: function(row, i){
 		if (i==0){
-			_zebraCounter=0;
+			this.options._zebraCounter=0;
 		}
 		if (!row.hasClass('filtered')){
-			_zebraCounter++;
+			this.options._zebraCounter++;
 		}
-	    return row[((_zebraCounter % 2) ? 'remove' : 'add')+'Class'](this.options.classZebra);
+	    return row[((this.options._zebraCounter % 2) ? 'remove' : 'add')+'Class'](this.options.classZebra);
 	},
 	filter: function(term){
 		var terms = term.toLowerCase().split(" ");

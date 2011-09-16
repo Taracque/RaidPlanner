@@ -60,6 +60,7 @@ class RaidPlannerModelEvent extends JModel
 		$db = & JFactory::getDBO();
 
 		/* quick and dirty query on users */
+		$version = new JVersion();
 		switch ($version->RELEASE) {
 			case '1.5':
 				$query = "SELECT id,name FROM #__users WHERE params LIKE '%vacation=2%' ORDER BY id ASC";

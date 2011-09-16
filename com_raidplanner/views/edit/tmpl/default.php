@@ -12,8 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 
-$dateFormat = JText::_('DATE_FORMAT_LC4');
-$dateFormatJS = JText::_('%Y-%m-%d');
+$dateFormat = JText::_('%Y-%m-%d');
 $version = new JVersion();
 switch ($version->RELEASE) {
 	case '1.5':
@@ -47,9 +46,9 @@ $start_time = explode( " ", JHTML::_('date', $this->event->start_time, $dateForm
 		<label><?php echo JText::_('Description');?>:<br />
 			<textarea name="description" cols="40" rows="5"><?php echo $this->event->description;?></textarea>
 		</label><br />
-		<label><?php echo JText::_('Start time');?>: <?php echo JHTML::calendar(JHTML::_('date', $start_time[0], $dateFormat),'start_time[1]','start_time_1',$dateFormatJS);?> <input type="text" name="start_time[2]" id="start_time_2" value="<?php echo $start_time[1];?>" size="6" /></label><br />
+		<label><?php echo JText::_('Start time');?>: <?php echo JHTML::calendar(JHTML::_('date', $start_time[0], $dateFormat),'start_time[1]','start_time_1',$dateFormat);?> <input type="text" name="start_time[2]" id="start_time_2" value="<?php echo $start_time[1];?>" size="6" /></label><br />
 		<label><?php echo JText::_('Duration');?>: <input type="text" name="duration_mins" id="duration_mins" value="<?php echo $this->event->duration_mins;?>" size="3" /> <?php echo JText::_('minutes');?></label><br />
-		<label><?php echo JText::_('Invite time');?>: <?php echo JHTML::calendar(JHTML::_('date', $invite_time[0], $dateFormat),'invite_time[1]','invite_time_1',$dateFormatJS);?> <input type="text" name="invite_time[2]" id="invite_time_2" value="<?php echo $invite_time[1];?>" size="6" /></label><br />
+		<label><?php echo JText::_('Invite time');?>: <?php echo JHTML::calendar(JHTML::_('date', $invite_time[0], $dateFormat),'invite_time[1]','invite_time_1',$dateFormat);?> <input type="text" name="invite_time[2]" id="invite_time_2" value="<?php echo $invite_time[1];?>" size="6" /></label><br />
 		<label><?php echo JText::_('Frozen');?> <input type="text" name="freeze_time" id="freeze_time" value="<?php echo $this->event->freeze_time;?>" size="3" /> <?php echo JText::_('mins. before start');?></label><br />
 		<label><?php echo JText::_('Level Range');?> <input type="text" name="minimum_level" id="minimum_level" value="<?php echo $this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo $this->event->maximum_level;?>" size="3" /></label><br />
 		<label><?php echo JText::_('Minimum Rank');?> <input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo $this->event->minimum_rank;?>" size="3" /></label><br />

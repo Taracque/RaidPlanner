@@ -74,7 +74,7 @@ class RaidPlannerModelCharacter extends JModel
 
 		// Store the web link table to the database
 		if (!$row->store()) {
-			$this->setError( $row->getErrorMsg() );
+			$this->setError( $this->_db->getErrorMsg() );
 			return false;
 		}
 		
@@ -96,7 +96,7 @@ class RaidPlannerModelCharacter extends JModel
 		if (count( $cids )) {
 			foreach($cids as $cid) {
 				if (!$row->delete( $cid )) {
-					$this->setError( $row->getErrorMsg() );
+					$this->setError( $this->_db->getErrorMsg() );
 					return false;
 				}
 			}

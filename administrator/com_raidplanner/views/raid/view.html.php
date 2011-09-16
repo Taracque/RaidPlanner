@@ -37,18 +37,7 @@ class RaidPlannerViewRaid extends JView
 			JToolBarHelper::cancel( 'cancel', 'Close' );
 		}
 		$groups = $this->getGroupList();
-		$version = new JVersion();
-		switch ($version->RELEASE) {
-			case '1.5':
-				$dateformat = '%Y-%m-%d %H:%M';
-			break;
-			default:
-			case '1.6':
-				$dateformat = 'Y-m-d H:i';
-			break;
-		}
-		
-		$this->assignRef('dateformat', $dateformat );
+
 		$this->assignRef('groups', $groups );
 		$this->assignRef('icons', $this->getIcons() );
 		$this->assignRef('raid', $raid);

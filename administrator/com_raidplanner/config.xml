@@ -15,7 +15,7 @@
 		</param>
 		<param type="text" name="armory_realm" default="" label="RAIDPLANNER_ARMORY_REALM" description="RAIDPLANNER_ARMORY_REALM_DESC"></param>
 		<param type="text" name="armory_guild" default="" label="RAIDPLANNER_ARMORY_GUILD" description="RAIDPLANNER_ARMORY_GUILD_DESC"></param>
-		<param type="integer" name="sync_interval" default="4" label="RAIDPLANNER_SYNC_INTERVAL" description="RAIDPLANNER_SYNC_INTERVAL_DESC" first="1" last="24" step="1" ></param>
+		<param type="text" name="sync_interval" default="4" label="RAIDPLANNER_SYNC_INTERVAL" description="RAIDPLANNER_SYNC_INTERVAL_DESC"></param>
 	</params>
 	<fieldset name="settings" label="RAIDPLANNER_SETTINGS">
 		<field type="radio" name="load_css" default="1" label="LOAD CSS" description="LOAD CSS DESCRIPTION">
