@@ -331,7 +331,7 @@ tr.rp_header {
 .rp_roster_table tr.table-tr-selected {
 	background-color: #FFC;
 }
-.rp_container .div-filter-control {
+.rp_container .rp_filter {
 	float:left;
 	margin-left:40px;
 }

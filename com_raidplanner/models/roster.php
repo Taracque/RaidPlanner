@@ -57,9 +57,9 @@ class RaidPlannerModelRoster extends JModel
 
 			if ( ( !$guild_id ) || ( $needsync<=0 ) )
 			{
-				$url = $paramsObj->get('armory_region', 'eu').".battle.net/api/wow/guild/";
-				$url .= $paramsObj->get('armory_realm', '') . "/";
-				$url .= $paramsObj->get('armory_guild', '');
+				$url = "http://".$paramsObj->get('armory_region', 'eu').".battle.net/api/wow/guild/";
+				$url .= urlencode( $paramsObj->get('armory_realm', '') ) . "/";
+				$url .= urlencode( $paramsObj->get('armory_guild', '') );
 				$url = $url . "?fields=members";
 
 				// Init cURL
@@ -84,9 +84,9 @@ class RaidPlannerModelRoster extends JModel
 				$data = json_decode($url_string);
 				if (json_last_error() != JSON_ERROR_NONE)
 				{
-					die('JSON ERROR');
 					return null;
 				}
+
 				if (!$guild_id)
 				{
 					$query = "INSERT INTO #__raidplanner_guild (guild_name) VALUES (".$db->Quote($data->name).")";
@@ -97,7 +97,9 @@ class RaidPlannerModelRoster extends JModel
 				$params = array(
 					'achievementPoints' => $data->achievementPoints,
 					'side'		=> ($data->side==0)?"Alliance":"Horde",
-					'emblem'	=> $data->emblem
+					'emblem'	=> $data->emblem,
+					'link'		=> "http://" . $paramsObj->get('armory_region', 'eu') . ".battle.net/wow/guild/" . urlencode( $paramsObj->get('armory_realm', '') ) . "/" . urlencode($data->name) ."/",
+					'char_link'	=> "http://" . $paramsObj->get('armory_region', 'eu') . ".battle.net/wow/character/" . urlencode( $paramsObj->get('armory_realm', '') ) . "/%s/advanced",
 				);
 				
 				$query = "UPDATE #__raidplanner_guild SET
@@ -108,7 +110,11 @@ class RaidPlannerModelRoster extends JModel
 								params=".$db->Quote(json_encode($params)).",
 								lastSync=NOW()
 								WHERE guild_id=".intval($guild_id);
-				echo $query;
+				$db->setQuery($query);
+				$db->query();
+
+				/* detach characters from guild */
+				$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($guild_id)."";
 				$db->setQuery($query);
 				$db->query();
 
@@ -135,6 +141,12 @@ class RaidPlannerModelRoster extends JModel
 					$db->setQuery($query);
 					$db->query();
 				}
+
+				/* delete all guildless characters */
+				$query = "DELETE FROM #__raidplanner_character WHERE guild_id=0";
+				$db->setQuery($query);
+				$db->query();
+
 			}
 		}
 	}

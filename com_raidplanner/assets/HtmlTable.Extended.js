@@ -52,7 +52,8 @@ HtmlTable = Class.refactor(HtmlTable, {
             previous:'Previous',
             rows:'Rows',
             search : 'Search…'
-        }
+        },
+        _zebraCounter:0
 	},
 
 	initialize: function(){
@@ -222,6 +223,15 @@ HtmlTable = Class.refactor(HtmlTable, {
 		if (this.options.listenToPush) this.updatePagination();
 		return pushed;
 	},
+	zebra: function(row, i){
+		if (i==0){
+			_zebraCounter=0;
+		}
+		if (!row.hasClass('filtered')){
+			_zebraCounter++;
+		}
+	    return row[((_zebraCounter % 2) ? 'remove' : 'add')+'Class'](this.options.classZebra);
+	},
 	filter: function(term){
 		var terms = term.toLowerCase().split(" ");
 		//for each row of table execute
@@ -239,5 +249,8 @@ HtmlTable = Class.refactor(HtmlTable, {
 			}
 		}
 		this.updatePagination();
+		if (this.options.zebra){
+			this.updateZebras();
+		}
 	}
 });

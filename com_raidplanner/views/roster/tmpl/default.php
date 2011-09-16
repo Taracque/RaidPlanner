@@ -49,6 +49,7 @@ jimport( 'joomla.utilities.date');
 								classHeaderPaginationContorlLI:'rp_control',
 								classHeaderNumOfRowsContorlUL:'rp_right',
 								classHeaderNumOfRowsContorlLI:'rp_control',
+								classHeaderFilterContorlDiv:'rp_filter'
 							}
 						).updatePagination();
 					}
@@ -61,8 +62,8 @@ jimport( 'joomla.utilities.date');
 				}, '<?php echo JURI::base();?>images/raidplanner/tabards/');
 			});
 		</script>
-		<h2><?php echo $this->guildinfo->guild_name;?></h2>
-		<strong>Level: <?php echo $this->guildinfo->guild_level;?>, <?php echo $this->guildinfo->params->side;?> <?php echo $this->guildinfo->guild_realm;?>-<?php echo $this->guildinfo->guild_region;?></strong>
+		<h2><a href="<?php echo $this->guildinfo->params->link;?>" target="_blank"><?php echo $this->guildinfo->guild_name;?></a></h2>
+		<strong><?php echo JTEXT::_('LEVEL');?>: <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JTEXT::_('GUILD');?>, <?php echo $this->guildinfo->guild_realm;?> - <?php echo strtoupper($this->guildinfo->guild_region);?></strong>
 	</div>
 	<div class="rp_roster_table">
 		<table class="rp_container" id="roster_table">
@@ -79,7 +80,7 @@ jimport( 'joomla.utilities.date');
 			<tbody>
 			<?php foreach($this->characters as $character) : ?>
 				<tr class="rp_roster">
-					<td><?php echo $character['char_name']; ?></td>
+					<td><a href="<?php echo sprintf($this->guildinfo->params->char_link, urlencode( $character['char_name'] ) );?>" target="_blank"><?php echo $character['char_name']; ?></a></td>
 					<td><?php echo $character['char_level']; ?></td>
 					<td><?php echo $character['gender_name']; ?></td>
 					<td><?php echo $character['race_name']; ?></td>
