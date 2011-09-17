@@ -13,6 +13,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 // add css and js
 JHTML::_('behavior.mootools');
 
+$version = new JVersion();
+if ($version->RELEASE == '1.5') {
+	JFactory::getLanguage()->load('com_raidplanner.j15', JPATH_ADMINISTRATOR);
+}
+
 $paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 if ($paramsObj->get('load_css', '1')) {
 	JHTML::stylesheet('raidplanner.css', 'components/com_raidplanner/assets/');

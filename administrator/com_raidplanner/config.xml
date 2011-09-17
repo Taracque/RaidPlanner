@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<params>
-		<param type="radio" name="load_css" default="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
+		<param type="radio" name="load_css" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</param>
-		<param type="radio" name="armory_sync" default="1" label="RAIDPLANNER_ARMORY_SYNC" description="RAIDPLANNER_ARMORY_SYNC_DESC">
+		<param type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_ARMORY_SYNC" description="COM_RAIDPLANNER_ARMORY_SYNC_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</param>
-		<param type="list" name="armory_region" default="eu" label="RAIDPLANNER_ARMORY_REGION" description="RAIDPLANNER_ARMORY_REGION_DESC">
+		<param type="list" name="armory_region" default="eu" label="COM_RAIDPLANNER_ARMORY_REGION" description="COM_RAIDPLANNER_ARMORY_REGION_DESC">
 			<option value="eu">EU</option>
 			<option value="us">US</option>
 			<option value="kr">KR</option>
 			<option value="tw">TW</option>
 			<option value="cn">CN</option>
 		</param>
-		<param type="text" name="armory_realm" default="" label="RAIDPLANNER_ARMORY_REALM" description="RAIDPLANNER_ARMORY_REALM_DESC"></param>
-		<param type="text" name="armory_guild" default="" label="RAIDPLANNER_ARMORY_GUILD" description="RAIDPLANNER_ARMORY_GUILD_DESC"></param>
-		<param type="text" name="sync_interval" default="4" label="RAIDPLANNER_SYNC_INTERVAL" description="RAIDPLANNER_SYNC_INTERVAL_DESC"></param>
+		<param type="text" name="armory_realm" default="" label="COM_RAIDPLANNER_ARMORY_REALM" description="COM_RAIDPLANNER_ARMORY_REALM_DESC"></param>
+		<param type="text" name="armory_guild" default="" label="COM_RAIDPLANNER_ARMORY_GUILD" description="COM_RAIDPLANNER_ARMORY_GUILD_DESC"></param>
+		<param type="text" name="sync_interval" default="4" label="COM_RAIDPLANNER_SYNC_INTERVAL" description="COM_RAIDPLANNER_SYNC_INTERVAL_DESC"></param>
 	</params>
-	<fieldset name="settings" label="RAIDPLANNER_SETTINGS">
-		<field type="radio" name="load_css" default="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
+	<fieldset name="settings" label="COM_RAIDPLANNER_SETTINGS">
+		<field type="radio" name="load_css" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
 	</fieldset>
-	<fieldset name="guild" label="RAIDPLANNER_GUILD_SETTINGS">
-		<field type="radio" name="armory_sync" default="1" label="RAIDPLANNER_ARMORY_SYNC" description="RAIDPLANNER_ARMORY_SYNC_DESC">
+	<fieldset name="guild" label="COM_RAIDPLANNER_GUILD_SETTINGS">
+		<field type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_ARMORY_SYNC" description="COM_RAIDPLANNER_ARMORY_SYNC_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		<field type="list" name="armory_region" default="eu" label="RAIDPLANNER_ARMORY_REGION" description="RAIDPLANNER_ARMORY_REGION_DESC">
+		<field type="list" name="armory_region" default="eu" label="COM_RAIDPLANNER_ARMORY_REGION" description="COM_RAIDPLANNER_ARMORY_REGION_DESC">
 			<option value="eu">EU</option>
 			<option value="us">US</option>
 			<option value="kr">KR</option>
 			<option value="tw">TW</option>
 			<option value="cn">CN</option>
 		</field>
-		<field type="text" name="armory_realm" default="" label="RAIDPLANNER_ARMORY_REALM" description="RAIDPLANNER_ARMORY_REALM_DESC"></field>
-		<field type="text" name="armory_guild" default="" label="RAIDPLANNER_ARMORY_GUILD" description="RAIDPLANNER_ARMORY_GUILD_DESC"></field>
-		<field type="integer" name="sync_interval" default="4" label="RAIDPLANNER_SYNC_INTERVAL" description="RAIDPLANNER_SYNC_INTERVAL_DESC" first="1" last="24" step="1" ></field>
+		<field type="text" name="armory_realm" default="" label="COM_RAIDPLANNER_ARMORY_REALM" description="COM_RAIDPLANNER_ARMORY_REALM_DESC"></field>
+		<field type="text" name="armory_guild" default="" label="COM_RAIDPLANNER_ARMORY_GUILD" description="COM_RAIDPLANNER_ARMORY_GUILD_DESC"></field>
+		<field type="integer" name="sync_interval" default="4" label="COM_RAIDPLANNER_SYNC_INTERVAL" description="COM_RAIDPLANNER_SYNC_INTERVAL_DESC" first="1" last="24" step="1" ></field>
 	</fieldset>
 </config>

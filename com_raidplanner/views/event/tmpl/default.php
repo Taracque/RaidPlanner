@@ -220,7 +220,7 @@ $hasChars = !empty($this->characters);
 			<?php if ($this->isOfficer) { ?>
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
 				<div class="rp_history_editor">
-					<label><?php echo JText::_('History');?>:
+					<label><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:
 						<textarea style="float:right;" name="history" rows="1" cols="20"><?php echo $this->xml_history; ?></textarea>
 					</label>
 				</div>
