@@ -16,16 +16,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<table>
 		<tr>
 			<td width="100%">
-				<?php echo JText::_( 'Filter' ); ?>:
+				<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
 				<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
-				<?php echo JText::_('Level'); ?>:
+				<?php echo JText::_('COM_RAIDPLANNER_LEVEL'); ?>:
 				<input type="text" name="level_min" id="level_min" value="<?php echo htmlspecialchars($this->lists['level_min']);?>" class="text_area" onchange="document.adminForm.submit();" />
 				-
 				<input type="text" name="level_max" id="level_max" value="<?php echo htmlspecialchars($this->lists['level_max']);?>" class="text_area" onchange="document.adminForm.submit();" />
 			</td>
 			<td nowrap="nowrap">
-				<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
-				<button onclick="document.getElementById('search').value='';document.getElementById('level_min').value='';document.getElementById('level_max').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+				<button onclick="this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
+				<button onclick="document.getElementById('search').value='';document.getElementById('level_min').value='';document.getElementById('level_max').value='';this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
 			</td>
 		</tr>
 	</table>
@@ -36,28 +36,28 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->characters ); ?>);" />
 			</th>
             <th width="5">
-                <?php echo JText::_( 'ID' ); ?>
+                <?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Character Name', 'c.char_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_CHARACTER_NAME', 'c.char_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'User', 'u.name', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'JGLOBAL_USERNAME', 'u.name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Class', 'cl.class_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_CLASS', 'cl.class_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Rank', 'c.rank', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_RANK', 'c.rank', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Gender', 'c.gender', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GENDER', 'c.gender', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Race', 'rc.race_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_RACE', 'rc.race_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Level', 'c.char_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_LEVEL', 'c.char_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
         </tr>            
     </thead>

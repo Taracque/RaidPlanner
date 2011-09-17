@@ -20,10 +20,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->classes ); ?>);" />
 			</th>
             <th width="5">
-                <?php echo JText::_( 'ID' ); ?>
+                <?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Class Name' ); ?>
+                <?php echo JText::_( 'COM_RAIDPLANNER_CLASS_NAME' ); ?>
             </th>
         </tr>            
     </thead>

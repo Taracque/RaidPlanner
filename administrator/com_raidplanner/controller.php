@@ -41,7 +41,7 @@ class RaidPlannerController extends JController
 			foreach ($list as $remove) {
 				$db->Execute( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
 			}
-			echo JText::_('Removing unanchored signups')." : ".count($list)." ".JText::_('found'); 
+			echo JText::printf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ); 
 		}
 	}
 }

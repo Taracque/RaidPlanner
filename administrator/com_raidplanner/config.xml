@@ -2,12 +2,12 @@
 <config>
 	<params>
 		<param type="radio" name="load_css" default="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</param>
 		<param type="radio" name="armory_sync" default="1" label="RAIDPLANNER_ARMORY_SYNC" description="RAIDPLANNER_ARMORY_SYNC_DESC">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</param>
 		<param type="list" name="armory_region" default="eu" label="RAIDPLANNER_ARMORY_REGION" description="RAIDPLANNER_ARMORY_REGION_DESC">
 			<option value="eu">EU</option>
@@ -22,14 +22,14 @@
 	</params>
 	<fieldset name="settings" label="RAIDPLANNER_SETTINGS">
 		<field type="radio" name="load_css" default="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="guild" label="RAIDPLANNER_GUILD_SETTINGS">
 		<field type="radio" name="armory_sync" default="1" label="RAIDPLANNER_ARMORY_SYNC" description="RAIDPLANNER_ARMORY_SYNC_DESC">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field type="list" name="armory_region" default="eu" label="RAIDPLANNER_ARMORY_REGION" description="RAIDPLANNER_ARMORY_REGION_DESC">
 			<option value="eu">EU</option>

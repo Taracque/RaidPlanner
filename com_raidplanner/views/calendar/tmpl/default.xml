@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="RAIDPLANNER_CALENDAR_VIEW">
-    	<message><![CDATA[RAIDPLANNER_CALENDAR_VIEW_DESC]]></message>
+	<layout title="COM_RAIDPLANNER_CALENDAR_VIEW">
+    	<message><![CDATA[COM_RAIDPLANNER_CALENDAR_VIEW_DESC]]></message>
 	</layout>
-	<view title="RAIDPLANNER_CALENDAR_VIEW">
-    	<message><![CDATA[RAIDPLANNER_CALENDAR_VIEW_DESC]]></message>
+	<view title="COM_RAIDPLANNER_CALENDAR_VIEW">
+    	<message><![CDATA[COM_RAIDPLANNER_CALENDAR_VIEW_DESC]]></message>
 	</view>
 	<state>
 		<params>
-			<param name="load_css" type="radio" defaul="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
-				<option value="0">No</option>
-				<option value="1">Yes</option>
+			<param name="load_css" type="radio" defaul="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
 			</param>
-			<param name="first_dow" type="radio" default="0" label="FIRST_DAY_OF_WEEK" description="FIRST_DAY_OF_WEEK_DESCRIPTION">
+			<param name="first_dow" type="radio" default="0" label="COM_RADIPLANNER_FIRST_DAY_OF_WEEK" description="COM_RADIPLANNER_FIRST_DAY_OF_WEEK_DESCRIPTION">
 				<option value="0">SUNDAY</option>
 				<option value="1">MONDAY</option>
 			</param>
@@ -20,11 +20,11 @@
 	</state>
 	<fields name="params">
 		<fieldset name="basic">
-			<field name="load_css" type="radio" defaul="1" label="LOAD_CSS" description="LOAD_CSS_DESCRIPTION">
-				<option value="0">No</option>
-				<option value="1">Yes</option>
+			<field name="load_css" type="radio" defaul="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
 			</field>
-			<field name="first_dow" type="radio" default="0" label="FIRST_DAY_OF_WEEK" description="FIRST_DAY_OF_WEEK_DESCRIPTION">
+			<field name="first_dow" type="radio" default="0" label="COM_RADIPLANNER_FIRST_DAY_OF_WEEK" description="COM_RADIPLANNER_FIRST_DAY_OF_WEEK_DESCRIPTION">
 				<option value="0">SUNDAY</option>
 				<option value="1">MONDAY</option>
 			</field>

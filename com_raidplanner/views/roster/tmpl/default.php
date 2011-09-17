@@ -38,9 +38,9 @@ jimport( 'joomla.utilities.date');
 								paginationControlPages:25,
 								filterable:true,
 								strings:{
-									next:'<?php echo JTEXT::_('next');?>',
-									previous:'<?php echo JTEXT::_('previous');?>',
-									rows:'<?php echo JTEXT::_('rows');?>'
+									next:'<?php echo JText::_('JNEXT');?>',
+									previous:'<?php echo JText::_('JPREV');?>',
+									rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>'
 								},
 								classHeaderPaginationContorlTH:'',
 								classHeaderPaginationContorlTR:'',
@@ -64,7 +64,7 @@ jimport( 'joomla.utilities.date');
 		</script>
 		<h2><a href="<?php echo $this->guildinfo->params->link;?>" target="_blank"><?php echo $this->guildinfo->guild_name;?></a></h2>
 		<strong>
-			<?php echo JTEXT::_('LEVEL');?> <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JTEXT::_('GUILD');?><br />
+			<?php echo JText::_('COM_RAIDPLANNER_LEVEL');?> <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JText::_('COM_RAIDPLANNER_GUILD');?><br />
 			<?php echo $this->guildinfo->guild_realm;?> - <?php echo strtoupper($this->guildinfo->guild_region);?>
 		</strong>
 	</div>
@@ -72,12 +72,12 @@ jimport( 'joomla.utilities.date');
 		<table class="rp_container" id="roster_table">
 			<thead>
 				<tr class="rp_header">
-					<th class="rp_header"><?php echo JTEXT::_('NAME');?></th>
-					<th class="rp_header"><?php echo JTEXT::_('LEVEL');?></th>
-					<th class="rp_header"><?php echo JTEXT::_('GENDER');?></th>
-					<th class="rp_header"><?php echo JTEXT::_('RACE');?></th>
-					<th class="rp_header"><?php echo JTEXT::_('CLASS');?></th>
-					<th class="rp_header"><?php echo JTEXT::_('RANK');?></th>
+					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
+					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_LEVEL');?></th>
+					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_GENDER');?></th>
+					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_RACE');?></th>
+					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_CLASS');?></th>
+					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_RANK');?></th>
 				</tr>
 			</thead>
 			<tbody>

@@ -15,12 +15,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <div class="col100">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
 		<table class="admintable">
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="group_name">
-					<?php echo JText::_( 'Group Name' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_GROUP_NAME' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -34,7 +34,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="default">
-					<?php echo JText::_( 'Default' ); ?>:
+					<?php echo JText::_( 'JDEFAULT' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -45,7 +45,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="group_members">
-					<?php echo JText::_( 'Membership' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_MEMBERSHIP' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -53,7 +53,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					<thead style="display:block;width:300px;">
 						<tr>
 							<th width="20">&nbsp;</th>
-							<th width="280"><?php echo JText::_( 'User' ); ?></th>
+							<th width="280"><?php echo JText::_( 'JGLOBAL_USERNAME' ); ?></th>
 						</tr>
 					</thead>
 					<tbody style="height:200px;overflow:scroll;display:block;width:300px;">
@@ -78,7 +78,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="group_members">
-					<?php echo JText::_( 'Permissions' ); ?>:
+					<?php echo JText::_( 'JCONFIG_PERMISSIONS_LABEL' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -86,7 +86,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					<thead style="display:block;width:300px;">
 						<tr>
 							<th width="20">&nbsp;</th>
-							<th width="280"><?php echo JText::_( 'Permissions' ); ?></th>
+							<th width="280"><?php echo JText::_( 'JCONFIG_PERMISSIONS_LABEL' ); ?></th>
 						</tr>
 					</thead>
 					<tbody style="height:200px;overflow:scroll;display:block;width:300px;">

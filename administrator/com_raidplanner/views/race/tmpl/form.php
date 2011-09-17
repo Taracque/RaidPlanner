@@ -15,12 +15,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <div class="col100">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
 		<table class="admintable">
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="race_name">
-					<?php echo JText::_( 'Race Name' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_RACE_NAME' ); ?>:
 				</label>
 			</td>
 			<td>

@@ -49,9 +49,9 @@ class RaidPlannerControllerRoles extends RaidPlannerController
         $post = JRequest::get('post');
 
 		if ($model->store($post)) {
-			$msg = JText::_( 'Role Saved!' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_ROLE') );
 		} else {
-			$msg = JText::_( 'Error Saving Role' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_ROLE') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
@@ -66,9 +66,9 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 	{
 		$model = $this->getModel('role');
 		if(!$model->delete()) {
-			$msg = JText::_( 'Error: One or More Roles Could not be Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_ONE_OR_MORE_X_COULD_NOT_BE_DELETED', JText::_('COM_RAIDPLANNER_ROLES') );
 		} else {
-			$msg = JText::_( 'Role(s) Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_DELETED', JText::_('COM_RAIDPLANNER_ROLE') );
 		}
 
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=roles', $msg );
@@ -80,7 +80,7 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 	 */
 	function cancel()
 	{
-		$msg = JText::_( 'Operation Cancelled' );
+		$msg = JText::_( 'COM_RAIDPLANNER_OPERATION_CANCELLED' );
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=roles', $msg );
 	}
 	

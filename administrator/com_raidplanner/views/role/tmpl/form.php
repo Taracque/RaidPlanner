@@ -15,12 +15,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <div class="col100">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
 		<table class="admintable">
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="role_name">
-					<?php echo JText::_( 'Role Name' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_ROLE_NAME' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -30,7 +30,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="body_color">
-					<?php echo JText::_( 'Body Color' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_ROLE_BODY_COLOR' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="header_color">
-					<?php echo JText::_( 'Header Color' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_ROLE_HEADER_COLOR' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -50,7 +50,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="font_color">
-					<?php echo JText::_( 'Font Color' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_ROLE_FONT_COLOR' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -60,7 +60,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="icon_name">
-					<?php echo JText::_( 'Icon' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_ICON' ); ?>:
 				</label>
 			</td>
 			<td>

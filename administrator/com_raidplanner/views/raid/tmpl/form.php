@@ -13,63 +13,63 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">
-<div class="width-30 fltlft">
+<div class="width-30 fltlft col30">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
 		<ul class="adminformlist">
 		<li>
-			<label for="location"><?php echo JText::_( 'Location' ); ?>:</label>
+			<label for="location"><?php echo JText::_( 'COM_RAIDPLANNER_LOCATION' ); ?>:</label>
 			<input class="text_area" type="text" name="location" id="location" size="32" maxlength="250" value="<?php echo @$this->raid->location;?>" />
 		</li>
 		<li>
-			<label for="is_template_set"><?php echo JText::_( 'Template' ); ?>:</label>
+			<label for="is_template_set"><?php echo JText::_( 'COM_RAIDPLANNER_TEMPLATE' ); ?>:</label>
 			<fieldset id="is_template_set" class="radio inputbox">
 				<?php echo JHTML::_('select.booleanlist', 'is_template', 'class="inputbox"', @$this->raid->is_template );?>
 			</fieldset>
 		</li>
 		<li>
-			<label for="description"><?php echo JText::_( 'Description' ); ?>:</label>
+			<label for="description"><?php echo JText::_( 'JGLOBAL_DESCRIPTION' ); ?>:</label>
 			<textarea class="text_area" type="text" name="description" id="description" cols="32" rows="10"><?php echo @$this->raid->description;?></textarea>
 		</li>
 		<li>
-			<label for="start_time"><?php echo JText::_( 'Start Time' ); ?>:<br />
-				<small><?php echo JText::_( 'GMT' ); ?></small>
+			<label for="start_time"><?php echo JText::_( 'COM_RAIDPLANNER_START_TIME' ); ?>:<br />
+				<small><?php echo JText::_( 'COM_RAIDPLANNER_GMT' ); ?></small>
 			</label>
 			<?php echo JHTML::_('calendar',@$this->raid->start_time, 'start_time', 'start_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
 		<li>
-			<label for="duration_mins"><?php echo JText::_( 'Duration' ); ?>:<br /></label>
+			<label for="duration_mins"><?php echo JText::_( 'COM_RAIDPLANNER_DURATION' ); ?>:<br /></label>
 			<input type="text" name="duration_mins" id="duration_mins" value="<?php echo @$this->raid->duration_mins;?>" size="5" />
 		</li>
 		<li>
-			<label for="invite_time"><?php echo JText::_( 'Invite Time' ); ?>:<br />
-				<small><?php echo JText::_( 'GMT' ); ?></small>
+			<label for="invite_time"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_TIME' ); ?>:<br />
+				<small><?php echo JText::_( 'COM_RAIDPLANNER_GMT' ); ?></small>
 			</label>
 			<?php echo JHTML::_('calendar',@$this->raid->invite_time, 'invite_time', 'invite_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
 		<li>
-			<label for="freeze_time"><?php echo JText::_( 'Freeze timer' ); ?>:</label>
+			<label for="freeze_time"><?php echo JText::_( 'COM_RAIDPLANNER_FREEZE_TIME' ); ?>:</label>
 			<input type="text" name="freeze_time" id="freeze_time" value="<?php echo @$this->raid->freeze_time;?>" size="5" />
 		</li>
 		<li>
-			<label for="raid_leader"><?php echo JText::_( 'Raid Leader' ); ?>:</label>
+			<label for="raid_leader"><?php echo JText::_( 'COM_RAIDPLANNER_RAID_LEADER' ); ?>:</label>
 			<input class="text_area" type="text" name="raid_leader" id="raid_leader" size="32" maxlength="250" value="<?php echo @$this->raid->raid_leader;?>" />
 		</li>
 		<li>
-			<label for="profile_id"><?php echo JText::_( 'User' ); ?>:</label>
+			<label for="profile_id"><?php echo JText::_( 'JGLOBAL_USERNAME' ); ?>:</label>
 			<?php echo JHTML::_('list.users', 'profile_id', @$this->raid->profile_id, 0, NULL, 'name', 0);?>
 		</li>
 		<li>
-			<label for="minimum_level"><?php echo JText::_( 'Level Range' ); ?>:</label>
+			<label for="minimum_level"><?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>:</label>
 			<input type="text" name="minimum_level" id="minimum_level" value="<?php echo @$this->raid->minimum_level;?>" size="5" />
 			<input type="text" name="maximum_level" id="maximum_level" value="<?php echo @$this->raid->maximum_level;?>" size="5" />
 		</li>
 		<li>
-			<label for="minimum_rank"><?php echo JText::_( 'Minimum Rank' ); ?>:</label>
+			<label for="minimum_rank"><?php echo JText::_( 'COM_RAIDPLANNER_MINIMUM_RANK' ); ?>:</label>
 			<input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo @$this->raid->minimum_rank;?>" size="5" />
 		</li>
 		<li>
-			<label for="invited_group_id"><?php echo JText::_( 'Invited Group' ); ?>:</label>
+			<label for="invited_group_id"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_GROUP' ); ?>:</label>
 			<select name="invited_group_id" id="invited_group_id">
 				<option value=""></option>
 				<?php foreach ($this->groups as $group_id => $group_name) : ?>
@@ -78,7 +78,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			</select>
 		</li>
 		<li>
-			<label for="icon_name"><?php echo JText::_( 'Icon' ); ?>:</label>
+			<label for="icon_name"><?php echo JText::_( 'COM_RAIDPLANNER_ICON' ); ?>:</label>
 			<select name="icon_name" id="icon_name">
 				<option value=""></option>
 				<?php foreach ($this->icons as $icon_file => $icon_name) : ?>
@@ -89,7 +89,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</ul>
 	</fieldset>
 </div>
-<div class="width-70 fltrt">
+<div class="width-70 fltrt col70">
 	<?php if ($this->raid->raid_id > 0 ) : ?>
 	<iframe style="width:100%;height:500px;border:none;" src="<?php echo JURI::base(); ?>../index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=<?php echo $this->raid->raid_id;?>"></iframe>
 	<?php endif; ?>

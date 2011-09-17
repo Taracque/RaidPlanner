@@ -31,7 +31,7 @@ class RaidPlannerViewCalendar extends JView
 		if ($eventmodel->getPermission('view_calendar') != 1) {
 			// redirect to the index page
 			$app = &JFactory::getApplication();
-			$msg = JText::_('Access Forbidden');
+			$msg = JText::_('JGLOBAL_AUTH_ACCESS_DENIED');
 			$app->redirect( JRoute::_(''), $msg);
 		}
 		

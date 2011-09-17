@@ -47,9 +47,9 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 		$model = $this->getModel('raid');
         $post = JRequest::get('post');
 		if ($model->store($post)) {
-			$msg = JText::_( 'Raid Saved!' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_RAID') );
 		} else {
-			$msg = JText::_( 'Error Saving Raid' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_RAID') );
 		}
 
 		$raid_id = JRequest::getVar('raid_id',  0, '', 'int');
@@ -68,9 +68,9 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 
         $post = JRequest::get('post');
 		if ($model->store($post)) {
-			$msg = JText::_( 'Raid Saved!' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_RAID')  );
 		} else {
-			$msg = JText::_( 'Error Saving Raid' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_RAID')  );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
@@ -86,9 +86,9 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 	{
 		$model = $this->getModel('raid');
 		if(!$model->delete()) {
-			$msg = JText::_( 'Error: One or More Raids Could not be Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_ONE_OR_MORE_X_COULD_NOT_BE_DELETED', JText::_('COM_RAIDPLANNER_RAIDS') );
 		} else {
-			$msg = JText::_( 'Raid(s) Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_DELETED', JText::_('COM_RAIDPLANNER_RAID') );
 		}
 
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=raids', $msg );
@@ -100,7 +100,7 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 	 */
 	function cancel()
 	{
-		$msg = JText::_( 'Operation Cancelled' );
+		$msg = JText::_( 'COM_RAIDPLANNER_OPERATION_CANCELLED' );
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=raids', $msg );
 	}
 }

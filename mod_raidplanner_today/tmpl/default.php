@@ -46,7 +46,7 @@ switch ($version->RELEASE) {
 	$event_count = count($items);
 	if ($event_count == 0) {
 		echo "<tr>";
-		echo "<td>".JTEXT::_('There are no events today')."<br />";
+		echo "<td>".JText::_('MOD_RAIDPLANNER_NO_EVENTS_TODAY')."<br />";
 		echo "</td></tr>";
 	} else {
 		foreach ($items as $item) { 
@@ -55,7 +55,7 @@ switch ($version->RELEASE) {
 			$tip = '';
 			if ( ($raidshowReg) && ($item->confirmed) ) {
 				// show if registered
-				$tip .= JText::_('RAIDPLANNER_CONFIRMATION_' . $item->confirmed) . " ";
+				$tip .= JText::_('COM_RAIDPLANNER_CONFIRMATIONS_' . $item->confirmed) . " ";
 			}
 			if ( ($raidshowChar) && ($item->char_name) ) {
 				// show which car is registered

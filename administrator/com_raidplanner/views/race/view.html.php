@@ -22,14 +22,14 @@ class RaidPlannerViewRace extends JView
 		$race	=& $this->get('Data');
 		$isNew	= ($race->race_id < 1);
 
-		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
-		JToolBarHelper::title(   JText::_( 'Character' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_RACE' ).': <small><small>[ ' . $text.' ]</small></small>' );
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
 		} else {
 			// for existing items the button is renamed `close`
-			JToolBarHelper::cancel( 'cancel', 'Close' );
+			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
 		$model =& $this->getModel();

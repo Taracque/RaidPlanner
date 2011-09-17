@@ -20,13 +20,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->groups ); ?>);" />
 			</th>
             <th width="5">
-                <?php echo JText::_( 'ID' ); ?>
+                <?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Group Name' ); ?>
+                <?php echo JText::_( 'COM_RAIDPLANNER_GROUP_NAME' ); ?>
             </th>
             <th>
-                <?php echo JText::_( 'Default' ); ?>
+                <?php echo JText::_( 'JDEFAULT' ); ?>
             </th>
         </tr>            
     </thead>

@@ -22,14 +22,14 @@ class RaidPlannerViewGroup extends JView
 		$group		=& $this->get('Data');
 		$isNew		= ($group->group_id < 1);
 
-		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
+		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
 		JToolBarHelper::title(   JText::_( 'Group' ).': <small><small>[ ' . $text.' ]</small></small>' );
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
 		} else {
 			// for existing items the button is renamed `close`
-			JToolBarHelper::cancel( 'cancel', 'Close' );
+			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
 		$model =& $this->getModel();

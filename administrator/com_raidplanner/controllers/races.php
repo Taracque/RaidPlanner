@@ -49,9 +49,9 @@ class RaidPlannerControllerRaces extends RaidPlannerController
         $post = JRequest::get('post');
 
 		if ($model->store($post)) {
-			$msg = JText::_( 'Race Saved!' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_RACE') );
 		} else {
-			$msg = JText::_( 'Error Saving Race' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_RACE') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
@@ -66,9 +66,9 @@ class RaidPlannerControllerRaces extends RaidPlannerController
 	{
 		$model = $this->getModel('race');
 		if(!$model->delete()) {
-			$msg = JText::_( 'Error: One or More Races Could not be Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_ONE_OR_MORE_X_COULD_NOT_BE_DELETED', JText::_('COM_RAIDPLANNER_RACES') );
 		} else {
-			$msg = JText::_( 'Race(s) Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_DELETED', JText::_('COM_RAIDPLANNER_RACE') );
 		}
 
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=races', $msg );
@@ -80,7 +80,7 @@ class RaidPlannerControllerRaces extends RaidPlannerController
 	 */
 	function cancel()
 	{
-		$msg = JText::_( 'Operation Cancelled' );
+		$msg = JText::_( 'COM_RAIDPLANNER_OPERATION_CANCELLED' );
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=races', $msg );
 	}
 	

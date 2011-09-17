@@ -15,12 +15,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <div class="col100">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
 		<table class="admintable">
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="class_name">
-					<?php echo JText::_( 'Class Name' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_NAME' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -30,7 +30,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="class_color">
-					<?php echo JText::_( 'Class Color' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_COLOR' ); ?>:
 				</label>
 			</td>
 			<td>
@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="armory_id">
-					<?php echo JText::_( 'Armory ID' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_ARMORY_ID' ); ?>:
 				</label>
 			</td>
 			<td>

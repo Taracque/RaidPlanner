@@ -49,9 +49,9 @@ class RaidPlannerControllerCharacters extends RaidPlannerController
         $post = JRequest::get('post');
 
 		if ($model->store($post)) {
-			$msg = JText::_( 'Character Saved!' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_CHARACTER')  );
 		} else {
-			$msg = JText::_( 'Error Saving Character' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_CHARACTER') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
@@ -66,9 +66,9 @@ class RaidPlannerControllerCharacters extends RaidPlannerController
 	{
 		$model = $this->getModel('character');
 		if(!$model->delete()) {
-			$msg = JText::_( 'Error: One or More Characters Could not be Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ONE_OR_MORE_X_COULD_NOT_BE_DELETED', JText::_('COM_RAIDPLANNER_CHARACTERS') );
 		} else {
-			$msg = JText::_( 'Character(s) Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_DELETED', JText::_('COM_RAIDPLANNER_CHARACTER') );
 		}
 
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=characters', $msg );
@@ -80,7 +80,7 @@ class RaidPlannerControllerCharacters extends RaidPlannerController
 	 */
 	function cancel()
 	{
-		$msg = JText::_( 'Operation Cancelled' );
+		$msg = JText::_( 'COM_RAIDPLANNER_OPERATION_CANCELLED' );
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=characters', $msg );
 	}
 	

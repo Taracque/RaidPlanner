@@ -22,14 +22,14 @@ class RaidPlannerViewRole extends JView
 		$role	=& $this->get('Data');
 		$isNew	= ($role->role_id < 1);
 
-		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
-		JToolBarHelper::title(   JText::_( 'Character' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_ROLE' ).': <small><small>[ ' . $text.' ]</small></small>' );
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
 		} else {
 			// for existing items the button is renamed `close`
-			JToolBarHelper::cancel( 'cancel', 'Close' );
+			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
 		$model =& $this->getModel();

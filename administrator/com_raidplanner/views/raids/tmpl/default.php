@@ -16,18 +16,18 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<table>
 		<tr>
 			<td width="100%">
-				<?php echo JText::_( 'Filter' ); ?>:
+				<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
 				<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
-				<?php echo JText::_('Start time'); ?>:
+				<?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?>:
 				<?php
-					echo JHTML::_('calendar', $this->lists['start_time_min'], 'start_time_min', 'start_time_min', JText::_('DATE_FORMAT_LC4') );
+					echo JHTML::_('calendar', $this->lists['start_time_min'], 'start_time_min', 'start_time_min', '%Y-%m-%d' );
 				?> - <?php
-					echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', JText::_('DATE_FORMAT_LC4') );
+					echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', '%Y-%m-%d' );
 				?>
 			</td>
 			<td nowrap="nowrap">
-				<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
-				<button onclick="document.getElementById('search').value='';document.getElementById('start_time_min').value='';document.getElementById('start_time_max').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+				<button onclick="this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
+				<button onclick="document.getElementById('search').value='';document.getElementById('start_time_min').value='';document.getElementById('start_time_max').value='';this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
 			</td>
 		</tr>
 	</table>
@@ -38,28 +38,28 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->raids ); ?>);" />
 			</th>
             <th width="5">
-                <?php echo JText::_( 'ID' ); ?>
+                <?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
             </th>
             <th width="100">
-                <?php echo JHTML::_( 'grid.sort', 'Start Time', 'r.start_time', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_START_TIME', 'r.start_time', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-            	<?php echo JHTML::_( 'grid.sort', 'Location', 'r.location', $this->lists['order_Dir'], $this->lists['order']); ?>
+            	<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_LOCATION', 'r.location', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Minimum Level', 'r.minimum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_LEVEL', 'r.minimum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Maximum Level', 'r.maximum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MAXMIUM_LEVEL', 'r.maximum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Minimum Rank', 'r.minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_RANK', 'r.minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'Invited Group', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_INVITE_GROUP', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th width="100">
-                <?php echo JHTML::_( 'grid.sort', 'Template', 'r.is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_TEMPLATE', 'r.is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
         </tr>            
     </thead>
@@ -97,7 +97,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo $row->group_name; ?>
             </td>
             <td>
-				<?php echo ($row->is_template) ? JText::_('Yes') : '-' ; ?>
+				<?php echo ($row->is_template) ? JText::_(JYES) : '-' ; ?>
             </td>
         </tr>
         <?php

@@ -25,7 +25,7 @@ window.addEvent('domready',function(){
 		<td class="rp_header_left">
 			<a class="rp_button_prev" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->prevmonth);?>"> ◄ </a>
 			<a class="rp_button_next" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->nextmonth);?>"> ► </a>
-			<a class="rp_button_today" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"> <?php echo JText::_('Today');?> </a>
+			<a class="rp_button_today" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"> <?php echo JText::_('COM_RAIDPLANNER_TODAY');?> </a>
 		</td>
 		<td class="rp_header_center">
 			<h3><?php echo $this->year." ".RaidPlannerModelRaidPlanner::monthToString($this->monthonly); ?></h3>
@@ -33,14 +33,14 @@ window.addEvent('domready',function(){
 		<td class="rp_header_right">
 <?php if ($this->calendar_mode == 'subscribe') : ?>
 	<label>
-		<?php echo JText::_('Subscribe Calendar URL');?>:<br />
+		<?php echo JText::_('COM_RAIDPLANNER_SUBSCRIBE_CALENDAR_URL');?>:<br />
 		<input type="text" value="<?php echo JURI::base()."index.php?option=com_raidplanner&view=feed&task=feed&user=".$this->user_id."&secret=".$this->calendar_secret;?>" size="40" />
 	</label>
 <?php else: ?>
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('Download Calendar');?></a>
+	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
 <?php endif; ?>
 <?php if ($this->isOfficer) { ?>
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new"><?php echo JText::_('New Event');?></a>
+	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new"><?php echo JText::_('COM_RAIDPLANNER_NEW_EVENT');?></a>
 <?php } ?>
 		</td>
 	</tr>
@@ -70,7 +70,7 @@ window.addEvent('domready',function(){
 							<?php
 								$onvacation = $this->eventmodel->usersOnVacation($thedate);
 							?>
-							<span class="day_no <?php if ($onvacation) {?>hasTip" title="<strong><?php echo JText::_('On Vacation');?></strong><br /><?php echo implode(", ",$onvacation); }?>"><?php echo $dom; ?></span>
+							<span class="day_no <?php if ($onvacation) {?>hasTip" title="<strong><?php echo JText::_('COM_RAIDPLANNER_ON_VACATION');?></strong><br /><?php echo implode(", ",$onvacation); }?>"><?php echo $dom; ?></span>
 							<div class="events"><?php
 								if (@$this->events[$thedate]) {
 									foreach ($this->events[$thedate] as $event) {

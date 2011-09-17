@@ -14,6 +14,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 require_once( JPATH_COMPONENT.DS.'controller.php' );
  
+// Load frontend language file
+JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
+ 
 // Require specific controller if requested
 if($controller = JRequest::getWord('controller')) {
     $path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';

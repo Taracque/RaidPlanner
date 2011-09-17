@@ -49,9 +49,9 @@ class RaidPlannerControllerGroups extends RaidPlannerController
         $post = JRequest::get('post');
 
 		if ($model->store($post)) {
-			$msg = JText::_( 'Group Saved!' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_GROUP') );
 		} else {
-			$msg = JText::_( 'Error Saving Group' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_GROUP') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
@@ -66,9 +66,9 @@ class RaidPlannerControllerGroups extends RaidPlannerController
 	{
 		$model = $this->getModel('group');
 		if(!$model->delete()) {
-			$msg = JText::_( 'Error: One or More Groups Could not be Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ONE_OR_MORE_X_COULD_NOT_BE_DELETED', JText::_('COM_RAIDPLANNER_GROUPS') );
 		} else {
-			$msg = JText::_( 'Group(s) Deleted' );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_DELETED', JText::_( 'COM_RAIDPLANNER_GROUP' ) );
 		}
 
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=groups', $msg );
@@ -80,7 +80,7 @@ class RaidPlannerControllerGroups extends RaidPlannerController
 	 */
 	function cancel()
 	{
-		$msg = JText::_( 'Operation Cancelled' );
+		$msg = JText::_( 'COM_RAIDPLANNER_OPERATION_CANCELLED' );
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=groups', $msg );
 	}
 	
@@ -89,9 +89,9 @@ class RaidPlannerControllerGroups extends RaidPlannerController
 		$group_id = JRequest::getVar('cid', null, 'INT');
 		$model = $this->getModel('group');
 		if (!$model->setDefault()) {
-			$msg = JText::_( 'Error: Default group can\'t changed' );
+			$msg = JText::_( 'COM_RAIDPLANNER_DEFAULT_GROUP_CANT_CHANGED' );
 		} else {
-			$msg = JText::_( 'Default group changed' );
+			$msg = JText::_( 'COM_RAIDPLANNER_DEFAULT_GROUP_CHANGED' );
 		}
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=groups', $msg );
 	}

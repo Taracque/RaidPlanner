@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="RAIDPLANNER_ROSTER_VIEW">
-    	<message><![CDATA[RAIDPLANNER_ROSTER_VIEW_DESC]]></message>
+	<layout title="COM_RAIDPLANNER_ROSTER_VIEW">
+    	<message><![CDATA[COM_RAIDPLANNER_ROSTER_VIEW_DESC]]></message>
 	</layout>
-	<view title="RAIDPLANNER_ROSTER_VIEW">
-    	<message><![CDATA[RAIDPLANNER_ROSTER_VIEW_DESC]]></message>
+	<view title="COM_RAIDPLANNER_ROSTER_VIEW">
+    	<message><![CDATA[COM_RAIDPLANNER_ROSTER_VIEW_DESC]]></message>
 	</view>
 </metadata>
