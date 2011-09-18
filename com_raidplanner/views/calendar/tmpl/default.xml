@@ -10,7 +10,7 @@
 		<name>COM_RAIDPLANNER_CALENDAR_VIEW</name>
 		<description><![CDATA[COM_RAIDPLANNER_CALENDAR_VIEW_DESC]]></description>
 		<params>
-			<param name="load_css" type="radio" defaul="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
+			<param name="load_css" type="radio" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</param>
@@ -22,7 +22,7 @@
 	</state>
 	<fields name="params">
 		<fieldset name="basic">
-			<field name="load_css" type="radio" defaul="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
+			<field name="load_css" type="radio" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
