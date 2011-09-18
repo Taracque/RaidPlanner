@@ -16,10 +16,6 @@ require_once( JPATH_COMPONENT.DS.'controller.php' );
  
 // Load frontend language file
 JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
-$version = new JVersion();
-if ($version->RELEASE == '1.5') {
-	JFactory::getLanguage()->load('com_raidplanner.j15', JPATH_ADMINISTRATOR);
-}
 
 // Require specific controller if requested
 if($controller = JRequest::getWord('controller')) {

@@ -13,15 +13,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 // include the helper file
 require_once(dirname(__FILE__).DS.'helper.php');
 
+JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
 
 //get user ID
-$app =& JFactory::getApplication('site');
-$app->initialise();
-
-$app->route();
 $user =& JFactory::getUser();
 $user_id = ($user->id);
-
 
 // get the parameters from the module's configuration
 $raidshowDateFormat	= $params->get('raidshowDateFormat');

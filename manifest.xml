@@ -70,6 +70,7 @@
 				in this section are copied from /admin/ in the package -->
 		<files folder="administrator/com_raidplanner">
 			<filename>index.html</filename>
+			<filename>helper.php</filename>
 			<filename>raidplanner.php</filename>
 			<filename>controller.php</filename>
 			<filename>config.xml</filename>
