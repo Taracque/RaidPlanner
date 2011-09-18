@@ -6,4 +6,8 @@
 	<view title="COM_RAIDPLANNER_ROSTER_VIEW">
     	<message><![CDATA[COM_RAIDPLANNER_ROSTER_VIEW_DESC]]></message>
 	</view>
+	<state>
+		<name>COM_RAIDPLANNER_ROSTER_VIEW</name>
+		<description><![CDATA[COM_RAIDPLANNER_ROSTER_VIEW_DESC]]></description>
+	</state>
 </metadata>

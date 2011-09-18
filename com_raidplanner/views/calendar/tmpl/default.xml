@@ -7,6 +7,8 @@
     	<message><![CDATA[COM_RAIDPLANNER_CALENDAR_VIEW_DESC]]></message>
 	</view>
 	<state>
+		<name>COM_RAIDPLANNER_CALENDAR_VIEW</name>
+		<description><![CDATA[COM_RAIDPLANNER_CALENDAR_VIEW_DESC]]></description>
 		<params>
 			<param name="load_css" type="radio" defaul="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
 				<option value="0">JNO</option>
