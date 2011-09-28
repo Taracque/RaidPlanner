@@ -53,7 +53,7 @@ function setupTooltip() {
 }
 
 window.addEvent('domready',function() {
-	if ((MooTools.version >= '1.3') && (typeof(SqueezBox)!='undefined')) {
+	if ((MooTools.version >= '1.3') && (typeof(SqueezeBox)!='undefined')) {
 		SqueezeBox.handlers.extend({
 			ajax: function(url) {
 				var options = this.options.ajaxOptions || {};
