@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Joomla Community Builder User Plugin: plug_raidplanner
+* @version $Id$
+* @package plug_raidplanner
+* @subpackage raidplanner.xml
+* @author Taracque
+* @copyright (C) Taracque, http://taracque.hu
+* @license Limited  http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @beta 1.0
+*/
+-->
+<cbinstall version="1.0.0" type="plugin" group="user">
+	<name>RaidPlanner Plugin</name>
+	<author>Taracque</author>
+	<creationDate>2011-09-28</creationDate>
+	<copyright>(C) 2011 Taracque, http://taracque.hu</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>taracque@taracque.hu</authorEmail>
+	<authorUrl>taracque.hu</authorUrl>
+	<version>1.0</version>
+	<description>
+		Synchronizes CB fields with RaidPlanner user fields.
+	</description>
+	<files>
+		<filename plugin="raidplanner">raidplanner.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<params>
+		<param name="rpPlugEnabled" type="radio" label="RaidPlanner Plugin Enabled" default="1" description="Specify Yes to enable RaidPlanner plugin.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="rpPlugCharactersField" type="text" default="" label="Characters field" description="Field name in CB for Characters (don't forget to include cb_ prefix!)" />
+		<param name="rpPlugVacationsField" type="text" default="" label="Vacations field" description="Field name in CB for Vacation periods (don't forget to include cb_ prefix!)" />
+		<param name="rpPlugCalSecretField" type="text" default="" label="Calendar secret field" description="Field name in CB for Calendar secret (don't forget to include cb_ prefix!)" />
+	</params>
+	<install>
+		<queries>
+		</queries>
+	</install>
+	<uninstall>
+	</uninstall>
+</cbinstall>
