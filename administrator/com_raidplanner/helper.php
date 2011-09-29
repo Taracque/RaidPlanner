@@ -56,9 +56,11 @@ class ComRaidPlannerHelper
 	
 	
 				$data = json_decode($url_string);
-				if (json_last_error() != JSON_ERROR_NONE)
-				{
-					return null;
+				if (function_exists('json_last_error')) {
+					if (json_last_error() != JSON_ERROR_NONE)
+					{
+						return null;
+					}
 				}
 
 				if (!$guild_id)
