@@ -409,6 +409,7 @@ class RaidPlannerModelEvent extends JModel
 
 		$raid_id = JRequest::getVar('raid_id', null, 'INT');
 		$roles = JRequest::getVar('role', null, 'ARRAY');
+		$comments = JRequest::getVar('comments', null, 'ARRAY');
 		$confirm = JRequest::getVar('confirm', null, 'ARRAY');
 		$characters = JRequest::getVar('characters', null, 'ARRAY');
 		$history = trim( JRequest::getVar('history', '', 'post', 'string', JREQUEST_ALLOWRAW ) );

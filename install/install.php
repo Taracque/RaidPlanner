@@ -83,6 +83,29 @@ function com_install()
 				}
 			}
 		}
+	} else {
+		// copy sys.ini into .ini language files
+		$langs =& JLanguage::getKnownLanguages( JPATH_ADMINISTRATOR );
+		foreach ($langs as $lang)
+		{
+			$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
+			// check if raidplanner has it language file in $target
+			if (JFile::exists( $target . DS . $lang['tag'] . '.com_raidplanner.ini' ))
+			{
+				$content = JFile::read( $target . DS . $lang['tag'] . '.com_raidplanner.ini' );
+				if ($content != false)
+				{
+					// merge sys.ini file to admin language file
+					if (JFile::exists( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.sys.ini' ))
+					{
+						$content .= "\n" . JFile::read( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.sys.ini' );
+					}
+					JFile::write( $target . DS . $lang['tag'] . '.com_raidplanner.ini', $content );
+
+					$out .= 'Language file for admin language ' . $lang['name'] . ' merged for Joomla 1.6/1.7<br />';
+				}
+			}
+		}
 	}
 
 	// check if #__raidplanner_guild table exists

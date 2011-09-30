@@ -29,6 +29,12 @@ function rpShowTooltip(el) {
 	}
 }
 
+function rpEditQueue(char_id) {
+	$('att_char_queue_' + char_id).setStyle('display','none');
+	$('att_char_edit_button_' + char_id).setStyle('display','none');
+	$('att_char_edit_queue_' + char_id).setStyle('display', '');
+}
+
 function rpHideTooltip() {
 	$('rpTip').setOpacity(0);
 	$('rpTip').setStyle('visibility','hidden');

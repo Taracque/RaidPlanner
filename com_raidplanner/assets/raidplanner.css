@@ -226,6 +226,14 @@
 	font-size:110%;
 }
 
+.rp_event_attendants td a.edit_button {
+	background: transparent url(edit_butt.gif) no-repeat right center;
+	width: 15px;
+	height: 15px;
+	display: block;
+	float: left;
+}
+
 .rp_event_attendants td .attendance.rp_tooltips {
 	padding-right: 20px;
 	background: transparent url(has_comment.png) no-repeat right center;

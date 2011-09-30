@@ -149,7 +149,18 @@ $hasChars = !empty($this->characters);
 									<strong><?php echo $attendant->char_name;?></strong>
 								</a>
 							</td>
-							<td><a href="#" onclick="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');" id="att_char_queue_<?php echo $attendant->character_id;?>" class="attendance<?php if ($attendant->comments!='') { ?> rp_tooltips" title="<?php echo htmlspecialchars( $attendant->comments, ENT_QUOTES, 'UTF-8' );?><?php } ?>"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_'.$attendant->queue); ?></a></td>
+							<td>
+								<a href="#" onclick="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');" id="att_char_queue_<?php echo $attendant->character_id;?>" class="attendance<?php if ($attendant->comments!='') { ?> rp_tooltips" title="<?php echo htmlspecialchars($attendant->comments, ENT_QUOTES, "UTF-8");?><?php } ?>"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_'.$attendant->queue); ?></a>
+								<?php if ($this->isOfficer) : ?>
+									<a href="#" onclick="javascript:rpEditQueue('<?php echo $attendant->character_id;?>');return false;" id="att_char_edit_button_<?php echo $attendant->character_id;?>" class="edit_button">&nbsp;</a>
+									<select name="queue[<?php echo $attendant->character_id;?>]" id="att_char_edit_queue_<?php echo $attendant->character_id;?>" style="display:none">
+										<option value="1" <?php if ($attendant->queue==1) { ?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></option>
+										<option value="-1" <?php if ($attendant->queue==-1) { ?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?></option>
+										<option value="2" <?php if ($attendant->queue==2) { ?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?></option>
+									</select>
+									<input type="hidden" name="comments[<?php echo $attendant->character_id;?>]" value="<?php echo $attendant->comments;?>" />
+								<?php endif; ?>
+							</td>
 							<td style="color:<?php echo $this->roles[$attendant->role_name]->font_color;?>;background-color:<?php echo $this->roles[$attendant->role_name]->body_color;?>;"><?php
 								if (!$this->isOfficer) {
 									echo $attendant->role_name;
