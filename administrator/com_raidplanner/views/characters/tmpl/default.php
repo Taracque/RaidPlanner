@@ -59,6 +59,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_LEVEL', 'c.char_level', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
+            <th>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD', 'g.guild_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+            </th>
         </tr>            
     </thead>
     <tbody>
@@ -97,6 +100,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             <td>
                 <?php echo $row->char_level; ?>
             </td>
+            <td>
+                <a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]='.$row->guild_id);?>"><?php echo $row->guild_name; ?></a>
+            </td>
         </tr>
         <?php
         $k = 1 - $k;
@@ -105,7 +111,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     </tbody>
 	<tfoot>
 		<tr>
-			<td colspan="9"><?php echo $this->pagination->getListFooter(); ?></td>
+			<td colspan="10"><?php echo $this->pagination->getListFooter(); ?></td>
 		</tr>
 	</tfoot>
     </table>

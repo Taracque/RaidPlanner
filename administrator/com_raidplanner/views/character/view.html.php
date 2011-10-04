@@ -38,6 +38,7 @@ class RaidPlannerViewCharacter extends JView
 		$this->assignRef('classes', $model->getClasses() );
 		$this->assignRef('genders', $model->getGenders() );
 		$this->assignRef('races', $model->getRaces() );
+		$this->assignRef('guilds', $model->getGuilds() );
 
 		parent::display($tpl);
 	}

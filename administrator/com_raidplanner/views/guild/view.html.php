@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------
-# RaidPlanner View for RaidPlanner Component
+# Guild View for RaidPlanner Component
 # com_raidplanner - RaidPlanner Component
 # ------------------------------------------------------------------------
 # author    Taracque
@@ -13,25 +13,28 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
-
-/* include the helper */
-require_once( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'helper.php' );
-
-class RaidPlannerViewRaidPlanner extends JView
+class RaidPlannerViewGuild extends JView
 {
-	/**
-	 * display method of Hello view
-	 * @return void
-	 **/
+
 	function display($tpl = null)
 	{
-		//get the data
+		//get the guild
+		$guild	=& $this->get('Data');
+		$isNew	= ($char->guild_id < 1);
 
-		JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER' ) );
-		JToolBarHelper::preferences( 'com_raidplanner' );
+		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_GUILD' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		JToolBarHelper::save();
+		if ($isNew)  {
+			JToolBarHelper::cancel();
+		} else {
+			// for existing items the button is renamed `close`
+			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
+		}
 
-		ComRaidPlannerHelper::showToolbarButtons();
+		$model =& $this->getModel();
+
+		$this->assignRef('guild', $guild);
 
 		parent::display($tpl);
 	}

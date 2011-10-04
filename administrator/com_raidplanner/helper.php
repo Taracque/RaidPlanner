@@ -17,7 +17,7 @@ require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
 class ComRaidPlannerHelper
 {
 
-	public function armorySync()
+	public static function armorySync()
 	{
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		if ($paramsObj->get('armory_sync', '1'))
@@ -125,5 +125,18 @@ class ComRaidPlannerHelper
 
 			}
 		}
+	}
+	
+	public static function showToolbarButtons()
+	{
+		$view = JRequest::getVar('view');
+
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RAIDS'), 'index.php?option=com_raidplanner&view=raids', ($view == 'raids'));
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_GUILDS'), 'index.php?option=com_raidplanner&view=guilds', ($view == 'guilds'));
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CHARACTERS'), 'index.php?option=com_raidplanner&view=characters', ($view == 'characters'));
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_GROUPS'), 'index.php?option=com_raidplanner&view=groups', ($view == 'groups'));
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_ROLES'), 'index.php?option=com_raidplanner&view=roles', ($view == 'roles'));
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CLASSES'), 'index.php?option=com_raidplanner&view=classes', ($view == 'classes'));
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RACES'), 'index.php?option=com_raidplanner&view=races', ($view == 'races'));
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------
-# Characters Model for RaidPlanner Component
+# Guilds Model for RaidPlanner Component
 # com_raidplanner - RaidPlanner Component
 # ------------------------------------------------------------------------
 # author    Taracque
@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
  
-class RaidPlannerModelCharacters extends JModel
+class RaidPlannerModelGuilds extends JModel
 {
     /**
      * Data array
@@ -62,7 +62,7 @@ class RaidPlannerModelCharacters extends JModel
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_char_order_Dir) ) &&
-			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender', 'rc.race_name', 'c.char_level','g.guild_name') ) ) &&
+			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender', 'rc.race_name', 'c.char_level') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 		
@@ -105,14 +105,7 @@ class RaidPlannerModelCharacters extends JModel
      */
     function _buildQuery()
     {
-        $query = ' SELECT c.*, u.name AS user_name, cl.class_name, rc.race_name, ge.gender_name, cl.class_color, g.guild_name '
-            . ' FROM #__raidplanner_character AS c'
-            . ' LEFT JOIN #__users AS u ON u.id = c.profile_id'
-            . ' LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id'
-            . ' LEFT JOIN #__raidplanner_race AS rc ON rc.race_id = c.race_id'
-            . ' LEFT JOIN #__raidplanner_gender AS ge ON ge.gender_id = c.gender_id'
-            . ' LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id'
-            . $this->_buildQueryWhere();
+        $query = ' SELECT * FROM #__raidplanner_guild' . $this->_buildQueryWhere();
         return $query;
     }
  

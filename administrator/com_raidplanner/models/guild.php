@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------
-# Character Model for RaidPlanner Component
+# Guild Model for RaidPlanner Component
 # com_raidplanner - RaidPlanner Component
 # ------------------------------------------------------------------------
 # author    Taracque
@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
  
-class RaidPlannerModelCharacter extends JModel
+class RaidPlannerModelGuild extends JModel
 {
 
 	function __construct()
@@ -35,15 +35,15 @@ class RaidPlannerModelCharacter extends JModel
 	{
 		// Load the data
 		if (empty( $this->_data )) {
-			$query = ' SELECT * FROM #__raidplanner_character '.
-					'  WHERE character_id = '.$this->_id;
+			$query = ' SELECT * FROM #__raidplanner_Guild '.
+					'  WHERE guild_id = '.$this->_id;
 			$this->_db->setQuery( $query );
 			$this->_data = $this->_db->loadObject();
 		}
 		if (!$this->_data) {
 			$this->_data = new stdClass();
-			$this->_data->character_id = 0;
-			$this->_data->char_name = null;
+			$this->_data->guild_id = 0;
+			$this->_data->guild_name = null;
 		}
 		return $this->_data;
 	}
@@ -104,13 +104,6 @@ class RaidPlannerModelCharacter extends JModel
 		return true;
 	}
 
-	function getGuilds()
-	{
-		$query = ' SELECT * FROM #__raidplanner_guild ORDER BY guild_name ASC ';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-	
 	function getClasses()
 	{
 		$query = ' SELECT * FROM #__raidplanner_class ORDER BY class_name ASC ';

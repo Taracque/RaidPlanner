@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------
-# Groups View for RaidPlanner Component
+# Guilds View for RaidPlanner Component
 # com_raidplanner - RaidPlanner Component
 # ------------------------------------------------------------------------
 # author    Taracque
@@ -16,14 +16,13 @@ jimport( 'joomla.application.component.view' );
 /* include the helper */
 require_once( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'helper.php' );
 
-class RaidPlannerViewGroups extends JView
+class RaidPlannerViewGuilds extends JView
 {
 
     function display($tpl = null)
     {
     
-        JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_GROUPS' ), 'generic.png' );
-        JToolBarHelper::makeDefault('setDefault');
+        JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_GUILDS' ), 'generic.png' );
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();
@@ -31,10 +30,21 @@ class RaidPlannerViewGroups extends JView
 		ComRaidPlannerHelper::showToolbarButtons();
 
         // Get data from the model
-        $groups =& $this->get( 'Data');
- 
-        $this->assignRef( 'groups', $groups );
- 
+        $guilds =& $this->get( 'Data');
+ 		$pagination =& $this->get('Pagination');
+
+        $this->assignRef( 'guilds', $guilds );
+ 		$this->assignRef( 'pagination', $pagination);
+ 		
+		 /* Call the state object */
+		$state =& $this->get( 'state' );
+		
+		/* Get the values from the state object that were inserted in the model's construct function */
+		$lists['search'] = $state->get( 'filter_char_search' );;
+		$lists['order']     = $state->get( 'filter_order' );
+		
+		$this->assignRef( 'lists', $lists );
+
         parent::display($tpl);
     }
 }

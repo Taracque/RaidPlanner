@@ -42,6 +42,15 @@ class RaidPlannerController extends JController
 				$db->Execute( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
 			}
 			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ); 
+
+			// remove characters that doesn't have guild
+			$query = 'SELECT c.character_id,c.profile_id FROM #__raidplanner_charcters AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id WHERE g.guild_name IS NULL'; 
+			$db->setQuery($query);
+			$list = $db->loadObjectList();
+			foreach ($list as $remove) {
+				$db->Execute( "DELETE FROM #__raidplanner_charcters WHERE character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+			}
+			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_GUILDLESS_CHARS', count($list) ); 
 		}
 	}
 }
