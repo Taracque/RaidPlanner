@@ -23,6 +23,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<?php echo JText::_('COM_RAIDPLANNER_RAIDS');?>
 		</a>
 	</div>
+
+	<div class="rp_icon_button">
+		<a href="index.php?option=com_raidplanner&view=guilds">
+			<span class="rp_guilds"></span>
+			<?php echo JText::_('COM_RAIDPLANNER_GUILDS');?>
+		</a>
+	</div>
 	
 	<div class="rp_icon_button">
 		<a href="index.php?option=com_raidplanner&view=characters">

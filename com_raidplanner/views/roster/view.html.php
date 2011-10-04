@@ -26,9 +26,25 @@ class RaidPlannerViewRoster extends JView
 	function display($tpl = null)
 	{
 		$model = &$this->getModel();
+		$paramsObj = &JComponentHelper::getParams( 'COM_RAIDPLANNER' );
+		$menuitemid = JRequest::getInt( 'Itemid' );
+		if ($menuitemid)
+		{
+			$menu = JSite::getMenu();
+			$menuparams = $menu->getParams( $menuitemid );
+			$paramsObj->merge( $menuparams );
+		}
 
-		$this->assignRef( 'characters', $model->getCharacters() );
-		$this->assignRef( 'guildinfo', $model->getGuildInfo() );
+		$guild_id = $paramsObj->get('guild_id', '0');
+		if ($paramsObj->get('armory_sync', '0') == 1)
+		{
+			// sync armory
+			require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+			ComRaidPlannerHelper::armorySync( $guild_id, $paramsObj->get( 'sync_interval', 4 ) );
+		}
+
+		$this->assignRef( 'characters', $model->getCharacters( $guild_id ) );
+		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
 
 		parent::display($tpl);
 	}

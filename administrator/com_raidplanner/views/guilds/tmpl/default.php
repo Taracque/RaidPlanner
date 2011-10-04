@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------
-# Characters List Template for RaidPlanner Component
+# Guild List Template for RaidPlanner Component
 # com_raidplanner - RaidPlanner Component
 # ------------------------------------------------------------------------
 # author    Taracque
@@ -10,6 +10,8 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
+$function	= JRequest::getCmd('function', '');
 ?>
 <form action="index.php" method="post" name="adminForm">
 <div id="editcell">
@@ -29,7 +31,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     <thead>
         <tr>
 			<th width="20">
-				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->characters ); ?>);" />
+				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->guilds ); ?>);" />
 			</th>
             <th width="5">
                 <?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
@@ -54,7 +56,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     $i = 0;
     foreach ($this->guilds as &$row)
     {
-    	$checked    = JHTML::_( 'grid.id', $i++, $row->character_id );
+    	$checked    = JHTML::_( 'grid.id', $i++, $row->guild_id );
         ?>
         <tr class="<?php echo "row$k"; ?>">
 			<td>
@@ -64,7 +66,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <?php echo $row->guild_id; ?>
             </td>
             <td>
-                <a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=guild&view=guild&task=edit&cid[]='.$row->guild_id);?>"><?php echo $row->guild_name; ?></a>
+            	<?php if ($function=="") : ?>
+                <a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]='.$row->guild_id);?>"><?php echo $row->guild_name; ?></a>
+                <?php else: ?>
+                <a class="pointer" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('<?php echo $row->guild_id; ?>', '<?php echo $this->escape(addslashes($row->guild_name)); ?>');"><?php echo $row->guild_name; ?></a>
+                <?php endif; ?>
             </td>
             <td>
                 <?php echo $row->guild_region; ?>

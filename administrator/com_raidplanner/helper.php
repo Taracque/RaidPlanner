@@ -17,25 +17,23 @@ require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
 class ComRaidPlannerHelper
 {
 
-	public static function armorySync()
+	public static function armorySync( $guild_id , $sync_interval )
 	{
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
-		if ($paramsObj->get('armory_sync', '1'))
+		$db = & JFactory::getDBO();
+		$query = "SELECT *,(DATE_ADD(lastSync, INTERVAL " . intval( $sync_interval ) . " HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
+		$db->setQuery($query);
+		if ($tmp = $db->loadObject())
 		{
-			$db = & JFactory::getDBO();
-			$query = "SELECT guild_id, (DATE_ADD(lastSync, INTERVAL ".intval( $paramsObj->get('sync_interval',4) )." HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_name=".$db->Quote( $paramsObj->get('armory_guild', '') )." ORDER BY guild_id ASC LIMIT 1"; 
-			$db->setQuery($query);
-			$tmp = $db->loadObject();
 			$guild_id = $tmp->guild_id;
 			$needsync = $tmp->needSync;
-
+	
 			if ( ( !$guild_id ) || ( $needsync<=0 ) )
 			{
-				$url = "http://".$paramsObj->get('armory_region', 'eu').".battle.net/api/wow/guild/";
-				$url .= urlencode( $paramsObj->get('armory_realm', '') ) . "/";
-				$url .= urlencode( $paramsObj->get('armory_guild', '') );
+				$url = "http://".$tmp->guild_region.".battle.net/api/wow/guild/";
+				$url .= urlencode( $tmp->guild_realm ) . "/";
+				$url .= urlencode( $tmp->guild_name );
 				$url = $url . "?fields=members";
-
+	
 				// Init cURL
 				$ch = curl_init();
 	
@@ -62,7 +60,7 @@ class ComRaidPlannerHelper
 						return null;
 					}
 				}
-
+	
 				if (!$guild_id)
 				{
 					$query = "INSERT INTO #__raidplanner_guild (guild_name) VALUES (".$db->Quote($data->name).")";
@@ -74,26 +72,26 @@ class ComRaidPlannerHelper
 					'achievementPoints' => $data->achievementPoints,
 					'side'		=> ($data->side==0)?"Alliance":"Horde",
 					'emblem'	=> $data->emblem,
-					'link'		=> "http://" . $paramsObj->get('armory_region', 'eu') . ".battle.net/wow/guild/" . urlencode( $paramsObj->get('armory_realm', '') ) . "/" . urlencode($data->name) ."/",
-					'char_link'	=> "http://" . $paramsObj->get('armory_region', 'eu') . ".battle.net/wow/character/" . urlencode( $paramsObj->get('armory_realm', '') ) . "/%s/advanced",
+					'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . urlencode( $tmp->guild_realm ) . "/" . urlencode($data->name) ."/",
+					'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/" . urlencode( $tmp->guild_realm ) . "/%s/advanced",
 				);
 				
 				$query = "UPDATE #__raidplanner_guild SET
 								guild_name=".$db->Quote($data->name).",
 								guild_realm=".$db->Quote($data->realm).",
-								guild_region=".$db->Quote($paramsObj->get('armory_region', 'eu')).",
+								guild_region=".$db->Quote($tmp->guild_region).",
 								guild_level=".$db->Quote($data->level).",
 								params=".$db->Quote(json_encode($params)).",
 								lastSync=NOW()
 								WHERE guild_id=".intval($guild_id);
 				$db->setQuery($query);
 				$db->query();
-
+	
 				/* detach characters from guild */
 				$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($guild_id)."";
 				$db->setQuery($query);
 				$db->query();
-
+	
 				foreach($data->members as $member)
 				{
 					// check if character exists
@@ -117,12 +115,12 @@ class ComRaidPlannerHelper
 					$db->setQuery($query);
 					$db->query();
 				}
-
+	
 				/* delete all guildless characters */
 				$query = "DELETE FROM #__raidplanner_character WHERE guild_id=0";
 				$db->setQuery($query);
 				$db->query();
-
+	
 			}
 		}
 	}

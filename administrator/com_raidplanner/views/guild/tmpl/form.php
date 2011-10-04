@@ -55,5 +55,5 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <input type="hidden" name="guild_id" value="<?php echo $this->guild->guild_id; ?>" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="view" value="guild" />
-<input type="hidden" name="controller" value="guild" />
+<input type="hidden" name="controller" value="guilds" />
 </form>

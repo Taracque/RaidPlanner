@@ -21,6 +21,10 @@
 	background-image: url(images/event.png);
 }
 
+.rp_guilds {
+	background-image: url(images/guilds.png);
+}
+
 .rp_chars {
 	background-image: url(images/roster.png);
 }

@@ -10,4 +10,16 @@
 		<name>COM_RAIDPLANNER_ROSTER_VIEW</name>
 		<description><![CDATA[COM_RAIDPLANNER_ROSTER_VIEW_DESC]]></description>
 	</state>
+	<fields name="params">
+		<fieldset name="basic" addfieldpath="/administrator/components/com_raidplanner/models/fields">
+			<field name="guild_id" type="modal_guilds"
+				description="COM_RAIDPLANNER_ARMORY_GUILD_DESC"
+				label="COM_RAIDPLANNER_ARMORY_GUILD_DESC"
+				required="true"
+			/>
+		</fieldset>
+	</fields>
+	<params>
+		<param name="guild_id" type="sql" label="COM_RAIDPLANNER_ARMORY_GUILD_DESC" query="SELECT guild_id, guild_name FROM #__raidplanner_guild ORDER BY guild_name ASC" key_field="guild_id" value_field="guild_name" />
+	</params>
 </metadata>

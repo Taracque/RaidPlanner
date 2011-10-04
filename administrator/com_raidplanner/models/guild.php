@@ -35,8 +35,8 @@ class RaidPlannerModelGuild extends JModel
 	{
 		// Load the data
 		if (empty( $this->_data )) {
-			$query = ' SELECT * FROM #__raidplanner_Guild '.
-					'  WHERE guild_id = '.$this->_id;
+			$query = ' SELECT * FROM #__raidplanner_guild '.
+					'  WHERE guild_id = ' . $this->_id;
 			$this->_db->setQuery( $query );
 			$this->_data = $this->_db->loadObject();
 		}
@@ -102,27 +102,6 @@ class RaidPlannerModelGuild extends JModel
 			}
 		}
 		return true;
-	}
-
-	function getClasses()
-	{
-		$query = ' SELECT * FROM #__raidplanner_class ORDER BY class_name ASC ';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-	
-	function getGenders()
-	{
-		$query = ' SELECT gender_id AS value, gender_name AS text FROM #__raidplanner_gender';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-
-	function getRaces()
-	{
-		$query = ' SELECT race_id AS value, race_name AS text FROM #__raidplanner_race';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
 	}
 
 }

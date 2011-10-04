@@ -233,8 +233,6 @@ class RaidPlannerModelEvent extends JModel
 				$db->setQuery($query);
 				$db->query();
 			}
-	
-			$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		}
 	}
 	
