@@ -30,6 +30,14 @@ function com_install()
 	} else {
 		$out .= 'RaidPlanner Today module installation failed!<br />';
 	}
+	// intsall RaidPlanner Today Module
+	if ( $extInstaller->install($source . DS . 'mod_raidplanner_events') ) {
+		// module installed
+		$out .= 'RaidPlanner Events module installed!<br />';
+	} else {
+		$out .= 'RaidPlanner Events module installation failed!<br />';
+	}
+	
 	
 	// version specific installation
 	$version = new JVersion();
