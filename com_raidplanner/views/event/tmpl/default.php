@@ -161,7 +161,7 @@ $hasChars = !empty($this->characters);
 									<input type="hidden" name="comments[<?php echo $attendant->character_id;?>]" value="<?php echo $attendant->comments;?>" />
 								<?php endif; ?>
 							</td>
-							<td style="<?php if ($this->roles[$attendant->role_name]->font_color!='') { echo "color:" . $this->roles[$attendant->role_name]->font_color . ";" } if ($this->roles[$attendant->role_name]->body_color!='') { echo "background-color:" . $this->roles[$attendant->role_name]->body_color . ";"; }?>"><?php
+							<td style="<?php if ($this->roles[$attendant->role_name]->font_color!='') { echo "color:" . $this->roles[$attendant->role_name]->font_color . ";"; } if ($this->roles[$attendant->role_name]->body_color!='') { echo "background-color:" . $this->roles[$attendant->role_name]->body_color . ";"; }?>"><?php
 								if (!$this->isOfficer) {
 									echo $attendant->role_name;
 								} else { ?>

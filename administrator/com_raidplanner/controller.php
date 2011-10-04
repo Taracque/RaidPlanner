@@ -38,19 +38,27 @@ class RaidPlannerController extends JController
 			$query = 'SELECT s.raid_id,s.character_id,s.profile_id FROM #__raidplanner_signups AS s LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id WHERE c.char_name IS NULL'; 
 			$db->setQuery($query);
 			$list = $db->loadObjectList();
-			foreach ($list as $remove) {
-				$db->Execute( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+			if (count($list) > 0)
+			{
+				foreach ($list as $remove) {
+					$db->setQuery( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+					$db->query();
+				}
 			}
-			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ); 
+			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ) . "<br />";
 
 			// remove characters that doesn't have guild
-			$query = 'SELECT c.character_id,c.profile_id FROM #__raidplanner_charcters AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id WHERE g.guild_name IS NULL'; 
+			$query = 'SELECT c.character_id,c.profile_id FROM #__raidplanner_characters AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id WHERE g.guild_name IS NULL'; 
 			$db->setQuery($query);
 			$list = $db->loadObjectList();
-			foreach ($list as $remove) {
-				$db->Execute( "DELETE FROM #__raidplanner_charcters WHERE character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+			if (count($list) > 0)
+			{
+				foreach ($list as $remove) {
+					$db->setQuery( "DELETE FROM #__raidplanner_charcters WHERE character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+					$db->query();
+				}
 			}
-			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_GUILDLESS_CHARS', count($list) ); 
+			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_GUILDLESS_CHARS', count($list) ) . "<br />";
 		}
 	}
 }
