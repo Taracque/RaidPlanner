@@ -442,19 +442,18 @@ class RaidPlannerModelEvent extends JModel
 			$query = "SELECT profile_id FROM #__raidplanner_character WHERE character_id=".$new_char_id;
 			$db->setQuery($query);
 			$profile_id = $db->loadResult();
-			if ($profile_id>0) {
-				$new_queue = JRequest::getVar('new_queue', null, 'INT');
-				$new_role = JRequest::getVar('new_role', null, 'INT');
+
+			$new_queue = JRequest::getVar('new_queue', null, 'INT');
+			$new_role = JRequest::getVar('new_role', null, 'INT');
 				
-				$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
-				$db->setQuery($query);
-				$db->query();
+			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
+			$db->setQuery($query);
+			$db->query();
 				
-				$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
-						"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",'',NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
-				$db->setQuery($query);
-				$db->query();
-			}
+			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
+					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",'',NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+			$db->setQuery($query);
+			$db->query();
 		}
 	}
 	

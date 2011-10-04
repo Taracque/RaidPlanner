@@ -33,7 +33,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="start_time"><?php echo JText::_( 'COM_RAIDPLANNER_START_TIME' ); ?>:<br />
-				<small><?php echo JText::_( 'COM_RAIDPLANNER_GMT' ); ?></small>
+				<small><?php echo JText::_( 'COM_RAIDPLANNER_UTCGMT' ); ?></small>
 			</label>
 			<?php echo JHTML::_('calendar',@$this->raid->start_time, 'start_time', 'start_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
@@ -43,7 +43,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="invite_time"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_TIME' ); ?>:<br />
-				<small><?php echo JText::_( 'COM_RAIDPLANNER_GMT' ); ?></small>
+				<small><?php echo JText::_( 'COM_RAIDPLANNER_UTCGMT' ); ?></small>
 			</label>
 			<?php echo JHTML::_('calendar',@$this->raid->invite_time, 'invite_time', 'invite_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
