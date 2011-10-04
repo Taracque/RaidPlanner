@@ -143,7 +143,7 @@ $hasChars = !empty($this->characters);
 					<tbody>
 			<?php foreach ($this->attendants as $attendant) { ?>
 						<tr>
-							<td>
+							<td class="class_<?php echo $attendant->class_id;?>">
 								<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
 								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
 									<strong><?php echo $attendant->char_name;?></strong>
@@ -161,7 +161,7 @@ $hasChars = !empty($this->characters);
 									<input type="hidden" name="comments[<?php echo $attendant->character_id;?>]" value="<?php echo $attendant->comments;?>" />
 								<?php endif; ?>
 							</td>
-							<td style="color:<?php echo $this->roles[$attendant->role_name]->font_color;?>;background-color:<?php echo $this->roles[$attendant->role_name]->body_color;?>;"><?php
+							<td style="<?php if ($this->roles[$attendant->role_name]->font_color!='') { echo echo "color:" . $this->roles[$attendant->role_name]->font_color . ";" } if ($this->roles[$attendant->role_name]->body_color!='') { echo "background-color:" . $this->roles[$attendant->role_name]->body_color . ";"; }?>"><?php
 								if (!$this->isOfficer) {
 									echo $attendant->role_name;
 								} else { ?>

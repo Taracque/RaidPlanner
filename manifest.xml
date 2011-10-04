@@ -49,6 +49,7 @@
 	<media destination="../images/raidplanner" folder="images">
 		<folder>raid_icons</folder>
 		<folder>role_icons</folder>
+		<folder>class_icons</folder>
 		<folder>tabards</folder>
 	</media>
 	<administration>
