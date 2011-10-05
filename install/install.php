@@ -119,7 +119,7 @@ function com_install()
 	// check if #__raidplanner_guild table exists
 	$db = & JFactory::getDBO();
 
-	$query = "SHOW TABLES LIKE '#__raidplanner_guild'";
+	$query = "SHOW TABLES LIKE '%_raidplanner_guild'";
 	$db->setQuery($query);
 	$db->query();
 	$result = $db->loadObject();
@@ -151,10 +151,10 @@ function com_install()
 		$query = "ALTER TABLE `#__raidplanner_class` ADD `class_css` varchar(45) NOT NULL DEFAULT ''";
 		$db->setQuery($query);
 		$db->query();
-		$query = "UPDATE `#__raidplanner_class` SET `class_css` = CONCAT( 'class_', 'class_id')";
+		$query = "UPDATE `#__raidplanner_class` SET `class_css` = CONCAT( 'class_', `class_id`)";
 		$db->setQuery($query);
 		$db->query();
-		$out .= 'Class_cc added to Class database table<br />';
+		$out .= 'Class_css added to Class database table<br />';
 	}
 
 	$query = "SHOW COLUMNS FROM `#__raidplanner_guild` LIKE  'guild_id'";

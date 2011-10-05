@@ -41,11 +41,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="sync_now"><?php echo JText::_( 'COM_RAIDPLANNER_SYNC_NOW' ); ?>:</label>
-			<input type="checkbox" type="sync_now" name="sync_now" id="default" value="1" />
+			<input type="checkbox" name="sync_now" id="sync_now" value="1" />
 		</li>
 		<li>
 			<label for="last_sync"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD_LAST_SYNC' ); ?>:</label>
-			<?php echo $this->guild->lastSync; ?>
+			<input type="text" name="last_sync" value="<?php echo $this->guild->lastSync; ?>" disabled="disabled" />
 		</li>
 	</ul>
 	</fieldset>

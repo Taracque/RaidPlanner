@@ -77,7 +77,13 @@ class RaidPlannerModelGuild extends JModel
 			$this->setError( $this->_db->getErrorMsg() );
 			return false;
 		}
-		
+	
+		if ($data['sync_now']=='1')
+		{
+			require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+			ComRaidPlannerHelper::armorySync( $data['guild_id'], 0 );
+		}
+
 		return true;
 	}
 

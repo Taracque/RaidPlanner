@@ -54,8 +54,8 @@ $start_time = explode( " ", JHTML::_('date', $this->event->start_time, JText::_(
 		<label><?php echo JText::_('COM_RAIDPLANNER_GUILD');?>
 			<select name="guild_id" id="guild_id">
 				<option value=""></option>
-				<?php foreach ($this->guild as $guild_id => $guild_name) : ?>
-				<option value="<?php echo $guild_id;?>"<?php if ($guild_id==$this->event->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild_name;?></option>
+				<?php foreach ($this->guilds as $guild_id => $guild_name) : ?>
+				<option value="<?php echo $guild_id;?>"<?php if ($guild_id==$this->event->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild_name['guild_name'];?></option>
 				<?php endforeach; ?>
 			</select>
 		</label><br />

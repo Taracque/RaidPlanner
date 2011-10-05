@@ -25,6 +25,7 @@ class TableClass extends JTable
 	 */
 	var $class_name = null;
 	var $class_color = null;
+	var $class_css = null;
 
 	/**
 	 * @var int

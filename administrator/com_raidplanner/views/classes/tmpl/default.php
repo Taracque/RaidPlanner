@@ -25,6 +25,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             <th>
                 <?php echo JText::_( 'COM_RAIDPLANNER_CLASS_NAME' ); ?>
             </th>
+            <th>
+                <?php echo JText::_( 'COM_RAIDPLANNER_CLASS_CSS' ); ?>
+            </th>
         </tr>            
     </thead>
     <?php
@@ -43,6 +46,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             </td>
             <td>
                 <a style="color:<?php echo $row->class_color;?>;" href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=classes&view=class&task=edit&cid[]='.$row->class_id);?>"><?php echo $row->class_name; ?></a>
+            </td>
+            <td>
+                <?php echo $row->class_css; ?>
             </td>
         </tr>
         <?php

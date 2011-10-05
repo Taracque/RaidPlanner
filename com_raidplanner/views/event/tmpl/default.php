@@ -24,7 +24,7 @@ $hasChars = !empty($this->characters);
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit"><?php echo JText::_('JGLOBAL_EDIT');?></a>
 		<?php } ?>
 			<ul>
-				<li><h2><?php echo $this->event->location; ?></h2></li>
+				<li><h2><?php echo $this->event->location; ?><?php if ($this->event->guild_name) { echo " - " . $this->event->guild_name;}?></h2></li>
 				<li>
 					<strong><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>:</strong> <?php echo JHTML::_('date', $this->event->invite_time, $dateFormat); ?>, 
 					<strong><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>:</strong> <?php echo JHTML::_('date', $this->event->start_time, $dateFormat); ?>,
@@ -38,8 +38,8 @@ $hasChars = !empty($this->characters);
 			<div class="rp_event_roles">
 				<ul>
 					<li>
-						<strong><?php echo JText::_('COM_RAIDPLANNER_ATTENDING_ROLES');?> (<?php echo (is_array($this->confirmed_roles[0]))?array_sum(@$this->confirmed_roles[0]):"0";?>):</strong><br />
-						<?php if (@$this->confirmed_roles[0]) : ?>
+						<strong><?php echo JText::_('COM_RAIDPLANNER_ATTENDING_ROLES');?> (<?php echo (isset($this->confirmed_roles[0]) && is_array($this->confirmed_roles[0]))?array_sum(@$this->confirmed_roles[0]):"0";?>):</strong><br />
+						<?php if ( (isset($this->confirmed_roles[0])) && (@$this->confirmed_roles[0]) ) : ?>
 							<?php foreach ($this->confirmed_roles[0] as $key => $role) : ?>
 								<?php if ($this->roles[$key]->icon_name != '') : ?>
 								<img src="<?php echo JURI::base()."images/raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />

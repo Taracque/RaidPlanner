@@ -71,9 +71,11 @@ class RaidPlannerViewEdit extends JView
 
 	function getGuilds()
 	{
+		$db = & JFactory::getDBO();
+
 		$query = ' SELECT * FROM #__raidplanner_guild ORDER BY guild_name ASC ';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList('guild_id');
+		$db->setQuery( $query );
+		return $db->loadAssocList('guild_id');
 	}
 
 	function getIcons()

@@ -28,7 +28,7 @@ class RaidPlannerModelEvent extends JModel
     	if ($id>0) {
 			$db = & JFactory::getDBO();
 	
-			$query = "SELECT *,DATE_ADD(start_time,INTERVAL duration_mins MINUTE) AS end_time FROM #__raidplanner_raid WHERE raid_id=".intval($id);
+			$query = "SELECT r.*,g.guild_name,DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS end_time FROM #__raidplanner_raid AS r LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=r.guild_id  WHERE r.raid_id=".intval($id);
 			
 			$db->setQuery($query);
 			$result = $db->loadObject();
@@ -150,7 +150,7 @@ class RaidPlannerModelEvent extends JModel
     	$db = & JFactory::getDBO();
 
     	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
-    				cl.class_name,cl.class_color,c.char_level,s.profile_id,s.role_id,s.queue
+    				cl.class_name,cl.class_color,c.char_level,s.profile_id,s.role_id,s.queue,cl.class_css
     			FROM #__raidplanner_signups AS s 
     				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
     				LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id
@@ -252,10 +252,10 @@ class RaidPlannerModelEvent extends JModel
 		} else {
 			$where = " 1=1";
 		}
-		if (($min_level != null) && ($min_level!='')) { $where .= " AND c.char_level>=".intval($min_level); }
-		if (($max_level != null) && ($max_level!='')) { $where .= " AND c.char_level<=".intval($max_level); }
-		if (($min_rank != null) && ($min_rank!='')) { $where .= " AND c.rank<=".intval($min_rank); }
-		if (($guild_id != null) && ($guil_id!='')) { $where .= " AND c.guild_id=".intval($guild_id); }
+		if (($min_level != null) && (intval($min_level) > 0)) { $where .= " AND c.char_level>=".intval($min_level); }
+		if (($max_level != null) && (intval($max_level) > 0)) { $where .= " AND c.char_level<=".intval($max_level); }
+		if (($min_rank != null) && (intval($min_rank) > 0)) { $where .= " AND c.rank<=".intval($min_rank); }
+		if (($guild_id != null) && (intval($guil_id) > 0)) { $where .= " AND c.guild_id=".intval($guild_id); }
 		$query = "SELECT c.character_id,c.char_name,c.profile_id
 					FROM #__raidplanner_character AS c 
 					WHERE ".$where." ORDER BY c.char_name ASC";
@@ -487,6 +487,7 @@ class RaidPlannerModelEvent extends JModel
 		$maximum_level = JRequest::getVar('maximum_level', null, 'default', 'INT');
 		$minimum_rank = JRequest::getVar('minimum_rank', null, 'default', 'INT');
 		$icon_name = JRequest::getVar('icon_name', null, 'default', 'STRING');
+		$guild_id = JRequest::getVar('guild_id', null, 'default', 'INT');
 
 		// update the record
 		$query = "UPDATE #__raidplanner_raid SET"
@@ -502,6 +503,7 @@ class RaidPlannerModelEvent extends JModel
 				. ",minimum_level=".( ($minimum_level=='')?"NULL":intval($minimum_level) )
 				. ",maximum_level=".( ($maximum_level=='')?"NULL":intval($maximum_level) )
 				. ",minimum_rank=".( ($minimum_rank=='')?"NULL":intval($minimum_rank) )
+				. ",guild_id=".( ($guild_id=='')?"NULL":intval($guild_id) )
 				. " WHERE raid_id=".intval($raid_id);
 
 		$db->setQuery($query);
