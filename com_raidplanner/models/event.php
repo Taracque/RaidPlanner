@@ -239,7 +239,7 @@ class RaidPlannerModelEvent extends JModel
 	/**
 	* Gets the list of user's characters
 	*/
-	function getCharacters($min_level = null, $max_level = null, $min_rank = null, $everyone = false) {
+	function getCharacters($min_level = null, $max_level = null, $min_rank = null, $guild_id = null, $everyone = false) {
 		$user =& JFactory::getUser();
 		$db = & JFactory::getDBO();
 		
@@ -255,6 +255,7 @@ class RaidPlannerModelEvent extends JModel
 		if (($min_level != null) && ($min_level!='')) { $where .= " AND c.char_level>=".intval($min_level); }
 		if (($max_level != null) && ($max_level!='')) { $where .= " AND c.char_level<=".intval($max_level); }
 		if (($min_rank != null) && ($min_rank!='')) { $where .= " AND c.rank<=".intval($min_rank); }
+		if (($guild_id != null) && ($guil_id!='')) { $where .= " AND c.guild_id=".intval($guild_id); }
 		$query = "SELECT c.character_id,c.char_name,c.profile_id
 					FROM #__raidplanner_character AS c 
 					WHERE ".$where." ORDER BY c.char_name ASC";

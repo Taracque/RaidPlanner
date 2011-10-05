@@ -37,57 +37,57 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<th width="20">
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->raids ); ?>);" />
 			</th>
-            <th width="5">
-                <?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
-            </th>
-            <th width="100">
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_START_TIME', 'r.start_time', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th>
-            	<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_LOCATION', 'r.location', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_LEVEL', 'r.minimum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MAXMIUM_LEVEL', 'r.maximum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_RANK', 'r.minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_INVITE_GROUP', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD', 'gu.guild_name', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-            <th width="100">
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_TEMPLATE', 'r.is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
-            </th>
-        </tr>            
-    </thead>
-    <tbody>
-    <?php
-    $k = 0;
-    $i = 0;
-    foreach ($this->raids as &$row)
-    {
-    	$checked    = JHTML::_( 'grid.id', $i++, $row->raid_id );
-        ?>
-        <tr class="<?php echo "row$k"; ?>">
+			<th width="5">
+				<?php echo JText::_( 'JGRID_HEADING_ID' ); ?>
+			</th>
+			<th width="100">
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_START_TIME', 'r.start_time', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_LOCATION', 'r.location', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_LEVEL', 'r.minimum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MAXMIUM_LEVEL', 'r.maximum_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_RANK', 'r.minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_INVITE_GROUP', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD', 'gu.guild_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+			<th width="100">
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_TEMPLATE', 'r.is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	$k = 0;
+	$i = 0;
+	foreach ($this->raids as &$row)
+	{
+		$checked    = JHTML::_( 'grid.id', $i++, $row->raid_id );
+		?>
+		<tr class="<?php echo "row$k"; ?>">
 			<td>
 				<?php echo $checked; ?>
 			</td>
-            <td>
-                <?php echo $row->raid_id; ?>
-            </td>
-            <td>
-                <?php echo JHTML::_('date', $row->start_time, JText::_('DATE_FORMAT_LC2') ); ?>
-            </td>
-            <td>
+			<td>
+				<?php echo $row->raid_id; ?>
+			</td>
+			<td>
+				<?php echo JHTML::_('date', $row->start_time, JText::_('DATE_FORMAT_LC2') ); ?>
+			</td>
+			<td>
 				<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=raids&view=raid&task=edit&cid[]='.$row->raid_id);?>"><?php echo $row->location; ?></a>
-            </td>
-            <td>
+			</td>
+			<td>
 				<?php echo $row->minimum_level; ?>
 			</td>
             <td>
@@ -97,10 +97,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo $row->minimum_rank; ?>
             </td>
             <td>
-				<?php echo $row->guild_name; ?>
+				<?php echo $row->group_name; ?>
             </td>
             <td>
-				<?php echo $row->group_name; ?>
+				<?php echo $row->guild_name; ?>
             </td>
             <td>
 				<?php echo ($row->is_template) ? JText::_(JYES) : '-' ; ?>

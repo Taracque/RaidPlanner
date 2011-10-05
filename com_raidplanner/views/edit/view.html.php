@@ -31,6 +31,7 @@ class RaidPlannerViewEdit extends JView
 				$event = $model->getEvent(JRequest::getVar('id') );
 			}
 			$this->assignRef( 'icons', $this->getIcons() );
+			$this->assignRef( 'guilds', $this->getGuilds() );
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'templates', $model->getTemplates() );
 			$this->assignRef( 'candelete', $model->canDelete( $event->raid_id ) );
@@ -66,6 +67,13 @@ class RaidPlannerViewEdit extends JView
 			// Display the view
 			$view->display();
 		}
+	}
+
+	function getGuilds()
+	{
+		$query = ' SELECT * FROM #__raidplanner_guild ORDER BY guild_name ASC ';
+		$this->_db->setQuery( $query );
+		return $this->_db->loadObjectList('guild_id');
 	}
 
 	function getIcons()

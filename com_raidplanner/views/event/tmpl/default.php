@@ -143,7 +143,7 @@ $hasChars = !empty($this->characters);
 					<tbody>
 			<?php foreach ($this->attendants as $attendant) { ?>
 						<tr>
-							<td class="class_<?php echo $attendant->class_id;?>">
+							<td class="<?php echo $attendant->class_css;?>">
 								<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
 								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
 									<strong><?php echo $attendant->char_name;?></strong>

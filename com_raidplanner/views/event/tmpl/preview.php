@@ -63,16 +63,15 @@ $dateFormat = JText::_('DATE_FORMAT_LC2');
 							</tr>
 						</thead>
 						<tbody>
-				<?php foreach ($this->attendants as $attendant) { 
-				?>
+				<?php foreach ($this->attendants as $attendant) : ?>
 							<tr>
-								<td><input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" /><span style="color:<?php echo $attendant->class_color;?>" class="hasTip" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>"><?php echo $attendant->char_name;?></span></td>
+								<td class="<?php echo $attendant->class_css;?>"><input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" /><span style="color:<?php echo $attendant->class_color;?>" class="hasTip" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>"><?php echo $attendant->char_name;?></span></td>
 								<td><?php echo JText::_('COM_RAIDPLANNER_STATUSES_'.$attendant->queue); ?></td>
 								<td><span <?php if ($attendant->comments!='') { ?>class="hasTip" title="<?php echo htmlspecialchars( $attendant->comments, ENT_QUOTES, 'UTF-8' );?>"<?php } ?>><?php echo $attendant->role_name; ?></span></td>
 								<td><?php echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_'.$attendant->confirmed); ?></td>
 								<td><?php echo JHTML::_('date', $attendant->timestamp, $dateFormat);?></td>
 							</tr>
-				<?php } ?>
+				<?php endforeach; ?>
 						</tbody>
 					</table>
 				</form>

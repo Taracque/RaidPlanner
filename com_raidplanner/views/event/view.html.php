@@ -25,10 +25,10 @@ class RaidPlannerViewEvent extends JView
 		} else {
 			$attendants = $model->getAttendants( JRequest::getVar('id') );
 			$event = $model->getEvent( JRequest::getVar('id') );
-			$characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank);
+			$characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank,@$event->guild_id);
 			$isOfficer = $model->userIsOfficer();
 			if ($isOfficer) {
-				$all_characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank,true);
+				$all_characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank,@$event->guild_id,true);
 				foreach($all_characters as $all_key => $all_char) {
 					if(isset($attendants[$all_char->profile_id])) {
 						unset($all_characters[$all_key]);

@@ -51,6 +51,14 @@ $start_time = explode( " ", JHTML::_('date', $this->event->start_time, JText::_(
 		<label><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?> <input type="text" name="freeze_time" id="freeze_time" value="<?php echo $this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?></label><br />
 		<label><?php echo JText::_('COM_RAIDPLANNER_LEVEL_RANGE');?> <input type="text" name="minimum_level" id="minimum_level" value="<?php echo $this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo $this->event->maximum_level;?>" size="3" /></label><br />
 		<label><?php echo JText::_('COM_RAIDPLANNER_MINIMUM_RANK');?> <input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo $this->event->minimum_rank;?>" size="3" /></label><br />
+		<label><?php echo JText::_('COM_RAIDPLANNER_GUILD');?>
+			<select name="guild_id" id="guild_id">
+				<option value=""></option>
+				<?php foreach ($this->guild as $guild_id => $guild_name) : ?>
+				<option value="<?php echo $guild_id;?>"<?php if ($guild_id==$this->event->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild_name;?></option>
+				<?php endforeach; ?>
+			</select>
+		</label><br />
 	
 		<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
 <?php if($this->candelete) : ?>

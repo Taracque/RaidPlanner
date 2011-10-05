@@ -49,7 +49,7 @@ class RaidPlannerControllerClasses extends RaidPlannerController
         $post = JRequest::get('post');
 
 		if ($model->store($post)) {
-			$msg = JText::sprintf( 'COM_RAIDPLANNER_CLASS_SAVED', JText::_('COM_RAIDPLANNER_CLASS') );
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_CLASS') );
 		} else {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_CLASS') );
 		}
