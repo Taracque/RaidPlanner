@@ -47,6 +47,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input class="text_area" type="text" name="armory_id" id="armory_id" size="10" maxlength="7" value="<?php echo $this->class->armory_id;?>" />
 			</td>
 		</tr>
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="class_css">
+					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_CSS' ); ?>:
+				</label>
+			</td>
+			<td>
+				<input class="text_area" type="text" name="class_css" id="class_css" size="20" maxlength="45" value="<?php echo $this->class->class_css;?>" />
+			</td>
+		</tr>
 	</table>
 	</fieldset>
 </div>

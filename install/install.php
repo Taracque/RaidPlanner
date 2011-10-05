@@ -139,6 +139,34 @@ function com_install()
 				";
 		$db->setQuery($query);
 		$db->query();
+		$out .= 'Guild table added to the database<br />';
+	}
+
+	$query = "SHOW COLUMNS FROM `#__raidplanner_class` LIKE  'class_css'";
+	$db->setQuery($query);
+	$db->query();
+	$result = $db->loadObject();
+	if ( !$result  )
+	{
+		$query = "ALTER TABLE `#__raidplanner_class` ADD `class_css` varchar(45) NOT NULL DEFAULT ''";
+		$db->setQuery($query);
+		$db->query();
+		$query = "UPDATE `#__raidplanner_class` SET `class_css` = CONCAT( 'class_', 'class_id')";
+		$db->setQuery($query);
+		$db->query();
+		$out .= 'Class_cc added to Class database table<br />';
+	}
+
+	$query = "SHOW COLUMNS FROM `#__raidplanner_guild` LIKE  'guild_id'";
+	$db->setQuery($query);
+	$db->query();
+	$result = $db->loadObject();
+	if ( !$result  )
+	{
+		$query = "ALTER TABLE `#__raidplanner_raid` ADD `guild_id` int(11) DEFAULT NULL";
+		$db->setQuery($query);
+		$db->query();
+		$out .= 'Guild_id added to Raid database table<br />';
 	}
 	
 	$installer->set('message', $out);

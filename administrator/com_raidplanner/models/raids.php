@@ -106,6 +106,7 @@ class RaidPlannerModelRaids extends JModel
         $query = ' SELECT * '
             . ' FROM #__raidplanner_raid AS r'
             . ' LEFT JOIN #__raidplanner_groups AS g ON g.group_id = r.invited_group_id '
+            . ' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
             . $this->_buildQueryWhere();
         
         return $query;

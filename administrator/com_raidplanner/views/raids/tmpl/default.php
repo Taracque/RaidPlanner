@@ -58,6 +58,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_INVITE_GROUP', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
+            <th>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD', 'gu.guild_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+            </th>
             <th width="100">
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_TEMPLATE', 'r.is_template', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
@@ -94,6 +97,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo $row->minimum_rank; ?>
             </td>
             <td>
+				<?php echo $row->guild_name; ?>
+            </td>
+            <td>
 				<?php echo $row->group_name; ?>
             </td>
             <td>
@@ -107,7 +113,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     	</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="9"><?php echo $this->pagination->getListFooter(); ?></td>
+				<td colspan="10"><?php echo $this->pagination->getListFooter(); ?></td>
 			</tr>
 		</tfoot>
     </table>

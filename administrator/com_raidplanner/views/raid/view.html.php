@@ -37,7 +37,9 @@ class RaidPlannerViewRaid extends JView
 			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 		$groups = $this->getGroupList();
+		$guilds = $this->getGuildList();
 
+		$this->assignRef('guilds', $guilds );
 		$this->assignRef('groups', $groups );
 		$this->assignRef('icons', $this->getIcons() );
 		$this->assignRef('raid', $raid);
@@ -75,6 +77,16 @@ class RaidPlannerViewRaid extends JView
 		return $files;
 	}
 	
+	function getGuildList()
+	{
+		$db	=& JFactory::getDBO();
+		$query = "SELECT guild_id,guild_name FROM #__raidplanner_guild ORDER BY guild_name ASC";
+		$db->setQuery($query);
+		$db->query();
+		
+		return $db->loadObjectList('guild_id');
+	}
+
 	function getGroupList()
 	{
 		$db	=& JFactory::getDBO();
