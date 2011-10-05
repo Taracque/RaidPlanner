@@ -26,7 +26,7 @@ class RaidPlannerViewRoster extends JView
 	function display($tpl = null)
 	{
 		$model = &$this->getModel();
-		$paramsObj = &JComponentHelper::getParams( 'COM_RAIDPLANNER' );
+		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JRequest::getInt( 'Itemid' );
 		if ($menuitemid)
 		{

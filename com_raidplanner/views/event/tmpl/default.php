@@ -118,12 +118,12 @@ $hasChars = !empty($this->characters);
 		<td>
 			<div>
 				<a href="#" id="rp_switcher_attendants" class="active rp_switchers" onclick="javascript:rpSwitchTab('attendants');return false;"><?php echo JText::_('COM_RAIDPLANNER_ATTENDANTS');?></a>
-			<?php if (($hasChars) && ($this->canSignup)) { ?>
+			<?php if (($hasChars) && ($this->canSignup)) : ?>
 				<a href="#" id="rp_switcher_signup" class="rp_switchers" onclick="javascript:rpSwitchTab('signup');return false;"><?php echo JText::_('COM_RAIDPLANNER_SIGNUP');?></a>
-			<?php } ?>
-			<?php if ($this->event->raid_history!='') { ?>
+			<?php endif; ?>
+			<?php if ( ($this->params['show_history']==1) && ($this->event->raid_history!='') ) : ?>
 				<a href="#" id="rp_switcher_history" class="rp_switchers" onclick="javascript:rpSwitchTab('history');return false;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?></a>
-			<?php } ?>
+			<?php endif; ?>
 			</div>
 		</td>
 	</tr>
@@ -228,7 +228,7 @@ $hasChars = !empty($this->characters);
 			<?php } ?>
 					</tbody>
 				</table>
-			<?php if ($this->isOfficer) { ?>
+			<?php if ( ($this->params['show_history']==1) && ($this->isOfficer) ) : ?>
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
 				<div class="rp_history_editor">
 					<label><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:
@@ -240,7 +240,7 @@ $hasChars = !empty($this->characters);
 				<input type="hidden" name="controller" value="" />
 				<input type="hidden" name="task" value="confirm" />
 				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
-			<?php } ?>
+			<?php endif; ?>
 			</form>
 		</td>
 	</tr>
@@ -301,7 +301,7 @@ $hasChars = !empty($this->characters);
 		</td>
 	</tr>
 <?php } ?>
-<?php if ($this->event->raid_history!='') { ?>
+<?php if ( ($this->params['show_history']==1) && ($this->event->raid_history!='') ) : ?>
 	<tr class="rp_event_history" id="rp_event_history" style="display:none;">
 		<td>
 			<div class="rp_history_viewer" id="rp_history_viewer">
@@ -309,5 +309,5 @@ $hasChars = !empty($this->characters);
 			</div>
 		</td>
 	</tr>
-<?php } ?>
+<?php endif; ?>
 </table>

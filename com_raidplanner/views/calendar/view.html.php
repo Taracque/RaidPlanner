@@ -16,17 +16,26 @@ jimport( 'joomla.application.component.controller' );
 
 JHTML::_('behavior.tooltip');
 
-JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => 750,'y' => 500)));
-
 class RaidPlannerViewCalendar extends JView
 {
     function display($tpl = null)
     {
 		$eventmodel = &$this->getModel('event');
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$menuitemid = JRequest::getInt( 'Itemid' );
+		if ($menuitemid)
+		{
+			$menu = JSite::getMenu();
+			$menuparams = $menu->getParams( $menuitemid );
+			$paramsObj->merge( $menuparams );
+		}
 		$params = array(
-			'first_dow'	=> $paramsObj->get('first_dow', 0)
+			'first_dow'		=> $paramsObj->get('first_dow', 0),
+			'popup_width'	=> $paramsObj->get('popup_width', 750),
+			'popup_height'	=> $paramsObj->get('popup_height', 500),
+			'show_history'	=> $paramsObj->get('show_history', 0)
 		);
+		JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
 
 		if ($eventmodel->getPermission('view_calendar') != 1) {
 			// redirect to the index page

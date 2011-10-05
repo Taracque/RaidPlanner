@@ -18,6 +18,12 @@
 				<option value="0">SUNDAY</option>
 				<option value="1">MONDAY</option>
 			</param>
+			<param name="popup_width" type="text" default="750" label="COM_RADIPLANNER_POPUP_WIDTH" description="COM_RADIPLANNER_POPUP_WIDTH_DESCRIPTION" />
+			<param name="popup_height" type="text" default="500" label="COM_RADIPLANNER_POPUP_HEIGHT" description="COM_RADIPLANNER_POPUP_HEIGHT_DESCRIPTION" />
+			<param name="show_history" type="radio" default="0" label="COM_RADIPLANNER_SHOW_HISTORY" description="COM_RADIPLANNER_SHOW_HISTORY_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</param>
 	    </params>
 	</state>
 	<fields name="params">
@@ -29,6 +35,12 @@
 			<field name="first_dow" type="radio" default="0" label="COM_RADIPLANNER_FIRST_DAY_OF_WEEK" description="COM_RADIPLANNER_FIRST_DAY_OF_WEEK_DESCRIPTION">
 				<option value="0">SUNDAY</option>
 				<option value="1">MONDAY</option>
+			</field>
+			<field name="popup_width" type="text" default="750" label="COM_RADIPLANNER_POPUP_WIDTH" description="COM_RADIPLANNER_POPUP_WIDTH_DESCRIPTION" />
+			<field name="popup_height" type="text" default="500" label="COM_RADIPLANNER_POPUP_HEIGHT" description="COM_RADIPLANNER_POPUP_HEIGHT_DESCRIPTION" />
+			<field name="show_history" type="radio" default="0" label="COM_RADIPLANNER_SHOW_HISTORY" description="COM_RADIPLANNER_SHOW_HISTORY_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
 			</field>
 		</fieldset>
 	</fields>

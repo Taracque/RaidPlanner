@@ -19,6 +19,18 @@ class RaidPlannerViewEvent extends JView
     {
 		$model = &$this->getModel();
 
+		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$menuitemid = JRequest::getInt( 'Itemid' );
+		if ($menuitemid)
+		{
+			$menu = JSite::getMenu();
+			$menuparams = $menu->getParams( $menuitemid );
+			$paramsObj->merge( $menuparams );
+		}
+		$params = array(
+			'show_history'	=> $paramsObj->get('show_history', 0)
+		);
+
 		if ( $model->getPermission('view_raids') != 1 ) {
 			$mainframe = JFactory::getApplication();
 			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
@@ -37,6 +49,8 @@ class RaidPlannerViewEvent extends JView
 			} else {
 				$all_characters = array();
 			}
+
+			$this->assignRef( 'params', $params);		
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'attendants' , $attendants );
 			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles($attendants) );
