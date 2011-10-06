@@ -29,7 +29,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<label for="class_id"><?php echo JText::_( 'COM_RAIDPLANNER_CLASS' ); ?>:</label>
 			<select name="class_id" id="class_id">
 				<?php foreach ($this->classes as $class) : ?>
-					<option value="<?php echo $class->class_id;?>" style="color:<?php echo $class->class_color;?>"><?php echo $class->class_name;?></option>
+					<option value="<?php echo $class->class_id;?>" style="color:<?php echo $class->class_color;?>"<?php if ($this->character->class_id == $class->class_id){ echo " selected=\"selected\"";}?>><?php echo $class->class_name;?></option>
 				<?php endforeach; ?>
 			</select>
 		</li>
