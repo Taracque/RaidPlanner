@@ -98,7 +98,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</ul>
 	</fieldset>
 </div>
-<div class="width-70 fltrt col70">
+<div class="width-65 fltrt col65">
 	<?php if ($this->raid->raid_id > 0 ) : ?>
 	<iframe style="width:100%;height:500px;border:none;" src="<?php echo JURI::base(); ?>../index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=<?php echo $this->raid->raid_id;?>"></iframe>
 	<?php endif; ?>

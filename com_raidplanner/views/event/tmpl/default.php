@@ -228,14 +228,15 @@ $hasChars = !empty($this->characters);
 			<?php } ?>
 					</tbody>
 				</table>
-			<?php if ( ($this->params['show_history']==1) && ($this->isOfficer) ) : ?>
+			<?php if ($this->isOfficer) : ?>
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
+				<?php if ($this->params['show_history']==1) : ?>
 				<div class="rp_history_editor">
 					<label><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:
 						<textarea style="float:right;" name="history" rows="1" cols="20"><?php echo $this->xml_history; ?></textarea>
 					</label>
 				</div>
-
+				<?php endif; ?>
 				<input type="hidden" name="option" value="com_raidplanner" />
 				<input type="hidden" name="controller" value="" />
 				<input type="hidden" name="task" value="confirm" />

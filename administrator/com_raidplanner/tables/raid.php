@@ -33,6 +33,7 @@ class TableRaid extends JTable
 	/**
 	* @var int
 	*/
+	var $status = 0;
 	var $profile_id = null;
 	var $freeze_time = null;
 	var $minimum_level = null;
