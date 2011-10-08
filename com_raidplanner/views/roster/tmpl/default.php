@@ -83,7 +83,7 @@ jimport( 'joomla.utilities.date');
 			<tbody>
 			<?php foreach($this->characters as $character) : ?>
 				<tr class="rp_roster">
-					<td><a href="<?php echo sprintf($this->guildinfo->params->char_link, urlencode( $character['char_name'] ) );?>" target="_blank"><?php echo $character['char_name']; ?></a></td>
+					<td><a href="<?php echo sprintf($this->guildinfo->params->char_link, rawurlencode( $character['char_name'] ) );?>" target="_blank"><?php echo $character['char_name']; ?></a></td>
 					<td><?php echo $character['char_level']; ?></td>
 					<td><?php echo $character['gender_name']; ?></td>
 					<td><?php echo $character['race_name']; ?></td>
