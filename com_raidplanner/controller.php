@@ -52,10 +52,10 @@ class RaidPlannerController extends JController
 					$model = &$this->getModel('event');
 					$raid_id = $model->saveEvent();
 					$start_time = JRequest::getVar('start_time', '');
-					if (!isset($start_time[0]) || ($start_time[0]=="")) {
+					if (!isset($start_time[1]) || ($start_time[1]=="")) {
 						$start_time[0] = date("Y-m");
 					}
-					$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&month='.$start_time[0].'&modalevent='.$raid_id ) );
+					$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&month='.$start_time[1].'&modalevent='.$raid_id ) );
 				}
 			break;
 			case 'deleteevent':

@@ -326,7 +326,7 @@ class RaidPlannerModelEvent extends JModel
 	* check if user is an officer
 	*/
 	function userIsOfficer($raid_id = null) {
-		$own_raid = false;
+		$own_raid = true;
 
 		if ($raid_id>0) {
 			$db = & JFactory::getDBO();
