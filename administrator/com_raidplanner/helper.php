@@ -11,8 +11,8 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-require_once ( JPATH_BASE .DS.'includes'.DS.'defines.php' );
-require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
+require_once ( JPATH_BASE . DS . 'includes' . DS . 'defines.php' );
+require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
 
 class ComRaidPlannerHelper
 {
@@ -30,8 +30,8 @@ class ComRaidPlannerHelper
 			if ( ( !$guild_id ) || ( $needsync<=0 ) )
 			{
 				$url = "http://".$tmp->guild_region.".battle.net/api/wow/guild/";
-				$url .= urlencode( $tmp->guild_realm ) . "/";
-				$url .= urlencode( $tmp->guild_name );
+				$url .= rawurlencode( $tmp->guild_realm ) . "/";
+				$url .= rawurlencode( $tmp->guild_name );
 				$url = $url . "?fields=members";
 	
 				// Init cURL
@@ -72,8 +72,8 @@ class ComRaidPlannerHelper
 					'achievementPoints' => $data->achievementPoints,
 					'side'		=> ($data->side==0)?"Alliance":"Horde",
 					'emblem'	=> $data->emblem,
-					'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . urlencode( $tmp->guild_realm ) . "/" . urlencode($data->name) ."/",
-					'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/" . urlencode( $tmp->guild_realm ) . "/%s/advanced",
+					'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . rawurlencode( $tmp->guild_realm ) . "/" . rawurlencode($data->name) ."/",
+					'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/" . rawurlencode( $tmp->guild_realm ) . "/%s/advanced",
 				);
 				
 				$query = "UPDATE #__raidplanner_guild SET

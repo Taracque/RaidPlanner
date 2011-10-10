@@ -8,10 +8,10 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.2</version>
-	<releaseDate>2011-03-22</releaseDate>
+	<version>0.3</version>
+	<releaseDate>2011-10-08</releaseDate>
 	<releaseType>Major release</releaseType>
-	<downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.1.zip</downloadUrl>
+	<downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.3.zip</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
 	<description>RaidPlanner component for Joomla, to organize WoW raids</description>
 	<!-- Install Database Section -->

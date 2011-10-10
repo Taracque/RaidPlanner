@@ -255,7 +255,7 @@ class RaidPlannerModelEvent extends JModel
 		if (($min_level != null) && (intval($min_level) > 0)) { $where .= " AND c.char_level>=".intval($min_level); }
 		if (($max_level != null) && (intval($max_level) > 0)) { $where .= " AND c.char_level<=".intval($max_level); }
 		if (($min_rank != null) && (intval($min_rank) > 0)) { $where .= " AND c.rank<=".intval($min_rank); }
-		if (($guild_id != null) && (intval($guil_id) > 0)) { $where .= " AND c.guild_id=".intval($guild_id); }
+		if (($guild_id != null) && (intval($guild_id) > 0)) { $where .= " AND c.guild_id=".intval($guild_id); }
 		$query = "SELECT c.character_id,c.char_name,c.profile_id
 					FROM #__raidplanner_character AS c 
 					WHERE ".$where." ORDER BY c.char_name ASC";
