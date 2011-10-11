@@ -35,10 +35,11 @@ class RaidPlannerViewEvent extends JView
 			$mainframe = JFactory::getApplication();
 			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
 		} else {
-			$attendants = $model->getAttendants( JRequest::getVar('id') );
-			$event = $model->getEvent( JRequest::getVar('id') );
+			$raid_id = JRequest::getInt('id');
+			$attendants = $model->getAttendants( $raid_id );
+			$event = $model->getEvent( $raid_id );
 			$characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank,@$event->guild_id);
-			$isOfficer = $model->userIsOfficer();
+			$isOfficer = $model->userIsOfficer( $event->raid_id );
 			if ($isOfficer) {
 				$all_characters = $model->getCharacters(@$event->minimum_level,@$event->maximum_level,@$event->minimum_rank,@$event->guild_id,true);
 				foreach($all_characters as $all_key => $all_char) {
@@ -60,7 +61,7 @@ class RaidPlannerViewEvent extends JView
 			$this->assignRef( 'all_characters' , $all_characters );
 			$this->assignRef( 'selfstatus' , $model->getUserStatus($attendants) );
 			$this->assignRef( 'isOfficer' , $isOfficer );
-			$this->assignRef( 'canSignup' , $model->userCanSignUp( JRequest::getVar('id') ) );
+			$this->assignRef( 'canSignup' , $model->userCanSignUp( $raid_id );
 			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
 
 			parent::display($tpl);
