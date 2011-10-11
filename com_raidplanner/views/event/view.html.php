@@ -54,14 +54,14 @@ class RaidPlannerViewEvent extends JView
 			$this->assignRef( 'params', $params);		
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'attendants' , $attendants );
-			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles($attendants) );
-			$this->assignRef( 'xml_history', $model->getHistory( $event->raid_id,true ) );
+			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles( $attendants ) );
+			$this->assignRef( 'xml_history', $model->getHistory( $event->raid_id, true ) );
 			$this->assignRef( 'roles' , $model->getRoles() );
 			$this->assignRef( 'characters' , $characters );
 			$this->assignRef( 'all_characters' , $all_characters );
 			$this->assignRef( 'selfstatus' , $model->getUserStatus($attendants) );
 			$this->assignRef( 'isOfficer' , $isOfficer );
-			$this->assignRef( 'canSignup' , $model->userCanSignUp( $raid_id );
+			$this->assignRef( 'canSignup' , $model->userCanSignUp( $event->raid_id ) );
 			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
 
 			parent::display($tpl);
