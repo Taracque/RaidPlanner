@@ -20,7 +20,7 @@ class RaidPlannerViewGuild extends JView
 	{
 		//get the guild
 		$guild	=& $this->get('Data');
-		$isNew	= ($char->guild_id < 1);
+		$isNew	= ($guild->guild_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
 		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_GUILD' ).': <small><small>[ ' . $text.' ]</small></small>' );

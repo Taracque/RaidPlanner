@@ -61,8 +61,8 @@ class RaidPlannerModelCharacters extends JModel
 		
 		/* Error handling is never a bad thing*/
 		if (
-			(!empty($filter_order) && !empty($filter_char_order_Dir) ) &&
-			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender', 'rc.race_name', 'c.char_level','g.guild_name') ) ) &&
+			(!empty($filter_order) && !empty($filter_order_Dir) ) &&
+			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender_id', 'rc.race_name', 'c.char_level','g.guild_name') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 		

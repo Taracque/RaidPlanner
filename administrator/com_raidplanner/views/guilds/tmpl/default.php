@@ -23,7 +23,7 @@ $function	= JRequest::getCmd('function', '');
 			</td>
 			<td nowrap="nowrap">
 				<button onclick="this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
-				<button onclick="document.getElementById('search').value='';document.getElementById('level_min').value='';document.getElementById('level_max').value='';this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
+				<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
 			</td>
 		</tr>
 	</table>

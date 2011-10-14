@@ -31,11 +31,9 @@ class RaidPlannerModelGuilds extends JModel
 		$option = JRequest::getCmd('option');
 		$app = &JFactory::getApplication();
 
-		$filter_char_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'level', 'cmd' );
-		$filter_char_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
-		$filter_char_search		= $app->getUserStateFromRequest( $option.'filter_char_search',	'search', '',	'string');
-		$filter_char_level_min	= $app->getUserStateFromRequest( $option.'filter_char_level_min',	'level_min', null,	'int');
-		$filter_char_level_max	= $app->getUserStateFromRequest( $option.'filter_char_level_max',	'level_max', null,	'int');
+		$filter_guild_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'level', 'cmd' );
+		$filter_guild_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
+		$filter_guild_search		= $app->getUserStateFromRequest( $option.'filter_guild_search',	'search', '',	'string');
 
 		// Get pagination request variables
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
@@ -46,11 +44,9 @@ class RaidPlannerModelGuilds extends JModel
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-		$this->setState('filter_order', $filter_char_order);
-		$this->setState('filter_order_Dir', $filter_char_order_Dir);
-		$this->setState('filter_char_search', $filter_char_search);
-		$this->setState('filter_char_level_min', $filter_char_level_min);
-		$this->setState('filter_char_level_max', $filter_char_level_max);
+		$this->setState('filter_order', $filter_guild_order);
+		$this->setState('filter_order_Dir', $filter_guild_order_Dir);
+		$this->setState('filter_guild_search', $filter_guild_search);
 	}
 
 	function _buildContentOrderBy()
@@ -61,8 +57,8 @@ class RaidPlannerModelGuilds extends JModel
 		
 		/* Error handling is never a bad thing*/
 		if (
-			(!empty($filter_order) && !empty($filter_char_order_Dir) ) &&
-			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender', 'rc.race_name', 'c.char_level') ) ) &&
+			(!empty($filter_order) && !empty($filter_guild_order_Dir) ) &&
+			(in_array($filter_order, array('guild_name', 'guild_region', 'guild_realm', 'guild_level') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 		
@@ -76,21 +72,13 @@ class RaidPlannerModelGuilds extends JModel
 	{
 		$db	=& JFactory::getDBO();
 		
-		$filter_char_level_min = $this->getState('filter_char_level_min');
-		$filter_char_level_max = $this->getState('filter_char_level_max');
-		$filter_char_search = $this->getState('filter_char_search');
+		$filter_guild_search = $this->getState('filter_guild_search');
 
 		$where = '';
 		
 		$where_arr = array();
-		if ($filter_char_level_min>0) {
-			$where_arr[] = "c.char_level >= ".$db->Quote($filter_char_level_min);
-		}
-		if ($filter_char_level_max!='') {
-			$where_arr[] = "c.char_level <= ".$db->Quote($filter_char_level_max);
-		}
-		if ($filter_char_search!='') {
-			$where_arr[] = "(c.char_name LIKE '%".$db->getEscaped($filter_char_search)."%' OR u.name LIKE '%".$db->getEscaped($filter_char_search)."%')";
+		if ($filter_guild_search!='') {
+			$where_arr[] = "guild_name LIKE '%".$db->getEscaped($filter_guild_search)."%'";
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);

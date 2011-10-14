@@ -40,7 +40,7 @@ class RaidPlannerViewGuilds extends JView
 		$state =& $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
-		$lists['search'] = $state->get( 'filter_char_search' );;
+		$lists['search'] = $state->get( 'filter_guild_search' );;
 		$lists['order']     = $state->get( 'filter_order' );
 		
 		$this->assignRef( 'lists', $lists );

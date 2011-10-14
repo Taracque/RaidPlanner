@@ -51,7 +51,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_RANK', 'c.rank', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GENDER', 'c.gender', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GENDER', 'c.gender_id', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_RACE', 'rc.race_name', $this->lists['order_Dir'], $this->lists['order']); ?>
