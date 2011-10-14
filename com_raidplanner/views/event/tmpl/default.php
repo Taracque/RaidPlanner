@@ -281,7 +281,7 @@ $hasChars = !empty($this->characters);
 							<?php if($hasChars) { ?>
 								<select name="character_id">
 								<?php foreach ($this->characters as $character) { ?>
-									<option value="<?php echo $character->character_id;?>" <?php if ($this->selfstatus->character_id==$character->character_id) { ?>selected="selected"<?php } ?> var="<?php echo $character->role_id;?>"><?php echo $character->char_name;?></option>
+									<option value="<?php echo $character->character_id;?>" <?php if ($this->selfstatus->character_id==$character->character_id) { ?>selected="selected"<?php } ?>><?php echo $character->char_name;?></option>
 								<?php } ?>
 								</select>
 							<?php } ?>
