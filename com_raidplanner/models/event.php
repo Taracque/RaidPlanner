@@ -214,14 +214,21 @@ class RaidPlannerModelEvent extends JModel
     	return $result;
 	}
 
-	function syncProfile()
+	/* Create an array of characters which is stored in joomla user profile */ 
+	function getProfileCharList($user)
 	{
-		$user =& JFactory::getUser();
+		$charset = $user->getParam('characters');
+		$charset = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $charset );
+		$charset = preg_replace('!\s+!', ' ', $charset);
+		$charset = explode( " ", $charset);
 		
+		return $charset;
+	}
+
+	function syncProfile($user)
+	{
 		if (!$user->guest) {
 			$db = & JFactory::getDBO();
-	
-			$charset = explode("\n",$user->getParam('characters'));
 	
 			// check if raidplanner profile exists
 			$query = "SELECT profile_id FROM #__raidplanner_profile WHERE profile_id = ".$user->id;
@@ -240,17 +247,15 @@ class RaidPlannerModelEvent extends JModel
 	* Gets the list of user's characters
 	*/
 	function getCharacters($min_level = null, $max_level = null, $min_rank = null, $guild_id = null, $everyone = false) {
-		$user =& JFactory::getUser();
 		$db = & JFactory::getDBO();
+		$user =& JFactory::getUser();
 		
-		$this->syncProfile();
-
-		$charset = explode("\n",$user->getParam('characters'));
+		$this->syncProfile($user);
 
 		if (!$everyone) {
-			$where = " c.profile_id=".$user->id;
+			$where = " WHERE c.profile_id=" . intval($user->id) . " OR c.profile_id = 0";
 		} else {
-			$where = " 1=1";
+			$where = " ";
 		}
 		if (($min_level != null) && (intval($min_level) > 0)) { $where .= " AND c.char_level>=".intval($min_level); }
 		if (($max_level != null) && (intval($max_level) > 0)) { $where .= " AND c.char_level<=".intval($max_level); }
@@ -258,21 +263,37 @@ class RaidPlannerModelEvent extends JModel
 		if (($guild_id != null) && (intval($guild_id) > 0)) { $where .= " AND c.guild_id=".intval($guild_id); }
 		$query = "SELECT c.character_id,c.char_name,c.profile_id
 					FROM #__raidplanner_character AS c 
-					WHERE ".$where." ORDER BY c.char_name ASC";
+					" . $where . " ORDER BY c.char_name ASC";
 		// reload the list
 		$db->setQuery($query);
 		$result = $db->loadObjectList('char_name');
 
 		$charlist = array();
-
+		$charset = $this->getProfileCharList($user);
+		
     	// reorder if set in characters parameters
     	foreach ($charset as $userchar) {
     		if (isset($result[$userchar])) {
 				$charlist[$userchar] = $result[$userchar];
+				/* Write it back to the database, if needed */
+				if ( $result[$userchar]->profile_id == 0 )	/* no profile attached to it */
+				{
+					$query = "UPDATE #__raidplanner_character SET profile_id = " . intval($user->id) . " WHERE character_id = " . intval($result[$userchar]->character_id);
+					$db->setQuery($query);
+					$db->query();
+				}
+
 				unset($result[$userchar]);
 			}
     	}
-		$charlist = $charlist + $result;
+
+    	foreach ($result as $charname => $charvalue)
+    	{
+    		if ( ( $charvalue->profile_id != 0 ) || ( $everyone ) )
+    		{
+    			$charlist[$charname] = $charvalue;
+    		}
+    	}
 
     	return $charlist;
 	}
