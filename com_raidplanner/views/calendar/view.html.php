@@ -22,7 +22,7 @@ class RaidPlannerViewCalendar extends JView
     {
 		$eventmodel = &$this->getModel('event');
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
-		$menuitemid = JRequest::getInt( 'Itemid' );
+		$menuitemid = JSite::getMenu()->getActive()->id;
 		if ($menuitemid)
 		{
 			$menu = JSite::getMenu();
@@ -43,8 +43,10 @@ class RaidPlannerViewCalendar extends JView
 			$msg = JText::_('JGLOBAL_AUTH_ACCESS_DENIED');
 			$app->redirect( JRoute::_(''), $msg);
 		}
+
+		$user =& JFactory::getUser();
 		
-		$eventmodel->syncProfile();
+		$eventmodel->syncProfile( $user );
 		$canView = ($eventmodel->getPermission('view_raids') == 1);
  		$this->assignRef( 'isOfficer', $eventmodel->userIsOfficer() );
 		$this->assignRef( 'canView', $canView );
@@ -74,7 +76,6 @@ class RaidPlannerViewCalendar extends JView
 			break;
 		}
 
-		$user =& JFactory::getUser();
 		if ($user->getParam('calendar_secret', '') != '') {
 			$calendar_mode = 'subscribe';
 			$this->assignRef( 'user_id', $user->id );
@@ -83,6 +84,7 @@ class RaidPlannerViewCalendar extends JView
 			$calendar_mode = 'download';
 		}
 		
+		$this->assignRef( 'menuitemid', $menuitemid );
 		$this->assignRef( 'calendar_mode', $calendar_mode );
 		$this->assignRef( 'prevmonth', $prevmonth );
 		$this->assignRef( 'nextmonth', $nextmonth );

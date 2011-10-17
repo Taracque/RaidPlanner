@@ -16,10 +16,12 @@ $version = new JVersion();
 switch ($version->RELEASE) {
 	case '1.5':
 		$timeformat = '%H:%M';
+		$jsdateformat = '%Y-%m-%d';
 	break;
 	default:
 	case '1.6':
 		$timeformat = 'H:i';
+		$jsdateformat = 'Y-m-d';
 	break;
 }
 
@@ -45,9 +47,9 @@ $start_time = explode( " ", JHTML::_('date', $this->event->start_time, JText::_(
 		<label><?php echo JText::_('JGLOBAL_DESCRIPTION');?>:<br />
 			<textarea name="description" cols="40" rows="5"><?php echo $this->event->description;?></textarea>
 		</label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: <?php echo JHTML::calendar(JHTML::_('date', $start_time[0], JText::_('DATE_FORMAT_LC4')),'start_time[1]','start_time_1',$dateFormat);?> <input type="text" name="start_time[2]" id="start_time_2" value="<?php echo $start_time[1];?>" size="6" /></label><br />
+		<label><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: <?php echo JHTML::calendar( JHTML::_('date', $start_time[0], $jsdateformat), 'start_time[1]', 'start_time_1', $dateFormat);?> <input type="text" name="start_time[2]" id="start_time_2" value="<?php echo $start_time[1];?>" size="6" /></label><br />
 		<label><?php echo JText::_('COM_RAIDPLANNER_DURATION');?>: <input type="text" name="duration_mins" id="duration_mins" value="<?php echo $this->event->duration_mins;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES');?></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: <?php echo JHTML::calendar(JHTML::_('date', $invite_time[0], JText::_('DATE_FORMAT_LC4')),'invite_time[1]','invite_time_1',$dateFormat);?> <input type="text" name="invite_time[2]" id="invite_time_2" value="<?php echo $invite_time[1];?>" size="6" /></label><br />
+		<label><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: <?php echo JHTML::calendar( JHTML::_('date', $invite_time[0], $jsdateformat), 'invite_time[1]', 'invite_time_1', $dateFormat);?> <input type="text" name="invite_time[2]" id="invite_time_2" value="<?php echo $invite_time[1];?>" size="6" /></label><br />
 		<label><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?> <input type="text" name="freeze_time" id="freeze_time" value="<?php echo $this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?></label><br />
 		<label><?php echo JText::_('COM_RAIDPLANNER_LEVEL_RANGE');?> <input type="text" name="minimum_level" id="minimum_level" value="<?php echo $this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo $this->event->maximum_level;?>" size="3" /></label><br />
 		<label><?php echo JText::_('COM_RAIDPLANNER_MINIMUM_RANK');?> <input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo $this->event->minimum_rank;?>" size="3" /></label><br />
@@ -74,7 +76,7 @@ $start_time = explode( " ", JHTML::_('date', $this->event->start_time, JText::_(
 <?php endif; ?>
 		
 		<input type="hidden" name="option" value="com_raidplanner" />
-		<input type="hidden" name="controller" value="" />
+		<input type="hidden" name="Itemid" value="<?php echo JSite::getMenu()->getActive()->id; ?>" />
 		<input type="hidden" name="task" id="task" value="saveevent" />
 		<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
 	</form>

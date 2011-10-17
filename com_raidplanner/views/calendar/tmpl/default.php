@@ -77,7 +77,7 @@ window.addEvent('domready',function(){
 					?>
 								<div class="event <?php echo ($event->signed)?"signed":"unsigned";?>">
 									<?php if($this->canView) { ?>
-									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id); ?>">
+									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 									<?php } else { ?>
 									<a>
 									<?php } ?>
