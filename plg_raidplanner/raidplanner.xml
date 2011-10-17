@@ -17,6 +17,8 @@
 	<languages>
 		<language tag="en-GB">en-GB.plg_user_raidplanner.ini</language>
 		<language tag="en-GB">en-GB.plg_user_raidplanner.sys.ini</language>
+		<language tag="de-DE">de-DE.plg_user_raidplanner.ini</language>
+		<language tag="de-DE">de-DE.plg_user_raidplanner.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
