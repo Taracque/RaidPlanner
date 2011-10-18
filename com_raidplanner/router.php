@@ -11,13 +11,6 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-/*
-	URL format for SEO friendly URLs:
-	0:view / 1:task / 2:id / 3:Itemid (menu id) / raidplanner internals
-	internals values and titles are separated by a - character
-
-*/
-
 /**
  * Function to build a RaidPlanner URL route.
  *
@@ -36,23 +29,34 @@ function RaidPlannerBuildRoute( &$query )
 	if(isset($query['task'])) {
 		$segments[] = $query['task'];
 		unset( $query['task'] );
-	};
+	}
 	if(isset($query['id'])) {
 		$segments[] = $query['id'];
 		unset( $query['id'] );
-	};
-	if(isset($query['Itemid'])) {
-		$segments[] = $query['Itemid'];
-		unset( $query['Itemid'] );
-	};
-	if(isset($query['modalevent'])) {
-		$segments[] = $query['modalevent'];
+	}
+	if(isset($query['modalevent']))
+	{
+		if ($query['modalevent']!='') {
+			$segments[] = 'modalevent-' . $query['modalevent'];
+		}
 		unset( $query['modalevent'] );
-	};
-	if(isset($query['month'])) {
-		$segments[] = 'month-' . $query['month'];
+	}
+	if(isset($query['month']))
+	{
+		if($query['month']!='')
+		{
+			$segments[] = 'month-' . $query['month'];
+		}
 		unset( $query['month'] );
-	};
+	}
+	if(isset($query['tmpl']))
+	{
+		if($query['tmpl']!='')
+		{
+			$segments[] = 'tmpl-' . $query['tmpl'];
+		}
+		unset( $query['tmpl'] );
+	}
 
 	return $segments;
 }
@@ -67,36 +71,40 @@ function RaidPlannerParseRoute( $segments )
 {
 	$vars = array();
 
-	switch($segments[0])
+	// get month and modalevent (if exists)
+	foreach ($segments as $segment)
+	{
+		if (strpos($segment, ":") !== false)
+		{
+			$tmp = explode(":" , @$segment);
+			$vars[$tmp[0]] = (@$tmp[1]);
+		}
+	}
+
+	//Handle View and Identifier
+	switch( $segments[0] )
 	{
 		case 'edit':
 			$vars['view'] = 'edit';
 			$vars['task'] = $segments[1];
 			$vars['id'] = intval(@$segments[2]);
-			$vars['Itemid'] = intval(@$segments[3]);
 		break;
 		case 'event':
 			$vars['view'] = 'event';
 			$vars['task'] = $segments[1];
 			$vars['id'] = intval(@$segments[2]);
-			$vars['Itemid'] = intval(@$segments[3]);
 		break;
 		case 'calendar':
 			$vars['view'] = 'calendar';
 			$vars['task'] = $segments[1];
 			$vars['id'] = intval(@$segments[2]);
-			$vars['Itemid'] = intval(@$segments[3]);
-			$vars['modalevent'] = intval(@$segments[4]);
-			$tmp = explode(":" , @$segments[5]);
-			$vars['month'] = $tmp[1];
 		break;
 		default:
-			if ( (is_numeric ( $segments[0] ) ) && ( intval( $segments[0] ) > 0 ) )
-			{
-				/* only Itemid is given */
-				$vars['Itemid'] = intval(@$segments[3]);
-			}
-		
+			$app =& JFactory::getApplication();
+			$menu =& $app->getMenu();
+			$item =& $menu->getActive();
+			// no view defined, needs to figure out
+			$vars['view'] = $item->query('view');
 	}
 	return $vars;
 }

@@ -44,7 +44,7 @@ SUMMARY:<?php echo $event[0]->location;?>
 
 DESCRIPTION:<?php echo $event[0]->description;?>
 
-URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$event[0]->raid_id.'');?>
+URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$event[0]->raid_id.'');?>
 
 BEGIN:VALARM
 ACTION:AUDIO

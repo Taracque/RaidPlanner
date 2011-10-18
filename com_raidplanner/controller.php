@@ -43,7 +43,8 @@ class RaidPlannerController extends JController
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 				$model = &$this->getModel('event');
 				$model->signupEvent();
-				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.JRequest::getVar('month').'&modalevent='.JRequest::getVar('raid_id') , false ) );
+				$month = $model->getMonth();
+				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
 			break;
 			case 'saveevent':
 				$template_id = JRequest::getVar('template_id');
@@ -56,30 +57,25 @@ class RaidPlannerController extends JController
 					$vLayout = JRequest::getCmd( 'layout', 'default' );
 					$model = &$this->getModel('event');
 					$raid_id = $model->saveEvent();
-					$start_time = JRequest::getVar('start_time', '');
-					if (!isset($start_time[1]) || ($start_time[1]=="")) {
-						$start_time[1] = date("Y-m");
-					}
-					$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$start_time[1].'&modalevent='.$raid_id , false ) );
+					$month = $model->getMonth();
+					$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.$raid_id , false ) );
 				}
 			break;
 			case 'deleteevent':
 				$vName = 'calendar';
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 				$model = &$this->getModel('event');
+				$month = $model->getMonth();
 				$model->deleteEvent();
-				$start_time = JRequest::getVar('start_time', '');
-				if ($start_time[1]=="") {
-					$start_time[1] = date("Y-m");
-				}
-				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$start_time[1] , false ) );
+				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month, false ) );
 			break;
 			case 'confirm':
 				$vName = 'calendar';
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 				$model = &$this->getModel('event');
 				$model->confirmEvent();
-				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.JRequest::getVar('month').'&modalevent='.JRequest::getVar('raid_id') , false ) );
+				$month = $model->getMonth();
+				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
 			break;
 			case 'viewevent':
 				$vName = 'event';

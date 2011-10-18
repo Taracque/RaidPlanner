@@ -286,14 +286,16 @@ class RaidPlannerModelEvent extends JModel
 				unset($result[$userchar]);
 			}
     	}
-
-    	foreach ($result as $charname => $charvalue)
-    	{
-    		if ( ( $charvalue->profile_id != 0 ) || ( $everyone ) )
-    		{
-    			$charlist[$charname] = $charvalue;
-    		}
-    	}
+		if (is_array($result))
+		{
+			foreach ($result as $charname => $charvalue)
+			{
+				if ( ( $charvalue->profile_id != 0 ) || ( $everyone ) )
+				{
+					$charlist[$charname] = $charvalue;
+				}
+			}
+		}
 
     	return $charlist;
 	}
@@ -317,6 +319,24 @@ class RaidPlannerModelEvent extends JModel
 		}
 	}
 
+	/**
+	* Get Month of an event
+	*/
+	
+	function getMonth()
+	{
+		$raid_id = JRequest::getVar('raid_id', null, 'INT');
+		if ($raid_id)
+		{
+			$event = $this->getEvent($raid_id);
+			
+			return substr($event->start_time,0,7);
+			
+		} else {
+			return date("Y-m");
+		}
+	}
+	
 	/**
 	* Signup for an event
 	*/
@@ -415,7 +435,7 @@ class RaidPlannerModelEvent extends JModel
 			$db->setQuery($query);
 			
 			$dbreply = ($db->loadResultArray());
-			$reply = ($dbreply[0] === "1");
+			$reply = (@$dbreply[0] === "1");
 		}
 		return $reply;
 	}
