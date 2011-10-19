@@ -253,9 +253,9 @@ class RaidPlannerModelEvent extends JModel
 		$this->syncProfile($user);
 
 		if (!$everyone) {
-			$where = " WHERE c.profile_id=" . intval($user->id) . " OR c.profile_id = 0";
+			$where = " WHERE (c.profile_id=" . intval($user->id) . " OR c.profile_id = 0)";
 		} else {
-			$where = " ";
+			$where = " WHERE 1=1";
 		}
 		if (($min_level != null) && (intval($min_level) > 0)) { $where .= " AND c.char_level>=".intval($min_level); }
 		if (($max_level != null) && (intval($max_level) > 0)) { $where .= " AND c.char_level<=".intval($max_level); }

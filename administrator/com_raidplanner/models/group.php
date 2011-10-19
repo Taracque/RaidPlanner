@@ -61,9 +61,19 @@ class RaidPlannerModelGroup extends JModel
 		$data = JRequest::get( 'post' );
 
 		// store membership and permission
-		$permissions = $data['permissions'];
+		if ( isset($data['permissions']) )
+		{
+			$permissions = $data['permissions'];
+		} else {
+			$members = array();
+		}
 		unset($data['permissions']);
-		$members = $data['members'];
+		if ( isset($data['members']) )
+		{
+			$members = $data['members'];
+		} else {
+			$members = array();
+		}
 		unset($data['members']);
 	
 		// Bind the form fields to the table
@@ -88,7 +98,7 @@ class RaidPlannerModelGroup extends JModel
 		}
 
 		// if default is set, remove default from all other records
-		if ($data['default']==1) {
+		if (@$data['default']==1) {
 			$this->setDefault();
 		}
 		
@@ -103,6 +113,9 @@ class RaidPlannerModelGroup extends JModel
 		}
 		
 		// Store members
+		$query = "UPDATE #__raidplanner_profile SET group_id = 0 WHERE group_id = ".$row->group_id;
+		$this->_db->setQuery($query);
+		$this->_db->query();
 		foreach ($members as $member) {
 			$query = "REPLACE INTO #__raidplanner_profile SET group_id = ".$row->group_id.", profile_id = ".intval($member);
 			$this->_db->setQuery($query);

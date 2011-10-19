@@ -35,6 +35,7 @@ class TableCharacter extends JTable
 	var $race_id = null;
 	var $char_level = null;
 	var $rank = null;
+	var $guild_id = 0;
 
 	/**
 	 * Constructor

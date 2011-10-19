@@ -76,8 +76,15 @@ function com_install()
 
 					$out .= 'Language file for admin language ' . $lang['name'] . ' patched for Joomla 1.5<br />';
 				}
-				$target = JLanguage::getLanguagePath( JPATH_SITE, $lang['tag'] );
-				// check if raidplanner has it language file in $target
+			}
+		}
+		$langs =& JLanguage::getKnownLanguages( JPATH_SITE );
+		foreach ($langs as $lang)
+		{
+			$target = JLanguage::getLanguagePath( JPATH_SITE, $lang['tag'] );
+			// check if raidplanner has it language file in $target
+			if (JFile::exists( $target . DS . $lang['tag'] . '.com_raidplanner.ini' ))
+			{
 				$content = JFile::read( $target . DS . $lang['tag'] . '.com_raidplanner.ini' );
 				if ($content != false)
 				{
@@ -86,7 +93,7 @@ function com_install()
 						$content .= "\n" . JFile::read( $source . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.j15.ini' );
 					}
 					JFile::write( $target . DS . $lang['tag'] . '.com_raidplanner.ini', $content );
-
+	
 					$out .= 'Language file for frontend language ' . $lang['name'] . ' patched for Joomla 1.5<br />';
 				}
 			}

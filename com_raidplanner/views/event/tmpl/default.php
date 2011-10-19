@@ -239,7 +239,7 @@ $hasChars = !empty($this->characters);
 				<?php endif; ?>
 
 				<input type="hidden" name="option" value="com_raidplanner" />
-				<input type="hidden" name="Itemid" value="<?php echo JSite::getMenu()->getActive()->id; ?>" />
+				<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
 				<input type="hidden" name="task" value="confirm" />
 				<input type="hidden" name="layout" value="default" />
 				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
