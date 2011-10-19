@@ -11,16 +11,17 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$dateFormat = JText::_('%Y-%m-%d');
 $version = new JVersion();
 switch ($version->RELEASE) {
 	case '1.5':
 		$timeformat = '%H:%M';
-		$jsdateformat = '%Y-%m-%d';
+		$dateFormat = JText::_('%Y-%m-%d');
+		$jsdateformat = JText::_('%Y-%m-%d');
 	break;
 	default:
 	case '1.6':
 		$timeformat = 'H:i';
+		$dateFormat = '%Y-%m-%d';
 		$jsdateformat = 'Y-m-d';
 	break;
 }
