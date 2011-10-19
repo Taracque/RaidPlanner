@@ -11,7 +11,7 @@
 	<version>0.3</version>
 	<releaseDate>2011-10-08</releaseDate>
 	<releaseType>Major release</releaseType>
-	<downloadUrl>http://taracque.hu/downloads/com_raidplanner_0.3.zip</downloadUrl>
+	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
 	<description>RaidPlanner component for Joomla, to organize WoW raids</description>
 	<!-- Install Database Section -->
@@ -91,4 +91,8 @@
 			<language tag="de-DE">de-DE.com_raidplanner.sys.ini</language>
 		</languages>
 	</administration>
+	<!-- UPDATESERVER DEFINITION -->
+	<updateservers>
+		<server type="extension" priority="1" name="RaidPlanner GitHub Site">https://raw.github.com/Taracque/RaidPlanner/master/raidplanner-updates.xml</server>
+	</updateservers>
 </install>
