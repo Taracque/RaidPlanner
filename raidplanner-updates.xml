@@ -6,12 +6,13 @@
 		<element>com_raidplanner</element>
 		<type>component</type>
 		<version>0.3</version>
- 
+		<client_id>1</client_id>
+
 		<infourl title="RaidPlanner URL">http://taracque.hu/raidplanner</infourl>
 		<downloads>
 			<downloadurl type="full" format="zip">https://nodeload.github.com/Taracque/RaidPlanner/zipball/master#.zip</downloadurl>
 		</downloads>
-		
+
 		<maintainer>Taracque</maintainer>
 		<maintainerurl>http://taracque.hu</maintainerurl>
 		<targetplatform name="joomla" version="1.6" />
@@ -22,14 +23,15 @@
 		<element>com_raidplanner</element>
 		<type>component</type>
 		<version>0.3</version>
- 
+		<client_id>1</client_id>
+
 		<infourl title="RaidPlanner URL">http://taracque.hu/raidplanner</infourl>
 		<downloads>
 			<downloadurl type="full" format="zip">https://nodeload.github.com/Taracque/RaidPlanner/zipball/master#.zip</downloadurl>
 		</downloads>
-		
+
 		<maintainer>Taracque</maintainer>
 		<maintainerurl>http://taracque.hu</maintainerurl>
 		<targetplatform name="joomla" version="1.7" />
-   </update>
+	</update>
 </updates>
