@@ -49,7 +49,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="freeze_time"><?php echo JText::_( 'COM_RAIDPLANNER_FREEZE_TIME' ); ?>:</label>
-			<input type="text" name="freeze_time" id="freeze_time" value="<?php echo @$this->raid->freeze_time;?>" size="5" />
+			<div class="fltlft">
+				<input type="text" name="freeze_time" id="freeze_time" value="<?php echo @$this->raid->freeze_time;?>" size="5" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?>
+			</div>
 		</li>
 		<li>
 			<label for="raid_leader"><?php echo JText::_( 'COM_RAIDPLANNER_RAID_LEADER' ); ?>:</label>
