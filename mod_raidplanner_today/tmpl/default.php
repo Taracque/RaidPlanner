@@ -68,7 +68,7 @@ switch ($version->RELEASE) {
 			if ($tip != '') {
 				echo ' class="hasTip" title="'.$tip.'"';
 			}
-			echo "><strong>" . JHTML::_('date', $item->start_time, $timeformat, true) . "</strong> " . $item->location . "</span></a><br />";
+			echo "><strong>" . JHTML::_('date', $item->start_time, $timeformat) . "</strong> " . $item->location . "</span></a><br />";
 			echo "</td></tr>";
 		}
 	}

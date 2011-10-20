@@ -54,7 +54,7 @@ $dateformat = JText::_('DATE_FORMAT_LC2');
 			if ($tip != '') {
 				echo ' class="hasTip" title="'.$tip.'"';
 			}
-			echo "><strong>" . JHTML::_('date', $item->start_time, $dateformat, true) . "</strong> " . $item->location . "</span></a><br />";
+			echo "><strong>" . JHTML::_('date', $item->start_time, $dateformat) . "</strong> " . $item->location . "</span></a><br />";
 			echo "</td></tr>";
 		}
 	}

@@ -323,9 +323,9 @@ class RaidPlannerModelEvent extends JModel
 	* Get Month of an event
 	*/
 	
-	function getMonth()
+	function getMonth( $event_id = null )
 	{
-		$raid_id = JRequest::getVar('raid_id', null, 'INT');
+		$raid_id = JRequest::getVar('raid_id', $event_id, 'INT');
 		if ($raid_id)
 		{
 			$event = $this->getEvent($raid_id);

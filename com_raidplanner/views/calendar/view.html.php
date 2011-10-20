@@ -54,7 +54,13 @@ class RaidPlannerViewCalendar extends JView
 		
 		$month = JRequest::getVar('month', null);
 		if ($month=='') {
-			$month = date("Y-m");
+			$modalevent_id = JRequest::getInt('modalevent', 0);
+			if ( $modalevent_id > 0 )
+			{
+				$month = $eventmodel->getMonth( $modalevent_id );
+			} else {
+				$month = date("Y-m");
+			}
 		}
 		$monthparts = explode("-",$month);
 		
