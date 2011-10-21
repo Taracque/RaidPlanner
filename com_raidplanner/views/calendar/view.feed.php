@@ -54,8 +54,12 @@ class RaidPlannerViewCalendar extends JView
 		$this->assignRef( 'tzname', $tzname );
 		$this->assignRef( 'dateformat', $dateformat );
         $this->assignRef( 'events', $model->getEvents('own', $user->id) );
+		
+		header("Content-Type: text/Calendar");
+		header("Content-Disposition: inline; filename=raid_calendar.ics");
 
         parent::display($tpl);
+        
         die();
     }
     
