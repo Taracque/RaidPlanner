@@ -98,6 +98,9 @@
 				$form->removeField('calendar_secret', 'profile');
 				$form->removeField('vacation', 'profile');
 			}
+		} else {
+				JForm::addFormPath(dirname(__FILE__).'/profiles');
+				$form->loadFile('profile', false);
 		}
 	}
 
