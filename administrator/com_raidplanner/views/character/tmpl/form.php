@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="profile_id"><?php echo JText::_( 'JGLOBAL_USERNAME' ); ?>:</label>
-			<?php echo JHTML::_('list.users', 'profile_id', $this->character->profile_id, 0, null, 'name', 0); ?>
+			<?php echo JHTML::_('list.users', 'profile_id', $this->character->profile_id, true, null, 'name', 0); ?>
 		</li>
 		<li>
 			<label for="class_id"><?php echo JText::_( 'COM_RAIDPLANNER_CLASS' ); ?>:</label>
