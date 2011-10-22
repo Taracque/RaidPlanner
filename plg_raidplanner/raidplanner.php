@@ -233,7 +233,7 @@ class plgUserRaidPlanner extends JPlugin
 
 				if ( $data_key == 'params')
 				{
-					$data_arr = json_decode($data[$data_key]);
+					$data_arr = json_decode($data[$data_key], true);
 				} else {
 					$data_arr = $data[$data_key];
 				}
