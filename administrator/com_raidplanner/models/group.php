@@ -191,7 +191,8 @@ class RaidPlannerModelGroup extends JModel
 			'edit_raids_own'	=>	0,
 			'edit_raids_any'	=>	0,
 			'delete_raid_own'	=>	0,
-			'delete_raid_any'	=>	0
+			'delete_raid_any'	=>	0,
+			'edit_characters'	=>	0
 		);
 		
 		$query = "SELECT permission_name,permission_value FROM #__raidplanner_permissions WHERE group_id = ".$this->_id;

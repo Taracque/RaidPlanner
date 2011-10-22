@@ -14,6 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 $function	= JRequest::getCmd('function', '');
 ?>
 <form action="index.php" method="post" name="adminForm">
+<input type="hidden" name="function" value="<?php echo $function; ?>" />
 <div id="editcell">
 	<table>
 		<tr>

@@ -87,13 +87,27 @@ class RaidPlannerController extends JController
 				$vType = 'feed';
 				$vLayout = JRequest::getCmd( 'layout', 'feed' );
 			break;
+			case 'savecharacter':
+				$vName = 'character';
+				$mName = 'character';
+				$model = &$this->getModel('character');
+				$model->saveCharacter();
+				$vLayout = JRequest::getCmd( 'layout', 'default' );
+			break;
 			default:
 			case 'default':
-				if (JRequest::getVar('view') == 'roster') {
-					$vName = 'roster';
-					$mName = 'roster';
-				} else {
-					$vName = 'calendar';
+				switch (JRequest::getVar('view'))
+				{
+					case 'roster':
+						$vName = 'roster';
+						$mName = 'roster';
+					break;
+					case 'character':
+						$vName = 'character';
+						$mName = 'character';
+					break;
+					default:
+						$vName = 'calendar';
 				}
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 			break;
@@ -101,7 +115,7 @@ class RaidPlannerController extends JController
 		
 		// Get/Create the view
 		$view = &$this->getView( $vName, $vType);
-		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.strtolower($vName).DS.'tmpl');
+		// $view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.strtolower($vName).DS.'tmpl');
 
 		// Get/Create the model
 		if ($model = &$this->getModel($mName)) {

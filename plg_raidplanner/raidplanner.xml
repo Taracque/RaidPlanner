@@ -27,14 +27,20 @@
 			<fieldset name="basic">
 				<field name="register-require-user" type="spacer" label="PLG_USER_RAIDPLANNER_FIELD_NAME_REGISTER_REQUIRE_USER" />
 				<field name="register-require_raidplanner" default="0" type="list" description="PLG_USER_RAIDPLANNER_FIELDS_REGISTER_DESC" label="PLG_USER_RAIDPLANNER_FIELDS_REGISTER_LABEL">
-					<option value="2">JOPTION_REQUIRED</option>
 					<option value="1">JOPTION_OPTIONAL</option>
 					<option value="0">JDISABLED</option>
 				</field>
 				<field name="profile-require-user" type="spacer" label="PLG_USER_RAIDPLANNER_FIELD_NAME_PROFILE_REQUIRE_USER" />
 				<field name="profile-require_raidplanner" default="1" type="list" description="PLG_USER_RAIDPLANNER_FIELDS_PROFILE_DESC" label="PLG_USER_RAIDPLANNER_FIELDS_PROFILE_LABEL">
-					<option value="2">JOPTION_REQUIRED</option>
 					<option value="1">JOPTION_OPTIONAL</option>
+					<option value="0">JDISABLED</option>
+				</field>
+				<field name="enable-character-editor" default="0" type="list" description="PLG_USER_RAIDPLANNER_ENABLE_CHARACTER_EDITOR" label="PLG_USER_RAIDPLANNER_ENABLE_CHARACTER_EDITOR_LABEL">
+					<option value="1">JENABLED</option>
+					<option value="0">JDISABLED</option>
+				</field>
+				<field name="raidplanner-profile-group" default="1" type="list" description="PLG_USER_RAIDPLANNER_FIELDS_IN_SEPARATE_GROUP" label="PLG_USER_RAIDPLANNER_FIELDS_IN_SEPARATE_GROUP_LABEL">
+					<option value="1">JENABLED</option>
 					<option value="0">JDISABLED</option>
 				</field>
 			</fieldset>
