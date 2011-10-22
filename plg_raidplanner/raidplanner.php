@@ -237,6 +237,7 @@ class plgUserRaidPlanner extends JPlugin
 				} else {
 					$data_arr = $data[$data_key];
 				}
+
 				foreach ($data_arr as $k => $v) {
 					if (in_array($k, array('characters', 'calendar_secret', 'vacation')))
 					{
@@ -255,7 +256,7 @@ class plgUserRaidPlanner extends JPlugin
 					$db->setQuery($query);
 					$db->query();
 					
-					$chars = explode("\n", $data[$data_key]['characters']);
+					$chars = explode("\n", $data_arr['characters']);
 					foreach ($chars as $char)
 					{
 						if (trim($char) != '')
