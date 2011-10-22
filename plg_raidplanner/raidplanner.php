@@ -230,7 +230,14 @@ class plgUserRaidPlanner extends JPlugin
 			{
 				$juser =& JFactory::getUser($userId);
 				$params = json_decode($juser->params);
-				foreach ($data[$data_key] as $k => $v) {
+
+				if ( $data_key == 'params')
+				{
+					$data_arr = json_decode($data[$data_key]);
+				} else {
+					$data_arr = $data[$data_key];
+				}
+				foreach ($data_arr as $k => $v) {
 					if (in_array($k, array('characters', 'calendar_secret', 'vacation')))
 					{
 						$juser->setParam($k, $v);

@@ -13,16 +13,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 $function	= JRequest::getCmd('function', '');
 ?>
-<?php if ($this->error) : ?>
-<dl id="system-message">
-	<dt class="error"><?php echo JText::_('error'); ?></dt>
-	<dd class="error message fade">
-		<ul>
-			<li><?php echo $this->error;?></li>
-		</ul>
-	</dd>
-</dl>
-<?php endif; ?>
 <table class="rp_container">
 	<tr>
 		<td class="rp_event_buttons">
