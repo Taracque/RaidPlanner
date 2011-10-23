@@ -14,6 +14,24 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <h3>RaidPlanner</h3>
 <p>Raid organizer component.</p>
 <p>If RaidPlanner plugin is installed and enabled, and users has a <code>characters</code> attribute added (and characters are spearated by newline), characters are automatically assigned to Joomla User.</p>
+<fieldset>
+	<legend><?php echo JText::_('PLUGINS');?></legend>
+	<ul>
+<?php
+	$version = new JVersion();
+	if ($version->RELEASE == '1.5') {
+?>
+		<li>UserMeta plugin (<?php echo JText::_('OPTIONAL'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'usermeta')?'ENABLED':'DISABLED');?></li>
+		<li>Mootools Upgrade plugin (<?php echo JText::_('REQUIRED'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'mtupgrade')?'ENABLED':'DISABLED');?></li>
+<?php
+	} elseif ($version->RELEASE >= '1.6') {
+?>
+		<li>RaidPlanner User plugin: <?php echo JText::_( JPluginHelper::isEnabled('user', 'raidplanner')?'JENABLED':'JDISABLED');?></li>
+<?php
+	}
+?>
+	</ul>
+</fieldset>
 
 <fieldset>
 	<legend><?php echo JText::_('JOPTION_MENUS');?>:</legend>
