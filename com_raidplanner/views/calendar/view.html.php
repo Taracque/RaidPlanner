@@ -63,13 +63,23 @@ class RaidPlannerViewCalendar extends JView
 			}
 		}
 		$monthparts = explode("-",$month);
+		$display_year = intval($monthparts[0]);
+		$display_month = intval($monthparts[1]);
+		if ( ($display_year < 1900) || ($display_year > 2199) )
+		{
+			$display_year = date("Y");
+		}
+		if ( ($display_month < 1) || ($display_month > 12) )
+		{
+			$display_month = date("m");
+		}
 		
-		$prevmonth = date("Y-m",mktime(0,0,0,$monthparts[1]-1,1,$monthparts[0]));
-		$nextmonth = date("Y-m",mktime(0,0,0,$monthparts[1]+1,1,$monthparts[0]));
-		$lastday = date("t",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
-		$year = date("Y",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
-		$monthonly = date("m",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
-		$shift = date("w",mktime(0,0,0,$monthparts[1],1,$monthparts[0]));
+		$prevmonth = date("Y-m",mktime(0,0,0,$display_month-1,1,$display_year));
+		$nextmonth = date("Y-m",mktime(0,0,0,$display_month+1,1,$display_year));
+		$lastday = date("t",mktime(0,0,0,$display_month,1,$display_year));
+		$year = date("Y",mktime(0,0,0,$display_month,1,$display_year));
+		$monthonly = date("m",mktime(0,0,0,$display_month,1,$display_year));
+		$shift = date("w",mktime(0,0,0,$display_month,1,$display_year));
 
 		$version = new JVersion();
 		switch ($version->RELEASE) {
