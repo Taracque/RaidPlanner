@@ -129,8 +129,7 @@ function com_install()
 	$query = "SHOW TABLES LIKE '%_raidplanner_guild'";
 	$db->setQuery($query);
 	$db->query();
-	$result = $db->loadObject();
-	if ( !$result  )
+	if ( $db->getNumRows() == 0  )
 	{
 		$query = "CREATE TABLE IF NOT EXISTS `#__raidplanner_guild` (
 					  `guild_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -152,8 +151,7 @@ function com_install()
 	$query = "SHOW COLUMNS FROM `#__raidplanner_class` LIKE  'class_css'";
 	$db->setQuery($query);
 	$db->query();
-	$result = $db->loadObject();
-	if ( !$result  )
+	if ( $db->getNumRows() == 0  )
 	{
 		$query = "ALTER TABLE `#__raidplanner_class` ADD `class_css` varchar(45) NOT NULL DEFAULT ''";
 		$db->setQuery($query);
@@ -164,11 +162,10 @@ function com_install()
 		$out .= 'Class_css added to Class database table<br />';
 	}
 
-	$query = "SHOW COLUMNS FROM `#__raidplanner_guild` LIKE  'guild_id'";
+	$query = "SHOW COLUMNS FROM `#__raidplanner_raid` LIKE 'guild_id'";
 	$db->setQuery($query);
 	$db->query();
-	$result = $db->loadObject();
-	if ( !$result  )
+	if ( $db->getNumRows() == 0  )
 	{
 		$query = "ALTER TABLE `#__raidplanner_raid` ADD `guild_id` int(11) DEFAULT NULL";
 		$db->setQuery($query);
