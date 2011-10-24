@@ -26,9 +26,6 @@
 	<files>
 		<filename plugin="raidplanner">raidplanner.php</filename>
 		<filename>index.html</filename>
-		<filename>assets/new.png</filename>
-		<filename>assets/delete.png</filename>
-		<filename>assets/index.html</filename>
 	</files>
 	<fieldtypes>
 		<field type="rpcharactersfield" label="RaidPlanner Characters">

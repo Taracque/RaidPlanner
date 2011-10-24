@@ -58,7 +58,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$script[] = '		}';
 		$script[] = '		line.getChildren("a").set("text",name);';
 		$script[] = '		line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=" + name + "&amp;fieldidx=" + idx );';
-		$script[] = '		line.getChildren("input").set("value",name)';
+		$script[] = '		line.getChildren("input").set("value",name);';
 		$script[] = '		SqueezeBox.close();';
 		$script[] = '		jRecalCharacterValue_'.$this->id.'();';
 		$script[] = '	}';
@@ -76,7 +76,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$idx = 0;
 
 		$html .= '<li style="display:none;float:left;clear:left;width:100%;" id="rp_characterEditorField_' . $this->id . '_0">';
-		$html .= '<img src="' . JURI::root() . 'plugins/user/raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
+		$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
 		$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
 		$html .= '</li>';
 		
@@ -88,13 +88,13 @@ class JFormFieldRPCharacterEditor extends JFormField {
 				$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars(trim($char), ENT_COMPAT, 'UTF-8') . '&amp;fieldidx=' . $idx;
 	
 				$html .= '<li style="display:block;float:left;clear:left;width:100%;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
-				$html .= '<img src="' . JURI::root() . 'plugins/user/raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
+				$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
 				$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char . '</a>';
 				$html .= '</li>';
 			}
 		}
 		$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=&amp;fieldidx=';
-		$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'plugins/user/raidplanner/assets/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('PLG_USER_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
+		$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'components/com_raidplanner/assets/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('PLG_USER_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
 
 		$html .= '</ul>';
 		$html .= '</div>';

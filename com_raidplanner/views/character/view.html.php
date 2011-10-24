@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------
-# Edit View for RaidPlanner Component
+# Character View for RaidPlanner Component
 # com_raidplanner - RaidPlanner Component
 # ------------------------------------------------------------------------
 # author    Taracque

@@ -157,10 +157,10 @@ function com_install()
 		$db->setQuery($query);
 		$db->query();
 		$out .= 'Class_css added to Class database table<br />';
+		$query = "UPDATE `#__raidplanner_class` SET `class_css` = CONCAT( 'class_', `class_id`) WHERE class_css = ''";
+		$db->setQuery($query);
+		$db->query();
 	}
-	$query = "UPDATE `#__raidplanner_class` SET `class_css` = CONCAT( 'class_', `class_id`) WHERE class_css = ''";
-	$db->setQuery($query);
-	$db->query();
 
 	$query = "SHOW COLUMNS FROM `#__raidplanner_raid` LIKE 'guild_id'";
 	$db->setQuery($query);
