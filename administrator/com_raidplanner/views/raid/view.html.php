@@ -39,6 +39,9 @@ class RaidPlannerViewRaid extends JView
 		$groups = $this->getGroupList();
 		$guilds = $this->getGuildList();
 
+		$users = $this->getUsers();
+
+		$this->assignRef('users', $users );
 		$this->assignRef('guilds', $guilds );
 		$this->assignRef('groups', $groups );
 		$this->assignRef('icons', $this->getIcons() );
@@ -77,6 +80,16 @@ class RaidPlannerViewRaid extends JView
 		return $files;
 	}
 	
+	function getUsers()
+	{
+		$db	=& JFactory::getDBO();
+		$query = "SELECT id,username FROM #__users ORDER BY username ASC";
+		$db->setQuery($query);
+		$db->query();
+		
+		return $db->loadObjectList('id');
+	}
+
 	function getGuildList()
 	{
 		$db	=& JFactory::getDBO();

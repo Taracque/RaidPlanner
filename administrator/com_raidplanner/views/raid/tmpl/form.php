@@ -59,7 +59,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="profile_id"><?php echo JText::_( 'JGLOBAL_USERNAME' ); ?>:</label>
-			<?php echo JHTML::_('list.users', 'profile_id', @$this->raid->profile_id, 0, NULL, 'name', 0);?>
+			<select name="profile_id" id="profile_id">
+				<option value=""></option>
+				<?php foreach ($this->users as $user_id => $user) : ?>
+					<option value="<?php echo $user_id;?>"<?php if($user_id==@$this->raid->profile_id){?> selected="selected"<?php } ?>><?php echo @$user->username;?></option>
+				<?php endforeach; ?>
+			</select>
 		</li>
 		<li>
 			<label for="minimum_level"><?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>:</label>

@@ -23,7 +23,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="profile_id"><?php echo JText::_( 'JGLOBAL_USERNAME' ); ?>:</label>
-			<?php echo JHTML::_('list.users', 'profile_id', $this->character->profile_id, true, null, 'name', 0); ?>
+			<select name="profile_id" id="profile_id">
+				<option value=""></option>
+				<?php foreach ($this->users as $user_id => $user) : ?>
+					<option value="<?php echo $user_id;?>"<?php if($user_id==@$this->character->profile_id){?> selected="selected"<?php } ?>><?php echo @$user->username;?></option>
+				<?php endforeach; ?>
+			</select>
 		</li>
 		<li>
 			<label for="class_id"><?php echo JText::_( 'COM_RAIDPLANNER_CLASS' ); ?>:</label>

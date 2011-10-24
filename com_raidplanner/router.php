@@ -103,8 +103,11 @@ function RaidPlannerParseRoute( $segments )
 			$app =& JFactory::getApplication();
 			$menu =& $app->getMenu();
 			$item =& $menu->getActive();
-			// no view defined, needs to figure out
-			$vars['view'] = $item->query('view');
+			if ($item)
+			{
+				// no view defined, needs to figure out
+				$vars['view'] = $item->query('view');
+			}
 	}
 	return $vars;
 }
