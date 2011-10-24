@@ -27,6 +27,17 @@
 		<filename plugin="raidplanner">raidplanner.php</filename>
 		<filename>index.html</filename>
 	</files>
+	<fieldtypes>
+		<field type="rpcharactersfield" label="RaidPlanner Characters">
+			<data name="" nametype="namesuffix" type="sql:mediumtext" null="true" default="NULL" strict="false" />
+			<params>
+				<param name="cols" type="text" default="80" label="Width of field" description="Width of field in characters" />
+				<param name="rows" type="text" default="5" label="Height of field" description="Height of field in characters" />
+				<param name="fieldValidateForbiddenList_register" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words at registration" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field for registration. Use comma twice (,,) to add comma as bad character." />
+				<param name="fieldValidateForbiddenList_edit" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words in user profile edits" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field when user updates his profile in profile edits. Use comma twice (,,) to add comma as bad character." />
+			</params>
+		</field>
+	</fieldtypes>
 	<params>
 		<param name="rpPlugEnabled" type="radio" label="RaidPlanner Plugin Enabled" default="1" description="Specify Yes to enable RaidPlanner plugin.">
 			<option value="0">No</option>
