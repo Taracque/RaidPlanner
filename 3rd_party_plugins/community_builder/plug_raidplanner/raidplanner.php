@@ -99,6 +99,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				case 'htmledit':
 					$oReturn =	null;
 					if ( $reason == 'edit' ) {
+						$value = $user->get( $field->name );
 						// Load the javascript
 						JHtml::_('behavior.framework');
 						JHtml::_('behavior.modal', 'a.modal');
@@ -146,7 +147,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						// Add the script to the document head.
 						JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 				
-						$chars = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $field->value );
+						$chars = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $value );
 						$chars = preg_replace('!\s+!', ' ', $chars);
 						$chars = explode( " ", $chars);
 				
@@ -174,7 +175,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 							}
 						}
 						$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=&amp;fieldidx=';
-						$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'plugins/user/raidplanner/assets/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('PLG_USER_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
+						$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'plugins/user/raidplanner/assets/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('JNEW') . '</a></li>';
 				
 						$html .= '</ul>';
 						$html .= '</div>';
