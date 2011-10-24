@@ -26,12 +26,15 @@
 	<files>
 		<filename plugin="raidplanner">raidplanner.php</filename>
 		<filename>index.html</filename>
+		<filename>assets/new.png</filename>
+		<filename>assets/delete.png</filename>
+		<filename>assets/index.html</filename>
 	</files>
 	<fieldtypes>
 		<field type="rpcharactersfield" label="RaidPlanner Characters">
 			<data name="" nametype="namesuffix" type="sql:mediumtext" null="true" default="NULL" strict="false" />
 			<params>
-				<param name="cols" type="text" default="80" label="Width of field" description="Width of field in characters" />
+				<param name="cols" type="text" default="40" label="Width of field" description="Width of field in characters" />
 				<param name="rows" type="text" default="5" label="Height of field" description="Height of field in characters" />
 				<param name="fieldValidateForbiddenList_register" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words at registration" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field for registration. Use comma twice (,,) to add comma as bad character." />
 				<param name="fieldValidateForbiddenList_edit" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words in user profile edits" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field when user updates his profile in profile edits. Use comma twice (,,) to add comma as bad character." />
@@ -43,9 +46,9 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
-		<param name="rpPlugCharactersField" type="text" default="" label="Characters field" description="Field name in CB for Characters (don't forget to include cb_ prefix!)" />
-		<param name="rpPlugVacationsField" type="text" default="" label="Vacations field" description="Field name in CB for Vacation periods (don't forget to include cb_ prefix!)" />
-		<param name="rpPlugCalSecretField" type="text" default="" label="Calendar secret field" description="Field name in CB for Calendar secret (don't forget to include cb_ prefix!)" />
+		<param name="rpPlugCharactersField" type="custom" method="loadFieldList" class="getRaidPlannerTab" default="" label="Characters field" description="Field name in CB for Characters (don't forget to include cb_ prefix!)" />
+		<param name="rpPlugVacationsField" type="custom" method="loadFieldList" class="getRaidPlannerTab" default="" label="Vacations field" description="Field name in CB for Vacation periods (don't forget to include cb_ prefix!)" />
+		<param name="rpPlugCalSecretField" type="custom" method="loadFieldList" class="getRaidPlannerTab" default="" label="Calendar secret field" description="Field name in CB for Calendar secret (don't forget to include cb_ prefix!)" />
 	</params>
 	<install>
 		<queries>
