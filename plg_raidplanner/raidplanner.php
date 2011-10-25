@@ -72,7 +72,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 		$html = '<input type="hidden" name="' . $this->name. '" value="' . implode("\n",$chars). '" id="rp_characterEditorValue_' . $this->id . '" />';
 		$html .= '<div style="width:' . $this->element['cols'] . 'em;height:' . ($this->element['rows'] * 2) . 'em;overflow-y:auto;overflow-x:hidden;border: 1px inset gray;">';
-		$html .= '<ul style="display:block;float:left;clear:left;width:100%;padding:0;" id="rp_characterEditorList_' . $this->id . '">';
+		$html .= '<ul style="display:block;float:left;clear:left;width:100%;padding:0;margin:0;" id="rp_characterEditorList_' . $this->id . '">';
 		$idx = 0;
 
 		$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_0">';
