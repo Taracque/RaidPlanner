@@ -66,7 +66,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 							<input type="checkbox" name="members[<?php echo $user->id;?>]" value="<?php echo $user->id;?>" onclick="isChecked(this.checked);"<?php if(isset($this->group_users[$user->id])) {?> checked="checked"<?php }?>>
 						</td>
 						<td width="260">
-							<?php echo $user->name;?> (<?php echo $user->group_name;?>)
+							<?php echo $user->username;?> (<?php echo $user->group_name;?>)
 						</td>
 					</tr>
 			<?php } ?>
