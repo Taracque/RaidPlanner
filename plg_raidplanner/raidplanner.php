@@ -71,11 +71,11 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$chars = explode( " ", $chars);
 
 		$html = '<input type="hidden" name="' . $this->name. '" value="' . implode("\n",$chars). '" id="rp_characterEditorValue_' . $this->id . '" />';
-		$html .= '<div style="width:' . $this->element['cols'] . 'em;height:' . ($this->element['rows'] * 2) . 'em;overflow-y:auto;overflow-x:hidden;">';
+		$html .= '<div style="width:' . $this->element['cols'] . 'em;height:' . ($this->element['rows'] * 2) . 'em;overflow-y:auto;overflow-x:hidden;border: 1px inset gray;">';
 		$html .= '<ul style="display:block;float:left;clear:left;width:100%;padding:0;" id="rp_characterEditorList_' . $this->id . '">';
 		$idx = 0;
 
-		$html .= '<li style="display:none;float:left;clear:left;width:100%;" id="rp_characterEditorField_' . $this->id . '_0">';
+		$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_0">';
 		$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
 		$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
 		$html .= '</li>';
@@ -87,7 +87,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 				$idx ++;
 				$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars(trim($char), ENT_COMPAT, 'UTF-8') . '&amp;fieldidx=' . $idx;
 	
-				$html .= '<li style="display:block;float:left;clear:left;width:100%;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
+				$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
 				$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
 				$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char . '</a>';
 				$html .= '</li>';
@@ -249,7 +249,7 @@ class plgUserRaidPlanner extends JPlugin
 				$table = $juser->getTable();
 				$table->bind($juser->getProperties());
 				$table->store();
-				if ( (isset($data[$data_key]['characters'])) && ($this->params->get('enable-character-editor', 0) == 1) )
+				if ( (isset($data_arr['characters'])) && ($this->params->get('enable-character-editor', 0) == 1) )
 				{
 					$db	=& JFactory::getDBO();
 					$query = 'UPDATE #__raidplanner_character SET profile_id=-profile_id WHERE profile_id='. $userId;
