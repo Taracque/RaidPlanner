@@ -114,7 +114,7 @@ class RaidPlannerModelCharacter extends JModel
 		
 		$query = "SELECT c.character_id,c.char_name
 					FROM #__raidplanner_character AS c 
-					WHERE " . ( (!$ownOnly)?"c.profile_id = 0 OR":"" ) . "c.profile_id= " . $user->id . " ORDER BY c.char_name ASC";
+					WHERE " . ( (!$ownOnly)?"c.profile_id = 0 OR":"" ) . " c.profile_id= " . $user->id . " ORDER BY c.char_name ASC";
 		// reload the list
 		$db->setQuery($query);
 		$result = $db->loadAssocList('character_id');

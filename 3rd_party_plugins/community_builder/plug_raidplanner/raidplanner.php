@@ -153,7 +153,15 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$script[] = '			line.set("id","rp_characterEditorField_' . $field->fieldid . '_" + (idx));';
 						$script[] = '			ul.grab(line,"top");';
 						$script[] = '			if (SqueezeBox) {';
-						$script[] = '				SqueezeBox.assign(line.getChildren("a"),{parse:"rel"});';
+						$script[] = '				if (SqueezeBox.assign) {';
+						$script[] = '					SqueezeBox.assign(line.getChildren("a"),{parse:"rel"});';
+						$script[] = '				} else {';
+						$script[] = '					line.getChildren("a").each(function(el){';
+						$script[] = '						el.addEvent("click",function(e){';
+						$script[] = '							SqueezeBox.fromElement(el,{parse:"rel"});';
+						$script[] = '						});';
+						$script[] = '					});';
+						$script[] = '				}';
 						$script[] = '			}';
 						$script[] = '		}';
 						$script[] = '		line.getChildren("a").set("text",name);';
@@ -194,7 +202,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 							}
 						}
 						$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=&amp;fieldidx=';
-						$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'components/com_raidplanner/assets/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('JNEW') . '</a></li>';
+						$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'components/com_raidplanner/assets/new.png" alt="' . JText::_('JNEW') . '" style="margin:0;" /> '. JText::_('JNEW') . '</a></li>';
 				
 						$html .= '</ul>';
 						$html .= '</div>';
