@@ -173,6 +173,33 @@ function com_install()
 		$out .= 'Guild_id added to Raid database table<br />';
 	}
 	
+	/* Detect Community Builder */
+	jimport( 'joomla.application.component.helper' );
+	if ( JComponentHelper::isEnabled( 'com_comprofiler', true ) )
+	{
+		try {
+			global $_CB_framework;
+	
+			$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
+			include_once $_CB_adminpath . '/plugin.foundation.php';
+	
+			$_CB_framework->cbset( '_ui', 2 );
+	
+			cbimport( 'cb.tabs' );
+			cbimport( 'cb.adminfilesystem' );
+			cbimport( 'cb.installer' );
+	
+			$CB_installer = new cbInstallerPlugin();
+	
+			$install_dir = $source . DS . '3rd_party_plugins' . DS . 'community_builder' . DS . 'plug_raidplanner' . DS;
+			
+			$ret = $CB_installer->install( $install_dir );
+		} catch (Exception $e) {
+			$ret = 0;
+		}
+		$out .= "\nCommunity Builder installed in Joomla. RaidPlanner Community builder installation:" . (($ret)?"[OK]":"[Failed]");
+	}
+	
 	$installer->set('message', $out);
 }
 
