@@ -70,6 +70,30 @@ class getRaidPlannerTab extends cbTabHandler {
 				$table = $juser->getTable();
 				$table->bind($juser->getProperties());
 				$table->store();
+
+				if (isset($data['characters']))
+				{
+					$db	=& JFactory::getDBO();
+					$query = 'UPDATE #__raidplanner_character SET profile_id=-profile_id WHERE profile_id='. $userId;
+					$db->setQuery($query);
+					$db->query();
+					
+					$chars = explode("\n", $data['characters']);
+					foreach ($chars as $char)
+					{
+						if (trim($char) != '')
+						{
+							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE char_name='". $db->getEscaped( trim($char) ) ."'";
+							$db->setQuery($query);
+							$db->query();
+						}
+					}
+
+					$query = 'DELETE FROM #__raidplanner_character WHERE profile_id=-'. $userId;
+					$db->setQuery($query);
+					$db->query();
+
+				}
 			}
 		}
 	}
