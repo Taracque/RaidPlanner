@@ -60,19 +60,20 @@ class getRaidPlannerTab extends cbTabHandler {
 				}
 
 				$juser =& JFactory::getUser($row->user_id);
-				$params = json_decode($juser->params);
+				$ju_params = json_decode($juser->params);
 				foreach ($data as $k => $v) {
 					$juser->setParam($k, $v);
-					$params->$k = $v;
+					$ju_params->$k = $v;
 				}
 				
-				$juser->params = json_encode($params);
+				$juser->params = json_encode($ju_params);
 				$table = $juser->getTable();
 				$table->bind($juser->getProperties());
 				$table->store();
 
-				if (isset($data['characters']))
+				if ( (isset($data['characters'])) && ($params->get('rpPlugDirectSync', "0") == 1) )
 				{
+					$userId = $juser->id;
 					$db	=& JFactory::getDBO();
 					$query = 'UPDATE #__raidplanner_character SET profile_id=-profile_id WHERE profile_id='. $userId;
 					$db->setQuery($query);

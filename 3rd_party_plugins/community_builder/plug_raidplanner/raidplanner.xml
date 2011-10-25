@@ -43,6 +43,10 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
+		<param name="rpPlugDirectSync" type="radio" label="RaidPlanner Direct Synchronization" default="0" description="Assign RaidPlanner characters directly to users, if user removes a Character from the list, it will be automatically deleted from the database.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
 		<param name="rpPlugCharactersField" type="custom" method="loadFieldList" class="getRaidPlannerTab" default="" label="Characters field" description="Field name in CB for Characters (don't forget to include cb_ prefix!)" />
 		<param name="rpPlugVacationsField" type="custom" method="loadFieldList" class="getRaidPlannerTab" default="" label="Vacations field" description="Field name in CB for Vacation periods (don't forget to include cb_ prefix!)" />
 		<param name="rpPlugCalSecretField" type="custom" method="loadFieldList" class="getRaidPlannerTab" default="" label="Calendar secret field" description="Field name in CB for Calendar secret (don't forget to include cb_ prefix!)" />
