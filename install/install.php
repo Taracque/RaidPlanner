@@ -175,32 +175,35 @@ function com_install()
 	
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );
-	$cbComp = &JComponentHelper::getComponent( 'com_comprofiler' , true );
-	if ( $cbComp->enabled )
+	$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
+	if ( file_exists( $_CB_adminpath . '/plugin.foundation.php' ) )
 	{
-		try {
-			global $_CB_framework;
-	
-			$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
-			include_once $_CB_adminpath . '/plugin.foundation.php';
-	
-			$_CB_framework->cbset( '_ui', 2 );
-	
-			cbimport( 'cb.tabs' );
-			cbimport( 'cb.adminfilesystem' );
-			cbimport( 'cb.installer' );
-	
-			$CB_installer = new cbInstallerPlugin();
-	
-			$install_dir = $source . DS . '3rd_party_plugins' . DS . 'community_builder' . DS . 'plug_raidplanner' . DS;
-			
-			$ret = $CB_installer->install( $install_dir );
-		} catch (Exception $e) {
-			$ret = 0;
+		$cbComp = &JComponentHelper::getComponent( 'com_comprofiler' );
+		if ( ( $cbComp ) && ( $cbComp->enabled ) )
+		{
+			try {
+				global $_CB_framework;
+		
+				include_once $_CB_adminpath . '/plugin.foundation.php';
+		
+				$_CB_framework->cbset( '_ui', 2 );
+		
+				cbimport( 'cb.tabs' );
+				cbimport( 'cb.adminfilesystem' );
+				cbimport( 'cb.installer' );
+		
+				$CB_installer = new cbInstallerPlugin();
+		
+				$install_dir = $source . DS . '3rd_party_plugins' . DS . 'community_builder' . DS . 'plug_raidplanner' . DS;
+				
+				$ret = $CB_installer->install( $install_dir );
+			} catch (Exception $e) {
+				$ret = 0;
+			}
+			$out .= "\nCommunity Builder installed in Joomla. RaidPlanner Community builder installation:" . (($ret)?"[OK]":"[Failed]");
 		}
-		$out .= "\nCommunity Builder installed in Joomla. RaidPlanner Community builder installation:" . (($ret)?"[OK]":"[Failed]");
 	}
-	
+
 	$installer->set('message', $out);
 }
 

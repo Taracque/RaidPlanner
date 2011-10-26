@@ -15,8 +15,8 @@ $version = new JVersion();
 switch ($version->RELEASE) {
 	case '1.5':
 		$timeformat = '%H:%M';
-		$dateFormat = JText::_('%Y-%m-%d');
-		$jsdateformat = JText::_('%Y-%m-%d');
+		$dateFormat = JText::_('%Y-%M-%D');
+		$jsdateformat = JText::_('%Y-%M-%D');
 	break;
 	default:
 	case '1.6':
@@ -25,43 +25,48 @@ switch ($version->RELEASE) {
 		$jsdateformat = 'Y-m-d';
 	break;
 }
-
-$invite_time = explode( " ", JHTML::_('date', $this->event->invite_time, JText::_('DATE_FORMAT_LC4') . " " . $timeformat ) );
-$start_time = explode( " ", JHTML::_('date', $this->event->start_time, JText::_('DATE_FORMAT_LC4') . " " . $timeformat ) );
+$invite_time = array(
+	'date'	=>	JHTML::_('date', $this->event->invite_time, $jsdateformat),
+	'time'	=>	JHTML::_('date', $this->event->invite_time, $timeformat ),
+);
+$start_time = array(
+	'date'	=>	JHTML::_('date', $this->event->start_time, $jsdateformat),
+	'time'	=>	JHTML::_('date', $this->event->start_time, $timeformat ),
+);
 ?>
 <div class="rp_container">
 	<form action="<?php echo JRoute::_('index.php');?>" method="post" id="rp_edit_form">
-		<label><?php echo JText::_('COM_RAIDPLANNER_RAID_NAME');?>:<input type="text" name="location" value="<?php echo $this->event->location;?>"></label>
-		<label><?php echo JText::_('COM_RAIDPLANNER_ICON');?><select name="icon_name" id="icon_name">
+		<label for="location"><?php echo JText::_('COM_RAIDPLANNER_RAID_NAME');?>:</label><input type="text" name="location" value="<?php echo $this->event->location;?>">
+		<label for="icon_name"><?php echo JText::_('COM_RAIDPLANNER_ICON');?></label><select name="icon_name" id="icon_name">
 			<option value=""></option>
 			<?php foreach ($this->icons as $icon_file => $icon_name) : ?>
 			<option value="<?php echo $icon_file;?>"<?php if ($icon_file==$this->event->icon_name) {?> selected="selected"<?php } ?>><?php echo $icon_name;?></option>
 			<?php endforeach; ?>
-		</select></label>
-		<label><?php echo JText::_('COM_RAIDPLANNER_TEMPLATE');?><select name="template_id" id="template_id" onchange="document.getElementById('rp_edit_form').submit();">
+		</select>
+		<label for="template_id"><?php echo JText::_('COM_RAIDPLANNER_TEMPLATE');?></label><select name="template_id" id="template_id" onchange="document.getElementById('rp_edit_form').submit();">
 			<option value=""></option>
 			<?php foreach ($this->templates as $template) : ?>
 			<option value="<?php echo $template->raid_id;?>"><?php echo $template->location;?></option>
 			<?php endforeach; ?>
-		</select></label>
+		</select>
 		<br />
-		<label><?php echo JText::_('JGLOBAL_DESCRIPTION');?>:<br />
+		<label for="description"><?php echo JText::_('JGLOBAL_DESCRIPTION');?>:</label><br />
 			<textarea name="description" cols="40" rows="5"><?php echo $this->event->description;?></textarea>
-		</label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: <?php echo JHTML::calendar( JHTML::_('date', $start_time[0], $jsdateformat), 'start_time[1]', 'start_time_1', $dateFormat);?> <input type="text" name="start_time[2]" id="start_time_2" value="<?php echo $start_time[1];?>" size="6" /></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_DURATION');?>: <input type="text" name="duration_mins" id="duration_mins" value="<?php echo $this->event->duration_mins;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES');?></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: <?php echo JHTML::calendar( JHTML::_('date', $invite_time[0], $jsdateformat), 'invite_time[1]', 'invite_time_1', $dateFormat);?> <input type="text" name="invite_time[2]" id="invite_time_2" value="<?php echo $invite_time[1];?>" size="6" /></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?> <input type="text" name="freeze_time" id="freeze_time" value="<?php echo $this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_LEVEL_RANGE');?> <input type="text" name="minimum_level" id="minimum_level" value="<?php echo $this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo $this->event->maximum_level;?>" size="3" /></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_MINIMUM_RANK');?> <input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo $this->event->minimum_rank;?>" size="3" /></label><br />
-		<label><?php echo JText::_('COM_RAIDPLANNER_GUILD');?>
+		<br />
+		<label for="start_time_0"><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: </label><?php echo JHTML::calendar( $start_time['date'], 'start_time[0]', 'start_time_0', $dateFormat);?> <input type="text" name="start_time[1]" id="start_time_1" value="<?php echo $start_time['time'];?>" size="6" /><br />
+		<label for="duration_mins"><?php echo JText::_('COM_RAIDPLANNER_DURATION');?>: </label><input type="text" name="duration_mins" id="duration_mins" value="<?php echo $this->event->duration_mins;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES');?><br />
+		<label for="invite_time_0"><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: </label><?php echo JHTML::calendar( $invite_time['date'], 'invite_time[0]', 'invite_time_0', $dateFormat);?> <input type="text" name="invite_time[1]" id="invite_time_1" value="<?php echo $invite_time['time'];?>" size="6" /><br />
+		<label for="freeze_time"><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?> </label><input type="text" name="freeze_time" id="freeze_time" value="<?php echo $this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?><br />
+		<label for="minimum_level"><?php echo JText::_('COM_RAIDPLANNER_LEVEL_RANGE');?> </label><input type="text" name="minimum_level" id="minimum_level" value="<?php echo $this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo $this->event->maximum_level;?>" size="3" /><br />
+		<label for="minimum_rank"><?php echo JText::_('COM_RAIDPLANNER_MINIMUM_RANK');?> </label><input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo $this->event->minimum_rank;?>" size="3" /><br />
+		<label for="guild_id"><?php echo JText::_('COM_RAIDPLANNER_GUILD');?></label>
 			<select name="guild_id" id="guild_id">
 				<option value=""></option>
 				<?php foreach ($this->guilds as $guild_id => $guild_name) : ?>
 				<option value="<?php echo $guild_id;?>"<?php if ($guild_id==$this->event->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild_name['guild_name'];?></option>
 				<?php endforeach; ?>
 			</select>
-		</label><br />
+		<br />
 	
 		<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
 <?php if($this->candelete) : ?>
