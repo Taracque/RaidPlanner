@@ -175,7 +175,8 @@ function com_install()
 	
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );
-	if ( JComponentHelper::isEnabled( 'com_comprofiler', true ) )
+	$cbComp = &JComponentHelper::getComponent( 'com_comprofiler' , true );
+	if ( $cbComp->enabled )
 	{
 		try {
 			global $_CB_framework;
