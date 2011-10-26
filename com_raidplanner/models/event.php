@@ -486,10 +486,13 @@ class RaidPlannerModelEvent extends JModel
 			$new_queue = JRequest::getVar('new_queue', null, 'INT');
 			$new_role = JRequest::getVar('new_role', null, 'INT');
 			$new_confirm = JRequest::getVar('new_confirm', null, 'INT');
-				
-			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
-			$db->setQuery($query);
-			$db->query();
+
+			if ($profile_id > 0)
+			{
+				$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
+				$db->setQuery($query);
+				$db->query();
+			}
 				
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
 					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'',NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
