@@ -10,6 +10,16 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
+$version = new JVersion();
+switch ($version->RELEASE) {
+	case '1.5':
+		$dateformat = '%Y-%m-%d %H:%M';
+	break;
+	default:
+	case '1.6':
+		$dateformat = 'Y-m-d H:i';
+	break;
+}
 ?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">
@@ -32,20 +42,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<textarea class="text_area" type="text" name="description" id="description" cols="32" rows="10"><?php echo @$this->raid->description;?></textarea>
 		</li>
 		<li>
-			<label for="start_time"><?php echo JText::_( 'COM_RAIDPLANNER_START_TIME' ); ?>:<br />
-				<small><?php echo JText::_( 'COM_RAIDPLANNER_UTCGMT' ); ?></small>
-			</label>
-			<?php echo JHTML::_('calendar',@$this->raid->start_time, 'start_time', 'start_time', '%Y-%m-%d %H:%M:%S' );?>
+			<label for="start_time"><?php echo JText::_( 'COM_RAIDPLANNER_START_TIME' ); ?>:</label>
+			<?php echo JHTML::_('calendar', JHTML::_('date', $this->raid->start_time, $dateformat), 'start_time', 'start_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
 		<li>
-			<label for="duration_mins"><?php echo JText::_( 'COM_RAIDPLANNER_DURATION' ); ?>:<br /></label>
+			<label for="duration_mins"><?php echo JText::_( 'COM_RAIDPLANNER_DURATION' ); ?>:</label>
 			<input type="text" name="duration_mins" id="duration_mins" value="<?php echo @$this->raid->duration_mins;?>" size="5" />
 		</li>
 		<li>
-			<label for="invite_time"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_TIME' ); ?>:<br />
-				<small><?php echo JText::_( 'COM_RAIDPLANNER_UTCGMT' ); ?></small>
-			</label>
-			<?php echo JHTML::_('calendar',@$this->raid->invite_time, 'invite_time', 'invite_time', '%Y-%m-%d %H:%M:%S' );?>
+			<label for="invite_time"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_TIME' ); ?>:</label>
+			<?php echo JHTML::_('calendar', JHTML::_('date', $this->raid->invite_time, $dateformat), 'invite_time', 'invite_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
 		<li>
 			<label for="freeze_time"><?php echo JText::_( 'COM_RAIDPLANNER_FREEZE_TIME' ); ?>:</label>

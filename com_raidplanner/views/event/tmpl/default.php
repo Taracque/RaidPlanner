@@ -294,7 +294,6 @@ $hasChars = !empty($this->characters);
 						<td colspan="4">
 							<input type="submit" name="SubmitButton" value="<?php echo JText::_('Save');?>" />
 							<input type="hidden" name="option" value="com_raidplanner" />
-							<input type="hidden" name="Itemid" value="<?php echo JSite::getMenu()->getActive()->id; ?>" />
 							<input type="hidden" name="task" value="signup" />
 							<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
 						</td>

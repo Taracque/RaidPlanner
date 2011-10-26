@@ -64,6 +64,15 @@ class RaidPlannerModelRaid extends JModel
 		if ($data['maximum_level']=='') { $data['maximum_level'] = NULL; }
 		if ($data['minimum_rank']=='') { $data['minimum_rank'] = NULL; }
 
+		// convert datetimes to UTC
+		$user =& JFactory::getUser();
+		$tz = $user->getParam('timezone');
+		$start_time = JFactory::getDate( $data['start_time'], $tz );
+		$data['start_time'] = $start_time->toMySQL();
+
+		$invite_time = JFactory::getDate( $data['invite_time'], $tz );
+		$data['invite_time'] = $invite_time->toMySQL();
+	
 		// Bind the form fields to the table
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());
@@ -76,7 +85,7 @@ class RaidPlannerModelRaid extends JModel
 			return false;
 		}
 
-		// Store the web link table to the database
+		// Store the raid table to the database
 		if (!$row->store(true)) {
 			$this->setError( $this->_db->getErrorMsg() );
 			return false;
