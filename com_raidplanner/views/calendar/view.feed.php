@@ -31,7 +31,7 @@ class RaidPlannerViewCalendar extends JView
 				die('Invalid access!');
 			}
 		}
-    	$tz = $user->getParam('timezone');
+		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
     	$tzname = timezone_name_from_abbr("", $tz * 3600, 0);
     	
 		$eventmodel = &$this->getModel('event');

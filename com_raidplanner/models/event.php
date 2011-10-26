@@ -509,7 +509,7 @@ class RaidPlannerModelEvent extends JModel
 
 		$user =& JFactory::getUser();
 		$user_id = $user->id;
-		$tz = $user->getParam('timezone');
+		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
 		$db = & JFactory::getDBO();
 		if ($raid_id == -1) {
 			// insert an empty record first

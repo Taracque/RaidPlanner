@@ -66,7 +66,7 @@ class RaidPlannerModelRaid extends JModel
 
 		// convert datetimes to UTC
 		$user =& JFactory::getUser();
-		$tz = $user->getParam('timezone');
+		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
 		$start_time = JFactory::getDate( $data['start_time'], $tz );
 		$data['start_time'] = $start_time->toMySQL();
 
