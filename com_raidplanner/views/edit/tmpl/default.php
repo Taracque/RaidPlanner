@@ -40,7 +40,7 @@ $start_time = array(
 		<label for="icon_name"><?php echo JText::_('COM_RAIDPLANNER_ICON');?></label><select name="icon_name" id="icon_name">
 			<option value=""></option>
 			<?php foreach ($this->icons as $icon_file => $icon_name) : ?>
-			<option value="<?php echo $icon_file;?>"<?php if ($icon_file==$this->event->icon_name) {?> selected="selected"<?php } ?>><?php echo $icon_name;?></option>
+			<option value="<?php echo $icon_file;?>"<?php if ($icon_file==@$this->event->icon_name) {?> selected="selected"<?php } ?>><?php echo $icon_name;?></option>
 			<?php endforeach; ?>
 		</select>
 		<label for="template_id"><?php echo JText::_('COM_RAIDPLANNER_TEMPLATE');?></label><select name="template_id" id="template_id" onchange="document.getElementById('rp_edit_form').submit();">
@@ -54,16 +54,16 @@ $start_time = array(
 			<textarea name="description" cols="40" rows="5"><?php echo $this->event->description;?></textarea>
 		<br />
 		<label for="start_time_0"><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: </label><?php echo JHTML::calendar( $start_time['date'], 'start_time[0]', 'start_time_0', $dateFormat);?> <input type="text" name="start_time[1]" id="start_time_1" value="<?php echo $start_time['time'];?>" size="6" /><br />
-		<label for="duration_mins"><?php echo JText::_('COM_RAIDPLANNER_DURATION');?>: </label><input type="text" name="duration_mins" id="duration_mins" value="<?php echo $this->event->duration_mins;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES');?><br />
+		<label for="duration_mins"><?php echo JText::_('COM_RAIDPLANNER_DURATION');?>: </label><input type="text" name="duration_mins" id="duration_mins" value="<?php echo @$this->event->duration_mins;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES');?><br />
 		<label for="invite_time_0"><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: </label><?php echo JHTML::calendar( $invite_time['date'], 'invite_time[0]', 'invite_time_0', $dateFormat);?> <input type="text" name="invite_time[1]" id="invite_time_1" value="<?php echo $invite_time['time'];?>" size="6" /><br />
-		<label for="freeze_time"><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?> </label><input type="text" name="freeze_time" id="freeze_time" value="<?php echo $this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?><br />
-		<label for="minimum_level"><?php echo JText::_('COM_RAIDPLANNER_LEVEL_RANGE');?> </label><input type="text" name="minimum_level" id="minimum_level" value="<?php echo $this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo $this->event->maximum_level;?>" size="3" /><br />
-		<label for="minimum_rank"><?php echo JText::_('COM_RAIDPLANNER_MINIMUM_RANK');?> </label><input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo $this->event->minimum_rank;?>" size="3" /><br />
+		<label for="freeze_time"><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?> </label><input type="text" name="freeze_time" id="freeze_time" value="<?php echo @$this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?><br />
+		<label for="minimum_level"><?php echo JText::_('COM_RAIDPLANNER_LEVEL_RANGE');?> </label><input type="text" name="minimum_level" id="minimum_level" value="<?php echo @$this->event->minimum_level;?>" size="3" /> - <input type="text" name="maximum_level" id="maximum_level" value="<?php echo @$this->event->maximum_level;?>" size="3" /><br />
+		<label for="minimum_rank"><?php echo JText::_('COM_RAIDPLANNER_MINIMUM_RANK');?> </label><input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo @$this->event->minimum_rank;?>" size="3" /><br />
 		<label for="guild_id"><?php echo JText::_('COM_RAIDPLANNER_GUILD');?></label>
 			<select name="guild_id" id="guild_id">
 				<option value=""></option>
 				<?php foreach ($this->guilds as $guild_id => $guild) : ?>
-				<option value="<?php echo $guild_id;?>"<?php if ($guild_id==$this->event->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild->guild_name;?></option>
+				<option value="<?php echo $guild_id;?>"<?php if ($guild_id==@$this->event->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild->guild_name;?></option>
 				<?php endforeach; ?>
 			</select>
 		<br />

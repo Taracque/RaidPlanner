@@ -349,6 +349,7 @@ class RaidPlannerModelEvent extends JModel
 			$char_id = JRequest::getVar('character_id', null, 'INT');
 	
 			$db = & JFactory::getDBO();
+			$user =& JFactory::getUser();
 
 			// throw all sigunps by same profile for same raid
 			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
@@ -430,14 +431,17 @@ class RaidPlannerModelEvent extends JModel
 		$history = trim( JRequest::getVar('history', '', 'post', 'string', JREQUEST_ALLOWRAW ) );
 		$queues = JRequest::getVar('queue', null, 'ARRAY');
 
-		foreach ($characters as $char) {
-			if (intval(@$roles[intval($char)])==0) {
-				$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
-			} else {
-				$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."',queue='".intval(@$queues[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+		if (is_array($characters))
+		{
+			foreach ($characters as $char) {
+				if (intval(@$roles[intval($char)])==0) {
+					$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+				} else {
+					$query = "UPDATE #__raidplanner_signups SET role_id='".intval(@$roles[intval($char)])."',confirmed='".intval(@$confirm[intval($char)])."',queue='".intval(@$queues[intval($char)])."' WHERE raid_id=".intval($raid_id)." AND character_id=".intval($char);
+				}
+				$db->setQuery($query);
+				$db->query();
 			}
-			$db->setQuery($query);
-			$db->query();
 		}
 
 		$query = "DELETE FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);

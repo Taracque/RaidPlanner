@@ -141,7 +141,7 @@ $hasChars = !empty($this->characters);
 						</tr>
 					</thead>
 					<tbody>
-			<?php foreach ($this->attendants as $attendant) { ?>
+			<?php foreach ($this->attendants as $attendant) : ?>
 						<tr>
 							<td class="<?php echo $attendant->class_css;?>">
 								<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
@@ -161,7 +161,16 @@ $hasChars = !empty($this->characters);
 									<input type="hidden" name="comments[<?php echo $attendant->character_id;?>]" value="<?php echo $attendant->comments;?>" />
 								<?php endif; ?>
 							</td>
-							<td style="<?php if ($this->roles[$attendant->role_name]->font_color!='') { echo "color:" . $this->roles[$attendant->role_name]->font_color . ";"; } if ($this->roles[$attendant->role_name]->body_color!='') { echo "background-color:" . $this->roles[$attendant->role_name]->body_color . ";"; }?>"><?php
+							<td style="<?php
+								if ( (isset($attendant->role_name)) && (isset($this->roles[$attendant->role_name])) ) {
+									if ($this->roles[$attendant->role_name]->font_color!='') {
+										echo "color:" . $this->roles[$attendant->role_name]->font_color . ";";
+									}
+									if ($this->roles[$attendant->role_name]->body_color!='') {
+										echo "background-color:" . $this->roles[$attendant->role_name]->body_color . ";";
+									}
+								}
+							?>"><?php
 								if (!$this->isOfficer) {
 									echo $attendant->role_name;
 								} else { ?>
@@ -188,8 +197,8 @@ $hasChars = !empty($this->characters);
 							?></td>
 							<td><?php echo JHTML::_('date', $attendant->timestamp, $dateFormat);?></td>
 						</tr>
-			<?php } ?>
-			<?php if ($this->isOfficer) { ?>
+			<?php endforeach; ?>
+			<?php if ($this->isOfficer) : ?>
 						<tr>
 							<td>
 								<select name="new_character">
@@ -225,7 +234,7 @@ $hasChars = !empty($this->characters);
 							<td>
 							</td>
 						</tr>
-			<?php } ?>
+			<?php endif; ?>
 					</tbody>
 				</table>
 			<?php if ($this->isOfficer) : ?>
@@ -287,7 +296,7 @@ $hasChars = !empty($this->characters);
 							<?php } ?>
 						</td>
 						<td>
-							<textarea name="comments" rows="5" cols="40"><?php echo $this->selfstatus->comments; ?></textarea></label>
+							<textarea name="comments" rows="5" style="width:95%;padding:0;"><?php echo $this->selfstatus->comments; ?></textarea></label>
 						</td>
 					</tr>
 					<tr>

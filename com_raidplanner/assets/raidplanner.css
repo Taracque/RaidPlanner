@@ -136,9 +136,6 @@
 	list-style-type: none;
 	padding: 0;
 }
-.rp_event_details {
-	border: 1px solid #33383C;
-}
 .rp_event_description {
 	display: block;
 	float: left;

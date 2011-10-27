@@ -14,6 +14,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 require_once ( JPATH_BASE . DS . 'includes' . DS . 'defines.php' );
 require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
 
+jimport( 'joomla.error.error' );
+
 abstract class RaidPlannerHelper
 {
 
@@ -231,6 +233,7 @@ abstract class RaidPlannerHelper
 		try {
 			$reply =& JFactory::getDate( $date, $tzOffset );
 		} catch (Exception $e) {
+			JError::raiseNotice( 500, 'Invalid date (' . $date .') entered' );
 			$reply =& JFactory::getDate();
 		}
 		
