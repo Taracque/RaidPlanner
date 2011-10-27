@@ -82,26 +82,7 @@ class RaidPlannerModelCharacter extends JModel
 	}
 	
 	function canEdit($user_id=null) {
-		$reply = false;
-		
-		$guest = false;
-		if (!$user_id) {
-			$user =& JFactory::getUser();
-			$user_id = $user->id;
-			$guest = $user->guest;
-		}
-		$db = & JFactory::getDBO();
-		if (!$guest) {
-			$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = 'edit_characters' AND perm.permission_value=1";
-		} else {
-			$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = 'edit_characters' AND perm.permission_value=1";
-		}
-		$db->setQuery($query);
-		
-		$dbreply = ($db->loadResultArray());
-		$reply = (@$dbreply[0] === "1");
-
-		return $reply;
+		return RaidPlannerHelper::getPermission( 'edit_characters', $user_id );
 	}
 
 

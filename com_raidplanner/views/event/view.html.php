@@ -31,7 +31,7 @@ class RaidPlannerViewEvent extends JView
 			'show_history'	=> $paramsObj->get('show_history', 0)
 		);
 
-		if ( $model->getPermission('view_raids') != 1 ) {
+		if ( RaidPlannerHelper::getPermission('view_raids') != 1 ) {
 			$mainframe = JFactory::getApplication();
 			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
 		} else {

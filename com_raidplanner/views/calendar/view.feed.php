@@ -34,8 +34,7 @@ class RaidPlannerViewCalendar extends JView
 		$tz = RaidPlannerHelper::getTimezone();
     	$tzname = timezone_name_from_abbr("", $tz * 3600, 0);
     	
-		$eventmodel = &$this->getModel('event');
-		$canView = ($eventmodel->getPermission('view_raids') == 1);
+		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
 		$version = new JVersion();
 		switch ($version->RELEASE) {
 			case '1.5':

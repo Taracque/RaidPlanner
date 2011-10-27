@@ -349,7 +349,6 @@ class RaidPlannerModelEvent extends JModel
 			$char_id = JRequest::getVar('character_id', null, 'INT');
 	
 			$db = & JFactory::getDBO();
-			$tz = RaidPlannerHelper::getTimezone();
 
 			// throw all sigunps by same profile for same raid
 			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
@@ -357,7 +356,7 @@ class RaidPlannerModelEvent extends JModel
 			$db->query();
 			
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".JFactory::getDate('now', $tz)->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -379,7 +378,7 @@ class RaidPlannerModelEvent extends JModel
 			$own_raid = ($db->loadResult() == $user_id);
 		}
 		
-		return ($this->getPermission('edit_raids_any') || ($this->getPermission('edit_raids_own') && ($own_raid)));
+		return (RaidPlannerHelper::getPermission('edit_raids_any') || (RaidPlannerHelper::getPermission('edit_raids_own') && ($own_raid)));
 	}
 	
 	function canDelete($raid_id = null) {
@@ -395,7 +394,7 @@ class RaidPlannerModelEvent extends JModel
 			$own_raid = ($db->loadResult() == $user_id);
 		}
 
-		return ($this->getPermission('delete_raid_any') || ($this->getPermission('delete_raid_own') && ($own_raid)));
+		return (RaidPlannerHelper::getPermission('delete_raid_any') || (RaidPlannerHelper::getPermission('delete_raid_own') && ($own_raid)));
 	}
 	
 	function userCanSignUp($raid_id = null) {
@@ -408,36 +407,12 @@ class RaidPlannerModelEvent extends JModel
 			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . $date->toMySQL() . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
 			$db->setQuery($query);
 			if ($db->loadResult() == 1) {
-				$can_signup = $this->getPermission('allow_signup', $user_id);
+				$can_signup = RaidPlannerHelper::getPermission('allow_signup', $user_id);
 			}
 		}
 		
 		return $can_signup;
 	
-	}
-	
-	function getPermission($permission, $user_id=null) {
-		$reply = false;
-		
-		if ($permission!='') {
-			$guest = false;
-			if (!$user_id) {
-				$user =& JFactory::getUser();
-				$user_id = $user->id;
-				$guest = $user->guest;
-			}
-			$db = & JFactory::getDBO();
-			if (!$guest) {
-				$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
-			} else {
-				$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
-			}
-			$db->setQuery($query);
-			
-			$dbreply = ($db->loadResultArray());
-			$reply = (@$dbreply[0] === "1");
-		}
-		return $reply;
 	}
 	
 	function confirmEvent() {
@@ -479,8 +454,6 @@ class RaidPlannerModelEvent extends JModel
 		// add new_character if there's one
 		$new_char_id = JRequest::getVar('new_character', null, 'INT');
 		if ($new_char_id > 0) {
-			$tz = RaidPlannerHelper::getTimezone();
-
 			$query = "SELECT profile_id FROM #__raidplanner_character WHERE character_id=".$new_char_id;
 			$db->setQuery($query);
 			$profile_id = $db->loadResult();
@@ -497,7 +470,7 @@ class RaidPlannerModelEvent extends JModel
 			}
 				
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".JFactory::getDate('now', $tz)->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -514,7 +487,6 @@ class RaidPlannerModelEvent extends JModel
 
 		$user =& JFactory::getUser();
 		$user_id = $user->id;
-		$tz = RaidPlannerHelper::getTimezone();
 		$db = & JFactory::getDBO();
 		if ($raid_id == -1) {
 			// insert an empty record first
@@ -526,9 +498,9 @@ class RaidPlannerModelEvent extends JModel
 
 		$location = JRequest::getVar('location', null, 'default', 'STRING');
 		$description = JRequest::getVar('description', null, 'default', 'STRING');
-		$start_time =& JFactory::getDate( implode(" ", JRequest::getVar('start_time', null, 'default', 'ARRAY') ) , $tz );
+		$start_time = RaidPlannerHelper::getDate( implode(" ", JRequest::getVar('start_time', null, 'default', 'ARRAY') ) );
 		$duration_mins = JRequest::getVar('duration_mins', 0, 'default', 'INT');
-		$invite_time =& JFactory::getDate( implode(" ", JRequest::getVar('invite_time', null, 'default', 'ARRAY') ) , $tz );
+		$invite_time = RaidPlannerHelper::getDate( implode(" ", JRequest::getVar('invite_time', null, 'default', 'ARRAY') ) );
 		$freeze_time = JRequest::getVar('freeze_time', null, 'default', 'INT');
 		$minimum_level = JRequest::getVar('minimum_level', null, 'default', 'INT');
 		$maximum_level = JRequest::getVar('maximum_level', null, 'default', 'INT');

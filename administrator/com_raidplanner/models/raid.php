@@ -65,12 +65,8 @@ class RaidPlannerModelRaid extends JModel
 		if ($data['minimum_rank']=='') { $data['minimum_rank'] = NULL; }
 
 		// convert datetimes to UTC
-		$tz = RaidPlannerHelper::getTimezone();
-		$start_time = JFactory::getDate( $data['start_time'], $tz );
-		$data['start_time'] = $start_time->toMySQL();
-
-		$invite_time = JFactory::getDate( $data['invite_time'], $tz );
-		$data['invite_time'] = $invite_time->toMySQL();
+		$data['start_time'] = RaidPlannerHelper::getDate($data['start_time'])->toMySQL();
+		$data['invite_time'] = RaidPlannerHelper::getDate($data['invite_time'])->toMySQL();
 	
 		// Bind the form fields to the table
 		if (!$row->bind($data)) {

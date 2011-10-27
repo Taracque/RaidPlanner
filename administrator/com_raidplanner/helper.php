@@ -197,5 +197,44 @@ abstract class RaidPlannerHelper
 		
 		return $db->loadObjectList('group_id');
 	}
+	
+	function getPermission($permission, $user_id=null) {
+		$reply = false;
+		
+		if ($permission!='') {
+			$guest = false;
+			if (!$user_id) {
+				$user =& JFactory::getUser();
+				$user_id = $user->id;
+				$guest = $user->guest;
+			}
+			$db = & JFactory::getDBO();
+			if (!$guest) {
+				$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			} else {
+				$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			}
+			$db->setQuery($query);
+			
+			$dbreply = ($db->loadResultArray());
+			$reply = (@$dbreply[0] === "1");
+		}
+		return $reply;
+	}
+	
+	function getDate( $date = 'now', $tzOffset = null )
+	{
+		if ($tzOffset === null)
+		{
+			$tzOffset = self::getTimezone();
+		}
+		try {
+			$reply =& JFactory::getDate( $date, $tzOffset );
+		} catch (Exception $e) {
+			$reply =& JFactory::getDate();
+		}
+		
+		return $reply;
+	}
 
 }
