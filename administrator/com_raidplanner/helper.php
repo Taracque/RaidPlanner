@@ -45,7 +45,7 @@ abstract class RaidPlannerHelper
 				$browser = 'Mozilla/5.0 (compatible; MSIE 7.01; Windows NT 5.1)';
 				
 				// cURL options
-				curl_setopt ($ch, CURLOPT_URL, $url);
+				curl_setopt ($ch, CURLOPT_URL, $url );
 				curl_setopt ($ch, CURLOPT_HTTPHEADER, $header); 
 				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 15);
@@ -53,16 +53,20 @@ abstract class RaidPlannerHelper
 				
 				$url_string = curl_exec($ch);
 				curl_close($ch);
-	
-	
+
 				$data = json_decode($url_string);
 				if (function_exists('json_last_error')) {
 					if (json_last_error() != JSON_ERROR_NONE)
 					{
+						JError::raiseWarning('100','ArmorySync data decoding error');
 						return null;
 					}
 				}
-	
+				if (isset($data->status) && ($data->status=="nok"))
+				{
+					JError::raiseWarning('100','ArmorySync failed');
+					return null;
+				}
 				if (!$guild_id)
 				{
 					$query = "INSERT INTO #__raidplanner_guild (guild_name) VALUES (".$db->Quote($data->name).")";
@@ -70,59 +74,65 @@ abstract class RaidPlannerHelper
 					$db->query();
 					$guild_id=$db->insertid();
 				}
-				$params = array(
-					'achievementPoints' => $data->achievementPoints,
-					'side'		=> ($data->side==0)?"Alliance":"Horde",
-					'emblem'	=> $data->emblem,
-					'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . $tmp->guild_realm . "/" . $data->name ."/",
-					'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/" . $tmp->guild_realm . "/%s/advanced",
-				);
-				
-				$query = "UPDATE #__raidplanner_guild SET
-								guild_name=".$db->Quote($data->name).",
-								guild_realm=".$db->Quote($data->realm).",
-								guild_region=".$db->Quote($tmp->guild_region).",
-								guild_level=".$db->Quote($data->level).",
-								params=".$db->Quote(json_encode($params)).",
-								lastSync=NOW()
-								WHERE guild_id=".intval($guild_id);
-				$db->setQuery($query);
-				$db->query();
-	
-				/* detach characters from guild */
-				$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($guild_id)."";
-				$db->setQuery($query);
-				$db->query();
-	
-				foreach($data->members as $member)
+
+				if (($tmp->guild_name == @$data->name) && ($data->name!=''))
 				{
-					// check if character exists
-					$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name=".$db->Quote($member->character->name)."";
-					$db->setQuery($query);
-					$char_id = $db->loadResult();
-					// not found insert it
-					if (!$char_id) {
-						$query="INSERT INTO #__raidplanner_character SET char_name=".$db->Quote($member->character->name)."";
-						$db->setQuery($query);
-						$db->query();
-						$char_id=$db->insertid();
-					}
-					$query = "UPDATE #__raidplanner_character SET class_id='".intval($member->character->class)."'
-																,race_id='".intval($member->character->race)."'
-																,gender_id='".(intval($member->character->gender) + 1)."'
-																,char_level='".intval($member->character->level)."'
-																,rank='".intval($member->rank)."'
-																,guild_id='".intval($guild_id)."'
-																WHERE character_id=".$char_id;
+					$params = array(
+						'achievementPoints' => $data->achievementPoints,
+						'side'		=> ($data->side==0)?"Alliance":"Horde",
+						'emblem'	=> $data->emblem,
+						'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . rawurlencode($tmp->guild_realm) . "/" . rawurlencode($data->name) ."/",
+						'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/%s/%s/advanced",
+					);
+					$query = "UPDATE #__raidplanner_guild SET
+									guild_name=".$db->Quote($data->name).",
+									guild_realm=".$db->Quote($data->realm).",
+									guild_region=".$db->Quote($tmp->guild_region).",
+									guild_level=".$db->Quote($data->level).",
+									params=".$db->Quote(json_encode($params)).",
+									lastSync=NOW()
+									WHERE guild_id=".intval($guild_id);
 					$db->setQuery($query);
 					$db->query();
+	
+					/* detach characters from guild */
+					$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($guild_id)."";
+					$db->setQuery($query);
+					$db->query();
+		
+					foreach($data->members as $member)
+					{
+						// check if character exists
+						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name=".$db->Quote($member->character->name)."";
+						$db->setQuery($query);
+						$char_id = $db->loadResult();
+						// not found insert it
+						if (!$char_id) {
+							$query="INSERT INTO #__raidplanner_character SET char_name=".$db->Quote($member->character->name)."";
+							$db->setQuery($query);
+							$db->query();
+							$char_id=$db->insertid();
+						}
+						$query = "UPDATE #__raidplanner_character SET class_id='".intval($member->character->class)."'
+																	,race_id='".intval($member->character->race)."'
+																	,gender_id='".(intval($member->character->gender) + 1)."'
+																	,char_level='".intval($member->character->level)."'
+																	,rank='".intval($member->rank)."'
+																	,guild_id='".intval($guild_id)."'
+																	WHERE character_id=".$char_id;
+						$db->setQuery($query);
+						$db->query();
+					}
+		
+					/* delete all guildless characters */
+					$query = "DELETE FROM #__raidplanner_character WHERE guild_id=0";
+					$db->setQuery($query);
+					$db->query();
+					
+					JError::raiseNotice('0', 'ArmorySync successed');
+				} else {
+					JError::raiseWarning('100', 'ArmorySync data doesn\'t match');
 				}
-	
-				/* delete all guildless characters */
-				$query = "DELETE FROM #__raidplanner_character WHERE guild_id=0";
-				$db->setQuery($query);
-				$db->query();
-	
 			}
 		}
 	}

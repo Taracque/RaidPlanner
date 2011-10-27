@@ -24,11 +24,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<li>
 			<label for="guild_region"><?php echo JText::_( 'COM_RAIDPLANNER_ARMORY_REGION' ); ?>:</label>
 			<select name="guild_region" id="guild_region">
-				<option value="eu">EU</option>
-				<option value="us">US</option>
-				<option value="kr">KR</option>
-				<option value="tw">TW</option>
-				<option value="cn">CN</option>
+				<option value="eu"<?php if ($this->guild->guild_region=="eu") { echo " selected=\"selected\""; }?>>EU</option>
+				<option value="us"<?php if ($this->guild->guild_region=="us") { echo " selected=\"selected\""; }?>>US</option>
+				<option value="kr"<?php if ($this->guild->guild_region=="kr") { echo " selected=\"selected\""; }?>>KR</option>
+				<option value="tw"<?php if ($this->guild->guild_region=="tw") { echo " selected=\"selected\""; }?>>TW</option>
+				<option value="cn"<?php if ($this->guild->guild_region=="cn") { echo " selected=\"selected\""; }?>>CN</option>
 			</select>
 		</li>
 		<li>

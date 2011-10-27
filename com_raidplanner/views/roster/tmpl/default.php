@@ -68,7 +68,7 @@ jimport( 'joomla.utilities.date');
 			});
 		</script>
 		<?php endif; ?>
-		<h2><a href="<?php echo rawurlencode($this->guildinfo->params->link);?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $this->guildinfo->guild_name;?></a></h2>
+		<h2><a href="<?php echo $this->guildinfo->params->link;?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $this->guildinfo->guild_name;?></a></h2>
 		<strong>
 			<?php echo JText::_('COM_RAIDPLANNER_LEVEL');?> <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JText::_('COM_RAIDPLANNER_GUILD');?><br />
 			<?php echo $this->guildinfo->guild_realm;?> - <?php echo strtoupper($this->guildinfo->guild_region);?>
@@ -89,7 +89,7 @@ jimport( 'joomla.utilities.date');
 			<tbody>
 			<?php foreach($this->characters as $character) : ?>
 				<tr class="rp_roster">
-					<td><a href="<?php echo rawurlencode( sprintf($this->guildinfo->params->char_link, $character['char_name'] ) );?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $character['char_name']; ?></a></td>
+					<td><a href="<?php echo sprintf($this->guildinfo->params->char_link, rawurlencode($this->guildinfo->guild_realm), rawurlencode($character['char_name']) );?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $character['char_name']; ?></a></td>
 					<td><?php echo $character['char_level']; ?></td>
 					<td><?php echo $character['gender_name']; ?></td>
 					<td><?php echo $character['race_name']; ?></td>
