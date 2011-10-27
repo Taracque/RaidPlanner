@@ -13,9 +13,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-/* include the helper */
-require_once( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'helper.php' );
-
 class RaidPlannerViewGuilds extends JView
 {
 
@@ -27,7 +24,7 @@ class RaidPlannerViewGuilds extends JView
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();
 
-		ComRaidPlannerHelper::showToolbarButtons();
+		RaidPlannerHelper::showToolbarButtons();
 
         // Get data from the model
         $guilds =& $this->get( 'Data');
@@ -42,6 +39,7 @@ class RaidPlannerViewGuilds extends JView
 		/* Get the values from the state object that were inserted in the model's construct function */
 		$lists['search'] = $state->get( 'filter_guild_search' );;
 		$lists['order']     = $state->get( 'filter_order' );
+		$lists['order_Dir'] = $state->get( 'filter_order_Dir' );
 		
 		$this->assignRef( 'lists', $lists );
 

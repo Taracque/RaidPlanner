@@ -33,20 +33,20 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<li>
 			<label for="class_id"><?php echo JText::_( 'COM_RAIDPLANNER_CLASS' ); ?>:</label>
 			<select name="class_id" id="class_id">
-				<?php foreach ($this->classes as $class) : ?>
-					<option value="<?php echo $class->class_id;?>" style="color:<?php echo $class->class_color;?>"<?php if ($this->character->class_id == $class->class_id){ echo " selected=\"selected\"";}?>><?php echo $class->class_name;?></option>
+				<?php foreach ($this->classes as $class_id => $class) : ?>
+					<option value="<?php echo $class_id;?>" style="color:<?php echo $class->class_color;?>"<?php if ($this->character->class_id == $class_id){ echo " selected=\"selected\"";}?>><?php echo $class->class_name;?></option>
 				<?php endforeach; ?>
 			</select>
 		</li>
 		<li>
 			<label for="gender_ids"><?php echo JText::_( 'COM_RAIDPLANNER_GENDER' ); ?>:</label>
 			<fieldset id="gender_ids" class="radio inputbox">
-			<?php echo JHTML::_('select.radiolist', $this->genders, 'gender_id', '', 'value', 'text', $this->character->gender_id); ?>
+			<?php echo JHTML::_('select.radiolist', $this->genders, 'gender_id', '', 'gender_id', 'gender_name', $this->character->gender_id); ?>
 			</fieldset>
 		</li>
 		<li>
 			<label for="race_id"><?php echo JText::_( 'COM_RAIDPLANNER_RACE' ); ?>:</label>
-			<?php echo JHTML::_('select.genericlist', $this->races, 'race_id', '', 'value', 'text', $this->character->race_id); ?>
+			<?php echo JHTML::_('select.genericlist', $this->races, 'race_id', '', 'race_id', 'race_name', $this->character->race_id); ?>
 		</li>
 		<li>
 			<label for="char_level"><?php echo JText::_( 'COM_RAIDPLANNER_LEVEL' ); ?>:</label>

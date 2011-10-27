@@ -122,58 +122,6 @@ class RaidPlannerModelCharacter extends JModel
     	return $result;
 	}
 
-	function getGuilds() {
-		$db = & JFactory::getDBO();
-		
-		$query = "SELECT g.guild_id,g.guild_name
-					FROM #__raidplanner_guild AS g 
-					ORDER BY g.guild_name ASC";
-		// reload the list
-		$db->setQuery($query);
-		$result = $db->loadAssocList('guild_id');
-
-    	return $result;
-	}
-
-	function getClasses() {
-		$db = & JFactory::getDBO();
-		
-		$query = "SELECT c.class_id,c.class_name
-					FROM #__raidplanner_class AS c 
-					ORDER BY c.class_name ASC";
-		// reload the list
-		$db->setQuery($query);
-		$result = $db->loadAssocList('class_id');
-
-    	return $result;
-	}
-
-	function getRaces() {
-		$db = & JFactory::getDBO();
-		
-		$query = "SELECT r.race_id,r.race_name
-					FROM #__raidplanner_race AS r 
-					ORDER BY r.race_name ASC";
-		// reload the list
-		$db->setQuery($query);
-		$result = $db->loadAssocList('race_id');
-
-    	return $result;
-	}
-
-	function getGenders() {
-		$db = & JFactory::getDBO();
-		
-		$query = "SELECT g.gender_id,g.gender_name
-					FROM #__raidplanner_gender AS g 
-					ORDER BY g.gender_name ASC";
-		// reload the list
-		$db->setQuery($query);
-		$result = $db->loadAssocList('gender_id');
-
-    	return $result;
-	}
-
 	function getCharacter( $char_name, $char_id = null ) {
 		$db = & JFactory::getDBO();
 		$user =& JFactory::getUser();

@@ -104,32 +104,4 @@ class RaidPlannerModelCharacter extends JModel
 		return true;
 	}
 
-	function getGuilds()
-	{
-		$query = ' SELECT * FROM #__raidplanner_guild ORDER BY guild_name ASC ';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-	
-	function getClasses()
-	{
-		$query = ' SELECT * FROM #__raidplanner_class ORDER BY class_name ASC ';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-	
-	function getGenders()
-	{
-		$query = ' SELECT gender_id AS value, gender_name AS text FROM #__raidplanner_gender';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-
-	function getRaces()
-	{
-		$query = ' SELECT race_id AS value, race_name AS text FROM #__raidplanner_race';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-
 }

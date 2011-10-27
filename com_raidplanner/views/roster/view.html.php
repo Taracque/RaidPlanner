@@ -39,11 +39,10 @@ class RaidPlannerViewRoster extends JView
 		if ($paramsObj->get('armory_sync', '0') == 1)
 		{
 			// sync armory
-			require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
-			ComRaidPlannerHelper::armorySync( $guild_id, $paramsObj->get( 'sync_interval', 4 ) );
+			RaidPlannerHelper::armorySync( $guild_id, $paramsObj->get( 'sync_interval', 4 ) );
 		}
 
-		$this->assignRef( 'characters', $model->getCharacters( $guild_id ) );
+		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
 
 		parent::display($tpl);

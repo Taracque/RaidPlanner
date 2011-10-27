@@ -23,10 +23,10 @@ class RaidPlannerViewCharacter extends JView
 
 		$this->assignRef( 'character', $model->getCharacter( JRequest::getVar('character'), JRequest::getInt('character_id') ) );
 		$this->assignRef( 'characters', $model->getCharacters( ) );		
-		$this->assignRef( 'guilds', $model->getGuilds( ) );		
-		$this->assignRef( 'genders', $model->getGenders( ) );		
-		$this->assignRef( 'races', $model->getRaces( ) );		
-		$this->assignRef( 'classes', $model->getClasses( ) );		
+		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds( ) );		
+		$this->assignRef( 'genders', RaidPlannerHelper::getGenders( ) );		
+		$this->assignRef( 'races', RaidPlannerHelper::getRaces( ) );		
+		$this->assignRef( 'classes', RaidPlannerHelper::getClasses( ) );		
 		$this->assignRef( 'canEdit', $canEdit );
 
 		parent::display($tpl);

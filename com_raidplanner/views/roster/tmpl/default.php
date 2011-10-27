@@ -15,6 +15,7 @@ jimport( 'joomla.utilities.date');
 ?>
 <div class="rp_roster">
 	<div class="rp_roster_header">
+	<?php if ($this->guildinfo->params->armory): ?>
 		<canvas id="rp_guild_tabard" width="120" height="120">
 		</canvas>
 		<script type="text/javascript">
@@ -62,6 +63,7 @@ jimport( 'joomla.utilities.date');
 				}, '<?php echo JURI::base();?>images/raidplanner/tabards/');
 			});
 		</script>
+		<?php endif; ?>
 		<h2><a href="<?php echo $this->guildinfo->params->link;?>" target="_blank"><?php echo $this->guildinfo->guild_name;?></a></h2>
 		<strong>
 			<?php echo JText::_('COM_RAIDPLANNER_LEVEL');?> <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JText::_('COM_RAIDPLANNER_GUILD');?><br />

@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 require_once ( JPATH_BASE . DS . 'includes' . DS . 'defines.php' );
 require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
 
-class ComRaidPlannerHelper
+abstract class RaidPlannerHelper
 {
 
 	public static function armorySync( $guild_id , $sync_interval )
@@ -137,4 +137,65 @@ class ComRaidPlannerHelper
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CLASSES'), 'index.php?option=com_raidplanner&view=classes', ($view == 'classes'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RACES'), 'index.php?option=com_raidplanner&view=races', ($view == 'races'));
 	}
+	
+	public static function getTimezone( $user = null )
+	{
+		$user =& JFactory::getUser( $user );
+		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+		
+		return $tz;
+	}
+
+	public static function getGuilds()
+	{
+		$db = & JFactory::getDBO();
+		$query = ' SELECT guild_name,guild_id FROM #__raidplanner_guild ORDER BY guild_name ASC ';
+		$db->setQuery( $query );
+		return $db->loadObjectList('guild_id');
+	}
+	
+	public static function getClasses()
+	{
+		$db = & JFactory::getDBO();
+		$query = ' SELECT class_name,class_id,class_color FROM #__raidplanner_class ORDER BY class_name ASC ';
+		$db->setQuery( $query );
+		return $db->loadObjectList('class_id');
+	}
+	
+	public static function getGenders()
+	{
+		$db = & JFactory::getDBO();
+		$query = ' SELECT gender_name,gender_id FROM #__raidplanner_gender';
+		$db->setQuery( $query );
+		return $db->loadObjectList('gender_id');
+	}
+
+	public static function getRaces()
+	{
+		$db = & JFactory::getDBO();
+		$query = ' SELECT race_name,race_id FROM #__raidplanner_race';
+		$db->setQuery( $query );
+		return $db->loadObjectList('race_id');
+	}
+
+	function getUsers()
+	{
+		$db	=& JFactory::getDBO();
+		$query = "SELECT id,username FROM #__users ORDER BY username ASC";
+		$db->setQuery($query);
+		$db->query();
+		
+		return $db->loadObjectList('id');
+	}
+
+	function getGroups()
+	{
+		$db	=& JFactory::getDBO();
+		$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
+		$db->setQuery($query);
+		$db->query();
+		
+		return $db->loadObjectList('group_id');
+	}
+
 }

@@ -10,6 +10,9 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+// register the helper
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+
 // add css and js
 JHTML::_('behavior.mootools');
 

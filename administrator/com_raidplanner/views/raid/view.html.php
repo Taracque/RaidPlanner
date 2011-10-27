@@ -36,14 +36,10 @@ class RaidPlannerViewRaid extends JView
 			// for existing items the button is renamed `close`
 			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
-		$groups = $this->getGroupList();
-		$guilds = $this->getGuildList();
 
-		$users = $this->getUsers();
-
-		$this->assignRef('users', $users );
-		$this->assignRef('guilds', $guilds );
-		$this->assignRef('groups', $groups );
+		$this->assignRef('users', RaidPlannerHelper::getUsers() );
+		$this->assignRef('guilds', RaidPlannerHelper::getGuilds() );
+		$this->assignRef('groups', RaidPlannerHelper::getGroups() );
 		$this->assignRef('icons', $this->getIcons() );
 		$this->assignRef('raid', $raid);
 
@@ -80,33 +76,4 @@ class RaidPlannerViewRaid extends JView
 		return $files;
 	}
 	
-	function getUsers()
-	{
-		$db	=& JFactory::getDBO();
-		$query = "SELECT id,username FROM #__users ORDER BY username ASC";
-		$db->setQuery($query);
-		$db->query();
-		
-		return $db->loadObjectList('id');
-	}
-
-	function getGuildList()
-	{
-		$db	=& JFactory::getDBO();
-		$query = "SELECT guild_id,guild_name FROM #__raidplanner_guild ORDER BY guild_name ASC";
-		$db->setQuery($query);
-		$db->query();
-		
-		return $db->loadObjectList('guild_id');
-	}
-
-	function getGroupList()
-	{
-		$db	=& JFactory::getDBO();
-		$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
-		$db->setQuery($query);
-		$db->query();
-		
-		return $db->loadObjectList('group_id');
-	}
 }

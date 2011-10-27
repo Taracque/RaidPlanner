@@ -9,11 +9,13 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
- 
+
+// register the helper
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+
 // Require the base controller
- 
 require_once( JPATH_COMPONENT.DS.'controller.php' );
- 
+
 // Load frontend language file
 JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
 
@@ -26,13 +28,13 @@ if($controller = JRequest::getWord('controller')) {
         $controller = '';
     }
 }
- 
+
 // Create the controller
 $classname    = 'RaidPlannerController'.$controller;
 $controller   = new $classname( );
 
 // Perform the Request task
 $controller->execute( JRequest::getVar( 'task' ) );
- 
+
 // Redirect if set by the controller
 $controller->redirect();

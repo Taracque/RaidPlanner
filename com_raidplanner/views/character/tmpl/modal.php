@@ -48,17 +48,17 @@ $function	= JRequest::getCmd('function', '');
 				<label><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?>:<input type="text" id="char_name" name="char_name" value="<?php echo @$this->character->char_name;?>"></label><br />
 				<label><?php echo JText::_('COM_RAIDPLANNER_CLASS');?><select name="class_id" id="class_id">
 					<?php foreach ($this->classes as $class_id => $class) : ?>
-					<option value="<?php echo $class_id;?>"<?php if ($class_id==@$this->character->class_id) {?> selected="selected"<?php } ?>><?php echo $class['class_name'];?></option>
+					<option value="<?php echo $class_id;?>"<?php if ($class_id==@$this->character->class_id) {?> selected="selected"<?php } ?>><?php echo $class->class_name;?></option>
 					<?php endforeach; ?>
 				</select></label><br />
 				<label><?php echo JText::_('COM_RAIDPLANNER_GENDER');?><select name="gender_id" id="gender_id">
 					<?php foreach ($this->genders as $gender_id => $gender) : ?>
-					<option value="<?php echo $gender_id;?>"<?php if ($gender_id==@$this->character->gender_id) {?> selected="selected"<?php } ?>><?php echo $gender['gender_name'];?></option>
+					<option value="<?php echo $gender_id;?>"<?php if ($gender_id==@$this->character->gender_id) {?> selected="selected"<?php } ?>><?php echo $gender->gender_name;?></option>
 					<?php endforeach; ?>
 				</select></label><br />
 				<label><?php echo JText::_('COM_RAIDPLANNER_RACE');?><select name="race_id" id="race_id">
 					<?php foreach ($this->races as $race_id => $race) : ?>
-					<option value="<?php echo $race_id;?>"<?php if ($race_id==@$this->character->race_id) {?> selected="selected"<?php } ?>><?php echo $race['race_name'];?></option>
+					<option value="<?php echo $race_id;?>"<?php if ($race_id==@$this->character->race_id) {?> selected="selected"<?php } ?>><?php echo $race->race_name;?></option>
 					<?php endforeach; ?>
 				</select></label><br />
 				<label><?php echo JText::_('COM_RAIDPLANNER_LEVEL');?>: <input type="text" name="char_level" id="char_level" value="<?php echo @$this->character->char_level;?>" size="10" /></label><br />
@@ -66,7 +66,7 @@ $function	= JRequest::getCmd('function', '');
 				<label><?php echo JText::_('COM_RAIDPLANNER_GUILD');?>
 					<select name="guild_id" id="guild_id">
 						<?php foreach ($this->guilds as $guild_id => $guild) : ?>
-						<option value="<?php echo $guild_id;?>"<?php if ($guild_id==@$this->character->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild['guild_name'];?></option>
+						<option value="<?php echo $guild_id;?>"<?php if ($guild_id==@$this->character->guild_id) {?> selected="selected"<?php } ?>><?php echo $guild->guild_name;?></option>
 						<?php endforeach; ?>
 					</select>
 				</label><br />

@@ -17,7 +17,7 @@ jimport( 'joomla.utilities.date' );
 
 class RaidPlannerModelRoster extends JModel
 {
-	function getCharacters( $guild_id )
+	function getGuildCharacters( $guild_id )
 	{
 		$db = & JFactory::getDBO();
 		$query = "SELECT * FROM #__raidplanner_character AS chars
@@ -44,6 +44,17 @@ class RaidPlannerModelRoster extends JModel
 		$db->setQuery($query);
 		$tmp = $db->loadObject();
 		$tmp->params = json_decode($tmp->params);
+		
+		if ( (!isset($tmp->params)) || ($tmp->params->emblem == null) )
+		{
+			$tmp->params->side = '';
+			$tmp->params->char_link = '#';
+			$tmp->params->link='#';
+			$tmp->params->armory = false;
+		} else {
+			$tmp->params->armory = true;
+		}
+
 		return ( $tmp );
 	}
 

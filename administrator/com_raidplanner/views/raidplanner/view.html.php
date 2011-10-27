@@ -15,9 +15,6 @@ jimport( 'joomla.application.component.view' );
 
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 
-/* include the helper */
-require_once( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'helper.php' );
-
 class RaidPlannerViewRaidPlanner extends JView
 {
 	/**
@@ -31,7 +28,7 @@ class RaidPlannerViewRaidPlanner extends JView
 		JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER' ) );
 		JToolBarHelper::preferences( 'com_raidplanner' );
 
-		ComRaidPlannerHelper::showToolbarButtons();
+		RaidPlannerHelper::showToolbarButtons();
 
 		parent::display($tpl);
 	}

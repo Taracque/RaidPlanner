@@ -34,25 +34,14 @@ class RaidPlannerViewCharacter extends JView
 
 		$model =& $this->getModel();
 
-		$users = $this->getUsers();
-
-		$this->assignRef('users', $users );
+		$this->assignRef('users', RaidPlannerHelper::getUsers() );
 		$this->assignRef('character', $char);
-		$this->assignRef('classes', $model->getClasses() );
-		$this->assignRef('genders', $model->getGenders() );
-		$this->assignRef('races', $model->getRaces() );
-		$this->assignRef('guilds', $model->getGuilds() );
+		$this->assignRef('classes', RaidPlannerHelper::getClasses() );
+		$this->assignRef('genders', RaidPlannerHelper::getGenders() );
+		$this->assignRef('races', RaidPlannerHelper::getRaces() );
+		$this->assignRef('guilds', RaidPlannerHelper::getGuilds() );
 
 		parent::display($tpl);
 	}
 
-	function getUsers()
-	{
-		$db	=& JFactory::getDBO();
-		$query = "SELECT id,username FROM #__users ORDER BY username ASC";
-		$db->setQuery($query);
-		$db->query();
-		
-		return $db->loadObjectList('id');
-	}
 }

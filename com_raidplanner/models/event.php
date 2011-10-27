@@ -348,9 +348,8 @@ class RaidPlannerModelEvent extends JModel
 			$comments = JRequest::getVar('comments', null, 'STRING');
 			$char_id = JRequest::getVar('character_id', null, 'INT');
 	
-			$user =& JFactory::getUser();
 			$db = & JFactory::getDBO();
-			$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+			$tz = RaidPlannerHelper::getTimezone();
 
 			// throw all sigunps by same profile for same raid
 			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
@@ -480,8 +479,7 @@ class RaidPlannerModelEvent extends JModel
 		// add new_character if there's one
 		$new_char_id = JRequest::getVar('new_character', null, 'INT');
 		if ($new_char_id > 0) {
-			$user =& JFactory::getUser();
-			$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+			$tz = RaidPlannerHelper::getTimezone();
 
 			$query = "SELECT profile_id FROM #__raidplanner_character WHERE character_id=".$new_char_id;
 			$db->setQuery($query);
@@ -516,7 +514,7 @@ class RaidPlannerModelEvent extends JModel
 
 		$user =& JFactory::getUser();
 		$user_id = $user->id;
-		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+		$tz = RaidPlannerHelper::getTimezone();
 		$db = & JFactory::getDBO();
 		if ($raid_id == -1) {
 			// insert an empty record first

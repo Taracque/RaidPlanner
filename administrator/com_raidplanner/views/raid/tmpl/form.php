@@ -91,11 +91,11 @@ switch ($version->RELEASE) {
 			</select>
 		</li>
 		<li>
-			<label for="invited_group_id"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?>:</label>
+			<label for="guild_id"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?>:</label>
 			<select name="guild_id" id="guild_id">
 				<option value=""></option>
-				<?php foreach ($this->guilds as $guild_id => $guild_name) : ?>
-					<option value="<?php echo $guild_id;?>"<?php if($guild_id==@$this->raid->guild_id){?> selected="selected"<?php } ?>><?php echo @$guild_name->guild_name;?></option>
+				<?php foreach ($this->guilds as $guild_id => $guild) : ?>
+					<option value="<?php echo $guild_id;?>"<?php if($guild_id==@$this->raid->guild_id){?> selected="selected"<?php } ?>><?php echo @$guild->guild_name;?></option>
 				<?php endforeach; ?>
 			</select>
 		</li>

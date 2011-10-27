@@ -13,9 +13,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-/* include the helper */
-require_once( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'helper.php' );
-
 class RaidPlannerViewRaces extends JView
 {
 
@@ -27,7 +24,7 @@ class RaidPlannerViewRaces extends JView
         JToolBarHelper::editListX();
         JToolBarHelper::addNewX();
 
-		ComRaidPlannerHelper::showToolbarButtons();
+		RaidPlannerHelper::showToolbarButtons();
 
         // Get data from the model
         $races =& $this->get( 'Data');
