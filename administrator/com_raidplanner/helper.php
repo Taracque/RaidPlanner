@@ -74,8 +74,8 @@ abstract class RaidPlannerHelper
 					'achievementPoints' => $data->achievementPoints,
 					'side'		=> ($data->side==0)?"Alliance":"Horde",
 					'emblem'	=> $data->emblem,
-					'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . rawurlencode( $tmp->guild_realm ) . "/" . rawurlencode($data->name) ."/",
-					'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/" . rawurlencode( $tmp->guild_realm ) . "/%s/advanced",
+					'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . $tmp->guild_realm . "/" . $data->name ."/",
+					'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/" . $tmp->guild_realm . "/%s/advanced",
 				);
 				
 				$query = "UPDATE #__raidplanner_guild SET
