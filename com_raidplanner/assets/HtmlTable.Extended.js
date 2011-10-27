@@ -199,13 +199,13 @@ HtmlTable = Class.refactor(HtmlTable, {
 		var endIndex = Math.min(this.options.paginateRows*this.options.paginatePage-1, this.body.rows.length-1);
 		var i = 0;
 		for (row=0;row<this.body.rows.length;row++){
-			if (!this.body.rows[row].hasClass('filtered')){
-				i++;
-			}
 			if(i<startIndex || i>endIndex || this.body.rows[row].hasClass('filtered')){
 				this.body.rows[row].setStyle('display','none');
 			}else{
 				this.body.rows[row].setStyle('display','table-row');
+			}
+			if (!this.body.rows[row].hasClass('filtered')){
+				i++;
 			}
 		}
 		

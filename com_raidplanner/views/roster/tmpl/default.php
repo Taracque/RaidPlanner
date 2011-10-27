@@ -15,46 +15,50 @@ jimport( 'joomla.utilities.date');
 ?>
 <div class="rp_roster">
 	<div class="rp_roster_header">
+	<script type="text/javascript">
+		window.addEvent('domready',function(){
+			if ($('roster_table')) {
+				if ((MooTools.version >= '1.2.4') && (typeof(HtmlTable)!='undefined')) {
+					var rosterTable = new HtmlTable(
+						$('roster_table'),
+						{
+							properties: {
+								border: 0,
+								cellspacing: 1,
+								cellpadding: 5
+							},
+							sortable :true,
+							zebra: true,
+							selectable: true,
+							allowMultiSelect: false,
+							paginate:true,
+							paginateRows:25,
+							paginationControlPages:25,
+							filterable:true,
+							strings:{
+								next:'<?php echo JText::_('JNEXT');?>',
+								previous:'<?php echo JText::_('JPREV');?>',
+								rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>'
+							},
+							classHeaderPaginationContorlTH:'',
+							classHeaderPaginationContorlTR:'',
+							classHeaderPaginationContorlDiv:'rp_header',
+							classHeaderPaginationContorlUL:'rp_left',
+							classHeaderPaginationContorlLI:'rp_control',
+							classHeaderNumOfRowsContorlUL:'rp_right',
+							classHeaderNumOfRowsContorlLI:'rp_control',
+							classHeaderFilterContorlDiv:'rp_filter'
+						}
+					).updatePagination();
+				}
+			}
+		});
+	</script>
 	<?php if ($this->guildinfo->params->armory): ?>
 		<canvas id="rp_guild_tabard" width="120" height="120">
 		</canvas>
 		<script type="text/javascript">
 			window.addEvent('domready',function(){
-				if ($('roster_table')) {
-					if ((MooTools.version >= '1.2.4') && (typeof(HtmlTable)!='undefined')) {
-						var rosterTable = new HtmlTable(
-							$('roster_table'),
-							{
-								properties: {
-									border: 0,
-									cellspacing: 1,
-									cellpadding: 5
-								},
-								sortable :true,
-								zebra: true,
-								selectable: true,
-								allowMultiSelect: false,
-								paginate:true,
-								paginateRows:25,
-								paginationControlPages:25,
-								filterable:true,
-								strings:{
-									next:'<?php echo JText::_('JNEXT');?>',
-									previous:'<?php echo JText::_('JPREV');?>',
-									rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>'
-								},
-								classHeaderPaginationContorlTH:'',
-								classHeaderPaginationContorlTR:'',
-								classHeaderPaginationContorlDiv:'rp_header',
-								classHeaderPaginationContorlUL:'rp_left',
-								classHeaderPaginationContorlLI:'rp_control',
-								classHeaderNumOfRowsContorlUL:'rp_right',
-								classHeaderNumOfRowsContorlLI:'rp_control',
-								classHeaderFilterContorlDiv:'rp_filter'
-							}
-						).updatePagination();
-					}
-				}
 				var tabard = new GuildTabard('rp_guild_tabard', {
 					'ring': '<?php echo $this->guildinfo->params->side;?>',
 					'bg': [ 0, '<?php echo $this->guildinfo->params->emblem->backgroundColor;?>' ],
