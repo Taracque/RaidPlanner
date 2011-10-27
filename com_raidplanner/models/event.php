@@ -350,14 +350,15 @@ class RaidPlannerModelEvent extends JModel
 	
 			$user =& JFactory::getUser();
 			$db = & JFactory::getDBO();
-			
+			$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+
 			// throw all sigunps by same profile for same raid
 			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
 			$db->setQuery($query);
 			$db->query();
 			
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".JFactory::getDate('now', $tz)->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -479,6 +480,9 @@ class RaidPlannerModelEvent extends JModel
 		// add new_character if there's one
 		$new_char_id = JRequest::getVar('new_character', null, 'INT');
 		if ($new_char_id > 0) {
+			$user =& JFactory::getUser();
+			$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+
 			$query = "SELECT profile_id FROM #__raidplanner_character WHERE character_id=".$new_char_id;
 			$db->setQuery($query);
 			$profile_id = $db->loadResult();
@@ -495,7 +499,7 @@ class RaidPlannerModelEvent extends JModel
 			}
 				
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'',NOW(),(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".JFactory::getDate('now', $tz)->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
