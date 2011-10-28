@@ -32,6 +32,7 @@ class RaidPlannerViewEdit extends JView
 			}
 			$this->assignRef( 'icons', $this->getIcons() );
 			$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
+			$this->assignRef( 'groups', RaidPlannerHelper::getGroups() );
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'templates', $model->getTemplates() );
 			$this->assignRef( 'candelete', $model->canDelete( $event->raid_id ) );

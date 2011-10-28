@@ -511,6 +511,7 @@ class RaidPlannerModelEvent extends JModel
 		$minimum_rank = JRequest::getVar('minimum_rank', null, 'default', 'INT');
 		$icon_name = JRequest::getVar('icon_name', null, 'default', 'STRING');
 		$guild_id = JRequest::getVar('guild_id', null, 'default', 'INT');
+		$invited_group_id = JRequest::getVar('invited_group_id', null, 'default', 'INT');
 
 		// update the record
 		$query = "UPDATE #__raidplanner_raid SET"
@@ -527,6 +528,7 @@ class RaidPlannerModelEvent extends JModel
 				. ",maximum_level=".( ($maximum_level=='')?"NULL":intval($maximum_level) )
 				. ",minimum_rank=".( ($minimum_rank=='')?"NULL":intval($minimum_rank) )
 				. ",guild_id=".( ($guild_id=='')?"NULL":intval($guild_id) )
+				. ",invited_group_id=".( ($invited_group_id=='')?"NULL":intval($invited_group_id) )
 				. " WHERE raid_id=".intval($raid_id);
 
 		$db->setQuery($query);
