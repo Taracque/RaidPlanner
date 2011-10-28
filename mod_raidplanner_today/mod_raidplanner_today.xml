@@ -34,6 +34,12 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="showInvitationAlert" type="list" default="1" label="Show invitation alert" description="Show invitation alert">
+			<option value="0">JDISABLED</option>
+			<option value="1">JSHOW</option>
+			<option value="2">JBROWSERTARGET_MODAL</option>
+		</param>
 	</params>
 	<config>
 		<fields name="params">
@@ -55,6 +61,12 @@
 				<field name="raidshowDate" type="radio" default="1" label="Show Today Date" description="Show today's date">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
+				</field>
+				<field name="@spacer" type="spacer" default="" label="" description="" />
+				<field name="showInvitationAlert" type="list" default="1" label="Show invitation alert" description="Show invitation alert">
+					<option value="0">JDISABLED</option>
+					<option value="1">JSHOW</option>
+					<option value="2">JBROWSERTARGET_MODAL</option>
 				</field>
 			</fieldset>
 		</fields>

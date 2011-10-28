@@ -21,12 +21,14 @@ window.addEvent('domready',function(){
 <?php } ?>
 </script>
 <?php if (!empty($this->invitations)) :?>
-<ul>
-	<li><h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3></li>
+<div id="rp_invitation_alert">
+	<h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3>
+	<ul>
 <?php foreach($this->invitations as $invitation):?>
-	<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$invitation->raid_id);?>"><?php echo $invitation->location . "( " . JHTML::_('date', $invitation->start_time, JText::_('DATE_FORMAT_LC2') ) . " )"; ?></a></li>
+		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$invitation->raid_id);?>"><?php echo $invitation->location . "( " . JHTML::_('date', $invitation->start_time, JText::_('DATE_FORMAT_LC2') ) . " )"; ?></a></li>
 <?php endforeach; ?>
-</ul>
+	</ul>
+</div>
 <?php endif; ?>
 <table class="rp_container">
 	<tr class="rp_header">

@@ -191,7 +191,7 @@ class RaidPlannerHelper
 		return $db->loadObjectList('race_id');
 	}
 
-	function getUsers()
+	public static function getUsers()
 	{
 		$db	=& JFactory::getDBO();
 		$query = "SELECT id,username FROM #__users ORDER BY username ASC";
@@ -201,7 +201,7 @@ class RaidPlannerHelper
 		return $db->loadObjectList('id');
 	}
 
-	function getGroups( $guest = true )
+	public static function getGroups( $guest = true )
 	{
 		$db	=& JFactory::getDBO();
 		if ($guest)
@@ -216,7 +216,8 @@ class RaidPlannerHelper
 		return $db->loadObjectList('group_id');
 	}
 	
-	function getPermission($permission, $user_id=null) {
+	public static function getPermission($permission, $user_id=null)
+	{
 		$reply = false;
 		
 		if ($permission!='') {
@@ -257,7 +258,7 @@ class RaidPlannerHelper
 	}
 	
 	/* Checks the invitations for raids which will be frozen in the next $times_before minutes and user is part of the invited group */
-	function checkInvitations($time_before = 1440, $user_id=null)
+	public static function checkInvitations($time_before = 1440, $user_id=null)
 	{
 		if (!self::$invite_alert_requested)
 		{
@@ -286,4 +287,22 @@ class RaidPlannerHelper
 		return null;
 	}
 
+	public static function getRaidPlannerItemId( $view = 'calendar' )
+	{
+		$menu = &JSite::getMenu()->getItems( 'component', 'com_raidplanner', false );
+		if (empty($menu)) {
+			$itemid = &JSite::getMenu()->getActive()->id;
+		} else {
+			foreach ($menu as $menuItem)
+			{
+				if ( ($menuItem->query['view'] == $view) && ($menuItem->query['option'] == 'com_raidplanner') )
+				{
+					return $menuItem->id;
+				}
+			}
+			$itemid = $menu[0]->id;
+		}
+		
+		return $itemid;
+	}
 }

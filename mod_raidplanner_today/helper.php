@@ -14,19 +14,19 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 require_once ( JPATH_BASE .DS.'includes'.DS.'defines.php' );
 require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
 
-class ModRaidPlannerTodayHelper
+class modRaidPlannerTodayHelper
 {
 
 	/**
 	 * Returns a list of post items
 	*/
-	public function getItems($raidshowNumber, $user_id)
+	public function getItems($user_id)
 	{
 
 		// get a reference to the database
 		$db = &JFactory::getDBO();
 
-		// get a list of $raidshow_number ordered by start_time
+		// get a list of raids ordered by start_time
 		$query = 'SELECT r.raid_id,r.location,r.start_time,s.confirmed,c.char_name,ro.role_name
 					FROM `#__raidplanner_raid` AS r
 					LEFT JOIN `#__raidplanner_signups` AS s ON s.raid_id = r.raid_id AND s.profile_id = '.intval($user_id).' 
