@@ -82,7 +82,7 @@ switch ($version->RELEASE) {
 			<input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo @$this->raid->minimum_rank;?>" size="5" />
 		</li>
 		<li>
-			<label for="invited_group_id"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_GROUP' ); ?>:</label>
+			<label for="invited_group_id"><?php echo JText::_( 'COM_RAIDPLANNER_INVITED_GROUP' ); ?>:</label>
 			<select name="invited_group_id" id="invited_group_id">
 				<option value=""></option>
 				<?php foreach ($this->groups as $group_id => $group_name) : ?>

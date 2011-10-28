@@ -99,7 +99,7 @@ class RaidPlannerViewCalendar extends JView
 		} else {
 			$calendar_mode = 'download';
 		}
-		
+		$this->assignRef( 'invitations', RaidPlannerHelper::checkInvitations() );
 		$this->assignRef( 'menuitemid', $menuitemid );
 		$this->assignRef( 'calendar_mode', $calendar_mode );
 		$this->assignRef( 'prevmonth', $prevmonth );

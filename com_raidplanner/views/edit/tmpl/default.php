@@ -67,11 +67,11 @@ $start_time = array(
 				<?php endforeach; ?>
 			</select>
 		<br />
-		<label for="invited_group_id"><?php echo JText::_('COM_RAIDPLANNER_INVITE_GROUP');?></label>
+		<label for="invited_group_id"><?php echo JText::_('COM_RAIDPLANNER_INVITED_GROUP');?></label>
 			<select name="invited_group_id" id="invited_group_id">
 				<option value=""></option>
 				<?php foreach ($this->groups as $group_id => $group) : ?>
-				<option value="<?php echo $group_id;?>"<?php if ($group_id==@$this->event->invited_group_id) {?> selected="selected"<?php } ?>><?php echo $guild->group_name;?></option>
+				<option value="<?php echo $group_id;?>"<?php if ($group_id==@$this->event->invited_group_id) {?> selected="selected"<?php } ?>><?php echo $group->group_name;?></option>
 				<?php endforeach; ?>
 			</select>
 		<br />

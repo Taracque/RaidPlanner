@@ -404,7 +404,7 @@ class RaidPlannerModelEvent extends JModel
 			$db = & JFactory::getDBO();
 			$user =& JFactory::getUser();
 			$user_id = $user->id;
-			$date = new JDate();
+			$date = RaidPlannerHelper::getDate();
 			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . $date->toMySQL() . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
 			$db->setQuery($query);
 			if ($db->loadResult() == 1) {

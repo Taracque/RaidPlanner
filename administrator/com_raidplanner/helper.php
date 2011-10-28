@@ -16,8 +16,9 @@ require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
 
 jimport( 'joomla.error.error' );
 
-abstract class RaidPlannerHelper
+class RaidPlannerHelper
 {
+	private static $invite_alert_requested = false;
 
 	public static function armorySync( $guild_id , $sync_interval )
 	{
@@ -200,10 +201,15 @@ abstract class RaidPlannerHelper
 		return $db->loadObjectList('id');
 	}
 
-	function getGroups()
+	function getGroups( $guest = true )
 	{
 		$db	=& JFactory::getDBO();
-		$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
+		if ($guest)
+		{
+			$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
+		} else {
+			$query = "SELECT group_id,group_name FROM #__raidplanner_groups WHERE group_name<>'Guest' ORDER BY group_name ASC";
+		}
 		$db->setQuery($query);
 		$db->query();
 		
@@ -248,6 +254,36 @@ abstract class RaidPlannerHelper
 		}
 		
 		return $reply;
+	}
+	
+	/* Checks the invitations for raids which will be frozen in the next $times_before minutes and user is part of the invited group */
+	function checkInvitations($time_before = 1440, $user_id=null)
+	{
+		if (!self::$invite_alert_requested)
+		{
+			if (!$user_id) {
+				$user =& JFactory::getUser();
+				$user_id = $user->id;
+			}
+			if ($user_id) {
+				$db = & JFactory::getDBO();
+				
+				$date = RaidPlannerHelper::getDate();
+				$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
+						." LEFT JOIN #__raidplanner_profile AS p ON p.group_id = r.invited_group_id"
+						." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.profile_id"
+						." WHERE r.invited_group_id>0"
+						." AND s.raid_id IS NULL"
+						." AND p.profile_id = ".intval($user_id)
+						." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . $date->toMySQL() . "'"
+						." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . $date->toMySQL() . "'";
+				$db->setQuery( $query );
+				self::$invite_alert_requested = true;
+
+				return $db->loadObjectList();
+			}
+		}
+		return null;
 	}
 
 }

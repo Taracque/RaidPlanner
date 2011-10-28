@@ -56,7 +56,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_MINIMUM_RANK', 'r.minimum_rank', $this->lists['order_Dir'], $this->lists['order']); ?>
 			</th>
 			<th>
-				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_INVITE_GROUP', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
+				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_INVITED_GROUP', 'g.group_name', $this->lists['order_Dir'], $this->lists['order']); ?>
 			</th>
 			<th>
 				<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD', 'gu.guild_name', $this->lists['order_Dir'], $this->lists['order']); ?>
