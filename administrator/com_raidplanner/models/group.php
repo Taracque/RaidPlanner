@@ -113,11 +113,11 @@ class RaidPlannerModelGroup extends JModel
 		}
 		
 		// Store members
-		$query = "UPDATE #__raidplanner_profile SET group_id = 0 WHERE group_id = ".$row->group_id;
+		$query = "DELETE FROM #__raidplanner_profile WHERE group_id = ".$row->group_id;
 		$this->_db->setQuery($query);
 		$this->_db->query();
 		foreach ($members as $member) {
-			$query = "REPLACE INTO #__raidplanner_profile SET group_id = ".$row->group_id.", profile_id = ".intval($member);
+			$query = "INSERT INTO #__raidplanner_profile SET group_id = ".$row->group_id.", profile_id = ".intval($member);
 			$this->_db->setQuery($query);
 			$this->_db->query();
 		}

@@ -173,6 +173,17 @@ function com_install()
 		$out .= 'Guild_id added to Raid database table<br />';
 	}
 	
+	/* Drop primary index from profile table */
+	$query = "SHOW KEYS FROM `#__raidplanner_profile` WHERE Key_name = 'PRIMARY'";
+	$db->setQuery($query);
+	$db->query();
+	if ( $db->getNumRows() > 0  )
+	{
+		$query = "ALTER TABLE `#__raidplanner_profile` DROP PRIMARY KEY , ADD INDEX (  `profile_id` ), ADD INDEX (  `group_id` )";
+		$db->setQuery($query);
+		$db->query();
+	}
+
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );
 	$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
