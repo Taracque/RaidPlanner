@@ -213,6 +213,11 @@ HtmlTable = Class.refactor(HtmlTable, {
 		this.fireEvent('paginationComplete');
 	},
 
+	updateZebras: function(){
+		this.options._zebraCounter=0;
+		Array.each(this.body.rows, this.zebra, this);
+	},
+
 	sort: function(){
 		var sorted = this.previous.apply(this, arguments);
 		if (this.options.paginate){
@@ -228,9 +233,6 @@ HtmlTable = Class.refactor(HtmlTable, {
 		return pushed;
 	},
 	zebra: function(row, i){
-		if (i==0){
-			this.options._zebraCounter=0;
-		}
 		if (!row.hasClass('filtered')){
 			this.options._zebraCounter++;
 		}
