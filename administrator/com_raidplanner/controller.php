@@ -59,6 +59,19 @@ class RaidPlannerController extends JController
 				}
 			}
 			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_GUILDLESS_CHARS', count($list) ) . "<br />";
+
+			// remove profile that doesn't have group or doesn't have user
+			$query = "SELECT p.profile_id,p.group_id FROM #__raidplanner_profile AS c LEFT JOIN #__raidplanner_groups AS g ON g.group_id = p.guild_id LEFT JOIN #__users AS u ON u.id = p.profile_id WHERE (g.group_name IS NULL OR u.name IS NULL OR g.group_name='Guest')"; 
+			$db->setQuery($query);
+			$list = $db->loadObjectList();
+			if (count($list) > 0)
+			{
+				foreach ($list as $remove) {
+					$db->setQuery( "DELETE FROM #__raidplanner_profile WHERE profile_id=".intval($remove->profile_id)." AND group_id=".intval($remove->group_id) );
+					$db->query();
+				}
+			}
+			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNASSIGNED_PROFILE_DATA', count($list) ) . "<br />";
 		}
 	}
 }
