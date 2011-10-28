@@ -126,11 +126,18 @@ class RaidPlannerModelGroup extends JModel
 
 	function setDefault()
 	{
-		$query = "UPDATE #__raidplanner_groups SET `default`=(group_id = ".$this->_id.")";
+		$query = "SELECT group_name FROM #__raidplanner_groups WHERE group_id = ".intval($this->_id)."";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		if ($this->_db->loadResult() != 'Guest')
+		{
+			$query = "UPDATE #__raidplanner_groups SET `default`=(group_id = ".$this->_id.")";
+			$this->_db->setQuery($query);
+			$this->_db->query();
 
-		return true;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**

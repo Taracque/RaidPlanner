@@ -31,6 +31,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php endif; ?>
 			</td>
 		</tr>
+		<?php if ($this->group->group_name != 'Guest') : ?>
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="default">
@@ -41,7 +42,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input type="checkbox" type="checkbox" name="default" id="default" value="1" <?php if ($this->group->default==1) {?>checked="checked"<?php }?> />
 			</td>
 		</tr>
-		<?php if ($this->group->group_name != 'Guest') : ?>
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="group_members">
