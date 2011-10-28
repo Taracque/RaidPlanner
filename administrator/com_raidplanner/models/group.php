@@ -65,7 +65,7 @@ class RaidPlannerModelGroup extends JModel
 		{
 			$permissions = $data['permissions'];
 		} else {
-			$members = array();
+			$permissions = array();
 		}
 		unset($data['permissions']);
 		if ( isset($data['members']) )
@@ -177,7 +177,7 @@ class RaidPlannerModelGroup extends JModel
 	 */
 	function getUsers()
 	{
-		$query = "SELECT u.id,u.username,g.group_name FROM #__users AS u LEFT JOIN #__raidplanner_profile AS p ON p.profile_id = u.id LEFT JOIN #__raidplanner_groups AS g ON g.group_id = p.group_id ORDER BY u.username ASC";
+		$query = "SELECT u.id,u.username,group_concat(g.group_name separator ', ') AS group_name FROM #__users AS u LEFT JOIN #__raidplanner_profile AS p ON p.profile_id = u.id LEFT JOIN #__raidplanner_groups AS g ON g.group_id = p.group_id GROUP BY u.id ORDER BY u.username ASC";
 		$this->_db->setQuery( $query );
 		return $this->_db->loadObjectList();
 	}
