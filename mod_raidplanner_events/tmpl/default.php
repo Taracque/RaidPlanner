@@ -16,28 +16,39 @@ $event_count = 0;
 
 $lang =& JFactory::getLanguage();
 $lang->load('com_raidplanner');
-
-$menu = &JSite::getMenu()->getItems( 'component', 'com_raidplanner', true );
-if (empty($menu)) {
-	$itemid = &JSite::getMenu()->getActive()->id;
-} else {
-	$itemid = $menu->id;
-}
-
-$dateformat = JText::_('DATE_FORMAT_LC2');
-
 ?>
+<?php if ($invitationAlerts): ?>
+<div id="rp_invitation_alert">
+	<h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3>
+	<ul>
+	<?php foreach($invitationAlerts as $invitation):?>
+		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent=' . $invitation->raid_id . '&Itemid=' . $itemid);?>"><?php echo $invitation->location . "( " . JHTML::_('date', $invitation->start_time, JText::_('DATE_FORMAT_LC2') ) . " )"; ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+</div>
+<?php if ($showInvitationAlerts == 2): ?>
+<script type="text/javascript">
+	window.addEvent('domready',function(){
+		SqueezeBox.initialize();
+		SqueezeBox.fromElement( $('rp_invitation_alert'),{
+			handler: 'adopt',
+			shadow: true,
+			id: 'system-message',
+			overlayOpacity: 0.5,
+			size: {x: 300, y: 100}
+		});
+	});
+</script>
+<?php endif; ?>
+<?php endif; ?>
 <table>
-	<?php
-	$event_count = count($items);
-	if ($event_count == 0) {
-		echo "<tr>";
-		echo "<td>".JText::_('MOD_RAIDPLANNER_NO_EVENTS')."<br />";
-		echo "</td></tr>";
-	} else {
-		foreach ($items as $item) { 
-			echo "<tr>";
-			echo "<td><a href='".JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$item->raid_id."&Itemid=".$itemid)."'><span";
+	<?php if (count($items) == 0) : ?>
+	<tr>
+		<td><?php echo JText::_('MOD_RAIDPLANNER_NO_EVENTS');?><br /></td>
+	</tr>
+	<?php else:?>
+	<?php	
+		foreach ($items as $item) {
 			$tip = '';
 			if ( ($raidshowReg) && ($item->confirmed) ) {
 				// show if registered
@@ -51,12 +62,16 @@ $dateformat = JText::_('DATE_FORMAT_LC2');
 				// show registered role
 				$tip .= $item->role_name . " ";
 			}
-			if ($tip != '') {
-				echo ' class="hasTip" title="'.$tip.'"';
-			}
-			echo "><strong>" . JHTML::_('date', $item->start_time, $dateformat) . "</strong> " . $item->location . "</span></a><br />";
-			echo "</td></tr>";
-		}
-	}
 	?>
+	<tr>
+		<td>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$item->raid_id.'&Itemid='.$itemid);?>">
+				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
+					<strong><?php echo JHTML::_('date', $item->start_time, JText::_('DATE_FORMAT_LC2') );?></strong><?php echo $item->location;?>
+				</span>
+			</a><br />
+		</td>
+	</tr>
+	<?php } //endforeach ?>
+<?php endif; ?>
 </table>

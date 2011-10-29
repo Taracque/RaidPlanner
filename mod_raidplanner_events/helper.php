@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 require_once ( JPATH_BASE .DS.'includes'.DS.'defines.php' );
 require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
 
-class ModRaidPlannerEventsHelper
+class modRaidPlannerEventsHelper
 {
 
 	/**
@@ -22,7 +22,6 @@ class ModRaidPlannerEventsHelper
 	*/
 	public function getItems($raidshowNumber, $user_id)
 	{
-
 		// get a reference to the database
 		$db = &JFactory::getDBO();
 

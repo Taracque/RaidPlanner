@@ -60,13 +60,13 @@ switch ($version->RELEASE) {
 		</td>
 	</tr>
 <?php endif;
-$event_count = count($items);
-if ($event_count == 0): ?>
+if (count($items) == 0): ?>
 	<tr>
 		<td><?php echo JText::_('MOD_RAIDPLANNER_NO_EVENTS_TODAY');?><br /></td>
 	</tr>
 <?php else: ?>
-	<?php foreach ($items as $item) :
+	<?php
+	foreach ($items as $item) {
 		$tip = '';
 		if ( ($raidshowReg) && ($item->confirmed) ) {
 			// show if registered
@@ -90,6 +90,6 @@ if ($event_count == 0): ?>
 			</a><br />
 		</td>
 	</tr>
-	<?php endforeach; ?>
+	<?php } //endforeach ?>
 <?php endif; ?>
 </table>
