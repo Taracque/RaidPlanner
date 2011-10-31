@@ -11,6 +11,18 @@
 		</param>
 		<param type="text" name="sync_interval" default="4" label="COM_RAIDPLANNER_SYNC_INTERVAL" description="COM_RAIDPLANNER_SYNC_INTERVAL_DESC"></param>
 	</params>
+	<params group="COM_RAIDPLANNER_RANKS">
+		<param type="text" name="ranks[0]" default="Guild Master" label="0"></param>
+		<param type="text" name="ranks[1]" default="Officer" label="1"></param>
+		<param type="text" name="ranks[2]" default="Member" label="2"></param>
+		<param type="text" name="ranks[3]" default="Trial" label="3"></param>
+		<param type="text" name="ranks[4]" default="- rank 4 -" label="4"></param>
+		<param type="text" name="ranks[5]" default="- rank 5 -" label="5"></param>
+		<param type="text" name="ranks[6]" default="- rank 6 -" label="6"></param>
+		<param type="text" name="ranks[7]" default="- rank 7 -" label="7"></param>
+		<param type="text" name="ranks[8]" default="- rank 8 -" label="8"></param>
+		<param type="text" name="ranks[9]" default="- rank 9 -" label="9"></param>
+	</params>
 	<fieldset name="settings" label="COM_RAIDPLANNER_SETTINGS">
 		<field type="radio" name="load_css" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
 			<option value="0">JNO</option>
@@ -23,5 +35,17 @@
 			<option value="1">JYES</option>
 		</field>
 		<field type="integer" name="sync_interval" default="4" label="COM_RAIDPLANNER_SYNC_INTERVAL" description="COM_RAIDPLANNER_SYNC_INTERVAL_DESC" first="1" last="24" step="1" ></field>
+	</fieldset>
+	<fieldset name="ranks" label="COM_RAIDPLANNER_RANKS">
+		<field type="text" name="ranks[0]" default="Guild Master" label="0"></field>
+		<field type="text" name="ranks[1]" default="Officer" label="1"></field>
+		<field type="text" name="ranks[2]" default="Member" label="2"></field>
+		<field type="text" name="ranks[3]" default="Trial" label="3"></field>
+		<field type="text" name="ranks[4]" default="- rank 4 -" label="4"></field>
+		<field type="text" name="ranks[5]" default="- rank 5 -" label="5"></field>
+		<field type="text" name="ranks[6]" default="- rank 6 -" label="6"></field>
+		<field type="text" name="ranks[7]" default="- rank 7 -" label="7"></field>
+		<field type="text" name="ranks[8]" default="- rank 8 -" label="8"></field>
+		<field type="text" name="ranks[9]" default="- rank 9 -" label="9"></field>
 	</fieldset>
 </config>

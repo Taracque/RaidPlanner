@@ -253,4 +253,4 @@ class CBfield_rpcharacters extends CBfield_textarea {
 		}
 		return $oReturn;
 	}
-}//end of rank field
+}//end of character field
