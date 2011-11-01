@@ -79,7 +79,11 @@ switch ($version->RELEASE) {
 		</li>
 		<li>
 			<label for="minimum_rank"><?php echo JText::_( 'COM_RAIDPLANNER_MINIMUM_RANK' ); ?>:</label>
-			<input type="text" name="minimum_rank" id="minimum_rank" value="<?php echo @$this->raid->minimum_rank;?>" size="5" />
+			<select name="minimum_rank" id=minimum_rank>
+				<?php foreach (RaidPlannerHelper::getRanks() as $rank_id => $rank) : ?>
+					<option value="<?php echo $rank_id;?>"<?php if (@$this->raid->minimum_rank == $rank_id){ echo " selected=\"selected\"";}?>><?php echo $rank;?></option>
+				<?php endforeach; ?>
+			</select>
 		</li>
 		<li>
 			<label for="invited_group_id"><?php echo JText::_( 'COM_RAIDPLANNER_INVITED_GROUP' ); ?>:</label>

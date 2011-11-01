@@ -70,6 +70,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<?php
 	$k = 0;
 	$i = 0;
+	$ranks = RaidPlannerHelper::getRanks();
 	foreach ($this->raids as &$row)
 	{
 		$checked    = JHTML::_( 'grid.id', $i++, $row->raid_id );
@@ -94,7 +95,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo $row->maximum_level; ?>
             </td>
             <td>
-				<?php echo $row->minimum_rank; ?>
+				<?php echo $ranks[$row->minimum_rank]; ?>
             </td>
             <td>
 				<?php echo $row->group_name; ?>

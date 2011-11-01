@@ -39,10 +39,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			</select>
 		</li>
 		<li>
-			<label for="gender_ids"><?php echo JText::_( 'COM_RAIDPLANNER_GENDER' ); ?>:</label>
-			<fieldset id="gender_ids" class="radio inputbox">
-			<?php echo JHTML::_('select.radiolist', $this->genders, 'gender_id', '', 'gender_id', 'gender_name', $this->character->gender_id); ?>
-			</fieldset>
+			<label for="gender_id"><?php echo JText::_( 'COM_RAIDPLANNER_GENDER' ); ?>:</label>
+			<?php echo JHTML::_('select.genericlist', $this->genders, 'gender_id', '', 'gender_id', 'gender_name', $this->character->gender_id); ?>
 		</li>
 		<li>
 			<label for="race_id"><?php echo JText::_( 'COM_RAIDPLANNER_RACE' ); ?>:</label>
@@ -54,7 +52,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</li>
 		<li>
 			<label for="rank"><?php echo JText::_( 'COM_RAIDPLANNER_RANK' ); ?>:</label>
-			<input class="text_area" type="text" name="rank" id="rank" size="10" maxlength="4" value="<?php echo $this->character->rank;?>" />
+			<select name="rank" id="rank">
+				<?php foreach (RaidPlannerHelper::getRanks() as $rank_id => $rank) : ?>
+					<option value="<?php echo $rank_id;?>"<?php if ($this->character->rank == $rank_id){ echo " selected=\"selected\"";}?>><?php echo $rank;?></option>
+				<?php endforeach; ?>
+			</select>
 		</li>
 		<li>
 			<label for="guild_id"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?>:</label>

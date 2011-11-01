@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_profile` (
   `profile_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
   KEY `profile_id` (`profile_id`),
-  KEY `group_id` (`group_id`),
+  KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_race` (

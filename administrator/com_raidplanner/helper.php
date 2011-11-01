@@ -305,4 +305,17 @@ class RaidPlannerHelper
 		
 		return $itemid;
 	}
+	
+	public function getRanks()
+	{
+		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$ranks = array();
+		for ($i=0; $i<=9; $i++)
+		{
+			$ranks[$i] = $paramsObj->get('ranks_' . $i, '- '.JText::_('COM_RAIDPLANNER_RANK') . ' ' . $i .' -');
+		}
+
+		return $ranks;
+
+	}
 }

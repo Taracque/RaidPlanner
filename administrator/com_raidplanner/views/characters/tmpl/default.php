@@ -68,6 +68,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     <?php
     $k = 0;
     $i = 0;
+    $ranks = RaidPlannerHelper::getRanks();
     foreach ($this->characters as &$row)
     {
     	$checked    = JHTML::_( 'grid.id', $i++, $row->character_id );
@@ -89,7 +90,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <span style="color:<?php echo $row->class_color; ?>"><?php echo $row->class_name; ?></span>
             </td>
             <td>
-                <?php echo $row->rank; ?>
+                <?php echo $ranks[$row->rank]; ?>
             </td>
             <td>
                 <?php echo $row->gender_name; ?>
