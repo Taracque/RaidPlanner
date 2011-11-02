@@ -63,7 +63,7 @@
 					<option value="1">JSHOW</option>
 					<option value="2">JBROWSERTARGET_MODAL</option>
 				</field>
-				<field name="alertTimer" type="text" default="24" label="Invitation alert timer" description="How many hours before raid froozen start displaying invitation alerts.">
+				<field name="alertTimer" type="text" default="24" label="Invitation alert timer" description="How many hours before raid froozen start displaying invitation alerts." />
 			</fieldset>
 		</fields>
 	</config>
