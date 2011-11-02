@@ -90,7 +90,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <span style="color:<?php echo $row->class_color; ?>"><?php echo $row->class_name; ?></span>
             </td>
             <td>
-                <?php echo $ranks[$row->rank]; ?>
+                <?php echo @$ranks[$row->rank]; ?>
             </td>
             <td>
                 <?php echo $row->gender_name; ?>

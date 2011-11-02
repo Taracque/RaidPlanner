@@ -53,8 +53,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<li>
 			<label for="rank"><?php echo JText::_( 'COM_RAIDPLANNER_RANK' ); ?>:</label>
 			<select name="rank" id="rank">
+				<option value=""></option>
 				<?php foreach (RaidPlannerHelper::getRanks() as $rank_id => $rank) : ?>
-					<option value="<?php echo $rank_id;?>"<?php if ($this->character->rank == $rank_id){ echo " selected=\"selected\"";}?>><?php echo $rank;?></option>
+					<option value="<?php echo $rank_id;?>"<?php if ($this->character->rank === $rank_id){ echo " selected=\"selected\"";}?>><?php echo $rank;?></option>
 				<?php endforeach; ?>
 			</select>
 		</li>

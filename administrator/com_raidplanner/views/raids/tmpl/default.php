@@ -95,7 +95,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo $row->maximum_level; ?>
             </td>
             <td>
-				<?php echo $ranks[$row->minimum_rank]; ?>
+				<?php echo @$ranks[$row->minimum_rank]; ?>
             </td>
             <td>
 				<?php echo $row->group_name; ?>
