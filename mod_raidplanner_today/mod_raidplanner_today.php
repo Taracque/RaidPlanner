@@ -25,6 +25,7 @@ $user =& JFactory::getUser();
 $user_id = ($user->id);
 
 // get the parameters from the module's configuration
+$alertTimer				= $params->get('alertTimer', 24);
 $showInvitationAlerts	= $params->get('showInvitationAlert',0);
 $raidshowReg 			= $params->get('raidshowReg',1);
 $raidshowRole 			= $params->get('raidshowRole',1);
@@ -34,7 +35,7 @@ $raidshowDate			= $params->get('raidshowDate',1);
 $itemid = RaidPlannerHelper::getRaidPlannerItemId('calendar');
 if ($showInvitationAlerts>0)
 {
-	$invitationAlerts = RaidPlannerHelper::checkInvitations( 1440, $user_id );
+	$invitationAlerts = RaidPlannerHelper::checkInvitations( intval($alertTimer) * 60, $user_id );
 } else {
 	$invitationAlerts = false;
 }
