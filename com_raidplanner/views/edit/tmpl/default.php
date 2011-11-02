@@ -66,7 +66,7 @@ $start_time = array(
 				<?php endforeach; ?>
 			</select>
 		</label><br />
-		<label for="guild_id"><?php echo JText::_('COM_RAIDPLANNER_GUILD');?></label>
+		<label for="guild_id"><?php echo JText::_('COM_RAIDPLANNER_GUILD');?>: </label>
 			<select name="guild_id" id="guild_id">
 				<option value=""></option>
 				<?php foreach ($this->guilds as $guild_id => $guild) : ?>
@@ -74,7 +74,7 @@ $start_time = array(
 				<?php endforeach; ?>
 			</select>
 		<br />
-		<label for="invited_group_id"><?php echo JText::_('COM_RAIDPLANNER_INVITED_GROUP');?></label>
+		<label for="invited_group_id"><?php echo JText::_('COM_RAIDPLANNER_INVITED_GROUP');?>: </label>
 			<select name="invited_group_id" id="invited_group_id">
 				<option value=""></option>
 				<?php foreach ($this->groups as $group_id => $group) : ?>
