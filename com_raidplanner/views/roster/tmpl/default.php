@@ -94,7 +94,7 @@ jimport( 'joomla.utilities.date');
 					<td><?php echo $character['gender_name']; ?></td>
 					<td><?php echo $character['race_name']; ?></td>
 					<td class="<?php echo $character['class_css'];?>"><?php echo $character['class_name']; ?></td>
-					<td><?php echo $character['rank']; ?></td>
+					<td><?php echo $this->ranks[$character['rank']]; ?></td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>

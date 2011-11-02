@@ -44,6 +44,7 @@ class RaidPlannerViewRoster extends JView
 
 		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
+		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );
 
 		parent::display($tpl);
 	}
