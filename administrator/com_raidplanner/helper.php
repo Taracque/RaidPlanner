@@ -241,7 +241,7 @@ class RaidPlannerHelper
 		return $reply;
 	}
 	
-	function getDate( $date = 'now', $tzOffset = null )
+	public static function getDate( $date = 'now', $tzOffset = null )
 	{
 		if ($tzOffset === null)
 		{
@@ -306,7 +306,7 @@ class RaidPlannerHelper
 		return $itemid;
 	}
 	
-	public function getRanks()
+	public static function getRanks()
 	{
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		$ranks = array();
@@ -317,5 +317,20 @@ class RaidPlannerHelper
 
 		return $ranks;
 
+	}
+	
+	public static function shortDateFormat()
+	{
+		$version = new JVersion();
+		switch ($version->RELEASE) {
+			case '1.5':
+				$dateformat = JText::_('DATE_FORMAT_LC4') . '%H:%M';
+			break;
+			default:
+			case '1.6':
+				$dateformat = JText::_('DATE_FORMAT_LC4') . ' H:i';
+			break;
+		}
+		return $dateformat;
 	}
 }

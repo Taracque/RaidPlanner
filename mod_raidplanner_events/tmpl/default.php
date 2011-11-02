@@ -22,7 +22,7 @@ $lang->load('com_raidplanner');
 	<h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3>
 	<ul>
 	<?php foreach($invitationAlerts as $invitation):?>
-		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent=' . $invitation->raid_id . '&Itemid=' . $itemid);?>"><?php echo $invitation->location . "( " . JHTML::_('date', $invitation->start_time, JText::_('DATE_FORMAT_LC2') ) . " )"; ?></a></li>
+		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent=' . $invitation->raid_id . '&Itemid=' . $itemid);?>"><?php echo $invitation->location . " (" . JHTML::_('date', $invitation->start_time, RaidPlannerHelper::shortDateFormat() ) . ")"; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
 </div>
@@ -67,7 +67,7 @@ $lang->load('com_raidplanner');
 		<td>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$item->raid_id.'&Itemid='.$itemid);?>">
 				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
-					<strong><?php echo JHTML::_('date', $item->start_time, JText::_('DATE_FORMAT_LC2') );?> </strong><?php echo $item->location;?>
+					<strong><?php echo JHTML::_('date', $item->start_time, RaidPlannerHelper::shortDateFormat() );?> </strong><?php echo $item->location;?>
 				</span>
 			</a><br />
 		</td>

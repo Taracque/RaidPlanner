@@ -25,7 +25,7 @@ window.addEvent('domready',function(){
 	<h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3>
 	<ul>
 <?php foreach($this->invitations as $invitation):?>
-		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$invitation->raid_id);?>"><?php echo $invitation->location . "( " . JHTML::_('date', $invitation->start_time, JText::_('DATE_FORMAT_LC2') ) . " )"; ?></a></li>
+		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$invitation->raid_id);?>"><?php echo $invitation->location . " (" . JHTML::_('date', $invitation->start_time, RaidPlannerHelper::shortDateFormat() ) . ")"; ?></a></li>
 <?php endforeach; ?>
 	</ul>
 </div>

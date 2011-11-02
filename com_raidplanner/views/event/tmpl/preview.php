@@ -11,7 +11,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$dateFormat = JText::_('DATE_FORMAT_LC2');
+$dateFormat = RaidPlannerHelper::shortDateFormat();
 ?>
 <fieldset class="rp_preview">
 	<legend><?php echo JText::_('COM_RAIDPLANNER_PREVIEW');?></legend>

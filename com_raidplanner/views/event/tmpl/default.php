@@ -11,7 +11,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$dateFormat = JText::_('DATE_FORMAT_LC2');
+$dateFormat = RaidPlannerHelper::shortDateFormat();
 $hasChars = !empty($this->characters);
 ?>
 <table class="rp_header_container">
