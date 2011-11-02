@@ -62,7 +62,7 @@ $start_time = array(
 			<select name="minimum_rank" id=minimum_rank>
 				<option value=""></option>
 				<?php foreach (RaidPlannerHelper::getRanks() as $rank_id => $rank) : ?>
-					<option value="<?php echo $rank_id;?>"<?php if (@$this->event->minimum_rank === $rank_id){ echo " selected=\"selected\"";}?>><?php echo $rank;?></option>
+					<option value="<?php echo $rank_id;?>"<?php if (@$this->event->minimum_rank === (string)$rank_id){ echo " selected=\"selected\"";}?>><?php echo $rank;?></option>
 				<?php endforeach; ?>
 			</select>
 		</label><br />

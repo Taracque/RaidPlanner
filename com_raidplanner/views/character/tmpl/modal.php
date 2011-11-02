@@ -64,9 +64,8 @@ $function	= JRequest::getCmd('function', '');
 				<label><?php echo JText::_('COM_RAIDPLANNER_LEVEL');?>: <input type="text" name="char_level" id="char_level" value="<?php echo @$this->character->char_level;?>" size="10" /></label><br />
 				<label><?php echo JText::_('COM_RAIDPLANNER_RANK');?>: 
 					<select name="rank" id="rank">
-						<option value=""></option>
 						<?php foreach (RaidPlannerHelper::getRanks() as $rank_id => $rank) : ?>
-						<option value="<?php echo $rank_id;?>"<?php if ($rank_id === @$this->character->rank) {?> selected="selected"<?php } ?>><?php echo $rank;?></option>
+						<option value="<?php echo $rank_id;?>"<?php if ($rank_id == @$this->character->rank) {?> selected="selected"<?php } ?>><?php echo $rank;?></option>
 						<?php endforeach; ?>
 					</select>
 				</label><br />
