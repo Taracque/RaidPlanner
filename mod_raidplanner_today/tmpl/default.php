@@ -85,7 +85,7 @@ if (count($items) == 0): ?>
 		<td>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent=' . $item->raid_id . '&Itemid=' . $itemid);?>">
 				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
-					<strong><?php echo JHTML::_('date', $item->start_time, $timeformat);?></strong><?php echo $item->location;?>
+					<strong><?php echo JHTML::_('date', $item->start_time, $timeformat);?> </strong><?php echo $item->location;?>
 				</span>
 			</a><br />
 		</td>
