@@ -104,8 +104,7 @@ class RaidPlannerHelper
 					foreach($data->members as $member)
 					{
 						// check if character exists
-						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name=".$db->Quote($member->character->name)."";
-						echo $query;
+						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name LIKE BINARY ".$db->Quote($member->character->name)."";
 						$db->setQuery($query);
 						$char_id = $db->loadResult();
 						// not found insert it
