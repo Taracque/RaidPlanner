@@ -80,7 +80,7 @@ class RaidPlannerModelGuild extends JModel
 	
 		if ($data['sync_now']=='1')
 		{
-			RaidPlannerHelper::armorySync( $data['guild_id'], 0 );
+			RaidPlannerHelper::armorySync( $data['guild_id'], 0 , true );
 		}
 
 		return true;

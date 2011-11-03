@@ -20,7 +20,7 @@ class RaidPlannerHelper
 {
 	private static $invite_alert_requested = false;
 
-	public static function armorySync( $guild_id , $sync_interval )
+	public static function armorySync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
 		$db = & JFactory::getDBO();
 		$query = "SELECT *,(DATE_ADD(lastSync, INTERVAL " . intval( $sync_interval ) . " HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
@@ -105,6 +105,7 @@ class RaidPlannerHelper
 					{
 						// check if character exists
 						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name=".$db->Quote($member->character->name)."";
+						echo $query;
 						$db->setQuery($query);
 						$char_id = $db->loadResult();
 						// not found insert it
@@ -130,7 +131,10 @@ class RaidPlannerHelper
 					$db->setQuery($query);
 					$db->query();
 					
-					JError::raiseNotice('0', 'ArmorySync successed');
+					if ($showOkStatus)
+					{
+						JError::raiseNotice('0', 'ArmorySync successed');
+					}
 				} else {
 					JError::raiseWarning('100', 'ArmorySync data doesn\'t match');
 				}
