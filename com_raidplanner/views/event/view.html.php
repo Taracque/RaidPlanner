@@ -28,13 +28,15 @@ class RaidPlannerViewEvent extends JView
 			$paramsObj->merge( $menuparams );
 		}
 		$params = array(
-			'show_history'	=> $paramsObj->get('show_history', 0)
+			'show_history'	=> $paramsObj->get('show_history', 0),
+			'macro_format'	=> $paramsObj->get('macro_format', '')
 		);
 
 		if ( RaidPlannerHelper::getPermission('view_raids') != 1 ) {
 			$mainframe = JFactory::getApplication();
 			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
 		} else {
+			$macro = false;
 			$raid_id = JRequest::getInt('id');
 			$attendants = $model->getAttendants( $raid_id );
 			$event = $model->getEvent( $raid_id );
@@ -47,11 +49,20 @@ class RaidPlannerViewEvent extends JView
 						unset($all_characters[$all_key]);
 					}
 				}
+				if ($params['macro_format'] != '')
+				{
+					$macro = '';
+					foreach ($characters as $character)
+					{
+						$macro .= str_replace ( '%c', $character , $params['macro_format'] ) ."\n";
+					}
+				}
 			} else {
 				$all_characters = array();
 			}
 
-			$this->assignRef( 'params', $params);		
+			$this->assignRef( 'params', $params);
+			$this->assignRef( 'macro', $macro);
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'attendants' , $attendants );
 			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles( $attendants ) );

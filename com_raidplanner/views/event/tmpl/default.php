@@ -253,7 +253,7 @@ $hasChars = !empty($this->characters);
 				<input type="hidden" name="layout" value="default" />
 				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
 				<?php if ($this->macro) : ?>
-					<textarea><?php echo $this->macro;?></textarea>
+					<textarea cols="20" rows="3"><?php echo $this->macro;?></textarea>
 				<?php endif; ?>
 			<?php endif; ?>
 			</form>
