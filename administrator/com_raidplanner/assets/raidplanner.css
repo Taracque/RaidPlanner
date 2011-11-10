@@ -48,3 +48,7 @@
 .rp_service {
 	background-image: url(images/service.png);
 }
+
+.rp_stats {
+	background-image: url(images/stats.png);
+}

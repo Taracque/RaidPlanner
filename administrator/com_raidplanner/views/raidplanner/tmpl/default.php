@@ -94,4 +94,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<?php echo JText::_('COM_RAIDPLANNER_DB_CHECKS');?>
 		</a>
 	</div>
+	<div class="rp_icon_button">
+		<a href="index.php?option=com_raidplanner&view=stats">
+			<span class="rp_stats"></span>
+			<?php echo JText::_('COM_RAIDPLANNER_STATS');?>
+		</a>
+	</div>
 </fieldset>
