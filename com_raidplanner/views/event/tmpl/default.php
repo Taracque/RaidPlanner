@@ -252,11 +252,14 @@ $hasChars = !empty($this->characters);
 				<input type="hidden" name="task" value="confirm" />
 				<input type="hidden" name="layout" value="default" />
 				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
+				<?php if ($this->macro) : ?>
+					<textarea><?php echo $this->macro;?></textarea>
+				<?php endif; ?>
 			<?php endif; ?>
 			</form>
 		</td>
 	</tr>
-<?php if (($hasChars) && ($this->canSignup)) { ?>
+<?php if (($hasChars) && ($this->canSignup)) : ?>
 	<tr class="rp_event_signup" id="rp_event_signup" style="display:none;">
 		<td>
 			<form action="<?php echo JRoute::_('index.php');?>" method="post">
@@ -311,7 +314,7 @@ $hasChars = !empty($this->characters);
 			</form>
 		</td>
 	</tr>
-<?php } ?>
+<?php endif; ?>
 <?php if ( ($this->params['show_history']==1) && ($this->event->raid_history!='') ) : ?>
 	<tr class="rp_event_history" id="rp_event_history" style="display:none;">
 		<td>

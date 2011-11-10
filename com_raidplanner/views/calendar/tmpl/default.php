@@ -49,9 +49,9 @@ window.addEvent('domready',function(){
 <?php else: ?>
 	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
 <?php endif; ?>
-<?php if ($this->isOfficer) { ?>
+<?php if ($this->isOfficer) : ?>
 	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new"><?php echo JText::_('COM_RAIDPLANNER_NEW_EVENT');?></a>
-<?php } ?>
+<?php endif; ?>
 		</td>
 	</tr>
 	<tr class="rp_calendar">
@@ -67,7 +67,7 @@ window.addEvent('domready',function(){
 				<tbody>
 				<?php
 					$day = ( -$this->shift + ( $this->params['first_dow'] - 7)) % 7;
-					for ($weeks=1;$weeks<7;$weeks++) {
+					for ($weeks=1;$weeks<7;$weeks++) :
 				?>
 					<tr class="<?php if (date("W", mktime(0, 0, 0, date("m"), date("d") + $this->params['first_dow'], date("Y"))) == date("W", mktime(0, 0, 0, $this->monthonly, $day + 3, $this->year)) ) { echo "curweek"; } ?>">
 					<?php for ($days=$this->params['first_dow'];$days<($this->params['first_dow']+7);$days++) {
@@ -103,7 +103,7 @@ window.addEvent('domready',function(){
 						</td>
 					<?php } ?>
 					</tr>
-				<?php } ?>
+				<?php endfor; ?>
 				</tbody>
 			</table>
 		</td>

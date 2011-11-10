@@ -24,6 +24,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</param>
+			<param name="macro_format" type="text" default="/invite %c" label="COM_RADIPLANNER_INVITE_MACRO_FORMAT" description="COM_RADIPLANNER_INVITE_MACRO_FORMAT_DESCRIPTION" />
 	    </params>
 	</state>
 	<fields name="params">
@@ -42,6 +43,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="macro_format" type="text" default="/invite %c" label="COM_RADIPLANNER_INVITE_MACRO_FORMAT" description="COM_RADIPLANNER_INVITE_MACRO_FORMAT_DESCRIPTION" />
 		</fieldset>
 	</fields>
 </metadata>
