@@ -52,9 +52,12 @@ class RaidPlannerViewEvent extends JView
 				if ($params['macro_format'] != '')
 				{
 					$macro = '';
-					foreach ($characters as $character)
+					foreach ($attendants as $attendant)
 					{
-						$macro .= str_replace ( '%c', $character , $params['macro_format'] ) ."\n";
+						if ($attendant->confirmed==1)
+						{
+							$macro .= str_replace ( '%c', $attendant->char_name , $params['macro_format'] ) . "\n";
+						}
 					}
 				}
 			} else {

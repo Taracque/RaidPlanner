@@ -239,22 +239,24 @@ $hasChars = !empty($this->characters);
 				</table>
 			<?php if ($this->isOfficer) : ?>
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
-				<?php if ($this->params['show_history']==1) : ?> 
 				<div class="rp_history_editor">
-					<label><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:
-						<textarea style="float:right;" name="history" rows="1" cols="20"><?php echo $this->xml_history; ?></textarea>
+				<?php if ($this->params['show_history']==1) : ?>
+					<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:<br />
+						<textarea name="history" style="float:left;" rows="3" cols="20"><?php echo $this->xml_history; ?></textarea>
 					</label>
-				</div>
 				<?php endif; ?>
+				<?php if ($this->macro) : ?>
+				<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_INVITE_MACRO');?>:<br />
+					<textarea style="float:left;" cols="20" rows="3"><?php echo $this->macro;?></textarea>
+				</label>
+				<?php endif; ?>
+				</div>
 
 				<input type="hidden" name="option" value="com_raidplanner" />
 				<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
 				<input type="hidden" name="task" value="confirm" />
 				<input type="hidden" name="layout" value="default" />
 				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
-				<?php if ($this->macro) : ?>
-					<textarea cols="20" rows="3"><?php echo $this->macro;?></textarea>
-				<?php endif; ?>
 			<?php endif; ?>
 			</form>
 		</td>
