@@ -13,7 +13,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
+JHTML::_('behavior.mootools');
+
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
+JHTML::script('MilkChart_src.js', 'administrator/components/com_raidplanner/assets/');
 
 class RaidPlannerViewStats extends JView
 {
@@ -26,9 +29,17 @@ class RaidPlannerViewStats extends JView
 		//get the data
 
 		JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_STATS' ) );
-		JToolBarHelper::preferences( 'com_raidplanner' );
 
 		RaidPlannerHelper::showToolbarButtons();
+
+		 /* Call the state object */
+		$state =& $this->get( 'state' );
+		
+		/* Get the values from the state object that were inserted in the model's construct function */
+		$lists['filter_min_time'] = $state->get( 'filter_min_time' );
+		$lists['filter_max_time'] = $state->get( 'filter_max_time' );
+
+		$this->assignRef( 'lists', $lists );
 
 		parent::display($tpl);
 	}
