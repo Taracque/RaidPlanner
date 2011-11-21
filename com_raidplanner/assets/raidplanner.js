@@ -2,46 +2,46 @@ function rpSwitchTab(switchto) {
 	$$('.rp_switchers').each(function(el){
 		el.removeClass('active');
 		if (el.get('id')) {
-			$(el.get('id').replace('rp_switcher', 'rp_event')).setStyle('display','none');
+			document.id(el.get('id').replace('rp_switcher', 'rp_event')).setStyle('display','none');
 		}
 	});
-	if ($('rp_event_' + switchto) && $('rp_switcher_' + switchto)) {
-		$('rp_event_' + switchto).setStyle('display','');
-		$('rp_switcher_' + switchto).addClass('active');
+	if (document.id('rp_event_' + switchto) && document.id('rp_switcher_' + switchto)) {
+		document.id('rp_event_' + switchto).setStyle('display','');
+		document.id('rp_switcher_' + switchto).addClass('active');
 	}
 	return false;
 }
 
 function rpShowTooltip(el) {
-	$(el).removeEvents('mouseleave');
-	if ($(el).title) {
-		$(el).addEvent('mouseleave',function(){
+	document.id(el).removeEvents('mouseleave');
+	if (document.id(el).title) {
+		document.id(el).addEvent('mouseleave',function(){
 			rpHideTooltip();
 		});
-		$('rpTipWrapper').set('text', $(el).title);
-		pos = $(el).getPosition();
-		$('rpTip').setStyles({
+		document.id('rpTipWrapper').set('text', document.id(el).title);
+		pos = document.id(el).getPosition();
+		document.id('rpTip').setStyles({
 				'left': pos.x + 0,
 				'top': pos.y + 20,
 				'visibility': 'visible'
 		});
-		$('rpTip').setOpacity(0.8);
+		document.id('rpTip').setOpacity(0.8);
 	}
 }
 
 function rpEditQueue(char_id) {
-	$('att_char_queue_' + char_id).setStyle('display','none');
-	$('att_char_edit_button_' + char_id).setStyle('display','none');
-	$('att_char_edit_queue_' + char_id).setStyle('display', '');
+	document.id('att_char_queue_' + char_id).setStyle('display','none');
+	document.id('att_char_edit_button_' + char_id).setStyle('display','none');
+	document.id('att_char_edit_queue_' + char_id).setStyle('display', '');
 }
 
 function rpHideTooltip() {
-	$('rpTip').setOpacity(0);
-	$('rpTip').setStyle('visibility','hidden');
+	document.id('rpTip').setOpacity(0);
+	document.id('rpTip').setStyle('visibility','hidden');
 }
 
 function setupTooltip() {
-	if (!($('rpTip'))) {
+	if (!(document.id('rpTip'))) {
 		(new Element('div', {
 				'class': 'rp_tool-tip',
 				'id' : 'rpTip',
@@ -54,7 +54,7 @@ function setupTooltip() {
 					'z-index' : 70000
 				}
 		})).inject(document.body);
-		(new Element('div',{'id':'rpTipWrapper'})).inject($('rpTip'));
+		(new Element('div',{'id':'rpTipWrapper'})).inject(document.id('rpTip'));
 	}
 }
 
