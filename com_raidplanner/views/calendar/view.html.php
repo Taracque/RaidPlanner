@@ -35,7 +35,11 @@ class RaidPlannerViewCalendar extends JView
 			'popup_height'	=> $paramsObj->get('popup_height', 500),
 			'show_history'	=> $paramsObj->get('show_history', 0)
 		);
-		JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
+		$is_mobile = RaidPlannerHelper::detectMobile();
+		if (!$is_mobile)
+		{
+			JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
+		}
 
 		if (RaidPlannerHelper::getPermission('view_calendar') != 1) {
 			// redirect to the index page
@@ -99,6 +103,7 @@ class RaidPlannerViewCalendar extends JView
 		} else {
 			$calendar_mode = 'download';
 		}
+		$this->assignRef( 'mobile_browser', $is_mobile );
 		$this->assignRef( 'invitations', RaidPlannerHelper::checkInvitations() );
 		$this->assignRef( 'menuitemid', $menuitemid );
 		$this->assignRef( 'calendar_mode', $calendar_mode );

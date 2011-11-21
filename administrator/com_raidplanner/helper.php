@@ -336,4 +336,22 @@ class RaidPlannerHelper
 		}
 		return $dateformat;
 	}
+	
+	public static function detectMobile()
+	{
+		$isMobile	= false;
+		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
+		$httpAccept	= $_SERVER['HTTP_ACCEPT'];
+		switch(true){
+			case (preg_match('/ipod/i',$userAgent)||preg_match('/iphone/i',$userAgent)):	// iPod or iPhone detected in user agent
+			case (preg_match('/android/i',$userAgent)):										// Android detected in user agent
+			case (preg_match('/opera mini/i',$userAgent)):									// Opera mini
+			case (preg_match('/blackberry/i',$userAgent)):									// blackberry
+			case (preg_match('/(iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce; iemobile)/i',$userAgent)):		// Windows CE variants
+				$isMobile = true;
+			break;
+		}
+		
+		return $isMobile;
+	}
 }
