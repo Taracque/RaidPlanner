@@ -336,7 +336,22 @@ class RaidPlannerHelper
 		}
 		return $dateformat;
 	}
-	
+
+	public static function sqlDateFormat()
+	{
+		$version = new JVersion();
+		switch ($version->RELEASE) {
+			case '1.5':
+				$dateformat = '%Y-%m-%d';
+			break;
+			default:
+			case '1.6':
+				$dateformat = 'Y-m-d';
+			break;
+		}
+		return $dateformat;
+	}
+
 	public static function detectMobile()
 	{
 		$isMobile	= false;

@@ -53,8 +53,8 @@ class RaidPlannerModelRaidPlanner extends JModel
     	$rows = $db->loadObjectList();
     	$result = array();
 		foreach ($rows as $row) {
-			$date = new JDate( $row->start_time );
-    		$result[$date->toFormat('%Y-%m-%d')][] = $row;
+			$date = JHTML::_('date', $row->start_time, RaidPlannerHelper::sqlDateFormat() );
+    		$result[$date][] = $row;
     	}
 
     	return $result;
