@@ -74,4 +74,12 @@ class RaidPlannerController extends JController
 			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNASSIGNED_PROFILE_DATA', count($list) ) . "<br />";
 		}
 	}
+	
+	/* Ajax gateway for statistics */
+	function getStats()
+	{
+		$app = &JFactory::getApplication();	
+		
+		$app->close();
+	}
 }

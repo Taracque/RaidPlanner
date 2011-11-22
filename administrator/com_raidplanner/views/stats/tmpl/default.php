@@ -13,6 +13,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <script type="text/javascript">
 window.addEvent('domready', function() {
     var chart = new MilkChart.Line("chart");
+    chart.load({
+		method: 'get',
+		url: '<?php echo JRoute::_('index.php?option=com_raidplanner&task=getStats', false); ?>'
+    });
 })
 </script>
 <form action="<?php echo JRoute::_( 'index.php' );?>" method="post" name="adminForm" id="adminForm">
@@ -36,31 +40,21 @@ window.addEvent('domready', function() {
     <table class="adminlist" id="chart">
 		<thead>
 			<tr>
-				<th><?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?></th>
-				<th><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></th>
-				<th><?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?></th>
-				<th><?php echo JText::_('COM_RAIDPLANNER_TOTAL_SIGNED');?></th>
-				<th><?php echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_1');?></th>
+				<th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>10</td>
-				<td>98</td>
-				<td>8</td>
-				<td>206</td>
-				<td>133</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>44</td>
-				<td>2</td>
-				<td>106</td>
-				<td>99</td>
-			</tr>
+			<tr><td>8.3</td><td>70</td><td>10.3</td><td>100</td></tr>
+			<tr><td>8.6</td><td>65</td><td>10.3</td><td>125</td></tr>
+			<tr><td>8.8</td><td>63</td><td>10.2</td><td>106</td></tr>
+			<tr><td>10.5</td><td>72</td><td>16.4</td><td>162</td></tr>
+			<tr><td>11.1</td><td>80</td><td>22.6</td><td>89</td></tr>
+	
 		</tbody>
 		<tfoot>
-			<tr><td>Dögrovás</td><td>Minsa</td></tr>
+			<tr>
+				<td>Row 1</td><td>Row 2</td><td>Row 3</td><td>Row 4</td><td>Row 5</td>
+			</tr>
 		</tfoot>
 	</table>
 

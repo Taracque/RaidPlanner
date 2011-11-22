@@ -66,7 +66,9 @@ MilkChart = new Class({
         showKey: true,
 		useZero: true,
 		copy: false,
-		data: {}
+		data: {},
+		method: "get",
+		url: ""
     },
     initialize: function(el, options) {
         this.setOptions(options);
@@ -244,7 +246,24 @@ MilkChart = new Class({
 		
 		return null;
     },
-    
+    load: function(options) {
+    	var self = this;
+    	options = options || {};
+    	var reqOptions = {
+    		method: options.method,
+    		onSuccess: function(res) {
+    			self.setData(res);
+    			self.render();
+    		}
+    	};
+    	var merged = Object.merge(options, reqOptions);
+    	if (merged.url) {
+	    	var req = new Request.JSON(merged);
+			req.send();
+			
+			return req;
+	    }
+    },
     draw: function() {
         // Abstract
         /**********************************
@@ -635,6 +654,35 @@ MilkChart.Line = new Class({
             }
         }
         this.longestRowName = longestRowName;
+    },
+    load: function(options) {
+    	var self = this;
+    	options = options || {};
+    	var reqOptions = {
+    		noCache: true,
+    		onSuccess: function(data) {
+    			var newRows = [];
+		    	data.rows.each(function(row, idx) {
+		    		row.each(function(cell, index) {
+		    			if (!newRows[index]) {
+		    				newRows[index] = [];
+		    			}
+		    			newRows[index][idx] = cell;
+		    		})
+		    	});
+		    	data.rows = newRows;
+    			self.setData(data);
+    			self.render();
+    		},
+    		onError: function() {
+    			
+    		}
+    	};
+    	var merged = Object.merge(options, reqOptions);
+    	if (merged.url) {
+	    	var req = new Request.JSON(merged);
+	    	req.send();
+	    }
     },
     draw: function() {
         /*************************************
