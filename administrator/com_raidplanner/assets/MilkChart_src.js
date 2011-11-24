@@ -246,6 +246,32 @@ MilkChart = new Class({
 		
 		return null;
     },
+    setData: function(data) {
+    	this.bounds = [new Point(), new Point(this.width, this.height)];
+    	this.colors = this.__getColors(this.options.colors);
+    	this.minY = (this.options.useZero) ? 0 : 10000000000;
+        this.maxY = 0;
+        data.rows.each(function(row) {
+        	var rowMax = Math.max.apply(Math, row);
+        	var rowMin = Math.min.apply(Math, row);
+        	this.maxY = (rowMax > this.maxY) ? rowMax : this.maxY;
+        	this.minY = (rowMin < this.minY) ? rowMin : this.minY;
+        }, this);
+		var longestRowName = "";
+		data.rowNames.each(function(row) {
+			if (this.ctx.measureText(row).width > this.ctx.measureText(longestRowName).width) {
+            	longestRowName = String(row);
+            }
+		}, this);
+		this.longestRowName = longestRowName;
+
+		this.rows = data.rows;
+		this.options.title = data.title;
+		this.colNames = data.colNames;
+		this.rowNames = data.rowNames;
+		this.rowCount = this.rows.length;
+		this.data = data;
+    },
     load: function(options) {
     	var self = this;
     	options = options || {};
@@ -253,7 +279,17 @@ MilkChart = new Class({
     		method: options.method,
     		onSuccess: function(res) {
     			self.setData(res);
-    			self.render();
+				self.prepareCanvas();
+				// Set row width
+				self.rowWidth = self.chartWidth / self.rows.length;//Math.round(this.chartWidth / this.rows.length);
+				// Draws the X and Y axes lines
+				self.drawAxes();
+				// Draws the value lines
+				self.drawValueLines();
+				// Main function to draw the graph
+				self.draw();
+				// Draws the key for the graph
+				if (self.options.showKey) self.drawKey();
     		}
     	};
     	var merged = Object.merge(options, reqOptions);
@@ -672,7 +708,17 @@ MilkChart.Line = new Class({
 		    	});
 		    	data.rows = newRows;
     			self.setData(data);
-    			self.render();
+				self.prepareCanvas();
+				// Set row width
+				self.rowWidth = self.chartWidth / self.rows.length;//Math.round(this.chartWidth / this.rows.length);
+				// Draws the X and Y axes lines
+				self.drawAxes();
+				// Draws the value lines
+				self.drawValueLines();
+				// Main function to draw the graph
+				self.draw();
+				// Draws the key for the graph
+				if (self.options.showKey) self.drawKey();
     		},
     		onError: function() {
     			
