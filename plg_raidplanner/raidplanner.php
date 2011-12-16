@@ -34,7 +34,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$script[] = '				val = val + li.getChildren("a").get("text") + "\n";';
 		$script[] = '			}';
 		$script[] = '		})';
-		$script[] = '		document.id(rp_characterEditorValue_' . $this->id . ').set("value", val);';
+		$script[] = '		document.id("rp_characterEditorValue_' . $this->id . '").set("value", val);';
 		$script[] = '	}';
 		$script[] = '';
 		$script[] = '	function jSelectCharacter_'.$this->id.'(idx, name) {';
