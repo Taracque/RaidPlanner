@@ -161,7 +161,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$script[] = '				val = val + li.getChildren("a").get("text") + "\n";';
 						$script[] = '			}';
 						$script[] = '		})';
-						$script[] = '		document.id(rp_characterEditorValue_' . $field->fieldid . ').set("value", val);';
+						$script[] = '		document.id("rp_characterEditorValue_' . $field->fieldid . '").set("value", val);';
 						$script[] = '	}';
 						$script[] = '';
 						$script[] = '	function jSelectCharacter_'.$field->fieldid.'(idx, name) {';
