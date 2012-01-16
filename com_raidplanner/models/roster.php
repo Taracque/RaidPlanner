@@ -24,6 +24,7 @@ class RaidPlannerModelRoster extends JModel
 					LEFT JOIN #__raidplanner_class AS class ON class.class_id = chars.class_id
 					LEFT JOIN #__raidplanner_race AS race ON race.race_id = chars.race_id
 					LEFT JOIN #__raidplanner_gender AS gender ON gender.gender_id = chars.gender_id
+					LEFT JOIN #__users AS user ON user.id = chars.profile_id
 					WHERE guild_id = " . intval($guild_id) . "
 					ORDER BY chars.rank DESC, chars.char_level DESC, chars.char_name ASC";
 			

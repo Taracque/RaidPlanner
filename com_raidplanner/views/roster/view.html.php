@@ -36,6 +36,7 @@ class RaidPlannerViewRoster extends JView
 		}
 
 		$guild_id = $paramsObj->get('guild_id', '0');
+		$show_account = $paramsObj->get('show_account', '0');
 		if ($paramsObj->get('armory_sync', '0') == 1)
 		{
 			// sync armory
@@ -45,6 +46,7 @@ class RaidPlannerViewRoster extends JView
 		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
 		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );
+		$this->assignRef( 'show_account', $show_account );
 
 		parent::display($tpl);
 	}
