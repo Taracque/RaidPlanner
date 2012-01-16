@@ -48,13 +48,17 @@ class RaidPlannerModelRaidPlanner extends JModel
 	    				WHERE r.start_time>=DATE_SUB(".$db->Quote($year_month).",interval 2 week) AND r.start_time<=DATE_ADD(".$db->Quote($year_month).",interval 7 week)
 	    				ORDER BY r.start_time ASC, r.location ASC";
 	    }
-    	
+   	
     	$db->setQuery($query);
     	$rows = $db->loadObjectList();
     	$result = array();
 		foreach ($rows as $row) {
+/*
 			$date = JHTML::_('date', $row->start_time, RaidPlannerHelper::sqlDateFormat() );
     		$result[$date][] = $row;
+*/
+			$date = RaidPlannerHelper::getDate( $row->start_time );
+    		$result[$date->toFormat('%Y-%m-%d')][] = $row;
     	}
 
     	return $result;
