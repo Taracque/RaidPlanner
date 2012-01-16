@@ -80,7 +80,7 @@ jimport( 'joomla.utilities.date');
 				<tr class="rp_header">
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
 					<?php if ($this->show_account == 1) : ?>
-					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_USER');?></th>
+					<th class="rp_header"><?php echo JText::_('JGLOBAL_USERNAME');?></th>
 					<?php endif; ?>
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_LEVEL');?></th>
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_GENDER');?></th>
