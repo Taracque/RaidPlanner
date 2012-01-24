@@ -232,12 +232,21 @@ class RaidPlannerHelper
 			}
 			$db = & JFactory::getDBO();
 			if (!$guest) {
-				$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				/* check if user is member of a group, if not, default group used */
+				$query = "SELECT count(*) FROM #__raidplanner_profile AS profile WHERE profile.profile_id=".intval($user_id)."";
+				$db->setQuery($query);
+				$count = $db->loadResult();
+				if ($count>0)
+				{
+					$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				} else {
+					$query = "SELECT permission_value FROM #__raidplanner_groups AS groups LEFT JOIN #__raidplanner_permissions AS perm ON groups.group_id = perm.group_id WHERE groups.`default`=1 AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				}
 			} else {
 				$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
 			}
 			$db->setQuery($query);
-			
+
 			$dbreply = ($db->loadResultArray());
 			$reply = (@$dbreply[0] === "1");
 		}
