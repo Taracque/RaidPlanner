@@ -16,7 +16,7 @@ jimport( 'joomla.utilities.date');
 <script type="text/javascript">
 <?php if ( (JRequest::getVar('modalevent')) && ($this->canView) ) : ?>
 window.addEvent('domready',function(){
-<?php if ($this->mobile_browser): ?>
+<?php if (($this->mobile_browser) || ($this->params['use_modal']==0)): ?>
 	window.location.href='<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . intval(JRequest::getVar('modalevent')) . '&Itemid='.$this->menuitemid); ?>';
 <?php else: ?>
 	SqueezeBox.fromElement($("event_<?php echo intval(JRequest::getVar('modalevent')); ?>"));
@@ -91,7 +91,7 @@ window.addEvent('domready',function(){
 					?>
 								<div class="event <?php echo ($event->signed)?"signed":"unsigned";?>">
 									<?php if($this->canView) : ?>
-										<?php if ($this->mobile_browser): ?>
+										<?php if (($this->mobile_browser) || ($this->params['use_modal']==0)): ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 										<?php else: ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
