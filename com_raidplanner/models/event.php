@@ -533,6 +533,14 @@ class RaidPlannerModelEvent extends JModel
 
 		$db->setQuery($query);
 		$db->query();
+
+		$query = "UPDATE #__raidplanner_raid SET"
+				. " raid_leader=".$db->Quote($user->name)
+				. " WHERE raid_id=".intval($raid_id)
+				. " AND raid_leader=''";
+
+		$db->setQuery($query);
+		$db->query();
 		
 		return $raid_id;
 	}
