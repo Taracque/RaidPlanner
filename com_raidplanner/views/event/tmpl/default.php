@@ -130,7 +130,7 @@ $hasChars = !empty($this->characters);
 	<tr class="rp_event_attendants" id="rp_event_attendants">
 		<td>
 			<form action="index.php" method="post">
-				<table>
+				<table onclick="javascript:rpMakeSortable(this);">
 					<thead>
 						<tr>
 							<th><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>

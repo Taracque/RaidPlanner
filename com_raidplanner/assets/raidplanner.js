@@ -58,6 +58,24 @@ function setupTooltip() {
 	}
 }
 
+function rpMakeSortable(el) {
+	if ((MooTools.version >= '1.2.4') && (typeof(HtmlTable)!='undefined')) {
+		el.set('onclick','');
+		new HtmlTable(el,{
+			sortIndex:null,
+			sortable :true,
+			zebra: false,
+			selectable: false,
+			allowMultiSelect: false,
+			paginate:false,
+			parsers : ['string', 'string', 'string', 'string', 'date']
+		}).enableSort();
+		el.getElements('th').each(function(ele){
+			ele.setStyle('cursor','pointer');
+		});
+	}
+}
+
 window.addEvent('domready',function() {
 	if ((MooTools.version >= '1.3') && (typeof(SqueezeBox)!='undefined')) {
 		SqueezeBox.handlers.extend({
