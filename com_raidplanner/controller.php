@@ -91,7 +91,7 @@ class RaidPlannerController extends JController
 				$vName = 'character';
 				$mName = 'character';
 				$model = &$this->getModel('character');
-				$model->saveCharacter();
+				JRequest::setVar('character_id', $model->saveCharacter());
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 			break;
 			default:
