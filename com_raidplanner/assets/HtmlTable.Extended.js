@@ -51,7 +51,7 @@ HtmlTable = Class.refactor(HtmlTable, {
             next:'Next',
             previous:'Previous',
             rows:'Rows',
-            search : 'Search…'
+            search : 'Search...'
         },
         _zebraCounter:0
 	},
