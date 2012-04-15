@@ -122,7 +122,7 @@
 	-webkit-transition: color 0.2s ease-out;
 }
 
-.rp_calendar_body td .event.unsigned {
+.rp_calendar_body td .event.signed_0 {
 	opacity: 0.8;
 	filter: alpha(opacity = 80);
 }

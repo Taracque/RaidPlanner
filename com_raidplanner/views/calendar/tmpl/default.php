@@ -89,7 +89,7 @@ window.addEvent('domready',function(){
 								if (@$this->events[$thedate]) {
 									foreach ($this->events[$thedate] as $event) {
 					?>
-								<div class="event <?php echo ($event->signed)?"signed":"unsigned";?>">
+								<div class="event signed_<?php echo str_replace("-","_",intval($event->queue));?> <?php if($event->queue==0) { echo "un";}?>signed">
 									<?php if($this->canView) : ?>
 										<?php if (($this->mobile_browser) || ($this->params['use_modal']==0)): ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
