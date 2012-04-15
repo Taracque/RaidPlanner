@@ -18,11 +18,11 @@ $function	= JRequest::getCmd('function', '');
 <div id="editcell">
 	<table>
 		<tr>
-			<td width="100%" colspan="3">
+			<td width="100%">
 				<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
 				<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
 			</td>
-			<td nowrap="nowrap" colspan="2">
+			<td nowrap="nowrap">
 				<button onclick="this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
 				<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
 			</td>
@@ -45,6 +45,9 @@ $function	= JRequest::getCmd('function', '');
             </th>
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_SYNC_PLUGIN', 'sync_plugin', $this->lists['order_Dir'], $this->lists['order']); ?>
+            </th>
+            <th>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD_LAST_SYNC', 'lastSync', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
         </tr>            
     </thead>
@@ -76,6 +79,9 @@ $function	= JRequest::getCmd('function', '');
             <td>
                 <?php echo $row->sync_plugin; ?>
             </td>
+            <td>
+                <?php echo $row->lastSync; ?>
+            </td>
         </tr>
         <?php
         $k = 1 - $k;
@@ -84,7 +90,7 @@ $function	= JRequest::getCmd('function', '');
     </tbody>
 	<tfoot>
 		<tr>
-			<td colspan="5"><?php echo $this->pagination->getListFooter(); ?></td>
+			<td colspan="6"><?php echo $this->pagination->getListFooter(); ?></td>
 		</tr>
 	</tfoot>
     </table>

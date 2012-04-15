@@ -36,6 +36,7 @@ class RaidPlannerModelRaids extends JModel
 		$filter_raid_search		= $app->getUserStateFromRequest( $option.'filter_raid_search',	'search', '',	'string');
 		$filter_raid_start_time_min	= $app->getUserStateFromRequest( $option.'filter_raid_start_time_min',	'start_time_min', null,	'date');
 		$filter_raid_start_time_max	= $app->getUserStateFromRequest( $option.'filter_raid_start_time_max',	'start_time_max', null,	'date');
+		$filter_guild_filter		= $app->getUserStateFromRequest( $option.'filter_guild_filter',	'guild_filter', null,	'int');
 
 		// Get pagination request variables
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
@@ -51,6 +52,7 @@ class RaidPlannerModelRaids extends JModel
 		$this->setState('filter_raid_search', $filter_raid_search);
 		$this->setState('filter_raid_start_time_min', $filter_raid_start_time_min);
 		$this->setState('filter_raid_start_time_max', $filter_raid_start_time_max);
+		$this->setState('filter_guild_filter', $filter_guild_filter);
 	}
 
 	function _buildContentOrderBy()
@@ -77,6 +79,7 @@ class RaidPlannerModelRaids extends JModel
 		$filter_raid_start_time_min = $this->getState('filter_raid_start_time_min');
 		$filter_raid_start_time_max = $this->getState('filter_raid_start_time_max');
 		$filter_raid_search = $this->getState('filter_raid_search');
+		$filter_guild_filter = $this->getState('filter_guild_filter');
 
 		$where = '';
 		
@@ -89,6 +92,9 @@ class RaidPlannerModelRaids extends JModel
 		}
 		if ($filter_raid_search!='') {
 			$where_arr[] = "(r.location LIKE '%".$db->getEscaped($filter_raid_search)."%' OR r.description LIKE '%".$db->getEscaped($filter_raid_search)."%')";
+		}
+		if (intval($filter_guild_filter)>0) {
+			$where_arr[] = "r.guild_id = " . intval($filter_guild_filter);
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);

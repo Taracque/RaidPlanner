@@ -58,7 +58,7 @@ class RaidPlannerModelGuilds extends JModel
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_guild_order_Dir) ) &&
-			(in_array($filter_order, array('guild_name') ) ) &&
+			(in_array($filter_order, array('guild_name', 'members', 'sync_plugin', 'lastSync') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 		

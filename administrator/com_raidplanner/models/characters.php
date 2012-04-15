@@ -33,9 +33,10 @@ class RaidPlannerModelCharacters extends JModel
 
 		$filter_char_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'level', 'cmd' );
 		$filter_char_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
-		$filter_char_search		= $app->getUserStateFromRequest( $option.'filter_char_search',	'search', '',	'string');
-		$filter_char_level_min	= $app->getUserStateFromRequest( $option.'filter_char_level_min',	'level_min', null,	'int');
-		$filter_char_level_max	= $app->getUserStateFromRequest( $option.'filter_char_level_max',	'level_max', null,	'int');
+		$filter_char_search		= $app->getUserStateFromRequest( $option.'filter_char_search', 'search', '', 'string');
+		$filter_char_level_min	= $app->getUserStateFromRequest( $option.'filter_char_level_min', 'level_min', null, 'int');
+		$filter_char_level_max	= $app->getUserStateFromRequest( $option.'filter_char_level_max', 'level_max', null, 'int');
+		$filter_guild_filter		= $app->getUserStateFromRequest( $option.'filter_guild_filter', 'guild_filter', null, 'int');
 
 		// Get pagination request variables
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
@@ -51,6 +52,7 @@ class RaidPlannerModelCharacters extends JModel
 		$this->setState('filter_char_search', $filter_char_search);
 		$this->setState('filter_char_level_min', $filter_char_level_min);
 		$this->setState('filter_char_level_max', $filter_char_level_max);
+		$this->setState('filter_guild_filter', $filter_guild_filter);
 	}
 
 	function _buildContentOrderBy()
@@ -79,6 +81,7 @@ class RaidPlannerModelCharacters extends JModel
 		$filter_char_level_min = $this->getState('filter_char_level_min');
 		$filter_char_level_max = $this->getState('filter_char_level_max');
 		$filter_char_search = $this->getState('filter_char_search');
+		$filter_guild_filter = $this->getState('filter_guild_filter');
 
 		$where = '';
 		
@@ -91,6 +94,9 @@ class RaidPlannerModelCharacters extends JModel
 		}
 		if ($filter_char_search!='') {
 			$where_arr[] = "(c.char_name LIKE '%".$db->getEscaped($filter_char_search)."%' OR u.name LIKE '%".$db->getEscaped($filter_char_search)."%')";
+		}
+		if (intval($filter_guild_filter)>0) {
+			$where_arr[] = "c.guild_id = " . intval($filter_guild_filter);
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);

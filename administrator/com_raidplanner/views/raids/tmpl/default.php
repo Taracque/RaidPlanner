@@ -24,6 +24,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				?> - <?php
 					echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', '%Y-%m-%d' );
 				?>
+				<?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?>
+				<select name="guild_filter" onchange="document.adminForm.submit();">
+					<option></option>
+					<?php foreach ($this->guilds as $guild_id => $guild): ?>
+					<option value="<?php echo $guild_id;?>" <?php if ($guild_id == $this->lists['guild_filter']) { echo "selected=\"selected\""; } ?>><?php echo $guild->guild_name;?></option>
+					<?php endforeach; ?>
+				</select>
 			</td>
 			<td nowrap="nowrap">
 				<button onclick="this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
