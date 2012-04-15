@@ -58,7 +58,7 @@ class RaidPlannerModelGuilds extends JModel
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_guild_order_Dir) ) &&
-			(in_array($filter_order, array('guild_name', 'guild_region', 'guild_realm', 'guild_level') ) ) &&
+			(in_array($filter_order, array('guild_name') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 		
@@ -78,7 +78,7 @@ class RaidPlannerModelGuilds extends JModel
 		
 		$where_arr = array();
 		if ($filter_guild_search!='') {
-			$where_arr[] = "guild_name LIKE '%".$db->getEscaped($filter_guild_search)."%'";
+			$where_arr[] = " guild.guild_name LIKE '%".$db->getEscaped($filter_guild_search)."%'";
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);
@@ -93,7 +93,7 @@ class RaidPlannerModelGuilds extends JModel
      */
     function _buildQuery()
     {
-        $query = ' SELECT * FROM #__raidplanner_guild' . $this->_buildQueryWhere();
+        $query = ' SELECT guild.*,(SELECT COUNT(character_id) FROM jos_raidplanner_character WHERE guild_id=guild.guild_id) AS members FROM jos_raidplanner_guild AS guild ' . $this->_buildQueryWhere();
         return $query;
     }
  

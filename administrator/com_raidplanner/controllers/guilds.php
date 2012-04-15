@@ -37,6 +37,26 @@ class RaidPlannerControllerGuilds extends RaidPlannerController
 
 		parent::display();
 	}
+	
+	/**
+	 * apply the record
+	 * @return void
+	 */
+	function apply()
+	{
+		$model = $this->getModel('guild');
+
+        $post = JRequest::get('post');
+
+		if ($model->store($post)) {
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_GUILD')  );
+		} else {
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_GUILD') );
+		}
+
+		$guild_id = JRequest::getVar('guild_id',  0, '', 'int');
+		$this->setRedirect('index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]=' . $guild_id, $msg);
+	}
 
 	/**
 	 * save a record (and redirect to main page)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>
+		<param type="text" name="guild_realm" label="Realm" />
+		<param type="list" name="guild_region" label="Region">
+			<option value="eu">EU</option>
+			<option value="us">US</option>
+			<option value="kr">KR</option>
+			<option value="tw">TW</option>
+			<option value="cn">CN</option>
+		</param>
+	</params>
+</config>

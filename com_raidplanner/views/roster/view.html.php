@@ -40,7 +40,7 @@ class RaidPlannerViewRoster extends JView
 		if ($paramsObj->get('armory_sync', '0') == 1)
 		{
 			// sync armory
-			RaidPlannerHelper::armorySync( $guild_id, $paramsObj->get( 'sync_interval', 4 ) );
+			RaidPlannerHelper::RosterSync( $guild_id, $paramsObj->get( 'sync_interval', 4 ) );
 		}
 
 		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );

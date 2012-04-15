@@ -39,12 +39,17 @@ class RaidPlannerModelGuild extends JModel
 					'  WHERE guild_id = ' . $this->_id;
 			$this->_db->setQuery( $query );
 			$this->_data = $this->_db->loadObject();
+			if ( ($this->_data) && ($this->_data->params) ) {
+				$this->_data->params = json_decode( $this->_data->params ,true );
+			}
 		}
 		if (!$this->_data) {
 			$this->_data = new stdClass();
 			$this->_data->guild_id = 0;
 			$this->_data->guild_name = null;
+			$this->_data->sync_plugin = null;
 		}
+		
 		return $this->_data;
 	}
 
@@ -59,7 +64,13 @@ class RaidPlannerModelGuild extends JModel
 		$row =& $this->getTable();
 
 		$data = JRequest::get( 'post' );
-	
+		
+		if ($data['params']) {
+			$data['params']=json_encode( $data['params'] );
+		} else {
+			$data['params'] = '';
+		}
+		
 		// Bind the form fields to the table
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());
@@ -78,9 +89,9 @@ class RaidPlannerModelGuild extends JModel
 			return false;
 		}
 	
-		if ($data['sync_now']=='1')
+		if (@$data['sync_now']=='1')
 		{
-			RaidPlannerHelper::armorySync( $data['guild_id'], 0 , true );
+			RaidPlannerHelper::RosterSync( $data['guild_id'], 0 , true );
 		}
 
 		return true;

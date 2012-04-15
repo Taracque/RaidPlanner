@@ -183,6 +183,33 @@ function com_install()
 		$db->setQuery($query);
 		$db->query();
 	}
+	/* Move guild_region, guild_realm to params field */
+	$query = "SHOW COLUMNS FROM `#__raidplanner_guild` LIKE 'guild_region'";
+	$db->setQuery($query);
+	$db->query();
+	if ( $db->getNumRows() > 0  )
+	{
+		$db->setQuery("SELECT * FROM `#__raidplanner_guild` WHERE guild_region <> ''");
+		$list = $db->loadObjectList();
+		if (count($list) > 0)
+		{
+			foreach ($list as $guild) {
+				$params = json_decode( $guild->params );
+				$params['guild_region'] = $guild->guild_region;
+				$params['guild_realm'] = $guild->guild_realm;
+				$params['guild_level'] = $guild->guild_level;
+				
+				$db->setQuery( "UPDATE FROM #__raidplanner_guild SET guild_realm='wow_armory',params=" . $db->Quote( json_encode($params) ) . " WHERE guild_id=".intval($guild->guild_id) );
+				$db->query();
+			}
+		}
+		$db->setQuery( "ALTER TABLE `#__raidplanner_guild` DROP `guild_level`, DROP `guild_region`" );
+		$db->query();
+		$db->setQuery( "ALTER TABLE `#__raidplanner_guild` CHANGE `guild_realm` `sync_plugin` VARCHAR( 80 ) NOT NULL DEFAULT ''" );
+		$db->query();
+		
+		$out .= 'Guild table changed to support syncing plugins<br />';
+	}
 
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );

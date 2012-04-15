@@ -8,7 +8,7 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.5.8</version>
+	<version>0.6.0</version>
 	<releaseDate>2012-04-14</releaseDate>
 	<releaseType>Bugfix release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
@@ -85,6 +85,7 @@
 			<folder>controllers</folder>
 			<folder>tables</folder>
 			<folder>install</folder>
+			<folder>plugins</folder>
 		</files>
 		<!-- Administration Language File Copy Section -->
 		<languages folder="administrator/language">
