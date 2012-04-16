@@ -74,4 +74,109 @@ class RaidPlannerController extends JController
 			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNASSIGNED_PROFILE_DATA', count($list) ) . "<br />";
 		}
 	}
+	
+	/* Ajax gateway for statistics */
+	/*
+		{ "title": "My Chart", "colNames": ["Internet Explorer", "FireFox"], "rowNames": ["Q1", "Q2", "Q3", "Q4"], "rows": [ [1,2], [3,4], [5,6], [7,8] ] }
+	*/
+	function getStats()
+	{
+		$app = &JFactory::getApplication();	
+		$from = JRequest::getVar('from', '');
+		$to = JRequest::getVar('to', '');
+		$type = JRequest::getVar('type', 'attendance');
+		
+		$db	=& JFactory::getDBO();
+		switch ($type) {
+			case 'raidlocations':
+				$reply->title = JText::_('COM_RAIDPLANNER_RAID_LOCATIONS');
+
+				$where = array();
+				if ($from!='')
+				{
+					$where[] = "start_time>='" . $db->getEscaped( $from ) . "'";
+				}
+				if ($to!='')
+				{
+					$where[] = "start_time<='" . $db->getEscaped( $to ) . "'";
+				}
+				if (!empty($where))
+				{
+					$wherestr = "WHERE " . implode(" AND ", $where );
+				} else {
+					$wherestr = "";
+				}
+				
+				$query = "SELECT COUNT(*) AS `count`,icon_name FROM `#__raidplanner_raid` " . $wherestr . " GROUP BY icon_name";
+				$db->setQuery($query);
+				$list = $db->loadObjectList();
+				if (count($list) > 0)
+				{
+					foreach ($list as $data) {
+						$reply->rowNames[] = array( $data->icon_name );
+						$reply->rows[] = array( $data->count , $data->count );
+					}
+				} else {
+					$reply->rowNames[] = array(JText::_('COM_RAIDPLANNER_NO_RAID'));
+					$reply->rows[] = array(0);
+				}
+				$reply->colNames = array();
+			break;
+			case 'attendance':
+			default:
+				$reply->title = JText::_('COM_RAIDPLANNER_RAID_ATTENDANCE');
+
+				$where = array();
+				if ($from!='')
+				{
+					$where[] = "r.start_time>='" . $db->getEscaped( $from ) . "'";
+				}
+				if ($to!='')
+				{
+					$where[] = "r.start_time<='" . $db->getEscaped( $to ) . "'";
+				}
+				if (!empty($where))
+				{
+					$wherestr = "WHERE " . implode(" AND ", $where );
+				} else {
+					$wherestr = "";
+				}
+				$rows = array();
+				$rowNames = array();
+				
+				$query = "SELECT COUNT(*) AS `count`,c.char_name,s.queue FROM `#__raidplanner_raid` AS r LEFT JOIN `#__raidplanner_signups` AS s ON s.raid_id=r.raid_id LEFT JOIN `#__raidplanner_character` AS c ON c.character_id = s.character_id " . $wherestr . " GROUP BY s.character_id,s.queue";
+				$db->setQuery($query);
+				$list = $db->loadObjectList();
+				if (count($list) > 0)
+				{
+					foreach ($list as $data) {
+						if (!isset($rows[$data->char_name]))
+						{
+							$rows[$data->char_name] = array(
+								-1 => 0,
+								0 => 0,
+								1 => 0,
+								2 => 0
+							);
+							$rowNames[$data->char_name] = $data->char_name;
+						}
+						$rows[$data->char_name][$data->queue] = $reply->rows[$data->char_name][intval($data->queue)] + $data->count;
+					}
+				}
+				foreach ($rows as $row)
+				{
+					$reply->rows[] = array_values($row);
+				}
+				$reply->rowNames = array_values($rowNames);
+
+				$reply->colNames = array(
+					JText::_('COM_RAIDPLANNER_STATUSES_-1'), JText::_('COM_RAIDPLANNER_STATUSES_0'), JText::_('COM_RAIDPLANNER_STATUSES_1'), JText::_('COM_RAIDPLANNER_STATUSES_2')
+				);
+			
+		}
+
+		echo json_encode($reply);
+
+		$app->close();
+	}
 }

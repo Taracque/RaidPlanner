@@ -66,7 +66,9 @@ MilkChart = new Class({
         showKey: true,
 		useZero: true,
 		copy: false,
-		data: {}
+		data: {},
+		method: "get",
+		url: ""
     },
     initialize: function(el, options) {
         this.setOptions(options);
@@ -244,7 +246,60 @@ MilkChart = new Class({
 		
 		return null;
     },
-    
+    setData: function(data) {
+    	this.bounds = [new Point(), new Point(this.width, this.height)];
+    	this.colors = this.__getColors(this.options.colors);
+    	this.minY = (this.options.useZero) ? 0 : 10000000000;
+        this.maxY = 0;
+        data.rows.each(function(row) {
+        	var rowMax = Math.max.apply(Math, row);
+        	var rowMin = Math.min.apply(Math, row);
+        	this.maxY = (rowMax > this.maxY) ? rowMax : this.maxY;
+        	this.minY = (rowMin < this.minY) ? rowMin : this.minY;
+        }, this);
+		var longestRowName = "";
+		data.rowNames.each(function(row) {
+			if (this.ctx.measureText(row).width > this.ctx.measureText(longestRowName).width) {
+            	longestRowName = String(row);
+            }
+		}, this);
+		this.longestRowName = longestRowName;
+
+		this.rows = data.rows;
+		this.options.title = data.title;
+		this.colNames = data.colNames;
+		this.rowNames = data.rowNames;
+		this.rowCount = this.rows.length;
+		this.data = data;
+    },
+    load: function(options) {
+    	var self = this;
+    	options = options || {};
+    	var reqOptions = {
+    		method: options.method,
+    		onSuccess: function(res) {
+    			self.setData(res);
+				self.prepareCanvas();
+				// Set row width
+				self.rowWidth = self.chartWidth / self.rows.length;//Math.round(this.chartWidth / this.rows.length);
+				// Draws the X and Y axes lines
+				self.drawAxes();
+				// Draws the value lines
+				self.drawValueLines();
+				// Main function to draw the graph
+				self.draw();
+				// Draws the key for the graph
+				if (self.options.showKey) self.drawKey();
+    		}
+    	};
+    	var merged = Object.merge(options, reqOptions);
+    	if (merged.url) {
+	    	var req = new Request.JSON(merged);
+			req.send();
+			
+			return req;
+	    }
+    },
     draw: function() {
         // Abstract
         /**********************************
@@ -635,6 +690,45 @@ MilkChart.Line = new Class({
             }
         }
         this.longestRowName = longestRowName;
+    },
+    load: function(options) {
+    	var self = this;
+    	options = options || {};
+    	var reqOptions = {
+    		noCache: true,
+    		onSuccess: function(data) {
+    			var newRows = [];
+		    	data.rows.each(function(row, idx) {
+		    		row.each(function(cell, index) {
+		    			if (!newRows[index]) {
+		    				newRows[index] = [];
+		    			}
+		    			newRows[index][idx] = cell;
+		    		})
+		    	});
+		    	data.rows = newRows;
+    			self.setData(data);
+				self.prepareCanvas();
+				// Set row width
+				self.rowWidth = self.chartWidth / self.rows.length;//Math.round(this.chartWidth / this.rows.length);
+				// Draws the X and Y axes lines
+				self.drawAxes();
+				// Draws the value lines
+				self.drawValueLines();
+				// Main function to draw the graph
+				self.draw();
+				// Draws the key for the graph
+				if (self.options.showKey) self.drawKey();
+    		},
+    		onError: function() {
+    			
+    		}
+    	};
+    	var merged = Object.merge(options, reqOptions);
+    	if (merged.url) {
+	    	var req = new Request.JSON(merged);
+	    	req.send();
+	    }
     },
     draw: function() {
         /*************************************

@@ -67,9 +67,9 @@ window.addEvent('domready', function() {
 			<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
 			<?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?>:
 			<?php
-				echo JHTML::_('calendar', $this->lists['start_time'], 'start_time', 'start_time', '%Y-%m-%d' );
+				echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-1 month')), 'start_time', 'start_time', '%Y-%m-%d' );
 			?> - <?php
-				echo JHTML::_('calendar', $this->lists['end_time'], 'end_time', 'end_time', '%Y-%m-%d' );
+				echo JHTML::_('calendar', RaidPlannerHelper::getDate('now'), 'end_time', 'end_time', '%Y-%m-%d' );
 			?>
 			<?php if (1==0): ?>
 			<select name="character_id" id="character_id">
