@@ -22,22 +22,35 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<input class="text_area" type="text" name="guild_name" id="guild_name" size="32" maxlength="250" value="<?php echo $this->guild->guild_name;?>" />
 		</li>
 		<li>
-			<label for="guild_region"><?php echo JText::_( 'COM_RAIDPLANNER_ARMORY_REGION' ); ?>:</label>
-			<select name="guild_region" id="guild_region">
-				<option value="eu"<?php if ($this->guild->guild_region=="eu") { echo " selected=\"selected\""; }?>>EU</option>
-				<option value="us"<?php if ($this->guild->guild_region=="us") { echo " selected=\"selected\""; }?>>US</option>
-				<option value="kr"<?php if ($this->guild->guild_region=="kr") { echo " selected=\"selected\""; }?>>KR</option>
-				<option value="tw"<?php if ($this->guild->guild_region=="tw") { echo " selected=\"selected\""; }?>>TW</option>
-				<option value="cn"<?php if ($this->guild->guild_region=="cn") { echo " selected=\"selected\""; }?>>CN</option>
-			</select>
-		</li>
-		<li>
-			<label for="guild_realm"><?php echo JText::_( 'COM_RAIDPLANNER_ARMORY_REALM' ); ?>:</label>
-			<input class="text_area" type="text" name="guild_realm" id="guild_realm" size="32" maxlength="250" value="<?php echo $this->guild->guild_realm;?>" />
-		</li>
-		<li>
-			<label for="guild_level"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD_LEVEL' ); ?>:</label>
-			<input class="text_area" type="text" name="guild_level" id="guild_level" size="5" maxlength="3" value="<?php echo $this->guild->guild_level;?>" />
+			<div class="clr"></div>
+			<fieldset>
+				<legend>
+					<label for="sync_plugin"><?php echo JText::_( 'COM_RAIDPLANNER_SYNC_PLUGIN' ); ?>:</label>
+					<select name="sync_plugin" id="sync_plugin" style="float: none;">
+						<option value=""></option>
+						<?php foreach ($this->sync_plugins as $plugin) :?>
+							<option value="<?php echo $plugin;?>" <?php if ($plugin==$this->guild->sync_plugin) { echo "selected=\"selected\" ";}?>><?php echo $plugin;?></option>
+						<?php endforeach; ?>
+					</select>
+				</legend>
+				<ul class="adminformlist">
+					<?php foreach ($this->sync_params as $param) : ?>
+					<li>
+						<label for="params_<?php echo $param['name'];?>"><?php echo JText::_( $param['label'] ); ?>:</label>
+						<?php if ($param['type'] == 'list') :?>
+							<select name="params[<?php echo $param['name'];?>]" id="params_<?php echo $param['name'];?>">
+								<option></option>
+							<?php foreach ($param['data'] as $option) :?>
+								<option value="<?php echo $option['value'];?>" <?php if ($option['value'] == $this->guild->params[$param['name']]) { echo "selected=\"selected\" ";}?>><?php echo JText::_( $option['label'] ); ?></option>
+							<?php endforeach; ?>
+							</select>
+						<?php else: ?>
+							<input type="text" name="params[<?php echo $param['name'];?>]" id="params_<?php echo $param['name'];?>" value="<?php echo $this->guild->params[$param['name']];?>" />
+						<?php endif; ?>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+			</fieldset>
 		</li>
 		<li>
 			<label for="sync_now"><?php echo JText::_( 'COM_RAIDPLANNER_SYNC_NOW' ); ?>:</label>
@@ -53,7 +66,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <div class="clr"></div>
 <input type="hidden" name="option" value="com_raidplanner" />
 <input type="hidden" name="guild_id" value="<?php echo $this->guild->guild_id; ?>" />
-<input type="hidden" name="task" value="" />
+<input type="hidden" name="task" value="edit" />
 <input type="hidden" name="view" value="guild" />
 <input type="hidden" name="controller" value="guilds" />
 </form>

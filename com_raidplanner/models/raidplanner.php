@@ -34,27 +34,30 @@ class RaidPlannerModelRaidPlanner extends JModel
     	if ($year_month=='all') {
 	    	$query = "SELECT raid_id,location,status,raid_leader,start_time,(DATE_ADD(start_time,INTERVAL duration_mins MINUTE)) AS end_time
 	    				FROM #__raidplanner_raid
+	    				GROUP BY raid_id
 	    				ORDER BY start_time ASC, location ASC";
     	} else if ($year_month=='own') {
 	    	$query = "SELECT r.raid_id,r.location,r.status,r.raid_leader,r.start_time,(DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE)) AS end_time,r.description,r.invite_time
 	    				FROM #__raidplanner_signups AS s
 	    				LEFT JOIN #__raidplanner_raid AS r ON r.raid_id=s.raid_id
 	    				WHERE s.profile_id = ".$user->id."
+	    				GROUP BY raid_id
 	    				ORDER BY r.start_time ASC, r.location ASC";
     	} else {
-	    	$query = "SELECT r.raid_id,r.location,r.status,r.raid_leader,r.start_time,(DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE)) AS end_time,s.queue IS NOT NULL AS signed
+	    	$query = "SELECT r.raid_id,r.location,r.status,r.raid_leader,r.start_time,(DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE)) AS end_time,s.queue
 	    				FROM #__raidplanner_raid AS r
 	    				LEFT JOIN #__raidplanner_signups AS s ON s.raid_id=r.raid_id AND s.profile_id=".$user->id." 
 	    				WHERE r.start_time>=DATE_SUB(".$db->Quote($year_month).",interval 2 week) AND r.start_time<=DATE_ADD(".$db->Quote($year_month).",interval 7 week)
+	    				GROUP BY raid_id
 	    				ORDER BY r.start_time ASC, r.location ASC";
 	    }
-    	
+   	
     	$db->setQuery($query);
     	$rows = $db->loadObjectList();
     	$result = array();
 		foreach ($rows as $row) {
-			$date = new JDate( $row->start_time );
-    		$result[$date->toFormat('%Y-%m-%d')][] = $row;
+			$date = JHTML::_('date', $row->start_time, RaidPlannerHelper::sqlDateFormat() );
+    		$result[$date][] = $row;
     	}
 
     	return $result;

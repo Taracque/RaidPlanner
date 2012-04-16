@@ -41,13 +41,13 @@ $function	= JRequest::getCmd('function', '');
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD_NAME', 'guild_name', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_ARMORY_REGION', 'guild_region', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD_MEMBERS', 'members', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_ARMORY_REALM', 'guild_realm', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_SYNC_PLUGIN', 'sync_plugin', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
             <th>
-                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD_LEVEL', 'guild_level', $this->lists['order_Dir'], $this->lists['order']); ?>
+                <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_GUILD_LAST_SYNC', 'lastSync', $this->lists['order_Dir'], $this->lists['order']); ?>
             </th>
         </tr>            
     </thead>
@@ -74,13 +74,13 @@ $function	= JRequest::getCmd('function', '');
                 <?php endif; ?>
             </td>
             <td>
-                <?php echo $row->guild_region; ?>
+                <?php echo $row->members; ?>
             </td>
             <td>
-                <?php echo $row->guild_realm; ?>
+                <?php echo $row->sync_plugin; ?>
             </td>
             <td>
-                <?php echo $row->guild_level; ?>
+                <?php echo $row->lastSync; ?>
             </td>
         </tr>
         <?php
@@ -90,7 +90,7 @@ $function	= JRequest::getCmd('function', '');
     </tbody>
 	<tfoot>
 		<tr>
-			<td colspan="9"><?php echo $this->pagination->getListFooter(); ?></td>
+			<td colspan="6"><?php echo $this->pagination->getListFooter(); ?></td>
 		</tr>
 	</tfoot>
     </table>

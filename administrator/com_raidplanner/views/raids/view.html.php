@@ -30,6 +30,7 @@ class RaidPlannerViewRaids extends JView
         $raids =& $this->get( 'Data' );
 		$pagination =& $this->get('Pagination');
 
+		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
         $this->assignRef( 'raids', $raids );
 		$this->assignRef( 'pagination', $pagination);
 
@@ -37,9 +38,10 @@ class RaidPlannerViewRaids extends JView
 		$state =& $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
-		$lists['search'] = $state->get( 'filter_raid_search' );
-		$lists['start_time_min'] = $state->get( 'filter_raid_start_time_min' );
-		$lists['start_time_max'] = $state->get( 'filter_raid_start_time_max' );
+		$lists['search'] = $state->get( 'filter_raid_search' );;
+		$lists['guild_filter'] = $state->get( 'filter_guild_filter' );;
+		$lists['start_time_min'] = $state->get( 'filter_raid_start_time_min' );;
+		$lists['start_time_max'] = $state->get( 'filter_raid_start_time_max' );;
 		$lists['order_Dir'] = $state->get( 'filter_order_Dir' );
 		$lists['order']     = $state->get( 'filter_order' );
 		

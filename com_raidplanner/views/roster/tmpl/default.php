@@ -70,8 +70,8 @@ jimport( 'joomla.utilities.date');
 		<?php endif; ?>
 		<h2><a href="<?php echo $this->guildinfo->params->link;?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $this->guildinfo->guild_name;?></a></h2>
 		<strong>
-			<?php echo JText::_('COM_RAIDPLANNER_LEVEL');?> <?php echo $this->guildinfo->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JText::_('COM_RAIDPLANNER_GUILD');?><br />
-			<?php echo $this->guildinfo->guild_realm;?> - <?php echo strtoupper($this->guildinfo->guild_region);?>
+			<?php echo JText::_('COM_RAIDPLANNER_LEVEL');?> <?php echo $this->guildinfo->params->guild_level;?> <?php echo $this->guildinfo->params->side;?> <?php echo JText::_('COM_RAIDPLANNER_GUILD');?><br />
+			<?php echo $this->guildinfo->params->guild_realm;?> - <?php echo strtoupper($this->guildinfo->params->guild_region);?>
 		</strong>
 	</div>
 	<div class="rp_roster_table">
@@ -79,6 +79,9 @@ jimport( 'joomla.utilities.date');
 			<thead>
 				<tr class="rp_header">
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
+					<?php if ($this->show_account == 1) : ?>
+					<th class="rp_header"><?php echo JText::_('JGLOBAL_USERNAME');?></th>
+					<?php endif; ?>
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_LEVEL');?></th>
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_GENDER');?></th>
 					<th class="rp_header"><?php echo JText::_('COM_RAIDPLANNER_RACE');?></th>
@@ -89,7 +92,10 @@ jimport( 'joomla.utilities.date');
 			<tbody>
 			<?php foreach($this->characters as $character) : ?>
 				<tr class="rp_roster">
-					<td><a href="<?php echo sprintf($this->guildinfo->params->char_link, rawurlencode($this->guildinfo->guild_realm), rawurlencode($character['char_name']) );?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $character['char_name']; ?></a></td>
+					<td><a href="<?php echo sprintf($this->guildinfo->params->char_link, rawurlencode($this->guildinfo->params->guild_realm), rawurlencode($character['char_name']) );?>"<?php if ($this->guildinfo->params->armory) {?> target="_blank"<?php } ?>><?php echo $character['char_name']; ?></a></td>
+					<?php if ($this->show_account == 1) : ?>
+					<td><a href="<?php echo "#";?>"><?php echo $character['username'];?></a>
+					<?php endif; ?>
 					<td><?php echo $character['char_level']; ?></td>
 					<td><?php echo $character['gender_name']; ?></td>
 					<td><?php echo $character['race_name']; ?></td>

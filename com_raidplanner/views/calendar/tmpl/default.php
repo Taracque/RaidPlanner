@@ -14,11 +14,15 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.utilities.date');
 ?>
 <script type="text/javascript">
-<?php if ( (JRequest::getVar('modalevent')) && ($this->canView) ) { ?>
+<?php if ( (JRequest::getVar('modalevent')) && ($this->canView) ) : ?>
 window.addEvent('domready',function(){
+<?php if (($this->mobile_browser) || ($this->params['use_modal']==0)): ?>
+	window.location.href='<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . intval(JRequest::getVar('modalevent')) . '&Itemid='.$this->menuitemid); ?>';
+<?php else: ?>
 	SqueezeBox.fromElement($("event_<?php echo intval(JRequest::getVar('modalevent')); ?>"));
+<?php endif; ?>
 });
-<?php } ?>
+<?php endif; ?>
 </script>
 <?php if (!empty($this->invitations)) :?>
 <div id="rp_invitation_alert">
@@ -85,12 +89,16 @@ window.addEvent('domready',function(){
 								if (@$this->events[$thedate]) {
 									foreach ($this->events[$thedate] as $event) {
 					?>
-								<div class="event <?php echo ($event->signed)?"signed":"unsigned";?>">
-									<?php if($this->canView) { ?>
+								<div class="event signed_<?php echo str_replace("-","_",intval($event->queue));?> <?php if($event->queue==0) { echo "un";}?>signed">
+									<?php if($this->canView) : ?>
+										<?php if (($this->mobile_browser) || ($this->params['use_modal']==0)): ?>
+									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
+										<?php else: ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
-									<?php } else { ?>
+										<?php endif; ?>
+									<?php else: ?>
 									<a>
-									<?php } ?>
+									<?php endif; ?>
 										<strong><?php
 											echo JHTML::_('date', $event->start_time, $this->timeformat );
 										?></strong> <?php echo $event->location;?>

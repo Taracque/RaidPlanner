@@ -24,6 +24,7 @@ class RaidPlannerViewGuild extends JView
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
 		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_GUILD' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		JToolBarHelper::apply();
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
@@ -33,8 +34,18 @@ class RaidPlannerViewGuild extends JView
 		}
 
 		$model =& $this->getModel();
+		
+		$plugins = RaidPlannerHelper::getSyncPlugins();
+		
+		$plugin_params = array();
+		if ($guild->sync_plugin != '') {
+			$plugin_params = RaidPlannerHelper::getSyncPluginParams( $guild->sync_plugin );
+		}
 
-		$this->assignRef('guild', $guild);
+		$this->assignRef( 'sync_plugins', $plugins );
+		$this->assignRef( 'sync_params', $plugin_params );
+
+		$this->assignRef( 'guild', $guild );
 
 		parent::display($tpl);
 	}

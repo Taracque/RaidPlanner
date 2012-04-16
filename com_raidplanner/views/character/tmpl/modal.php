@@ -33,12 +33,13 @@ $function	= JRequest::getCmd('function', '');
 	<tr id="rp_event_selectchar">
 		<td>
 			<label for="select_char"><?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>:</label>
-			<select name="select_char" onchange="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, this.get('value'));">
+			<select name="select_char" id="select_char" onchange="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, this.get('value'));" style="width:50%">
 				<option></option>
 				<?php foreach ($this->characters as $character_id => $character) : ?>
 				<option value="<?php echo $character['char_name'];?>" <?php if ($character_id==@$this->character->character_id) {?>selected="selected"<?php } ?>><?php echo $character['char_name'];?></option>
 				<?php endforeach; ?>
 			</select>
+			<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('select_char').get('value'));" />
 		</td>
 	</tr>
 	<?php if ($this->canEdit) : ?>
@@ -79,7 +80,7 @@ $function	= JRequest::getCmd('function', '');
 			
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
 				<?php if (@$this->character->character_id>0) : ?>
-				<input type="button" name="SelectButton" value="<?php echo JTExt::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('char_name').get('value'));" />
+				<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('char_name').get('value'));" />
 				<?php endif; ?>
 
 				<input type="hidden" name="function" value="<?php echo $function; ?>" />

@@ -28,8 +28,9 @@ class RaidPlannerViewCharacters extends JView
 
         // Get data from the model
         $characters =& $this->get( 'Data');
- 		$pagination =& $this->get('Pagination');
+ 		$pagination =& $this->get( 'Pagination' );
 
+		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
         $this->assignRef( 'characters', $characters );
  		$this->assignRef( 'pagination', $pagination);
  		
@@ -40,6 +41,7 @@ class RaidPlannerViewCharacters extends JView
 		$lists['search'] = $state->get( 'filter_char_search' );;
 		$lists['level_min'] = $state->get( 'filter_char_level_min' );;
 		$lists['level_max'] = $state->get( 'filter_char_level_max' );;
+		$lists['guild_filter'] = $state->get( 'filter_guild_filter' );;
 		$lists['order_Dir'] = $state->get( 'filter_order_Dir' );
 		$lists['order']     = $state->get( 'filter_order' );
 		

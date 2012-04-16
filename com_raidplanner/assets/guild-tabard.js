@@ -22,7 +22,7 @@ function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):(h.length==6 ? 
 
 function GuildTabard(canvas, tabard, jpath) {
 	var self = this,
-		canvas = $(canvas),
+		canvas = document.id(canvas),
 		context = null,
 		_path = jpath + '',
 		_width = canvas.width,

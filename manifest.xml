@@ -8,8 +8,8 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.5.1</version>
-	<releaseDate>2011-11-03</releaseDate>
+	<version>0.6.0</version>
+	<releaseDate>2012-04-14</releaseDate>
 	<releaseType>Bugfix release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
@@ -46,6 +46,8 @@
 		<language tag="en-GB">en-GB.com_raidplanner.ini</language>
 		<language tag="de-DE">de-DE.com_raidplanner.ini</language>
 		<language tag="hu-HU">hu-HU.com_raidplanner.ini</language>
+		<language tag="fr-FR">fr-FR.com_raidplanner.ini</language>
+		<language tag="sk-SK">sk-SK.com_raidplanner.ini</language>
 	</languages>
 	<!-- Site Main Media File Copy Section -->
 	<media destination="../images/raidplanner" folder="images">
@@ -83,6 +85,7 @@
 			<folder>controllers</folder>
 			<folder>tables</folder>
 			<folder>install</folder>
+			<folder>plugins</folder>
 		</files>
 		<!-- Administration Language File Copy Section -->
 		<languages folder="administrator/language">
@@ -92,6 +95,10 @@
 			<language tag="de-DE">de-DE.com_raidplanner.sys.ini</language>
 			<language tag="hu-HU">hu-HU.com_raidplanner.ini</language>
 			<language tag="hu-HU">hu-HU.com_raidplanner.sys.ini</language>
+			<language tag="fr-FR">fr-FR.com_raidplanner.ini</language>
+			<language tag="fr-FR">fr-FR.com_raidplanner.sys.ini</language>
+			<language tag="sk-SK">sk-SK.com_raidplanner.ini</language>
+			<language tag="sk-SK">sk-SK.com_raidplanner.sys.ini</language>
 		</languages>
 	</administration>
 	<!-- UPDATESERVER DEFINITION -->

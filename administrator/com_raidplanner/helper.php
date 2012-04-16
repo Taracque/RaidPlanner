@@ -20,7 +20,7 @@ class RaidPlannerHelper
 {
 	private static $invite_alert_requested = false;
 
-	public static function armorySync( $guild_id , $sync_interval , $showOkStatus = false )
+	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
 		$db = & JFactory::getDBO();
 		$query = "SELECT *,(DATE_ADD(lastSync, INTERVAL " . intval( $sync_interval ) . " HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
@@ -29,118 +29,68 @@ class RaidPlannerHelper
 		{
 			$guild_id = $tmp->guild_id;
 			$needsync = $tmp->needSync;
+			$plug_class = $tmp->sync_plugin;
 	
-			if ( ( !$guild_id ) || ( $needsync<=0 ) )
+			if ( ( $needsync<=0 ) && ($plug_class != '') )
 			{
-				$url = "http://".$tmp->guild_region.".battle.net/api/wow/guild/";
-				$url .= rawurlencode( $tmp->guild_realm ) . "/";
-				$url .= rawurlencode( $tmp->guild_name );
-				$url = $url . "?fields=members";
-	
-				// Init cURL
-				$ch = curl_init();
-	
-				// Language
-				$header[] = 'Accept-Language: en_EN';
-				// Browser
-				$browser = 'Mozilla/5.0 (compatible; MSIE 7.01; Windows NT 5.1)';
+				$tmp->params = json_decode($tmp->params, true);
 				
-				// cURL options
-				curl_setopt ($ch, CURLOPT_URL, $url );
-				curl_setopt ($ch, CURLOPT_HTTPHEADER, $header); 
-				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 15);
-				curl_setopt ($ch, CURLOPT_USERAGENT, $browser);
+				/* Load plugin */
 				
-				$url_string = curl_exec($ch);
-				curl_close($ch);
-
-				$data = json_decode($url_string);
-				if (function_exists('json_last_error')) {
-					if (json_last_error() != JSON_ERROR_NONE)
-					{
-						JError::raiseWarning('100','ArmorySync data decoding error');
-						return null;
-					}
-				}
-				if (isset($data->status) && ($data->status=="nok"))
-				{
-					JError::raiseWarning('100','ArmorySync failed');
-					return null;
-				}
-				if (!$guild_id)
-				{
-					$query = "INSERT INTO #__raidplanner_guild (guild_name) VALUES (".$db->Quote($data->name).")";
-					$db->setQuery($query);
-					$db->query();
-					$guild_id=$db->insertid();
-				}
-
-				if (($tmp->guild_name == @$data->name) && ($data->name!=''))
-				{
-					$params = array(
-						'achievementPoints' => $data->achievementPoints,
-						'side'		=> ($data->side==0)?"Alliance":"Horde",
-						'emblem'	=> $data->emblem,
-						'link'		=> "http://" . $tmp->guild_region . ".battle.net/wow/guild/" . rawurlencode($tmp->guild_realm) . "/" . rawurlencode($data->name) ."/",
-						'char_link'	=> "http://" . $tmp->guild_region . ".battle.net/wow/character/%s/%s/advanced",
-					);
-					$query = "UPDATE #__raidplanner_guild SET
-									guild_name=".$db->Quote($data->name).",
-									guild_realm=".$db->Quote($data->realm).",
-									guild_region=".$db->Quote($tmp->guild_region).",
-									guild_level=".$db->Quote($data->level).",
-									params=".$db->Quote(json_encode($params)).",
-									lastSync=NOW()
-									WHERE guild_id=".intval($guild_id);
-					$db->setQuery($query);
-					$db->query();
-	
-					/* detach characters from guild */
-					$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($guild_id)."";
-					$db->setQuery($query);
-					$db->query();
-		
-					foreach($data->members as $member)
-					{
-						// check if character exists
-						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name LIKE BINARY ".$db->Quote($member->character->name)."";
-						$db->setQuery($query);
-						$char_id = $db->loadResult();
-						// not found insert it
-						if (!$char_id) {
-							$query="INSERT INTO #__raidplanner_character SET char_name=".$db->Quote($member->character->name)."";
-							$db->setQuery($query);
-							$db->query();
-							$char_id=$db->insertid();
-						}
-						$query = "UPDATE #__raidplanner_character SET class_id='".intval($member->character->class)."'
-																	,race_id='".intval($member->character->race)."'
-																	,gender_id='".(intval($member->character->gender) + 1)."'
-																	,char_level='".intval($member->character->level)."'
-																	,rank='".intval($member->rank)."'
-																	,guild_id='".intval($guild_id)."'
-																	WHERE character_id=".$char_id;
-						$db->setQuery($query);
-						$db->query();
-					}
-		
-					/* delete all guildless characters */
-					$query = "DELETE FROM #__raidplanner_character WHERE guild_id=0";
-					$db->setQuery($query);
-					$db->query();
-					
-					if ($showOkStatus)
-					{
-						JError::raiseNotice('0', 'ArmorySync successed');
-					}
-				} else {
-					JError::raiseWarning('100', 'ArmorySync data doesn\'t match');
-				}
+				JLoader::register( $plug_class, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $plug_class . DS . $plug_class . '.php' );
+				
+				$sync_module = new $plug_class();
+				$sync_module->Sync( $tmp, $sync_interval , $showOkStatus );
 			}
 		}
 	}
 	
+	public static function getSyncPlugins()
+	{
+		$plugins = JFolder::folders( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins', '.', false );
+		/* FIXME: needs to be veryfied if there is anything in those folder */
+		
+		return $plugins;
+	}
+	
+	public static function getSyncPluginParams( $plugin )
+	{
+		$params = array();
+		
+		/* FIXME: Plugin name must be sanitized */
+		$plug_xml_file = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $plugin . DS . $plugin . '.xml';
+		if (JFile::exists( $plug_xml_file )) {
+			$plug_xml =& JFactory::getXMLParser( 'simple' );
+			$plug_xml->loadFile( $plug_xml_file );
+
+			foreach( $plug_xml->document->params[0]->param as $param ) {
+				$data = null;
+				if ($param->attributes( 'type' ) == 'list')
+				{
+					$data = array();
+					foreach ( $param->option as $option )
+					{
+						$data[] = array(
+							'value'	=>	$option->attributes( 'value' ),
+							'label'	=>	$option->data()
+						);
+					}
+				}
+				$params[] = array(
+					'type'	=>	$param->attributes( 'type' ),
+					'name'	=>	$param->attributes( 'name' ),
+					'label'	=>	$param->attributes( 'label' ),
+					'description'	=>	$param->attributes( 'description' ),
+					'data'	=>	$data
+				);
+			}
+		} else {
+			JError::raiseWarning('100','RaidPlanner Sync plugin configuration file not exists!');
+		}
+
+		return  ($params);
+	}
+
 	public static function showToolbarButtons()
 	{
 		$view = JRequest::getVar('view');
@@ -234,12 +184,21 @@ class RaidPlannerHelper
 			}
 			$db = & JFactory::getDBO();
 			if (!$guest) {
-				$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				/* check if user is member of a group, if not, default group used */
+				$query = "SELECT count(*) FROM #__raidplanner_profile AS profile WHERE profile.profile_id=".intval($user_id)."";
+				$db->setQuery($query);
+				$count = $db->loadResult();
+				if ($count>0)
+				{
+					$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				} else {
+					$query = "SELECT permission_value FROM #__raidplanner_groups AS groups LEFT JOIN #__raidplanner_permissions AS perm ON groups.group_id = perm.group_id WHERE groups.`default`=1 AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				}
 			} else {
 				$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
 			}
 			$db->setQuery($query);
-			
+
 			$dbreply = ($db->loadResultArray());
 			$reply = (@$dbreply[0] === "1");
 		}
@@ -311,13 +270,17 @@ class RaidPlannerHelper
 		return $itemid;
 	}
 	
-	public static function getRanks()
+	public static function getRanks( $transposed = false )
 	{
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		$ranks = array();
 		for ($i=0; $i<=9; $i++)
 		{
-			$ranks[$i] = $paramsObj->get('ranks_' . $i, '- '.JText::_('COM_RAIDPLANNER_RANK') . ' ' . $i .' -');
+			if ($transposed) {
+				$ranks[$paramsObj->get('ranks_' . $i, '- '.JText::_('COM_RAIDPLANNER_RANK') . ' ' . $i .' -')] = $i;
+			} else {
+				$ranks[$i] = $paramsObj->get('ranks_' . $i, '- '.JText::_('COM_RAIDPLANNER_RANK') . ' ' . $i .' -');
+			}
 		}
 
 		return $ranks;
@@ -329,7 +292,7 @@ class RaidPlannerHelper
 		$version = new JVersion();
 		switch ($version->RELEASE) {
 			case '1.5':
-				$dateformat = JText::_('DATE_FORMAT_LC4') . '%H:%M';
+				$dateformat = JText::_('DATE_FORMAT_LC4') . ' %H:%M';
 			break;
 			default:
 			case '1.6':
@@ -337,5 +300,38 @@ class RaidPlannerHelper
 			break;
 		}
 		return $dateformat;
+	}
+
+	public static function sqlDateFormat()
+	{
+		$version = new JVersion();
+		switch ($version->RELEASE) {
+			case '1.5':
+				$dateformat = '%Y-%m-%d';
+			break;
+			default:
+			case '1.6':
+				$dateformat = 'Y-m-d';
+			break;
+		}
+		return $dateformat;
+	}
+
+	public static function detectMobile()
+	{
+		$isMobile	= false;
+		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
+		$httpAccept	= $_SERVER['HTTP_ACCEPT'];
+		switch(true){
+			case (preg_match('/ipod/i',$userAgent)||preg_match('/iphone/i',$userAgent)):	// iPod or iPhone detected in user agent
+			case (preg_match('/android/i',$userAgent)):										// Android detected in user agent
+			case (preg_match('/opera mini/i',$userAgent)):									// Opera mini
+			case (preg_match('/blackberry/i',$userAgent)):									// blackberry
+			case (preg_match('/(iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce; iemobile)/i',$userAgent)):		// Windows CE variants
+				$isMobile = true;
+			break;
+		}
+		
+		return $isMobile;
 	}
 }

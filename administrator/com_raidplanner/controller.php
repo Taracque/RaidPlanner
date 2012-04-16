@@ -48,13 +48,13 @@ class RaidPlannerController extends JController
 			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ) . "<br />";
 
 			// remove characters that doesn't have guild
-			$query = 'SELECT c.character_id,c.profile_id FROM #__raidplanner_characters AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id WHERE g.guild_name IS NULL'; 
+			$query = 'SELECT c.character_id,c.profile_id FROM #__raidplanner_character AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id WHERE g.guild_name IS NULL'; 
 			$db->setQuery($query);
 			$list = $db->loadObjectList();
 			if (count($list) > 0)
 			{
 				foreach ($list as $remove) {
-					$db->setQuery( "DELETE FROM #__raidplanner_charcters WHERE character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+					$db->setQuery( "DELETE FROM #__raidplanner_character WHERE character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
 					$db->query();
 				}
 			}

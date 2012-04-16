@@ -39,6 +39,26 @@ class RaidPlannerControllerCharacters extends RaidPlannerController
 	}
 
 	/**
+	 * apply a record (and redirect to main page)
+	 * @return void
+	 */
+	function apply()
+	{
+		$model = $this->getModel('character');
+        $post = JRequest::get('post');
+		if ($model->store($post)) {
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_CHARACTER') );
+		} else {
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_CHARACTER') );
+		}
+
+		$character_id = JRequest::getVar('character_id',  0, '', 'int');
+		// Check the table in so it can be edited.... we are done with it anyway
+		$link = 'index.php?option=com_raidplanner&view=character&controller=characters&task=edit&cid[]='.$character_id;
+		$this->setRedirect($link, $msg);
+	}
+
+	/**
 	 * save a record (and redirect to main page)
 	 * @return void
 	 */

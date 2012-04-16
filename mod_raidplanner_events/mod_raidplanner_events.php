@@ -26,6 +26,7 @@ $user_id = ($user->id);
 
 // get the parameters from the module's configuration
 $alertTimer			= $params->get('alertTimer', 24);
+$showInvitationAlerts	= $params->get('showInvitationAlert',0);
 $raidshowNumber		= $params->get('raidshowNumber',5);
 $raidshowReg 		= $params->get('raidshowReg',1);
 $raidshowRole 		= $params->get('raidshowRole',1);

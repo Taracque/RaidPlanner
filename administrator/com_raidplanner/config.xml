@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<params>
-		<param type="radio" name="load_css" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
+		<param type="radio" name="load_css" default="1" label="COM_RAIDPLANNER_LOAD_CSS" description="COM_RAIDPLANNER_LOAD_CSS_DESCRIPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</param>
+		<param type="radio" name="use_modal" default="1" label="COM_RAIDPLANNER_USE_MODAL" description="COM_RAIDPLANNER_USE_MODAL_DESCRIPTION">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</param>
@@ -22,7 +26,11 @@
 		<param type="text" name="ranks_9" default="- rank 9 -" label="Rank 9"></param>
 	</params>
 	<fieldset name="settings" label="COM_RAIDPLANNER_SETTINGS">
-		<field type="radio" name="load_css" default="1" label="COM_RADIPLANNER_LOAD_CSS" description="COM_RADIPLANNER_LOAD_CSS_DESCRIPTION">
+		<field type="radio" name="load_css" default="1" label="COM_RAIDPLANNER_LOAD_CSS" description="COM_RAIDPLANNER_LOAD_CSS_DESCRIPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field type="radio" name="use_modal" default="1" label="COM_RAIDPLANNER_USE_MODAL" description="COM_RAIDPLANNER_USE_MODAL_DESCRIPTION">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>

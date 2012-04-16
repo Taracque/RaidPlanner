@@ -24,8 +24,7 @@ class TableGuild extends JTable
 	 * @var string
 	 */
 	var $guild_name = null;
-	var $guild_region = null;
-	var $guild_realm = null;
+	var $sync_plugin = null;
 	var $lastSync = null;
 	var $params = null;
 
