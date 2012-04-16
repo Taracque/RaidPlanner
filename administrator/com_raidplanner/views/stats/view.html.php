@@ -21,7 +21,7 @@ JHTML::script('MilkChart_src.js', 'administrator/components/com_raidplanner/asse
 class RaidPlannerViewStats extends JView
 {
 	/**
-	 * display method of Hello view
+	 * display method of Stats view
 	 * @return void
 	 **/
 	function display($tpl = null)
@@ -36,9 +36,13 @@ class RaidPlannerViewStats extends JView
 		$state =& $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
-		$lists['filter_min_time'] = $state->get( 'filter_min_time' );
-		$lists['filter_max_time'] = $state->get( 'filter_max_time' );
+		$lists['filter_start_time'] = $state->get( 'filter_start_time' );
+		$lists['filter_end_time'] = $state->get( 'filter_end_time' );
+		$lists['filter_character_id'] = $state->get( 'filter_character_id' );
+		$lists['filter_group_id'] = $state->get( 'filter_group_id' );
 
+		$this->assignRef( 'groups', RaidPlannerHelper::getGroups() );
+/*		$this->assignRef( 'charcters', RaidPlannerHelper::getGroups() ); */
 		$this->assignRef( 'lists', $lists );
 
 		parent::display($tpl);
