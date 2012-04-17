@@ -37,25 +37,10 @@ class RaidPlannerControllerGuilds extends RaidPlannerController
 
 		parent::display();
 	}
-	
-	/**
-	 * apply the record
-	 * @return void
-	 */
+
 	function apply()
 	{
-		$model = $this->getModel('guild');
-
-        $post = JRequest::get('post');
-
-		if ($model->store($post)) {
-			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_GUILD')  );
-		} else {
-			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_GUILD') );
-		}
-
-		$guild_id = JRequest::getVar('guild_id',  0, '', 'int');
-		$this->setRedirect('index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]=' . $guild_id, $msg);
+		$this->save();
 	}
 
 	/**
@@ -65,17 +50,22 @@ class RaidPlannerControllerGuilds extends RaidPlannerController
 	function save()
 	{
 		$model = $this->getModel('guild');
-
+		$task = $this->getTask();
         $post = JRequest::get('post');
 
-		if ($model->store($post)) {
+		if ($guild_id = $model->store($post)) {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_GUILD')  );
 		} else {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_GUILD') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
-		$this->setRedirect('index.php?option=com_raidplanner&view=guilds', $msg);
+		if ($task == 'apply') {
+			$link = 'index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]=' . $guild_id;
+		} else {
+			$link = 'index.php?option=com_raidplanner&view=guilds';
+		}
+		$this->setRedirect( $link, $msg);
 	}
 
 	/**

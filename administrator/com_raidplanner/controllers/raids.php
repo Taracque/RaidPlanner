@@ -44,18 +44,7 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 	 */
 	function apply()
 	{
-		$model = $this->getModel('raid');
-        $post = JRequest::get('post');
-		if ($model->store($post)) {
-			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_RAID') );
-		} else {
-			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_RAID') );
-		}
-
-		$raid_id = JRequest::getVar('raid_id',  0, '', 'int');
-		// Check the table in so it can be edited.... we are done with it anyway
-		$link = 'index.php?option=com_raidplanner&view=raid&controller=raids&task=edit&cid[]='.$raid_id;
-		$this->setRedirect($link, $msg);
+		$this->save();
 	}
 
 	/**
@@ -65,16 +54,21 @@ class RaidPlannerControllerRaids extends RaidPlannerController
 	function save()
 	{
 		$model = $this->getModel('raid');
-
+		$task = $this->getTask();
         $post = JRequest::get('post');
-		if ($model->store($post)) {
+
+		if ($raid_id = $model->store($post)) {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_RAID')  );
 		} else {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_RAID')  );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
-		$link = 'index.php?option=com_raidplanner&view=raids';
+		if ($task == 'apply') {
+			$link = 'index.php?option=com_raidplanner&view=raid&controller=raids&task=edit&cid[]='.$raid_id;
+		} else {
+			$link = 'index.php?option=com_raidplanner&view=raids';
+		}
 		$this->setRedirect($link, $msg);
 	}
 
