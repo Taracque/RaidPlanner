@@ -11,13 +11,65 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <script type="text/javascript">
+var colors = [
+	'black','green','orange','red',''
+];
 function getStats()
 {
 	statReq.get({
 		'start_time' : document.id('start_time').get('value'),
 		'end_time' : document.id('end_time').get('value'),
-		'char_id' : 0, //document.id('character_id').get('value'),
-		'group_id' : document.id('group_id').get('value')
+		'character_id' : document.id('character_id').get('value'),
+		'group_id' : document.id('group_id').get('value'),
+		'guild_id' : document.id('guild_id').get('value')
+	});
+}
+
+function drawBars()
+{
+	/* get the biggest number in the table */
+	var biggest = 0;
+	var cur;
+	var total = 0;
+	document.id('chart').getChildren('tbody')[0].getElements('td').each(function(el){
+		if ((cur = el.get('text').toInt()) && (cur>biggest)) {
+			biggest = cur;
+		}
+	});
+	
+	/* go thru each rows (except the first one, and draw the bars */
+	var bars = [];
+	var first;
+	var color;
+	document.id('chart').getChildren('tbody')[0].getChildren('tr').each(function(row){
+		first = true;
+		bars = [];
+		row.getChildren('td').each(function(cell){
+			var cell_val = cell;
+			if (first) {
+				first=false;
+			} else {
+				bars.append([ cell.get('text').toInt() ]);
+			}
+		});
+		
+		/* draw the bars itself */
+		total = bars[bars.length-2];
+		delete bars[bars.length-1];
+		delete bars[bars.length-2];
+		total_div = new Element('div',{ style : 'border: 1px solid gray;width:' + Math.round(100*total/biggest) + '%;height:16px;overflow:hidden;position:relative;'});
+		bars.each(function(bar,idx){
+			if (colors[idx+1]!='') {
+				color = colors[idx+1];
+			} else {
+				color = 'transparent;position:absolute;top:0;left:0;border-right:2px solid black;';
+			}
+			total_div.grab( new Element('div',{style : 'height:16px;width:' + Math.floor(100*bar/total) + '%;float:left;background-color:' + color}));
+		},this);
+		/* put the whole thing into last td element of the row */
+		if (row.getChildren('td.bars').length>0) {
+			row.getChildren('td.bars')[0].grab(total_div);
+		}
 	});
 }
 
@@ -31,35 +83,34 @@ window.addEvent('domready', function() {
 		{
 			document.id('chart').empty();
 			var tr;
-			var thead = null;
+			var thead = new Element('thead');
+			tr = new Element('tr');
+			Object.each(responseJSON.titles,(function(value,key){
+				tr.grab(new Element('td',{'text':value}));
+			}));
+			tr.grab(new Element('td',{style:'width:100%',text:'' }));
+			thead.grab(tr);
+			document.id('chart').grab(thead);
 			
-			responseJSON.each(function(row) {
-				if (!thead) {
-					thead = new Element('thead');
-					tr = new Element('tr');
-					tr.grab(new Element('td',{'text':'char_name'}));
-					tr.grab(new Element('td',{'text':'attending'}));
-					tr.grab(new Element('td',{'text':'not_attending'}));
-					tr.grab(new Element('td',{'text':'confirmed'}));
-					tr.grab(new Element('td',{'text':'late'}));
-					tr.grab(new Element('td',{'text':'raids'}));
-					thead.grab(tr);
-					document.id('chart').grab(thead);
-				}
+			var tbody = new Element('tbody');
+			Object.each(responseJSON.data,(function(row) {
 				tr = new Element('tr');
-				tr.grab(new Element('td',{'text':row.char_name}));
-				tr.grab(new Element('td',{'text':row.attending}));
-				tr.grab(new Element('td',{'text':row.not_attending}));
-				tr.grab(new Element('td',{'text':row.confirmed}));
-				tr.grab(new Element('td',{'text':row.late}));
-				tr.grab(new Element('td',{'text':row.raids}));
-				document.id('chart').grab(tr);
-			});
+				var i = 0;
+				Object.each(row,(function(value){
+					tr.grab(new Element('td',{'text':value,styles:{color:colors[i]}}));
+					i++;
+				}));
+				tr.grab(new Element('td',{style:'width:100%',class:'bars'}));
+				tbody.grab(tr);
+			}));
+			document.id('chart').grab(tbody);
+			drawBars();
 		}
 	});
 
+
 	getStats();
-})
+});
 </script>
 <table>
 	<tr>
@@ -67,22 +118,26 @@ window.addEvent('domready', function() {
 			<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
 			<?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?>:
 			<?php
-				echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-1 month')), 'start_time', 'start_time', '%Y-%m-%d' );
+				echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-3 month'))->toFormat( '%Y-%m-%d' ), 'start_time', 'start_time', '%Y-%m-%d' );
 			?> - <?php
-				echo JHTML::_('calendar', RaidPlannerHelper::getDate('now'), 'end_time', 'end_time', '%Y-%m-%d' );
+				echo JHTML::_('calendar', RaidPlannerHelper::getDate('now')->toFormat( '%Y-%m-%d' ), 'end_time', 'end_time', '%Y-%m-%d' );
 			?>
-			<?php if (1==0): ?>
 			<select name="character_id" id="character_id">
 				<option></option>
 				<?php foreach ($this->characters as $character_id => $character) : ?>
-				<option value="<?php echo $character_id;?>"><?php echo $character['char_name'];?></option>
+				<option value="<?php echo $character_id;?>"><?php echo $character->char_name;?></option>
 				<?php endforeach; ?>
 			</select>
-			<?php endif; ?>
 			<select name="group_id" id="group_id">
 				<option></option>
 				<?php foreach ($this->groups as $group_id => $group) : ?>
 				<option value="<?php echo $group_id;?>"><?php echo $group->group_name;?></option>
+				<?php endforeach; ?>
+			</select>
+			<select name="guild_id" id="guild_id">
+				<option></option>
+				<?php foreach ($this->guilds as $guild_id => $guild) : ?>
+				<option value="<?php echo $guild_id;?>"><?php echo $guild->guild_name;?></option>
 				<?php endforeach; ?>
 			</select>
 		</td>

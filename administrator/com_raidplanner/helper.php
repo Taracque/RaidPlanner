@@ -146,6 +146,14 @@ class RaidPlannerHelper
 		return $db->loadObjectList('race_id');
 	}
 
+	public static function getCharacters()
+	{
+		$db = & JFactory::getDBO();
+		$query = ' SELECT character_id,char_name FROM #__raidplanner_character';
+		$db->setQuery( $query );
+		return $db->loadObjectList('character_id');
+	}
+
 	public static function getUsers()
 	{
 		$db	=& JFactory::getDBO();

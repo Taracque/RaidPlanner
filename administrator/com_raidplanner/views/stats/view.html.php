@@ -16,7 +16,6 @@ jimport( 'joomla.application.component.view' );
 JHTML::_('behavior.mootools');
 
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
-JHTML::script('MilkChart_src.js', 'administrator/components/com_raidplanner/assets/');
 
 class RaidPlannerViewStats extends JView
 {
@@ -41,8 +40,9 @@ class RaidPlannerViewStats extends JView
 		$lists['filter_character_id'] = $state->get( 'filter_character_id' );
 		$lists['filter_group_id'] = $state->get( 'filter_group_id' );
 
+		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
 		$this->assignRef( 'groups', RaidPlannerHelper::getGroups() );
-/*		$this->assignRef( 'charcters', RaidPlannerHelper::getGroups() ); */
+		$this->assignRef( 'characters', RaidPlannerHelper::getCharacters() );
 		$this->assignRef( 'lists', $lists );
 
 		parent::display($tpl);

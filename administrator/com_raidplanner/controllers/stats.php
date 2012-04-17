@@ -20,30 +20,47 @@ class RaidPlannerControllerStats extends RaidPlannerController
 	{
 		$start_time = JRequest::getVar('start_time', '', 'get', 'date');
 		$end_time	= JRequest::getVar('end_time', '', 'get', 'date');
-		$char_id	= JRequest::getVar('char_id', '', 'get', 'int');
+		$char_id	= JRequest::getVar('character_id', '', 'get', 'int');
 		$group_id	= JRequest::getVar('group_id', '', 'get', 'int');
 		
 		$where = array();
 		$where[] = 'c.char_name IS NOT NULL';
-		$stat_x = "c.char_name,SUM(IF(s.queue=-1,1,0)) AS not_attending,SUM(IF(s.queue=1,1,0)) AS attending,SUM(IF(s.queue=2,1,0)) AS late, SUM(IF(s.confirmed=1,1,0)) AS confirmed, COUNT(r.raid_id) AS raids";
+		$stat_x = array(
+			0	=>	'c.char_name',
+			1	=>	'SUM(IF(s.queue=1,1,0)) AS attending',
+			2	=>	'SUM(IF(s.queue=2,1,0)) AS late',
+			3	=>	'SUM(IF(s.queue=-1,1,0)) AS not_attending',
+			4	=>	'SUM(IF(s.confirmed=1,1,0)) AS confirmed',
+			5	=>	'COUNT(r.raid_id) AS raids'			// FIXME: Invited raid count
+		);
 		$stat_y = "c.char_name";
-		
+		$titles = array( 
+			0	=>	JText::_( 'COM_RAIDPLANNER_CHARACTER_NAME'),
+			1	=>	JText::_( 'COM_RAIDPLANNER_STATUSES_1'),
+			2	=>	JText::_( 'COM_RAIDPLANNER_STATUSES_2'),
+			3	=>	JText::_( 'COM_RAIDPLANNER_STATUSES_-1'),
+			4	=>	JText::_( 'COM_RAIDPLANNER_CONFIRMATIONS_1'),
+			5	=>	JText::_( 'COM_RAIDPLANNER_RAIDS')
+		);
+
 		$db =& JFactory::getDBO();
 		if ($group_id > 0) {
 			$where[] = 'g.group_id=' . intval($group_id);
 		}
 		if ($char_id > 0) {
-			$where[] = 'c.char_id=' . intval($char_id);
+			$where[] = 'c.character_id=' . intval($char_id);
 			$stat_y = "MONTH(r.start_time)";
+			$stat_x[0] = "MONTH(r.start_time) AS month";
+			$titles[0] = JText::_( 'COM_RAIDPLANNER_START_TIME');
 		}
 		if ($start_time != '') {
 			$where[] = 'r.start_time>=' . $db->Quote( $start_time );
 		}
-		if ($start_end != '') {
+		if ($end_time != '') {
 			$where[] = 'r.start_time<=' . $db->Quote( $end_time );
 		}
 		
-		$query = "SELECT " . $stat_x .
+		$query = "SELECT " . implode(", ", $stat_x) .
 					" FROM #__raidplanner_raid AS r " .
 					" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
 					" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
@@ -53,7 +70,12 @@ class RaidPlannerControllerStats extends RaidPlannerController
 		$query .= " GROUP BY " . $stat_y;
 		$db->setQuery($query);
 		
-		echo json_encode( $db->loadObjectList() );
+		echo json_encode(
+			array(
+				'titles'	=> $titles,
+				'data'		=> $db->loadObjectList()
+			)
+		);
 		
 		die();
 	}
