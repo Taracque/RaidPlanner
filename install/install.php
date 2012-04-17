@@ -194,7 +194,7 @@ function com_install()
 		if (count($list) > 0)
 		{
 			foreach ($list as $guild) {
-				$params = json_decode( $guild->params );
+				$params = json_decode( $guild->params , true );
 				$params['guild_region'] = $guild->guild_region;
 				$params['guild_realm'] = $guild->guild_realm;
 				$params['guild_level'] = $guild->guild_level;
