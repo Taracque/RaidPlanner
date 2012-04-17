@@ -14,6 +14,20 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 var colors = [
 	'black','green','orange','red',''
 ];
+var months = [];
+months[ 1] = '<?php echo JText::_( 'JANUARY' );?>';
+months[ 2] = '<?php echo JText::_( 'FEBRUARY' );?>';
+months[ 3] = '<?php echo JText::_( 'MARCH' );?>';
+months[ 4] = '<?php echo JText::_( 'APRIL' );?>';
+months[ 5] = '<?php echo JText::_( 'MAY' );?>';
+months[ 6] = '<?php echo JText::_( 'JUNE' );?>';
+months[ 7] = '<?php echo JText::_( 'JULY' );?>';
+months[ 8] = '<?php echo JText::_( 'AUGUST' );?>';
+months[ 9] = '<?php echo JText::_( 'SEPTEMBER' );?>';
+months[10] = '<?php echo JText::_( 'OCTOBER' );?>';
+months[11] = '<?php echo JText::_( 'NOVEMBER' );?>';
+months[12] = '<?php echo JText::_( 'DECEMBER' );?>';
+
 function getStats()
 {
 	statReq.get({
@@ -97,6 +111,9 @@ window.addEvent('domready', function() {
 				tr = new Element('tr');
 				var i = 0;
 				Object.each(row,(function(value){
+					if ( (i==0) && (responseJSON.type=='bymonth') ) {
+						value = months[value.toInt()];
+					}
 					tr.grab(new Element('td',{'text':value,styles:{color:colors[i]}}));
 					i++;
 				}));

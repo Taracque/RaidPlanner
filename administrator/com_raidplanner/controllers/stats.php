@@ -24,6 +24,7 @@ class RaidPlannerControllerStats extends RaidPlannerController
 		$group_id	= JRequest::getVar('group_id', '', 'get', 'int');
 		
 		$where = array();
+		$type = 'bychar';
 		$where[] = 'c.char_name IS NOT NULL';
 		$stat_x = array(
 			0	=>	'c.char_name',
@@ -51,7 +52,8 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			$where[] = 'c.character_id=' . intval($char_id);
 			$stat_y = "MONTH(r.start_time)";
 			$stat_x[0] = "MONTH(r.start_time) AS month";
-			$titles[0] = JText::_( 'COM_RAIDPLANNER_START_TIME');
+			$titles[0] = JText::_( 'COM_RAIDPLANNER_MONTH');
+			$type = 'bymonth';
 		}
 		if ($start_time != '') {
 			$where[] = 'r.start_time>=' . $db->Quote( $start_time );
@@ -73,11 +75,13 @@ class RaidPlannerControllerStats extends RaidPlannerController
 		echo json_encode(
 			array(
 				'titles'	=> $titles,
-				'data'		=> $db->loadObjectList()
+				'data'		=> $db->loadObjectList(),
+				'type'		=> $type
 			)
 		);
 		
-		die();
+		$app = &JFactory::getApplication();
+		$app->close();
 	}
 	
 }
