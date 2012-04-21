@@ -93,7 +93,7 @@ class RaidPlannerModelGuilds extends JModel
      */
     function _buildQuery()
     {
-        $query = ' SELECT guild.*,(SELECT COUNT(character_id) FROM jos_raidplanner_character WHERE guild_id=guild.guild_id) AS members FROM jos_raidplanner_guild AS guild ' . $this->_buildQueryWhere();
+        $query = 'SELECT guild.*,(SELECT COUNT(character_id) FROM #__raidplanner_character WHERE guild_id=guild.guild_id) AS members FROM #__raidplanner_guild AS guild' . $this->_buildQueryWhere();
         return $query;
     }
  
@@ -106,7 +106,7 @@ class RaidPlannerModelGuilds extends JModel
         // Lets load the data if it doesn't already exist
         if (empty( $this->_data ))
         {
-            $query = $this->_buildQuery(). $this->_buildContentOrderBy();
+            $query = $this->_buildQuery() . $this->_buildContentOrderBy();
             $this->_data = $this->_getList( $query , $this->getState('limitstart'), $this->getState('limit') );
         }
 
