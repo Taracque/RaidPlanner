@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<access component="com_raidplanner">
+	<section name="component">
+		<action name="raidplanner.allow_signup" title="COM_RAIDPLANNER_ALLOW_SIGNUP" description="COM_RAIDPLANNER_ALLOW_SIGNUP_DESC" />
+		<action name="raidplanner.view_raids" title="COM_RAIDPLANNER_VIEW_RAIDS" description="COM_RAIDPLANNER_VIEW_RAIDS_DESC" />
+		<action name="raidplanner.view_calendar" title="COM_RAIDPLANNER_VIEW_CALENDAR" description="COM_RAIDPLANNER_VIEW_CALENDAR_DESC" />
+		<action name="raidplanner.edit_raids_own" title="COM_RAIDPLANNER_EDIT_RAIDS_OWN" description="COM_RAIDPLANNER_EDIT_RAIDS_OWN_DESC" />
+		<action name="raidplanner.edit_raids_any" title="COM_RAIDPLANNER_EDIT_RAIDS_ANY" description="COM_RAIDPLANNER_EDIT_RAIDS_ANY_DESC" />
+		<action name="raidplanner.delete_raid_own" title="COM_RAIDPLANNER_DELETE_RAIDS_OWN" description="COM_RAIDPLANNER_DELETE_RAIDS_OWN_DESC" />
+		<action name="raidplanner.delete_raid_any" title="COM_RAIDPLANNER_DELETE_RAIDS_ANY" description="COM_RAIDPLANNER_DELETE_RAIDS_ANY_DESC" />
+		<action name="raidplanner.edit_characters" title="COM_RAIDPLANNER_EDIT_CHARACTERS" description="COM_RAIDPLANNER_EDIT_CHARACTERS_DESC" />
+	</section>
+</access>

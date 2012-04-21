@@ -19,6 +19,7 @@ jimport( 'joomla.error.error' );
 class RaidPlannerHelper
 {
 	private static $invite_alert_requested = false;
+	private static $use_joomla_acl = false;
 
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
@@ -95,6 +96,8 @@ class RaidPlannerHelper
 	{
 		$view = JRequest::getVar('view');
 
+		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER'), 'index.php?option=com_raidplanner&view=raidplanner', ($view == 'raidplanner'));
+		JSubMenuHelper::addEntry('', '', false);
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RAIDS'), 'index.php?option=com_raidplanner&view=raids', ($view == 'raids'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_GUILDS'), 'index.php?option=com_raidplanner&view=guilds', ($view == 'guilds'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CHARACTERS'), 'index.php?option=com_raidplanner&view=characters', ($view == 'characters'));
@@ -104,6 +107,20 @@ class RaidPlannerHelper
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RACES'), 'index.php?option=com_raidplanner&view=races', ($view == 'races'));
 		JSubMenuHelper::addEntry('', '', false);
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_STATS'), 'index.php?option=com_raidplanner&view=stats', ($view == 'stats'));
+	}
+	
+	private static function checkACL()
+	{
+		$version = new JVersion();
+		if ((!self::$use_joomla_acl) && ($version->RELEASE >= '1.6')) {
+		// use of Joomla ACL is not set and Joomla >= 1.6, check the database.
+			$db = & JFactory::getDBO();
+			$db->setQuery("SELECT COUNT(*) FROM #__raidplanner_permissions");
+			if ($db->loadResult() == 0) {
+				// no RaidPlanner group defined, use Joomla ACL.
+				self::$use_joomla_acl = true;
+			}
+		}
 	}
 	
 	public static function getTimezone( $user = null )
@@ -166,12 +183,23 @@ class RaidPlannerHelper
 
 	public static function getGroups( $guest = true )
 	{
+		self::checkACL();
 		$db	=& JFactory::getDBO();
-		if ($guest)
-		{
-			$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
+
+		if (self::$user_joomla_acl) {
+			// Joomla ACL used, return Joomla groups
+			// FIXME: dirty way to get Joomla usergroups, there can be a "Framework"friendly way
+			if ($guest) {
+				$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups ORDER BY title ASC";
+			} else {
+				$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups WHERE parent_id<>0 ORDER BY title ASC";
+			}
 		} else {
-			$query = "SELECT group_id,group_name FROM #__raidplanner_groups WHERE group_name<>'Guest' ORDER BY group_name ASC";
+			if ($guest) {
+				$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
+			} else {
+				$query = "SELECT group_id,group_name FROM #__raidplanner_groups WHERE group_name<>'Guest' ORDER BY group_name ASC";
+			}
 		}
 		$db->setQuery($query);
 		$db->query();
@@ -184,31 +212,40 @@ class RaidPlannerHelper
 		$reply = false;
 		
 		if ($permission!='') {
-			$guest = false;
-			if (!$user_id) {
-				$user =& JFactory::getUser();
-				$user_id = $user->id;
-				$guest = $user->guest;
-			}
-			$db = & JFactory::getDBO();
-			if (!$guest) {
-				/* check if user is member of a group, if not, default group used */
-				$query = "SELECT count(*) FROM #__raidplanner_profile AS profile WHERE profile.profile_id=".intval($user_id)."";
-				$db->setQuery($query);
-				$count = $db->loadResult();
-				if ($count>0)
-				{
-					$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
-				} else {
-					$query = "SELECT permission_value FROM #__raidplanner_groups AS groups LEFT JOIN #__raidplanner_permissions AS perm ON groups.group_id = perm.group_id WHERE groups.`default`=1 AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			self::checkACL();
+			// Joomla ACL
+			if (self::$use_joomla_acl) {
+				if (JFactory::getUser()->authorise('raidplanner.' . $permission, 'com_raidplanner')) {
+					$reply = true;
 				}
 			} else {
-				$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+			// RaidPlanner groups
+				$guest = false;
+				if (!$user_id) {
+					$user =& JFactory::getUser();
+					$user_id = $user->id;
+					$guest = $user->guest;
+				}
+				if (!$guest) {
+					$db	=& JFactory::getDBO();
+					/* check if user is member of a group, if not, default group used */
+					$query = "SELECT count(*) FROM #__raidplanner_profile AS profile WHERE profile.profile_id=".intval($user_id)."";
+					$db->setQuery($query);
+					$count = $db->loadResult();
+					if ($count>0)
+					{
+						$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+					} else {
+						$query = "SELECT permission_value FROM #__raidplanner_groups AS groups LEFT JOIN #__raidplanner_permissions AS perm ON groups.group_id = perm.group_id WHERE groups.`default`=1 AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+					}
+				} else {
+					$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
+				}
+				$db->setQuery($query);
+	
+				$dbreply = ($db->loadResultArray());
+				$reply = (@$dbreply[0] === "1");
 			}
-			$db->setQuery($query);
-
-			$dbreply = ($db->loadResultArray());
-			$reply = (@$dbreply[0] === "1");
 		}
 		return $reply;
 	}
