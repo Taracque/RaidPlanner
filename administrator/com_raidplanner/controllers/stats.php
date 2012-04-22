@@ -46,7 +46,7 @@ class RaidPlannerControllerStats extends RaidPlannerController
 
 		$db =& JFactory::getDBO();
 		if ($group_id > 0) {
-			$where[] = 'g.group_id=' . intval($group_id);
+			$where[] = 'p.group_id=' . intval($group_id);
 		}
 		if ($char_id > 0) {
 			$where[] = 'c.character_id=' . intval($char_id);
@@ -62,12 +62,22 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			$where[] = 'r.start_time<=' . $db->Quote( $end_time );
 		}
 		
-		$query = "SELECT " . implode(", ", $stat_x) .
-					" FROM #__raidplanner_raid AS r " .
-					" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
-					" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
-					" LEFT JOIN #__raidplanner_profile AS p ON p.profile_id = c.profile_id " .
-					" LEFT JOIN #__raidplanner_groups AS g ON g.group_id = p.group_id ";
+		if ( RaidPlannerHelper::checkACL() ) {
+			// Joomla ACL used, use Joomla usergroups
+			$query = "SELECT " . implode(", ", $stat_x) .
+						" FROM #__raidplanner_raid AS r " .
+						" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
+						" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
+						" LEFT JOIN #__user_usergroup_map AS p ON p.user_id = c.profile_id " .
+						" LEFT JOIN #__usergroups AS g ON g.id = p.group_id ";
+		} else {
+			$query = "SELECT " . implode(", ", $stat_x) .
+						" FROM #__raidplanner_raid AS r " .
+						" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
+						" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
+						" LEFT JOIN #__raidplanner_profile AS p ON p.profile_id = c.profile_id " .
+						" LEFT JOIN #__raidplanner_groups AS g ON g.group_id = p.group_id ";
+		}
 		$query .= " WHERE " . implode( " AND ", $where );
 		$query .= " GROUP BY " . $stat_y;
 		$db->setQuery($query);

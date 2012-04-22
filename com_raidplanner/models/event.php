@@ -227,7 +227,8 @@ class RaidPlannerModelEvent extends JModel
 
 	function syncProfile($user)
 	{
-		if (!$user->guest) {
+		// Not guest, and we are not using Joomla ACL
+		if ( (!$user->guest) && (!RaidPlannerHelper::checkACL()) ) {
 			$db = & JFactory::getDBO();
 	
 			// check if raidplanner profile exists

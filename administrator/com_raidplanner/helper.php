@@ -121,6 +121,8 @@ class RaidPlannerHelper
 				self::$use_joomla_acl = true;
 			}
 		}
+		
+		return self::$use_joomla_acl;
 	}
 	
 	public static function getTimezone( $user = null )
@@ -188,7 +190,6 @@ class RaidPlannerHelper
 
 		if (self::$user_joomla_acl) {
 			// Joomla ACL used, return Joomla groups
-			// FIXME: dirty way to get Joomla usergroups, there can be a "Framework"friendly way
 			if ($guest) {
 				$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups ORDER BY title ASC";
 			} else {
