@@ -13,6 +13,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <form action="index.php" method="post" name="adminForm">
 <div id="editcell">
+	<?php if (!$this->groups) : ?>
+	<h2><?php echo JText::_( 'COM_RAIDPLANNER_JOOMLA_GROUPS_USED');?></h2>
+	<p><?php echo JText::_( 'COM_RAIDPLANNER_JOOMLA_GROUPS_USED');?></p>
+	<div class="toolbar-list button">
+		<a class="modal" href="<?php echo JRoute::_( 'index.php?option=com_config&view=component&component=com_raidplanner&tmpl=component' );?>" rel="{handler: 'iframe', size: {x: 875, y: 550}, onClose: function() {}}">
+			<span class="icon-32-options"></span>
+			<?php echo JText::_( 'JOPTIONS' );?>
+		</a>
+	</div>
+	<?php else: ?>
     <table class="adminlist">
     <thead>
         <tr>
@@ -58,6 +68,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     }
     ?>
     </table>
+    <?php endif; ?>
 </div>
  
 <input type="hidden" name="option" value="com_raidplanner" />

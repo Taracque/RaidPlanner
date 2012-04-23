@@ -188,7 +188,7 @@ class RaidPlannerHelper
 		self::checkACL();
 		$db	=& JFactory::getDBO();
 
-		if (self::$user_joomla_acl) {
+		if (self::$use_joomla_acl) {
 			// Joomla ACL used, return Joomla groups
 			if ($guest) {
 				$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups ORDER BY title ASC";
@@ -278,16 +278,29 @@ class RaidPlannerHelper
 			}
 			if ($user_id) {
 				$db = & JFactory::getDBO();
-				
 				$date = RaidPlannerHelper::getDate();
-				$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
-						." LEFT JOIN #__raidplanner_profile AS p ON p.group_id = r.invited_group_id"
-						." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.profile_id"
-						." WHERE r.invited_group_id>0"
-						." AND s.raid_id IS NULL"
-						." AND p.profile_id = ".intval($user_id)
-						." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . $date->toMySQL() . "'"
-						." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . $date->toMySQL() . "'";
+				
+				self::checkACL();
+				// Joomla ACL
+				if (self::$use_joomla_acl) {
+					$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
+							." LEFT JOIN #__user_usergroup_map AS p ON p.group_id = r.invited_group_id"
+							." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.profile_id"
+							." WHERE r.invited_group_id>0"
+							." AND s.raid_id IS NULL"
+							." AND p.user_id = ".intval($user_id)
+							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . $date->toMySQL() . "'"
+							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . $date->toMySQL() . "'";
+				} else {
+					$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
+							." LEFT JOIN #__raidplanner_profile AS p ON p.group_id = r.invited_group_id"
+							." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.profile_id"
+							." WHERE r.invited_group_id>0"
+							." AND s.raid_id IS NULL"
+							." AND p.profile_id = ".intval($user_id)
+							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . $date->toMySQL() . "'"
+							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . $date->toMySQL() . "'";
+				}
 				$db->setQuery( $query );
 				self::$invite_alert_requested = true;
 

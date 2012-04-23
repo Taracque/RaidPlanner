@@ -13,12 +13,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
+JHtml::_('behavior.modal', 'a.modal');
+
 class RaidPlannerViewGroups extends JView
 {
 
     function display($tpl = null)
     {
-    
         JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_GROUPS' ), 'generic.png' );
         JToolBarHelper::makeDefault('setDefault');
         JToolBarHelper::deleteList();
