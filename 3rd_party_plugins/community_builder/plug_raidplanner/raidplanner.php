@@ -142,7 +142,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 			switch ( $output ) {
 				case 'htmledit':
 					$oReturn =	null;
-					if ( $reason == 'edit' ) {
+					if ( ( $reason == 'edit' ) || ( $reason == 'register' ) ) {
 						$value = $user->get( $field->name );
 						// Load language file
 						JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE );
