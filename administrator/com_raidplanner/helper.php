@@ -264,8 +264,8 @@ class RaidPlannerHelper
 					$user_id = $user->id;
 					$guest = $user->guest;
 				}
+				$db	=& JFactory::getDBO();
 				if (!$guest) {
-					$db	=& JFactory::getDBO();
 					/* check if user is member of a group, if not, default group used */
 					$query = "SELECT count(*) FROM #__raidplanner_profile AS profile WHERE profile.profile_id=".intval($user_id)."";
 					$db->setQuery($query);
