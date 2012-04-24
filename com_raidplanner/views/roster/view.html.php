@@ -14,8 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
-$version = new JVersion();
-if ($version->RELEASE == '1.5') {
+if ( RaidPlannerHelper::getJVersion() == '1.5') {
 	JHTML::script('mootools.more.125.additional.js', 'components/com_raidplanner/assets/');
 }
 JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');

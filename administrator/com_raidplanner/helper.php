@@ -20,6 +20,7 @@ class RaidPlannerHelper
 {
 	private static $invite_alert_requested = false;
 	private static $use_joomla_acl = false;
+	private static $jversion = null;
 
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
@@ -92,6 +93,15 @@ class RaidPlannerHelper
 		return  ($params);
 	}
 
+	public station function getJVersion()
+	{
+		if (!self::$jversion)
+		{
+			self::$jversion = new JVersion();
+		}
+		return self::$jversion->RELEASE;
+	}
+
 	public static function showToolbarButtons()
 	{
 		$view = JRequest::getVar('view');
@@ -111,8 +121,7 @@ class RaidPlannerHelper
 	
 	public static function checkACL()
 	{
-		$version = new JVersion();
-		if ((!self::$use_joomla_acl) && ($version->RELEASE >= '1.6')) {
+		if ((!self::$use_joomla_acl) && (self::getJVersion() >= '1.6')) {
 		// use of Joomla ACL is not set and Joomla >= 1.6, check the database.
 			$db = & JFactory::getDBO();
 			$db->setQuery("SELECT COUNT(*) FROM #__raidplanner_permissions");
@@ -376,8 +385,7 @@ class RaidPlannerHelper
 	
 	public static function shortDateFormat()
 	{
-		$version = new JVersion();
-		switch ($version->RELEASE) {
+		switch ( self::getJVersion() ) {
 			case '1.5':
 				$dateformat = JText::_('DATE_FORMAT_LC4') . ' %H:%M';
 			break;
@@ -391,8 +399,7 @@ class RaidPlannerHelper
 
 	public static function sqlDateFormat()
 	{
-		$version = new JVersion();
-		switch ($version->RELEASE) {
+		switch ( self::getJVersion() ) {
 			case '1.5':
 				$dateformat = '%Y-%m-%d';
 			break;

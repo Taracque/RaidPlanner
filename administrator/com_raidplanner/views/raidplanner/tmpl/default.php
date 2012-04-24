@@ -18,13 +18,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<legend><?php echo JText::_('PLUGINS');?></legend>
 	<ul>
 <?php
-	$version = new JVersion();
-	if ($version->RELEASE == '1.5') {
+	if ( RaidPlannerHelper::getJVersion() == '1.5') {
 ?>
 		<li>UserMeta plugin (<?php echo JText::_('OPTIONAL'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'usermeta')?'ENABLED':'DISABLED');?></li>
 		<li>Mootools Upgrade plugin (<?php echo JText::_('REQUIRED'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'mtupgrade')?'ENABLED':'DISABLED');?></li>
 <?php
-	} elseif ($version->RELEASE >= '1.6') {
+	} elseif ( RaidPlannerHelper::getJVersion() >= '1.6') {
 ?>
 		<li>RaidPlanner User plugin: <?php echo JText::_( JPluginHelper::isEnabled('user', 'raidplanner')?'JENABLED':'JDISABLED');?></li>
 <?php

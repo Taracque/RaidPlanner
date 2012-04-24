@@ -10,8 +10,8 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
-$version = new JVersion();
-switch ($version->RELEASE) {
+
+switch ( RaidPlannerHelper::getJVersion() ) {
 	case '1.5':
 		$dateformat = '%Y-%m-%d %H:%M';
 	break;

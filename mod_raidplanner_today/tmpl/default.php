@@ -17,8 +17,7 @@ $event_count = 0;
 $lang =& JFactory::getLanguage();
 $lang->load('com_raidplanner');
 
-$version = new JVersion();
-switch ($version->RELEASE) {
+switch ( RaidPlannerHelper::getJVersion() ) {
 	case '1.5':
 		$timeformat = '%H:%M';
 	break;

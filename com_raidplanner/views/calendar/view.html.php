@@ -86,8 +86,7 @@ class RaidPlannerViewCalendar extends JView
 		$monthonly = date("m",mktime(0,0,0,$display_month,1,$display_year));
 		$shift = date("w",mktime(0,0,0,$display_month,1,$display_year));
 
-		$version = new JVersion();
-		switch ($version->RELEASE) {
+		switch ( RaidPlannerHelper::getJVersion() ) {
 			case '1.5':
 				$timeformat = '%H:%M';
 			break;

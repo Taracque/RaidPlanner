@@ -12,10 +12,14 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
-jimport( 'joomla.application.component.modeladmin' );
 
+if ( RaidPlannerHelper::getJVersion() >= 1.6 ) {
+	jimport( 'joomla.application.component.modeladmin' );
+} else {
+	class JModelAdmin extends JModel { }
+}
 
-/* FIXME: works with Joomla 1.6 only! */ 
+/* FIXME: works with Joomla 1.6 only! */
 class RaidPlannerModelGroups extends JModelAdmin
 {
     /**

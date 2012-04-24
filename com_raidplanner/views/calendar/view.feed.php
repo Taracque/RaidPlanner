@@ -33,8 +33,8 @@ class RaidPlannerViewCalendar extends JView
     	$tzname = timezone_name_from_abbr("", $tz * 3600, 0);
     	
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
-		$version = new JVersion();
-		switch ($version->RELEASE) {
+
+		switch ( RaidPlannerHelper::getJVersion() ) {
 			case '1.5':
 				$dateformat = '%Y%m%dT%H%M%S';
 			break;
@@ -57,7 +57,8 @@ class RaidPlannerViewCalendar extends JView
 
         parent::display($tpl);
         
-        die();
+		$app = &JFactory::getApplication();
+		$app->close();
     }
     
 }
