@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <?php if (!$this->groups) : ?>
 	<?php if ($this->canDo->get('core.admin')): ?>
-		<form action="index.php?option=com_config">
+		<form action="<?php echo JRoute::_( 'index.php?option=com_config' );?>" method="post" name="adminForm" class="form-validate">
 			<div class="width-100 fltlft">
 				<fieldset class="panelform">
 					<legend><?php echo JText::_('COM_CONTENT_FIELDSET_RULES');?></legend>
@@ -21,11 +21,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					<?php echo $this->form->getInput('rules'); ?>
 				</fieldset>
 			</div>
-			<input type="submit" value="submit" name="submit" />
+			<button type="button" onclick="Joomla.submitform('component.apply', this.form);"><?php echo JText::_( 'JAPPLY' );?></button>
 	
-			<input type="hidden" name="id" value="10003" />
+			<input type="hidden" name="id" value="10050" />
 			<input type="hidden" name="component" value="com_raidplanner" />
 			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="view" value="groups" />
+			<input type="hidden" name="section" value="groups" />
 			<?php echo JHtml::_('form.token'); ?>
 
 		</form>
