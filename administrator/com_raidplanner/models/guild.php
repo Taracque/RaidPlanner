@@ -77,6 +77,10 @@ class RaidPlannerModelGuild extends JModel
 			return false;
 		}
 
+		if ($this->_id==0) {
+			$this->_id = $row->guild_id;
+		}
+
 		// Make sure the record is valid
 		if (!$row->check()) {
 			$this->setError($this->_db->getErrorMsg());
@@ -94,7 +98,7 @@ class RaidPlannerModelGuild extends JModel
 			RaidPlannerHelper::RosterSync( $data['guild_id'], 0 , true );
 		}
 
-		return true;
+		return $row->guild_id;
 	}
 
 	/**

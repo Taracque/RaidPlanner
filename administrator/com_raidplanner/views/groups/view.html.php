@@ -27,6 +27,10 @@ class RaidPlannerViewGroups extends JView
         JToolBarHelper::addNewX();
 
 		RaidPlannerHelper::showToolbarButtons();
+		
+		$this->form		= $this->get('Form');
+		
+		$this->canDo	= RaidPlannerHelper::getActions();
 
         // Get data from the model
         $groups =& $this->get( 'Data');

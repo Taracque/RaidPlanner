@@ -77,8 +77,7 @@ class RaidPlannerModelCharacter extends JModel
 			$this->setError( $this->_db->getErrorMsg() );
 			return false;
 		}
-		
-		return true;
+		return $row->character_id;
 	}
 
 	/**

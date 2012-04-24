@@ -86,7 +86,7 @@ class RaidPlannerModelRaid extends JModel
 			return false;
 		}
 
-		return true;
+		return $row->raid_id;
 	}
 
 	/**

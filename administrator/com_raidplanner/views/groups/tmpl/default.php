@@ -11,18 +11,28 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
+<?php if (!$this->groups) : ?>
+	<?php if ($this->canDo->get('core.admin')): ?>
+		<form action="index.php?option=com_config">
+			<div class="width-100 fltlft">
+				<fieldset class="panelform">
+					<legend><?php echo JText::_('COM_CONTENT_FIELDSET_RULES');?></legend>
+					<?php echo $this->form->getLabel('rules'); ?>
+					<?php echo $this->form->getInput('rules'); ?>
+				</fieldset>
+			</div>
+			<input type="submit" value="submit" name="submit" />
+	
+			<input type="hidden" name="id" value="10003" />
+			<input type="hidden" name="component" value="com_raidplanner" />
+			<input type="hidden" name="task" value="" />
+			<?php echo JHtml::_('form.token'); ?>
+
+		</form>
+	<?php endif; ?>
+<?php else: ?>
 <form action="index.php" method="post" name="adminForm">
 <div id="editcell">
-	<?php if (!$this->groups) : ?>
-	<h2><?php echo JText::_( 'COM_RAIDPLANNER_JOOMLA_GROUPS_USED');?></h2>
-	<p><?php echo JText::_( 'COM_RAIDPLANNER_JOOMLA_GROUPS_USED');?></p>
-	<div class="toolbar-list button">
-		<a class="modal" href="<?php echo JRoute::_( 'index.php?option=com_config&view=component&component=com_raidplanner&tmpl=component' );?>" rel="{handler: 'iframe', size: {x: 875, y: 550}, onClose: function() {}}">
-			<span class="icon-32-options"></span>
-			<?php echo JText::_( 'JOPTIONS' );?>
-		</a>
-	</div>
-	<?php else: ?>
     <table class="adminlist">
     <thead>
         <tr>
@@ -68,7 +78,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     }
     ?>
     </table>
-    <?php endif; ?>
 </div>
  
 <input type="hidden" name="option" value="com_raidplanner" />
@@ -77,3 +86,4 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <input type="hidden" name="controller" value="groups" />
 <input type="hidden" name="view" value="groups" />
 </form>
+<?php endif; ?>

@@ -109,7 +109,7 @@ class RaidPlannerHelper
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_STATS'), 'index.php?option=com_raidplanner&view=stats', ($view == 'stats'));
 	}
 	
-	private static function checkACL()
+	public static function checkACL()
 	{
 		$version = new JVersion();
 		if ((!self::$use_joomla_acl) && ($version->RELEASE >= '1.6')) {
@@ -123,6 +123,34 @@ class RaidPlannerHelper
 		}
 		
 		return self::$use_joomla_acl;
+	}
+
+	/**
+	 * Gets a list of the actions that can be performed.
+	 *
+	 * @return	JObject
+	 * @since	1.6
+	 */
+	public static function getActions( $id = null)
+	{
+		$user	= JFactory::getUser();
+		$result	= new JObject;
+
+		$assetName = 'com_raidplanner';
+
+		$actions = array(
+		/* admin actions */
+			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete',
+		/* frontend actions */
+			'raidplanner.allow_signup', 'raidplanner.view_raids', 'raidplanner.view_calendar', 'raidplanner.edit_raids_own',
+			'raidplanner.edit_raids_any', 'raidplanner.delete_raid_own', 'raidplanner.delete_raid_any', 'raidplanner.edit_characters'
+		);
+
+		foreach ($actions as $action) {
+			$result->set($action,	$user->authorise($action, $assetName));
+		}
+
+		return $result;
 	}
 	
 	public static function getTimezone( $user = null )

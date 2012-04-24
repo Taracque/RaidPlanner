@@ -12,8 +12,11 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
- 
-class RaidPlannerModelGroups extends JModel
+jimport( 'joomla.application.component.modeladmin' );
+
+
+/* FIXME: works with Joomla 1.6 only! */ 
+class RaidPlannerModelGroups extends JModelAdmin
 {
     /**
      * Data array
@@ -49,4 +52,24 @@ class RaidPlannerModelGroups extends JModel
 
         return $this->_data;
     }
+
+	/**
+	 * Method to get the record form.
+	 *
+	 * @param	array	$data		An optional array of data for the form to interogate.
+	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
+	 * @return	JForm	A JForm object on success, false on failure
+	 * @since	1.6
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// Get the form.
+		$form = $this->loadForm('com_raidplanner.groups', 'groups', array('control' => 'jform', 'load_data' => $loadData));
+		if (empty($form)) {
+			return false;
+		}
+
+		return $form;
+	}
+	
 }
