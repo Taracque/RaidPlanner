@@ -93,7 +93,7 @@ class RaidPlannerHelper
 		return  ($params);
 	}
 
-	public station function getJVersion()
+	public static function getJVersion()
 	{
 		if (!self::$jversion)
 		{
