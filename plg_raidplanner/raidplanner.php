@@ -67,10 +67,10 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-
+	
+		/* replace various possible separators to \n */
 		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $this->value );
-		$chars = preg_replace('!\s+!', ' ', $chars);
-		$chars = explode( " ", $chars);
+		$chars = explode( "\n", $chars);
 
 		$html = '<input type="hidden" name="' . $this->name. '" value="' . implode("\n",$chars). '" id="rp_characterEditorValue_' . $this->id . '" />';
 		$html .= '<div style="width:' . $this->element['cols'] . 'em;height:' . ($this->element['rows'] * 2) . 'em;overflow-y:auto;overflow-x:hidden;border: 1px inset gray;">';

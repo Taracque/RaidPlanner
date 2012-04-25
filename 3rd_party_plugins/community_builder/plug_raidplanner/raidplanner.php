@@ -202,10 +202,10 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				
 						// Add the script to the document head.
 						JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-				
-						$chars = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $value );
-						$chars = preg_replace('!\s+!', ' ', $chars);
-						$chars = explode( " ", $chars);
+						
+						/* replace various possible separators to \n */
+						$chars = str_replace( array("\n", ",", ";", "\r", "\t"), "\n", $value );
+						$chars = explode( "\n", $chars);
 				
 						$html = '<input type="hidden" name="' . $field->name. '" value="' . implode("\n",$chars). '" id="rp_characterEditorValue_' . $field->fieldid . '" />';
 						$html .= '<div style="width:' . $field->params->get('cols', 40) . 'em;height:' . $field->params->get('rows',5) . 'em;overflow-y:auto;overflow-x:hidden;border:1px inset gray;">';
