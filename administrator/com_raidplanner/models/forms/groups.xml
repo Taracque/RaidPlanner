@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<form>
-	<fieldset>
-		<field name="rules" type="rules" label="JFIELD_RULES_LABEL"
-			translate_label="false" class="inputbox" filter="rules"
-			component="com_raidplanner" section="frontend" validate="rules"
-		/>
-	</fieldset>
-</form>

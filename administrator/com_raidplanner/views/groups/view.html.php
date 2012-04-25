@@ -25,12 +25,7 @@ class RaidPlannerViewGroups extends JView
         // Get data from the model
         $groups =& $this->get( 'Data');
 
-		if (!$groups) {
-			/* no groups found, use Joomla ACL */
-			$this->form		= $this->get('Form');
-			$this->canDo	= RaidPlannerHelper::getActions();
-			JToolBarHelper::custom('saveRules', 'save' ,'save' , JText::_( 'JAPPLY' ) );
-		} else {
+		if ($groups) {
 			JToolBarHelper::makeDefault('setDefault');
 			JToolBarHelper::deleteList();
 			JToolBarHelper::editListX();

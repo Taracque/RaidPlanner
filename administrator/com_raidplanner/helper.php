@@ -21,6 +21,11 @@ class RaidPlannerHelper
 	private static $invite_alert_requested = false;
 	private static $use_joomla_acl = false;
 	private static $jversion = null;
+	private static $acl_map = array(
+		'raidplanner.edit_raids_own'	=>	'core.edit.own',
+		'raidplanner.edit_raids_any'	=>	'core.edit',
+		'raidplanner.delete_raid_any'	=>	'core.delete'
+	);
 
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
@@ -149,10 +154,10 @@ class RaidPlannerHelper
 
 		$actions = array(
 		/* admin actions */
-			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete',
+			'core.admin', 'core.manage',
 		/* frontend actions */
-			'raidplanner.allow_signup', 'raidplanner.view_raids', 'raidplanner.view_calendar', 'raidplanner.edit_raids_own',
-			'raidplanner.edit_raids_any', 'raidplanner.delete_raid_own', 'raidplanner.delete_raid_any', 'raidplanner.edit_characters'
+			'core.delete', 'core.edit', 'core.edit.own',
+			'raidplanner.delete_raid_own', 'raidplanner.allow_signup', 'raidplanner.view_raids', 'raidplanner.view_calendar', 'raidplanner.edit_characters'
 		);
 
 		foreach ($actions as $action) {
@@ -253,7 +258,11 @@ class RaidPlannerHelper
 			self::checkACL();
 			// Joomla ACL
 			if (self::$use_joomla_acl) {
-				if (JFactory::getUser()->authorise('raidplanner.' . $permission, 'com_raidplanner')) {
+				$permission = 'raidplanner.' . $permission;
+				if (isset(self::$acl_map[ $permission ])) {
+					$permission = self::$acl_map[ $permission ];
+				}
+				if (JFactory::getUser()->authorise($permission, 'com_raidplanner')) {
 					$reply = true;
 				}
 			} else {
