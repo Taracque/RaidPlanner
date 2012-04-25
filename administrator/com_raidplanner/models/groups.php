@@ -68,12 +68,26 @@ class RaidPlannerModelGroups extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
+		
 		$form = $this->loadForm('com_raidplanner.groups', 'groups', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
 
 		return $form;
+	}
+	
+	protected function loadFormData()
+	{
+		$asset	= JTable::getInstance('asset');
+		if ($asset->loadByName( 'com_raidplanner.frontend' )) {
+			/* have an asset load it into the form */
+			return array(
+					'rules'	=>	json_decode( $asset->rules , true)
+			);
+		}
+		
+		return false;
 	}
 	
 }

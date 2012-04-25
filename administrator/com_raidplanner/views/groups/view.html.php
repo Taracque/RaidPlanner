@@ -21,19 +21,23 @@ class RaidPlannerViewGroups extends JView
     function display($tpl = null)
     {
         JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_GROUPS' ), 'generic.png' );
-        JToolBarHelper::makeDefault('setDefault');
-        JToolBarHelper::deleteList();
-        JToolBarHelper::editListX();
-        JToolBarHelper::addNewX();
-
-		RaidPlannerHelper::showToolbarButtons();
-		
-		$this->form		= $this->get('Form');
-		
-		$this->canDo	= RaidPlannerHelper::getActions();
 
         // Get data from the model
         $groups =& $this->get( 'Data');
+
+		if (!$groups) {
+			/* no groups found, use Joomla ACL */
+			$this->form		= $this->get('Form');
+			$this->canDo	= RaidPlannerHelper::getActions();
+			JToolBarHelper::custom('saveRules', 'save' ,'save' , JText::_( 'JAPPLY' ) );
+		} else {
+			JToolBarHelper::makeDefault('setDefault');
+			JToolBarHelper::deleteList();
+			JToolBarHelper::editListX();
+			JToolBarHelper::addNewX();
+		}
+
+		RaidPlannerHelper::showToolbarButtons();
  
         $this->assignRef( 'groups', $groups );
  

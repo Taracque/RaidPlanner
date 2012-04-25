@@ -22,7 +22,7 @@ class RaidPlannerControllerGroups extends RaidPlannerController
 		parent::__construct();
 
 		// Register Extra tasks
-		$this->registerTask( 'add'  , 	'edit' );
+		$this->registerTask( 'add' , 'edit' );
 	}
 
 	/**
@@ -92,6 +92,31 @@ class RaidPlannerControllerGroups extends RaidPlannerController
 			$msg = JText::_( 'COM_RAIDPLANNER_DEFAULT_GROUP_CANT_CHANGED' );
 		} else {
 			$msg = JText::_( 'COM_RAIDPLANNER_DEFAULT_GROUP_CHANGED' );
+		}
+		$this->setRedirect( 'index.php?option=com_raidplanner&view=groups', $msg );
+	}
+	
+	function saveRules()
+	{
+		$data = JRequest::getVar('jform', array(), 'post', 'array');
+		if (isset($data['rules'])) {
+			$rules	= new JAccessRules($data['rules']);
+			$asset	= JTable::getInstance('asset');
+
+			if (!$asset->loadByName( 'com_raidplanner.frontend' )) {
+				$root	= JTable::getInstance('asset');
+				$root->loadByName('root.1');
+				$asset->name = 'com_raidplanner.frontend';
+				$asset->title = 'com_raidplanner.frontend';
+				$asset->setLocation($root->id, 'last-child');
+			}
+			$asset->rules = (string) $rules;
+
+			if (!$asset->check() || !$asset->store()) {
+				$this->setError($asset->getError());
+				return false;
+			}
+			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_GROUP') );
 		}
 		$this->setRedirect( 'index.php?option=com_raidplanner&view=groups', $msg );
 	}
