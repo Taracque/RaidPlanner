@@ -46,16 +46,6 @@ class RaidPlannerModelRoster extends JModel
 		$tmp = $db->loadObject();
 		$tmp->params = json_decode($tmp->params);
 		
-		if ( (!isset($tmp->params)) || ($tmp->params->emblem == null) )
-		{
-			$tmp->params->side = '';
-			$tmp->params->char_link = '#';
-			$tmp->params->link='#';
-			$tmp->params->armory = false;
-		} else {
-			$tmp->params->armory = true;
-		}
-
 		return ( $tmp );
 	}
 

@@ -11,10 +11,14 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class lotro
+class RaidPlannerPluginLotro extends RaidPlannerPlugin
 {
+	function __construct( $guild_id, $guild_name, $params)
+	{
+		parent::__construct( $guild_id, $guild_name, $params);
+	}
 
-	public function Sync( $guild_data , $sync_interval , $showOkStatus = false )
+	public function doSync( $showOkStatus = false )
 	{
 		$db = & JFactory::getDBO();
 
