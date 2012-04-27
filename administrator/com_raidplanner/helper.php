@@ -15,6 +15,7 @@ require_once ( JPATH_BASE . DS . 'includes' . DS . 'defines.php' );
 require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
 
 jimport( 'joomla.error.error' );
+jimport( 'joomla.filesystem.file' );
 
 class RaidPlannerHelper
 {
