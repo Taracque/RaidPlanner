@@ -9,7 +9,7 @@
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
 	<version>0.6.9</version>
-	<releaseDate>2012-04-24</releaseDate>
+	<releaseDate>2012-05-08</releaseDate>
 	<releaseType>Development release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
@@ -82,6 +82,7 @@
 			<filename>config.xml</filename>
 			<filename>access.xml</filename>
 			<folder>assets</folder>
+			<folder>includes</folder>
 			<folder>models</folder>
 			<folder>views</folder>
 			<folder>controllers</folder>

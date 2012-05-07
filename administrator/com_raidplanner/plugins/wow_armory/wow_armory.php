@@ -11,21 +11,24 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class wow_armory
+class RaidPlannerPluginWow_armory extends RaidPlannerPlugin
 {
 
-	public function Sync( $guild_data , $sync_interval , $showOkStatus = false )
+	function __construct( $guild_id, $guild_name, $params)
+	{
+		parent::__construct( $guild_id, $guild_name, $params);
+	}
+
+	public function doSync( $showOkStatus = false )
 	{
 		$db = & JFactory::getDBO();
 
-		$guild_id = $guild_data->guild_id;
-		
-		$region = $guild_data->params['guild_region'];
-		$realm = $guild_data->params['guild_realm'];
+		$region = $this->params['guild_region'];
+		$realm = $this->params['guild_realm'];
 
 		$url = "http://" . $region . ".battle.net/api/wow/guild/";
 		$url .= rawurlencode( $realm ) . "/";
-		$url .= rawurlencode( $guild_data->guild_name );
+		$url .= rawurlencode( $this->guild_name );
 		$url = $url . "?fields=members";
 
 		// Init cURL
@@ -59,15 +62,8 @@ class wow_armory
 			JError::raiseWarning('100','ArmorySync failed');
 			return null;
 		}
-		if (!$guild_id)
-		{
-			$query = "INSERT INTO #__raidplanner_guild (guild_name) VALUES (".$db->Quote($data->name).")";
-			$db->setQuery($query);
-			$db->query();
-			$guild_id=$db->insertid();
-		}
 
-		if (($guild_data->guild_name == @$data->name) && ($data->name!=''))
+		if (($this->guild_name == @$data->name) && ($data->name!=''))
 		{
 			$params = array(
 				'achievementPoints' => $data->achievementPoints,
@@ -80,18 +76,18 @@ class wow_armory
 				'guild_level'	=>	$data->level
 			);
 
-			$params = array_merge( $guild_data->params, $params );
+			$this->params = array_merge( $this->params, $params );
 			
 			$query = "UPDATE #__raidplanner_guild SET
 							guild_name=".$db->Quote($data->name).",
 							params=".$db->Quote(json_encode($params)).",
 							lastSync=NOW()
-							WHERE guild_id=".intval($guild_id);
+							WHERE guild_id=".intval($this->guild_id);
 			$db->setQuery($query);
 			$db->query();
 
 			/* detach characters from guild */
-			$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($guild_id)."";
+			$query = "UPDATE #__raidplanner_character SET guild_id=0 WHERE guild_id=".intval($this->guild_id)."";
 			$db->setQuery($query);
 			$db->query();
 
@@ -113,7 +109,7 @@ class wow_armory
 															,gender_id='".(intval($member->character->gender) + 1)."'
 															,char_level='".intval($member->character->level)."'
 															,rank='".intval($member->rank)."'
-															,guild_id='".intval($guild_id)."'
+															,guild_id='".intval($this->guild_id)."'
 															WHERE character_id=".$char_id;
 				$db->setQuery($query);
 				$db->query();
@@ -132,4 +128,33 @@ class wow_armory
 			JError::raiseWarning('100', 'ArmorySync data doesn\'t match');
 		}
 	}
+
+	public function characterLink( $char_name )
+	{
+		return sprintf($this->params['char_link'], rawurlencode($this->params['guild_realm']), rawurlencode($char_name) ) . '" target="_blank';
+	}
+	
+	public function guildHeader()
+	{
+		JHTML::script('guild-tabard.js', 'components/com_raidplanner/assets/');
+		
+		$header = array();
+		$header[] = '<canvas id="rp_guild_tabard" width="120" height="120"></canvas>';
+		$header[] = '<script type="text/javascript">';
+		$header[] = '	window.addEvent("domready",function(){';
+		$header[] = '		var tabard = new GuildTabard("rp_guild_tabard", {';
+		$header[] = '			"ring": "' . $this->params['side'] . '",';
+		$header[] = '			"bg": [ 0, "' . $this->params['emblem']['backgroundColor'] . '" ], ';
+		$header[] = '			"border": [ "' . $this->params['emblem']['border'] . '", "' . $this->params['emblem']['borderColor'] . '" ], ';
+		$header[] = '			"emblem": [ "' . $this->params['emblem']['icon'] . '", "' . $this->params['emblem']['iconColor'] . '" ], ';
+		$header[] = '		}, "' . JURI::base() . 'images/raidplanner/tabards/");';
+		$header[] = '	});';
+		$header[] = '</script>';
+		$header[] = '<h2><a href="' . $this->params['link'] . '" target="_blank">' . $this->guild_name . '</a></h2>';
+		$header[] = '<strong>' . JText::_('COM_RAIDPLANNER_LEVEL') . " " . $this->params['guild_level'] . " " . $this->params['side'] . " " . JText::_('COM_RAIDPLANNER_GUILD') . '<br />';
+		$header[] = $this->params['guild_realm'] . " - " . strtoupper($this->params['guild_region']) . '</strong>';
+
+		return implode("\n", $header);
+	}
+
 }

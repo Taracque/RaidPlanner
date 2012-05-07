@@ -18,7 +18,6 @@ if ( RaidPlannerHelper::getJVersion() == '1.5') {
 	JHTML::script('mootools.more.125.additional.js', 'components/com_raidplanner/assets/');
 }
 JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');
-JHTML::script('guild-tabard.js', 'components/com_raidplanner/assets/');
 
 class RaidPlannerViewRoster extends JView
 {
@@ -36,12 +35,14 @@ class RaidPlannerViewRoster extends JView
 
 		$guild_id = $paramsObj->get('guild_id', '0');
 		$show_account = $paramsObj->get('show_account', '0');
-		if ($paramsObj->get('armory_sync', '0') == 1)
+		$guild_plugin = RaidPlannerHelper::getGuildPlugin( $guild_id );
+		if (($paramsObj->get('armory_sync', '0') == 1) && ($guild_plugin) && ($guild_plugin->needSync( $paramsObj->get( 'sync_interval', 4 ) ) ))
 		{
 			// sync armory
-			RaidPlannerHelper::RosterSync( $guild_id, $paramsObj->get( 'sync_interval', 4 ) );
+			$guild_plugin->doSync();
 		}
 
+		$this->assignRef( 'guild_plugin', $guild_plugin );
 		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
 		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );

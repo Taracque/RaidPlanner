@@ -15,6 +15,9 @@ require_once ( JPATH_BASE . DS . 'includes' . DS . 'defines.php' );
 require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
 
 jimport( 'joomla.error.error' );
+jimport( 'joomla.filesystem.file' );
+
+require_once ( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'includes' . DS . 'plugin.php' );
 
 class RaidPlannerHelper
 {
@@ -27,28 +30,28 @@ class RaidPlannerHelper
 		'raidplanner.delete_raid_any'	=>	'core.delete'
 	);
 
-	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
+	public static function getGuildPlugin( $guild_id )
 	{
 		$db = & JFactory::getDBO();
-		$query = "SELECT *,(DATE_ADD(lastSync, INTERVAL " . intval( $sync_interval ) . " HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
+		$query = "SELECT guild_id, guild_name, sync_plugin, params FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
 		$db->setQuery($query);
-		if ($tmp = $db->loadObject())
+		if ($guild = $db->loadObject()) {
+			$guild->params = json_decode( $guild->params, true );
+			$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
+
+			JLoader::register( $plug_class, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $guild->sync_plugin . DS . $guild->sync_plugin . '.php' );
+
+			return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
+		} else {
+			return null;
+		}
+	}
+
+	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
+	{
+		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ($plugin->needSync($sync_interval)) )
 		{
-			$guild_id = $tmp->guild_id;
-			$needsync = $tmp->needSync;
-			$plug_class = $tmp->sync_plugin;
-	
-			if ( ( $needsync<=0 ) && ($plug_class != '') )
-			{
-				$tmp->params = json_decode($tmp->params, true);
-				
-				/* Load plugin */
-				
-				JLoader::register( $plug_class, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $plug_class . DS . $plug_class . '.php' );
-				
-				$sync_module = new $plug_class();
-				$sync_module->Sync( $tmp, $sync_interval , $showOkStatus );
-			}
+			$plugin->doSync( $showOkStatus );
 		}
 	}
 	
