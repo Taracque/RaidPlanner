@@ -31,7 +31,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 	</ul>
 </fieldset>
-
+<fieldset>
+	<legend><?php echo JText::_('COM_RAIDPLANNER_THEME_INSTALL'); ?></legend>
+	<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm">
+		<input type="hidden" name="task" value="doInstall" />
+		<input type="hidden" name="option" value="com_raidplanner" />
+		<input class="input_box" name="install_theme" type="file" size="57" />
+		<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_RAIDPLANNER_UPLOAD_THEME' ); ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+	</form>
+</fieldset>
 <fieldset>
 	<legend><?php echo JText::_('JOPTION_MENUS');?>:</legend>
 	<div class="rp_icon_button">
