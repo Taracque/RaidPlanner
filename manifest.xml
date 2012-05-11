@@ -89,6 +89,7 @@
 			<folder>tables</folder>
 			<folder>install</folder>
 			<folder>plugins</folder>
+			<folder>themes</folder>
 		</files>
 		<!-- Administration Language File Copy Section -->
 		<languages folder="administrator/language">

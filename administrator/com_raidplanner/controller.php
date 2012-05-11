@@ -13,6 +13,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
+require_once ( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'includes' . DS . 'installer.php' );
+
 /**
  * Raid Planner Component Controller
  *
@@ -29,27 +31,8 @@ class RaidPlannerController extends JController
 	function display()
 	{
 		if ($this->getTask() == 'doInstall') {
-			jimport ( 'joomla.filesystem.folder' );
-			jimport ( 'joomla.filesystem.file' );
-			jimport ( 'joomla.filesystem.archive' );
-
-			$file = JRequest::getVar ( 'install_theme', NULL, 'FILES', 'array' );
-			$app = JFactory::getApplication();
-			$tmp = $app->getCfg('tmp_path');
-			if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
-				$app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
-			} else {
-				$success = JFile::upload($file ['tmp_name'], $tmp . DS . $file ['name']);
-				$success = JArchive::extract ( $tmp . DS . $file ['name'], $tmp );
-				if (! $success) {
-					$app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
-				}
-				// find the manifest file
-				$xmlfiles = JFolder::files($tmp, '.xml$', 1, true);
-				foreach ($xmlfiles as $xmlfile) {
-					// install using the xml
-				}
-			}
+			$installer = new RaidPlannerInstaller();
+			$installer->installUploaded( 'install_theme' );
 		}
 
 		parent::display();
