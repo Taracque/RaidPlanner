@@ -24,16 +24,16 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_class` (
   PRIMARY KEY (`class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (1,	'#7c5f48',	'Warrior',	1);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (2,	'#cb7497',	'Paladin',	2);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (3,	'#668e40',	'Hunter',	3);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (4,	'#a8a556',	'Rogue',	4);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (5,	'#8ca5a3',	'Priest',	5);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (6,	'#b1474f',	'Death Knight',	6);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (7,	'#4a71ca',	'Shaman',	7);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (8,	'#60a4ba',	'Mage',		8);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (9,	'#825c87',	'Warlock',	9);
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`, `armory_id`) VALUES (11,	'#dc8043',	'Druid',11);
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (1,	'#7c5f48',	'Warrior');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (2,	'#cb7497',	'Paladin');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (3,	'#668e40',	'Hunter');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (4,	'#a8a556',	'Rogue');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (5,	'#8ca5a3',	'Priest');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (6,	'#b1474f',	'Death Knight');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (7,	'#4a71ca',	'Shaman');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (8,	'#60a4ba',	'Mage');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (9,	'#825c87',	'Warlock');
+INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (11,	'#dc8043',	'Druid');
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_gender` (
   `gender_id` int(10) unsigned NOT NULL AUTO_INCREMENT,

@@ -13,7 +13,7 @@
 	<releaseType>Development release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
-	<description>RaidPlanner component for Joomla, to organize WoW raids</description>
+	<description>RaidPlanner component for Joomla, to organize MMORPG raids</description>
 	<!-- Install Database Section -->
 	<install>
 		<sql>

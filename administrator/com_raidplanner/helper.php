@@ -49,7 +49,7 @@ class RaidPlannerHelper
 
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
-		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ($plugin->needSync($sync_interval)) )
+		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
 		{
 			$plugin->doSync( $showOkStatus );
 		}
@@ -115,7 +115,6 @@ class RaidPlannerHelper
 		$view = JRequest::getVar('view');
 
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER'), 'index.php?option=com_raidplanner&view=raidplanner', ($view == 'raidplanner'));
-		JSubMenuHelper::addEntry('', '', false);
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RAIDS'), 'index.php?option=com_raidplanner&view=raids', ($view == 'raids'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_GUILDS'), 'index.php?option=com_raidplanner&view=guilds', ($view == 'guilds'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CHARACTERS'), 'index.php?option=com_raidplanner&view=characters', ($view == 'characters'));
@@ -123,7 +122,6 @@ class RaidPlannerHelper
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_ROLES'), 'index.php?option=com_raidplanner&view=roles', ($view == 'roles'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CLASSES'), 'index.php?option=com_raidplanner&view=classes', ($view == 'classes'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RACES'), 'index.php?option=com_raidplanner&view=races', ($view == 'races'));
-		JSubMenuHelper::addEntry('', '', false);
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_STATS'), 'index.php?option=com_raidplanner&view=stats', ($view == 'stats'));
 	}
 	

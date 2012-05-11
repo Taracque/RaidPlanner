@@ -28,11 +28,6 @@ class TableClass extends JTable
 	var $class_css = null;
 
 	/**
-	 * @var int
-	 */
-	var $armory_id = null;
-
-	/**
 	 * Constructor
 	 *
 	 * @param object Database connector object

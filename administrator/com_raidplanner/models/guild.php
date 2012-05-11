@@ -92,7 +92,7 @@ class RaidPlannerModelGuild extends JModel
 			$this->setError( $this->_db->getErrorMsg() );
 			return false;
 		}
-	
+
 		if (@$data['sync_now']=='1')
 		{
 			RaidPlannerHelper::RosterSync( $data['guild_id'], 0 , true );
