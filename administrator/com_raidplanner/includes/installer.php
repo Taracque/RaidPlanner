@@ -97,14 +97,14 @@ class RaidPlannerInstaller
 			}
 			if ($filelist = @$files->file) {
 				foreach ($filelist as $file) {
-					if (! JFile::copy( $basepath . DS . $source_folder . $file->data(), $dest . DS . $destination . $file->data() ) ) {
+					if (! JFile::copy( $basepath . DS . $source_folder . $file->data(), $dest . DS . $destination . $file->data(), null, true ) ) {
 						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $file->data() ), 'warning' );
 					}
 				}
 			}
 			if ($folderlist = @$files->folder) {
 				foreach ($folderlist as $folder) {
-					if (! JFolder::copy( $basepath . DS . $source_folder . $folder->data(), JPATH_SITE . DS . 'images' . DS . 'raidplanner' . DS . $destination . $folder->data(), '', true ) ) {
+					if (! JFolder::copy( $basepath . DS . $source_folder . $folder->data(), JPATH_SITE . DS . 'images' . DS . 'raidplanner' . DS . $destination . $folder->data(), null, true ) ) {
 						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $folder->data() ), 'warning' );
 					}
 				}
@@ -130,7 +130,7 @@ class RaidPlannerInstaller
 			$attributes = $xml->document->attributes();
 			if ($attributes['type'] == "raidplanner_theme") {
 				// move the manifest file
-				if ( !JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xml_name ) ) {
+				if ( !JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xml_name, null, true ) ) {
 					$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $xml_name ), 'warning' );
 				}
 				$this->doCopy( $xml->document->fileset, $basepath, JPATH_SITE . DS . 'images' . DS . 'raidplanner' );
