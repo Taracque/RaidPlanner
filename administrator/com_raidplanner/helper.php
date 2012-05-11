@@ -42,7 +42,7 @@ class RaidPlannerHelper
 
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
-		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ($plugin->needSync($sync_interval)) )
+		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
 		{
 			$plugin->doSync( $showOkStatus );
 		}
