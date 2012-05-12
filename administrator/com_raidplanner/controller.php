@@ -34,6 +34,10 @@ class RaidPlannerController extends JController
 			$installer = new RaidPlannerInstaller();
 			$installer->installUploaded( 'install_theme' );
 		}
+		if ($this->getTask() == 'doUninstall') {
+			$installer = new RaidPlannerInstaller();
+			$installer->uninstall( JRequest::getVar( 'plugin' ) );
+		}
 
 		parent::display();
 		

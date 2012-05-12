@@ -10,7 +10,6 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
-
 <h3>RaidPlanner</h3>
 <p>Raid organizer component.</p>
 <p>If RaidPlanner plugin is installed and enabled, and users has a <code>characters</code> attribute added (and characters are spearated by newline), characters are automatically assigned to Joomla User.</p>
@@ -57,7 +56,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<td><?php echo $plugin['type']; ?></td>
 			<td><?php echo $plugin['creationDate'] . " (" . $plugin['version'] . ")"; ?></td>
 			<td><span class="hasTip" title="<?php echo htmlspecialchars( $plugin['authorEmail'] );?>"><?php echo $plugin['author']; ?></span></td>
-			<td><a href="#" onclick="return false;"><?php echo JText::_( 'JACTION_DELETE' ); ?></a></td>
+			<td><a href="index.php?option=com_raidplanner&task=doUninstall&plugin=<?php echo $plugin['filename'];?>" onclick="return confirm('<?php echo JText::_('COM_RAIDPLANNER_INSTALLER_CONFIRM_DELETE_PROMPT');?>');"><?php echo JText::_( 'JACTION_DELETE' ); ?></a></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

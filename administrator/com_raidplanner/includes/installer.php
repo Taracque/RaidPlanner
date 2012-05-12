@@ -73,6 +73,45 @@ class RaidPlannerInstaller
 	}
 
 	/**
+	 * Remove files, folders as defined in the XML
+	 * $filesets : array of JSimpleXMLElement
+	 * $dest : base destination folder
+	 */
+	private function doRemove( $filesets, $dest )
+	{
+		if ( !$filesets ) {
+			return false;
+		}
+		foreach ($filesets as $files) {
+			$attributes = $files->attributes();
+			if (isset($attributes['folder'])) {
+				$source_folder = $attributes['folder'] . DS;
+			} else {
+				$source_folder = "";
+			}
+			if (isset($attributes['destination'])) {
+				$destination = $attributes['destination'] . DS;
+			} else {
+				$destination = "";
+			}
+			if ($filelist = @$files->file) {
+				foreach ($filelist as $file) {
+					if (! JFile::delete( $dest . DS . $destination . $file->data(), null, true ) ) {
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNINSTALL_DELETE_FAILED', $file->data() ), 'warning' );
+					}
+				}
+			}
+			if ($folderlist = @$files->folder) {
+				foreach ($folderlist as $folder) {
+					if (! JFolder::delete( $dest . DS . $destination . $folder->data(), null, true ) ) {
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNINSTALL_DELETE_FAILED', $folder->data() ), 'warning' );
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Copies files, folders as defined in the XML
 	 * $filesets : array of JSimpleXMLElement
 	 * $source : source folder
@@ -104,7 +143,7 @@ class RaidPlannerInstaller
 			}
 			if ($folderlist = @$files->folder) {
 				foreach ($folderlist as $folder) {
-					if (! JFolder::copy( $basepath . DS . $source_folder . $folder->data(), JPATH_SITE . DS . 'images' . DS . 'raidplanner' . DS . $destination . $folder->data(), null, true ) ) {
+					if (! JFolder::copy( $basepath . DS . $source_folder . $folder->data(), $dest . DS . $destination . $folder->data(), null, true ) ) {
 						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $folder->data() ), 'warning' );
 					}
 				}
@@ -138,6 +177,25 @@ class RaidPlannerInstaller
 				
 			} else {
 				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNKNOWN_INSTALL_TYPE', $xml->document->attributes()->type), 'warning' );
+			}
+		}
+	}
+	
+	/**
+	 * Uninstalls the given plugin
+	 */
+	public function uninstall( $xmlfile )
+	{
+		$xml =& JFactory::getXMLParser( 'simple' );
+		$xml->loadFile( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xmlfile );
+		$attributes = $xml->document->attributes();
+		if ($attributes['type'] == "raidplanner_theme") {
+			$this->doRemove( $xml->document->fileset, JPATH_SITE . DS . 'images' . DS . 'raidplanner' );
+			$this->doRemove( $xml->document->administrator[0]->fileset, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' );
+			// remove the manifest file
+			if ( !JFile::delete( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xmlfile ) ) {
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNINSTALL_DELETE_FAILED', $xml->document->attributes()->type), 'warning' );
+				return false;
 			}
 		}
 	}
