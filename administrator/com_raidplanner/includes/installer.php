@@ -35,7 +35,6 @@ class RaidPlannerInstaller
 	{
 		$file = JRequest::getVar ( $ul_variable_name, NULL, 'FILES', 'array' );
 		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
-			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_UPLOAD_FAILED', $file ['name']), 'notice' );
 			return false;
 		} else {
 			$success = JFile::upload($file ['tmp_name'], $this->_tmp . DS . $file ['name']);
@@ -68,8 +67,8 @@ class RaidPlannerInstaller
 			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_EXTRACT_FAILED', $archive), 'warning' );
 			return false;
 		}
-
-		$this->installPackage( $tmp );
+		JFile::delete( $archive );
+		return $this->installPackage( $tmp );
 	}
 
 	/**
@@ -156,6 +155,13 @@ class RaidPlannerInstaller
 	 */
 	public function installFromURL( $url )
 	{
+		$data = RaidPlannerHelper::downloadData( $url );
+		if ( file_put_contents( $this->_tmp . DS . basename($url), $data ) ) {
+			return $this->installArchive( $this->_tmp . DS . basename($url) );
+		} else {
+			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_DOWNLOAD_FAILED', $url ), 'warning' );
+			return false;
+		}
 	}
 	
 	/**
@@ -186,6 +192,8 @@ class RaidPlannerInstaller
 				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNKNOWN_INSTALL_TYPE', $xml->document->attributes()->type), 'warning' );
 			}
 		}
+		JFolder::delete( $folder );
+		return true;
 	}
 	
 	/**

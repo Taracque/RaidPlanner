@@ -427,7 +427,7 @@ class RaidPlannerHelper
 			$ch = @curl_init();
 
 			@curl_setopt($ch, CURLOPT_URL, $url);
-			@curl_setopt($ch, CURLOPT_HEADER, true);
+			@curl_setopt($ch, CURLOPT_HEADER, false);
 			@curl_setopt($ch, CURLOPT_FAILONERROR, true);
 			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			@curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

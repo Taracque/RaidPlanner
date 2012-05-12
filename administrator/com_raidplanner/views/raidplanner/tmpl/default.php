@@ -19,8 +19,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php
 	if ( RaidPlannerHelper::getJVersion() == '1.5') {
 ?>
-		<li>UserMeta plugin (<?php echo JText::_('OPTIONAL'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'usermeta')?'ENABLED':'DISABLED');?></li>
-		<li>Mootools Upgrade plugin (<?php echo JText::_('REQUIRED'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'mtupgrade')?'ENABLED':'DISABLED');?></li>
+		<li>UserMeta plugin (<?php echo JText::_('JOPTIONAL_OPTIONAL'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'usermeta')?'ENABLED':'DISABLED');?></li>
+		<li>Mootools Upgrade plugin (<?php echo JText::_('JREQUIRED'); ?>): <?php echo JText::_( JPluginHelper::isEnabled('system', 'mtupgrade')?'ENABLED':'DISABLED');?></li>
 <?php
 	} elseif ( RaidPlannerHelper::getJVersion() >= '1.6') {
 ?>
@@ -31,14 +31,14 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</ul>
 </fieldset>
 <fieldset>
-	<legend><?php echo JText::_('COM_RAIDPLANNER_THEME_INSTALL'); ?></legend>
+	<legend><?php echo JText::_('COM_RAIDPLANNER_PLUGINS'); ?></legend>
 	<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm" class="adminform">
 		<input type="hidden" name="task" value="doInstall" />
 		<input type="hidden" name="option" value="com_raidplanner" />
 		<label for="install_theme"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_PACKAGE_FILE' );?></label> <input class="input_box" name="install_theme" id="install_theme" type="file" size="57" /><br />
 		<label for="install_url"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_FROM_URL' );?></label> <input type="text" id="install_url" name="install_url" class="input_box" size="70" value=""><br />
 		<label for="install_directory"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_DIRECTORY' );?></label> <input type="text" id="install_directory" name="install_directory" class="input_box" size="70" value="<?php echo JFactory::getApplication()->getCfg('tmp_path');?>"><br />
-		<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_RAIDPLANNER_INSTALL_THEME' ); ?>" />
+		<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_INSTALL' ); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 	</form>
     <table class="adminlist">
@@ -46,7 +46,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
         <tr>
             <th><?php echo JText::_( 'COM_RAIDPLANNER_PLUGIN_NAME' ); ?></th>
             <th><?php echo JText::_( 'COM_RAIDPLANNER_PLUGIN_TYPE' ); ?></th>
-            <th><?php echo JText::_( 'JGLOBAL_CREATED_DATE_ON' ); ?></th>
+            <th><?php echo JText::_( 'JGLOBAL_CREATED_DATE' ); ?></th>
             <th><?php echo JText::_( 'JAUTHOR' ); ?></th>
             <th><?php echo JText::_( 'JACTION_DELETE' ); ?></th>
         </tr>
@@ -64,59 +64,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</tbody>
 	</table>
 </fieldset>
-<fieldset>
-	<legend><?php echo JText::_('JOPTION_MENUS');?>:</legend>
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=raids">
-			<span class="rp_raids"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_RAIDS');?>
-		</a>
-	</div>
-
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=guilds">
-			<span class="rp_guilds"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_GUILDS');?>
-		</a>
-	</div>
-	
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=characters">
-			<span class="rp_chars"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_CHARACTERS');?>
-		</a>
-	</div>
-	
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=groups">
-			<span class="rp_groups"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_GROUPS');?>
-		</a>
-	</div>
-	
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=roles">
-			<span class="rp_roles"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_ROLES');?>
-		</a>
-	</div>
-	
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=classes">
-			<span class="rp_classes"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_CLASSES');?>
-		</a>
-	</div>
-
-	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=races">
-			<span class="rp_races"></span>
-			<?php echo JText::_('COM_RAIDPLANNER_RACES');?>
-		</a>
-	</div>
-
-</fieldset>
-
 <fieldset>
 	<legend><?php echo JText::_('COM_RAIDPLANNER_UTILITIES');?>:</legend>
 	<div class="rp_icon_button">
