@@ -43,7 +43,7 @@ class RaidPlannerModelRace extends JModel
 		if (!$this->_data) {
 			$this->_data = new stdClass();
 			$this->_data->race_id = 0;
-			$this->_data->race = null;
+			$this->_data->race_name = null;
 		}
 		return $this->_data;
 	}
