@@ -39,7 +39,7 @@ class RaidPlannerInstaller
 		} else {
 			$success = JFile::upload($file ['tmp_name'], $this->_tmp . DS . $file ['name']);
 			if ( !$success ) {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_UPLOAD_FAILED', $file ['name']), 'notice' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UPLOAD_FAILED', $file ['name']), 'warning' );
 				return false;
 			} 
 			
@@ -55,16 +55,10 @@ class RaidPlannerInstaller
 	{
 		$folder_name = uniqid('RPinstall_');
 		
-		if ( JFolder::exists( $this->_tmp . DS . $folder_name ) ) {
-			if ( !JFolder::delete( $this->_tmp . DS . $folder_name ) ) {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_FOLDER_EXISTS_CANTDELETE', $folder_name), 'warning' );
-				return false;
-			}
-		}
 		$tmp = $this->_tmp . DS . $folder_name;
 		$success = JArchive::extract ( $archive, $tmp );
 		if (! $success) {
-			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_EXTRACT_FAILED', $archive), 'warning' );
+			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_EXTRACT_FAILED', $archive), 'warning' );
 			return false;
 		}
 		JFile::delete( $archive );
@@ -96,14 +90,14 @@ class RaidPlannerInstaller
 			if ($filelist = @$files->file) {
 				foreach ($filelist as $file) {
 					if (! JFile::delete( $dest . DS . $destination . $file->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNINSTALL_DELETE_FAILED', $file->data() ), 'warning' );
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $file->data() ), 'warning' );
 					}
 				}
 			}
 			if ($folderlist = @$files->folder) {
 				foreach ($folderlist as $folder) {
 					if (! JFolder::delete( $dest . DS . $destination . $folder->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNINSTALL_DELETE_FAILED', $folder->data() ), 'warning' );
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $folder->data() ), 'warning' );
 					}
 				}
 			}
@@ -136,14 +130,14 @@ class RaidPlannerInstaller
 			if ($filelist = @$files->file) {
 				foreach ($filelist as $file) {
 					if (! JFile::copy( $basepath . DS . $source_folder . $file->data(), $dest . DS . $destination . $file->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $file->data() ), 'warning' );
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_COPY_FAILED', $file->data() ), 'warning' );
 					}
 				}
 			}
 			if ($folderlist = @$files->folder) {
 				foreach ($folderlist as $folder) {
 					if (! JFolder::copy( $basepath . DS . $source_folder . $folder->data(), $dest . DS . $destination . $folder->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $folder->data() ), 'warning' );
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_COPY_FAILED', $folder->data() ), 'warning' );
 					}
 				}
 			}
@@ -159,7 +153,7 @@ class RaidPlannerInstaller
 		if ( file_put_contents( $this->_tmp . DS . basename($url), $data ) ) {
 			return $this->installArchive( $this->_tmp . DS . basename($url) );
 		} else {
-			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_DOWNLOAD_FAILED', $url ), 'warning' );
+			$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DOWNLOAD_FAILED', $url ), 'warning' );
 			return false;
 		}
 	}
@@ -182,14 +176,12 @@ class RaidPlannerInstaller
 			$attributes = $xml->document->attributes();
 			if ($attributes['type'] == "raidplanner_theme") {
 				// move the manifest file
-				if ( !JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xml_name, null, true ) ) {
-					$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALL_COPY_FAILED', $xml_name ), 'warning' );
-				}
+				JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xml_name, null, true );
 				$this->doCopy( $xml->document->fileset, $basepath, JPATH_SITE . DS . 'images' . DS . 'raidplanner' );
 				$this->doCopy( $xml->document->administrator[0]->fileset, $basepath, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' );
 				
 			} else {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNKNOWN_INSTALL_TYPE', $xml->document->attributes()->type), 'warning' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UNKNOWN_TYPE', $xml->document->attributes()->type), 'warning' );
 			}
 		}
 		JFolder::delete( $folder );
@@ -209,7 +201,7 @@ class RaidPlannerInstaller
 			$this->doRemove( $xml->document->administrator[0]->fileset, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' );
 			// remove the manifest file
 			if ( !JFile::delete( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xmlfile ) ) {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_UNINSTALL_DELETE_FAILED', $xml->document->attributes()->type), 'warning' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $xml->document->attributes()->type), 'warning' );
 				return false;
 			}
 		}
