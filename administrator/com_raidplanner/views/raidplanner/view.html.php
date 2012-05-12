@@ -13,6 +13,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
+require_once ( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'includes' . DS . 'installer.php' );
+
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 
 class RaidPlannerViewRaidPlanner extends JView
@@ -29,6 +31,8 @@ class RaidPlannerViewRaidPlanner extends JView
 		JToolBarHelper::preferences( 'com_raidplanner' );
 
 		RaidPlannerHelper::showToolbarButtons();
+		
+		$this->assignRef( 'installed_plugins', RaidPlannerInstaller::getInstalledList() );
 
 		parent::display($tpl);
 	}

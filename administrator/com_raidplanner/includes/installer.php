@@ -141,4 +141,32 @@ class RaidPlannerInstaller
 			}
 		}
 	}
+	
+	/**
+	 * Get the list of installed packages
+	 * $type : filter for type (unused)
+	 */
+	public static function getInstalledList( $type = '' )
+	{
+		$installed = array();
+		$xmlfiles = JFolder::files( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS, '.xml$', 1, true);
+		$xml =& JFactory::getXMLParser( 'simple' );
+		foreach ($xmlfiles as $xmlfile)
+		{
+			$xml->loadFile( $xmlfile );
+			if ( ( $type == '') || ( str_replace( 'raidplanner_' , '' , $xml->document->attributes ( "type" ) ) == $type ) )
+			$installed[] = array(
+				'name'			=>	$xml->document->name[0]->data(),
+				'type'			=>	str_replace( 'raidplanner_' , '' , $xml->document->attributes ( "type" ) ),
+				'filename'		=>	basename($xmlfile),
+				'creationDate'	=>	$xml->document->creationDate[0]->data(),
+				'author'		=>	$xml->document->author[0]->data(),
+				'authorEmail'	=>	$xml->document->authorEmail[0]->data(),
+				'version'		=>	$xml->document->version[0]->data(),
+				'description'	=>	$xml->document->description[0]->data()
+			);
+		}
+		
+		return $installed;
+	}
 }

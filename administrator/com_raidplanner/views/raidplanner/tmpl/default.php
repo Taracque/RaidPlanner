@@ -40,6 +40,28 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_RAIDPLANNER_UPLOAD_THEME' ); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 	</form>
+    <table class="adminlist">
+    <thead>
+        <tr>
+            <th><?php echo JText::_( 'COM_RAIDPLANNER_PLUGIN_NAME' ); ?></th>
+            <th><?php echo JText::_( 'COM_RAIDPLANNER_PLUGIN_TYPE' ); ?></th>
+            <th><?php echo JText::_( 'JGLOBAL_CREATED_DATE_ON' ); ?></th>
+            <th><?php echo JText::_( 'JAUTHOR' ); ?></th>
+            <th><?php echo JText::_( 'JACTION_DELETE' ); ?></th>
+        </tr>
+	</thead>
+	<tbody>
+		<?php foreach ($this->installed_plugins as $plugin) : ?>
+		<tr>
+			<td><span class="hasTip" title="<?php echo htmlspecialchars( $plugin['description'] );?>"><?php echo $plugin['name']; ?></span></td>
+			<td><?php echo $plugin['type']; ?></td>
+			<td><?php echo $plugin['creationDate'] . " (" . $plugin['version'] . ")"; ?></td>
+			<td><span class="hasTip" title="<?php echo htmlspecialchars( $plugin['authorEmail'] );?>"><?php echo $plugin['author']; ?></span></td>
+			<td><a href="#" onclick="return false;"><?php echo JText::_( 'JACTION_DELETE' ); ?></a></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+	</table>
 </fieldset>
 <fieldset>
 	<legend><?php echo JText::_('JOPTION_MENUS');?>:</legend>
