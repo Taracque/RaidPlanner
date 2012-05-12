@@ -32,11 +32,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </fieldset>
 <fieldset>
 	<legend><?php echo JText::_('COM_RAIDPLANNER_THEME_INSTALL'); ?></legend>
-	<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm">
+	<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm" class="adminform">
 		<input type="hidden" name="task" value="doInstall" />
 		<input type="hidden" name="option" value="com_raidplanner" />
-		<input class="input_box" name="install_theme" type="file" size="57" />
-		<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_RAIDPLANNER_UPLOAD_THEME' ); ?>" />
+		<label for="install_theme"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_PACKAGE_FILE' );?></label> <input class="input_box" name="install_theme" id="install_theme" type="file" size="57" /><br />
+		<label for="install_url"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_FROM_URL' );?></label> <input type="text" id="install_url" name="install_url" class="input_box" size="70" value=""><br />
+		<label for="install_directory"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_DIRECTORY' );?></label> <input type="text" id="install_directory" name="install_directory" class="input_box" size="70" value="<?php echo JFactory::getApplication()->getCfg('tmp_path');?>"><br />
+		<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_RAIDPLANNER_INSTALL_THEME' ); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 	</form>
     <table class="adminlist">

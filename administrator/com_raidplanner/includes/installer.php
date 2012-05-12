@@ -152,6 +152,13 @@ class RaidPlannerInstaller
 	}
 	
 	/**
+	 * Installs an archive from the given URL
+	 */
+	public function installFromURL( $url )
+	{
+	}
+	
+	/**
 	 * Install the theme package from $folder path
 	 */
 	public function installPackage($folder)

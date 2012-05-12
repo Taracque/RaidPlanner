@@ -421,6 +421,67 @@ class RaidPlannerHelper
 		return $dateformat;
 	}
 
+	public static function downloadData( $url )
+	{
+		if(function_exists('curl_init') && function_exists('curl_exec')) {
+			$ch = @curl_init();
+
+			@curl_setopt($ch, CURLOPT_URL, $url);
+			@curl_setopt($ch, CURLOPT_HEADER, true);
+			@curl_setopt($ch, CURLOPT_FAILONERROR, true);
+			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			@curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			@curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+			@curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			$data = @curl_exec($ch);
+			@curl_close($ch);
+		}
+
+		if(function_exists('fsockopen') && $data == '') {
+			$errno = 0;
+			$errstr = '';
+
+			$fsock = @fsockopen("update.kunena.org", 80, $errno, $errstr, 10);
+
+			if ($fsock) {
+				@fputs($fsock, "GET /kunena_update.xml HTTP/1.1\r\n");
+				@fputs($fsock, "HOST: update.kunena.org\r\n");
+				@fputs($fsock, "Connection: close\r\n\r\n");
+				@stream_set_blocking($fsock, 1);
+				@stream_set_timeout($fsock, 30);
+				$get_info = false;
+				while (!@feof($fsock)) {
+					if ($get_info) {
+						$data .= @fread($fsock, 1024);
+					} else {
+						if (@fgets($fsock, 1024) == "\r\n") {
+							$get_info = true;
+						}
+					}
+				}
+				@fclose($fsock);
+			}
+		}
+
+		if (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '') {
+			ini_set('default_socket_timeout', 15);
+			
+			$handle = @fopen ($url, 'r');
+
+			//set stream timeout
+			@stream_set_blocking($handle, 1);
+			@stream_set_timeout($handle, 30);
+			
+			while (!@feof($handle)) {
+				$data .= @fread($handle, 8192);
+			}
+			
+			@fclose($handle);
+		}
+		
+		return $data;
+	}
+
 	public static function detectMobile()
 	{
 		$isMobile	= false;

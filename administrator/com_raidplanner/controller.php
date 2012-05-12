@@ -32,7 +32,13 @@ class RaidPlannerController extends JController
 	{
 		if ($this->getTask() == 'doInstall') {
 			$installer = new RaidPlannerInstaller();
-			$installer->installUploaded( 'install_theme' );
+			if ( JRequest::getVar ( install_theme, NULL, 'FILES', 'array' ) ) {
+				$installer->installUploaded( 'install_theme' );
+			} elseif ( $url = JRequest::getVar ( 'install_url', NULL ) ) {
+				$installer->installFromURL( $url );
+			} else {
+				$installer->installPackage( JRequest::getVar ( 'install_directory', NULL ) );
+			}
 		}
 		if ($this->getTask() == 'doUninstall') {
 			$installer = new RaidPlannerInstaller();
