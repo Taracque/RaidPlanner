@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_class` (
   `class_color` varchar(45) NOT NULL DEFAULT '',
   `class_name` varchar(45) NOT NULL DEFAULT '',
   `class_css` varchar(45) NOT NULL DEFAULT '',
-  `armory_id` int(11) NOT NULL,
   PRIMARY KEY (`class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -71,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_profile` (
 CREATE TABLE IF NOT EXISTS `#__raidplanner_race` (
   `race_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `race_name` varchar(45) NOT NULL DEFAULT '',
+  `race_css` varchar(45) NOT NULL DEFAULT '',
   PRIMARY KEY (`race_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

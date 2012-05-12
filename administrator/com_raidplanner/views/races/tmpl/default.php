@@ -25,6 +25,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             <th>
                 <?php echo JText::_( 'COM_RAIDPLANNER_RACE_NAME' ); ?>
             </th>
+            <th>
+                <?php echo JText::_( 'COM_RAIDPLANNER_CSS_NAME' ); ?>
+            </th>
         </tr>            
     </thead>
     <?php
@@ -43,6 +46,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
             </td>
             <td>
                 <a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=races&view=race&task=edit&cid[]='.$row->race_id);?>"><?php echo $row->race_name; ?></a>
+            </td>
+            <td>
+                <?php echo $row->race_css; ?>
             </td>
         </tr>
         <?php

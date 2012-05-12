@@ -210,6 +210,17 @@ function com_install()
 		
 		$out .= 'Guild table changed to support syncing plugins<br />';
 	}
+	/* Remove armory_id  */
+	$query = "SHOW COLUMNS FROM `#__raidplanner_class` LIKE 'armory_id'";
+	$db->setQuery($query);
+	$db->query();
+	if ( $db->getNumRows() > 0  )
+	{
+		$db->setQuery( "ALTER TABLE `#__raidplanner_class` DROP `guild_level`, DROP `armory_id`" );
+		$db->query();
+		$db->setQuery( "ALTER TABLE `#__raidplanner_race` ADD `race_css` varchar(45) NOT NULL DEFAULT ''" );
+		$db->query();
+	}
 
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );

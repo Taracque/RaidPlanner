@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<tr>
 			<td width="100" align="right" class="key">
 				<label for="class_css">
-					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_CSS' ); ?>:
+					<?php echo JText::_( 'COM_RAIDPLANNER_CSS_NAME' ); ?>:
 				</label>
 			</td>
 			<td>

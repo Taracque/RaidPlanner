@@ -27,6 +27,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<input class="text_area" type="text" name="race_name" id="race_name" size="32" maxlength="250" value="<?php echo $this->race->race_name;?>" />
 			</td>
 		</tr>
+		<tr>
+			<td width="100" align="right" class="key">
+				<label for="race_css">
+					<?php echo JText::_( 'COM_RAIDPLANNER_CSS_NAME' ); ?>:
+				</label>
+			</td>
+			<td>
+				<input class="text_area" type="text" name="race_css" id="race_css" size="32" maxlength="250" value="<?php echo $this->race->race_css;?>" />
+			</td>
+		</tr>
 	</table>
 	</fieldset>
 </div>

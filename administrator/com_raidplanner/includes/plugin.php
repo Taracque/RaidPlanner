@@ -37,7 +37,7 @@ class RaidPlannerPlugin
 		return false;
 	}
 
-	private function getData( $url )
+	protected function getData( $url )
 	{
 		// register the helper
 		JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );

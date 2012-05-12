@@ -24,7 +24,7 @@ class TableRace extends JTable
 	 * @var string
 	 */
 	var $race_name = null;
-
+	var $race_css = null;
 	/**
 	 * Constructor
 	 *

@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <?php echo JText::_( 'COM_RAIDPLANNER_CLASS_NAME' ); ?>
             </th>
             <th>
-                <?php echo JText::_( 'COM_RAIDPLANNER_CLASS_CSS' ); ?>
+                <?php echo JText::_( 'COM_RAIDPLANNER_CSS_NAME' ); ?>
             </th>
         </tr>            
     </thead>
