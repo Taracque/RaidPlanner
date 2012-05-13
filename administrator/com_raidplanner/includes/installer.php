@@ -159,6 +159,26 @@ class RaidPlannerInstaller
 	}
 	
 	/**
+	 * Executes the SQL commands defined in the xmlnode
+	 */
+	private function doSQL( $xmlnode )
+	{
+		$db = & JFactory::getDBO();
+		foreach ($xmlnode->sql as $sql) {
+			$attributes = $sql->attributes();
+			$condition_met = true;
+			if ($attributes['condition']) {
+				$db->setQuery( $attributes['condition'] );
+				$condition_met = (boolean) $db->loadResult();
+			}
+			if ($condition_met) {
+				$db->setQuery( $sql->data() );
+				$db->query();
+			}
+		}
+	}
+
+	/**
 	 * Install the theme package from $folder path
 	 */
 	public function installPackage($folder)
@@ -175,11 +195,12 @@ class RaidPlannerInstaller
 			$xml->loadFile( $xmlfile );
 			$attributes = $xml->document->attributes();
 			if ($attributes['type'] == "raidplanner_theme") {
-				// move the manifest file
+				// copy the manifest file
 				JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xml_name, null, true );
 				$this->doCopy( $xml->document->fileset, $basepath, JPATH_SITE . DS . 'images' . DS . 'raidplanner' );
 				$this->doCopy( $xml->document->administrator[0]->fileset, $basepath, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' );
-				
+				// do SQL commands
+				$this->doSQL( $xml->document->install[0] );
 			} else {
 				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UNKNOWN_TYPE', $xml->document->attributes()->type), 'warning' );
 			}
@@ -197,6 +218,9 @@ class RaidPlannerInstaller
 		$xml->loadFile( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS . $xmlfile );
 		$attributes = $xml->document->attributes();
 		if ($attributes['type'] == "raidplanner_theme") {
+			// do SQL commands
+			$this->doSQL( $xml->document->uninstall[0] );
+			// remove files
 			$this->doRemove( $xml->document->fileset, JPATH_SITE . DS . 'images' . DS . 'raidplanner' );
 			$this->doRemove( $xml->document->administrator[0]->fileset, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' );
 			// remove the manifest file
