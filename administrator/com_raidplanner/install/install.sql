@@ -23,17 +23,6 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_class` (
   PRIMARY KEY (`class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (1,	'#7c5f48',	'Warrior');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (2,	'#cb7497',	'Paladin');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (3,	'#668e40',	'Hunter');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (4,	'#a8a556',	'Rogue');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (5,	'#8ca5a3',	'Priest');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (6,	'#b1474f',	'Death Knight');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (7,	'#4a71ca',	'Shaman');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (8,	'#60a4ba',	'Mage');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (9,	'#825c87',	'Warlock');
-INSERT IGNORE INTO `#__raidplanner_class` (`class_id`, `class_color`, `class_name`) VALUES (11,	'#dc8043',	'Druid');
-
 CREATE TABLE IF NOT EXISTS `#__raidplanner_gender` (
   `gender_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gender_name` varchar(45) NOT NULL DEFAULT '',
@@ -74,19 +63,6 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_race` (
   PRIMARY KEY (`race_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (1,	'Human');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (2,	'Orc');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (3,	'Dwarf');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (4,	'Nightelf');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (5,	'Undead');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (6,	'Tauren');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (7,	'Gnome');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (8,	'Troll');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (9,	'Goblin');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (10,	'Bloodelf');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (11,	'Draenei');
-INSERT IGNORE INTO `#__raidplanner_race` (`race_id`, `race_name`) VALUES (22,	'Worgen');
-
 CREATE TABLE IF NOT EXISTS `#__raidplanner_raid` (
   `raid_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `status` tinyint(1) NOT NULL DEFAULT '0',
@@ -118,11 +94,6 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_role` (
   `icon_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-INSERT IGNORE INTO `#__raidplanner_role` (`role_id`, `role_name`, `body_color`, `header_color`, `font_color`, `icon_name`) VALUES (1,	'Tank',			'white',	'#93232b',	'black',	'role_tank.png');
-INSERT IGNORE INTO `#__raidplanner_role` (`role_id`, `role_name`, `body_color`, `header_color`, `font_color`, `icon_name`) VALUES (2,	'Melee DPS',	'white',	'#a06729',	'black',	'role_melee_dps.png');
-INSERT IGNORE INTO `#__raidplanner_role` (`role_id`, `role_name`, `body_color`, `header_color`, `font_color`, `icon_name`) VALUES (3,	'Ranged DPS',	'white',	'#2983a0',	'black',	'role_ranged_dps.png');
-INSERT IGNORE INTO `#__raidplanner_role` (`role_id`, `role_name`, `body_color`, `header_color`, `font_color`, `icon_name`) VALUES (4,	'Healer',		'white',	'#6aa64d',	'black',	'role_heal.png');
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_signups` (
   `raid_id` int(10) unsigned NOT NULL DEFAULT '0',
