@@ -9,7 +9,7 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</param>
-		<param type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_ARMORY_SYNC" description="COM_RAIDPLANNER_ARMORY_SYNC_DESC">
+		<param type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_SYNC" description="COM_RAIDPLANNER_SYNC_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</param>
@@ -36,7 +36,7 @@
 		</field>
 	</fieldset>
 	<fieldset name="guild" label="COM_RAIDPLANNER_GUILD_SETTINGS">
-		<field type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_ARMORY_SYNC" description="COM_RAIDPLANNER_ARMORY_SYNC_DESC">
+		<field type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_SYNC" description="COM_RAIDPLANNER_SYNC_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>

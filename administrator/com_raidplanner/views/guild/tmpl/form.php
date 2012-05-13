@@ -26,14 +26,15 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<fieldset>
 				<legend>
 					<label for="sync_plugin"><?php echo JText::_( 'COM_RAIDPLANNER_SYNC_PLUGIN' ); ?>:</label>
-					<select name="sync_plugin" id="sync_plugin" style="float: none;">
+					<select name="sync_plugin" id="sync_plugin" style="float: none;" onchange="document.id('plugin_settings').setStyle('display','none');document.id('plugin_settings_warning').setStyle('display','');">
 						<option value=""></option>
 						<?php foreach ($this->sync_plugins as $plugin) :?>
 							<option value="<?php echo $plugin;?>" <?php if ($plugin==$this->guild->sync_plugin) { echo "selected=\"selected\" ";}?>><?php echo $plugin;?></option>
 						<?php endforeach; ?>
 					</select>
 				</legend>
-				<ul class="adminformlist">
+				<strong id="plugin_settings_warning" style="display:none;"><?php echo JText::_( 'COM_RAIDPLANNER_SAVE_TOSET_PLUGIN' );?></strong>
+				<ul id="plugin_settings" class="adminformlist">
 					<?php foreach ($this->sync_params as $param) : ?>
 					<li>
 						<label for="params_<?php echo $param['name'];?>"><?php echo JText::_( $param['label'] ); ?>:</label>
