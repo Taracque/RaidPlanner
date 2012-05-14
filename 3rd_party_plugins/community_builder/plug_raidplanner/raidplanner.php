@@ -60,13 +60,12 @@ class getRaidPlannerTab extends cbTabHandler {
 				}
 
 				$juser =& JFactory::getUser($row->user_id);
-				$ju_params = json_decode($juser->params);
+				$ju_params = $juser->getParameters(false)->toObject();
 				foreach ($data as $k => $v) {
 					$juser->setParam($k, $v);
 					$ju_params->$k = $v;
 				}
 				
-				$juser->params = json_encode($ju_params);
 				$table = $juser->getTable();
 				$table->bind($juser->getProperties());
 				$table->store();

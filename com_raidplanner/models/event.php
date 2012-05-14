@@ -270,7 +270,7 @@ class RaidPlannerModelEvent extends JModel
 
 		$charlist = array();
 		$charset = $this->getProfileCharList($user);
-		
+
     	// reorder if set in characters parameters
     	foreach ($charset as $userchar) {
     		if (isset($result[$userchar])) {

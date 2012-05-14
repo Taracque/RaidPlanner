@@ -231,7 +231,7 @@ class plgUserRaidPlanner extends JPlugin
 			try
 			{
 				$juser =& JFactory::getUser($userId);
-				$params = json_decode($juser->params);
+				$params = $juser->getParameters(false)->toObject();
 
 				if ( $data_key == 'params')
 				{
@@ -247,7 +247,7 @@ class plgUserRaidPlanner extends JPlugin
 						$params->$k = $v;
 					}
 				}
-				$juser->params = json_encode($params);
+
 				$table = $juser->getTable();
 				$table->bind($juser->getProperties());
 				$table->store();
