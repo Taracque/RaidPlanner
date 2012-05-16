@@ -248,9 +248,11 @@ class plgUserRaidPlanner extends JPlugin
 					}
 				}
 
-				$table = $juser->getTable();
+				$table = &$juser->getTable();
+				$juser->params = json_encode($params);
 				$table->bind($juser->getProperties());
 				$table->store();
+
 				if ( (isset($data_arr['characters'])) && ($this->params->get('enable-character-editor', 0) == 1) )
 				{
 					$db	=& JFactory::getDBO();
