@@ -216,7 +216,7 @@ function com_install()
 	$db->query();
 	if ( $db->getNumRows() > 0  )
 	{
-		$db->setQuery( "ALTER TABLE `#__raidplanner_class` DROP `guild_level`, DROP `armory_id`" );
+		$db->setQuery( "ALTER TABLE `#__raidplanner_class` DROP `armory_id`" );
 		$db->query();
 		$db->setQuery( "ALTER TABLE `#__raidplanner_race` ADD `race_css` varchar(45) NOT NULL DEFAULT ''" );
 		$db->query();

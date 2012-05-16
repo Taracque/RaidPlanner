@@ -33,19 +33,20 @@ $function	= JRequest::getCmd('function', '');
 	<tr id="rp_event_selectchar">
 		<td>
 			<label for="select_char"><?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>:</label>
-			<select name="select_char" id="select_char" onchange="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, this.get('value'));" style="width:50%">
+			<select name="select_char" id="select_char" onchange="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, this.getSelected().get('value'), this.getSelected().get('text') );" style="width:50%">
 				<option></option>
 				<?php foreach ($this->characters as $character_id => $character) : ?>
-				<option value="<?php echo $character['char_name'];?>" <?php if ($character_id==@$this->character->character_id) {?>selected="selected"<?php } ?>><?php echo $character['char_name'];?></option>
+				<option value="<?php echo $character_id;?>" <?php if ($character_id==@$this->character->character_id) {?>selected="selected"<?php } ?>><?php echo $character['char_name'];?></option>
 				<?php endforeach; ?>
 			</select>
-			<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('select_char').get('value'));" />
+			<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('select_char').getSelected().get('value'), document.id('select_char').getSelected().get('text') );" />
 		</td>
 	</tr>
 	<?php if ($this->canEdit) : ?>
 	<tr id="rp_event_newchar" style="display:none;">
 		<td>
 			<form action="<?php echo JRoute::_('index.php');?>" method="post" id="rp_edit_form">
+				<input type="hidden" id="char_id" name="char_id" value="<?php echo @$this->character->character_id;?>" />
 				<label><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?>:<input type="text" id="char_name" name="char_name" value="<?php echo @$this->character->char_name;?>"></label><br />
 				<label><?php echo JText::_('COM_RAIDPLANNER_CLASS');?><select name="class_id" id="class_id">
 					<?php foreach ($this->classes as $class_id => $class) : ?>
@@ -80,7 +81,7 @@ $function	= JRequest::getCmd('function', '');
 			
 				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
 				<?php if (@$this->character->character_id>0) : ?>
-				<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('char_name').get('value'));" />
+				<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('char_id').get('value'), document.id('char_name').get('value'));" />
 				<?php endif; ?>
 
 				<input type="hidden" name="function" value="<?php echo $function; ?>" />

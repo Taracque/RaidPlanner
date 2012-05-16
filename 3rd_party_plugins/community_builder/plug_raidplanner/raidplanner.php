@@ -160,13 +160,16 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$script[] = '		var val = "";';
 						$script[] = '		ul.getChildren("li").each(function(li){';
 						$script[] = '			if (li.get("id") && (li.get("id") != "rp_characterEditorField_' . $field->fieldid . '_0") && (li.getChildren("a").get("text") != "") ) {';
+						$script[] = '				if (li.getChildren("input").get("value")) {';
+						$script[] = '					val = val + li.getChildren("input").get("value") + ":";';
+						$script[] = '				}';
 						$script[] = '				val = val + li.getChildren("a").get("text") + "\n";';
 						$script[] = '			}';
 						$script[] = '		})';
 						$script[] = '		document.id("rp_characterEditorValue_' . $field->fieldid . '").set("value", val);';
 						$script[] = '	}';
 						$script[] = '';
-						$script[] = '	function jSelectCharacter_'.$field->fieldid.'(idx, name) {';
+						$script[] = '	function jSelectCharacter_'.$field->fieldid.'(idx, char_id, char_name) {';
 						$script[] = '		var line = document.id( "rp_characterEditorField_' . $field->fieldid . '_" + idx );';
 						$script[] = '		if (idx==0) {';
 						$script[] = '			var ul = line.getParent("ul");';
@@ -193,9 +196,9 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$script[] = '				}';
 						$script[] = '			}';
 						$script[] = '		}';
-						$script[] = '		line.getChildren("a").set("text",name);';
-						$script[] = '		line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=" + name + "&amp;fieldidx=" + idx );';
-						$script[] = '		line.getChildren("input").set("value",name);';
+						$script[] = '		line.getChildren("a").set("text",char_name);';
+						$script[] = '		line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=" + char_name + "&amp;char_id=" + char_id + "&amp;fieldidx=" + idx );';
+						$script[] = '		line.getChildren("input").set("value",char_id);';
 						$script[] = '		SqueezeBox.close();';
 						$script[] = '		jRecalCharacterValue_'.$field->fieldid.'();';
 						$script[] = '	}';
@@ -215,6 +218,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_0">';
 						$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
 						$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
+						$html .= '<input type="hidden" value="" />';
 						$html .= '</li>';
 						
 						foreach ($chars as $char)
@@ -222,11 +226,21 @@ class CBfield_rpcharacters extends CBfield_textarea {
 							if ( trim($char) )
 							{
 								$idx ++;
+
+								if ( strpos($char, ':') !== false ) {
+									list($char_id, $char_name) = explode (":", trim($char) );
+									$char_id = intval($char_id);
+								} else {
+									$char_id = '';
+									$char_name = trim($char);
+								}
+
 								$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=' . htmlspecialchars(trim($char), ENT_COMPAT, 'UTF-8') . '&amp;fieldidx=' . $idx;
 					
 								$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_' . $idx . '">';
 								$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$field->fieldid.'();" style="float:right;margin:0;" />';
 								$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char . '</a>';
+								$html .= '<input type="hidden" value="' . $char_id . '" />';
 								$html .= '</li>';
 							}
 						}

@@ -31,14 +31,17 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$script[] = '		var val = "";';
 		$script[] = '		ul.getChildren("li").each(function(li){';
 		$script[] = '			if (li.get("id") && (li.get("id") != "rp_characterEditorField_' . $this->id . '_0") && (li.getChildren("a").get("text") != "") ) {';
+		$script[] = '				if (li.getChildren("input").get("value")) {';
+		$script[] = '					val = val + li.getChildren("input").get("value") + ":";';
+		$script[] = '				}';
 		$script[] = '				val = val + li.getChildren("a").get("text") + "\n";';
 		$script[] = '			}';
 		$script[] = '		})';
 		$script[] = '		document.id("rp_characterEditorValue_' . $this->id . '").set("value", val);';
 		$script[] = '	}';
 		$script[] = '';
-		$script[] = '	function jSelectCharacter_'.$this->id.'(idx, name) {';
-		$script[] = '		if (name) {';
+		$script[] = '	function jSelectCharacter_'.$this->id.'(idx, char_id, char_name) {';
+		$script[] = '		if (char_name) {';
 		$script[] = '			var line = document.id( "rp_characterEditorField_' . $this->id . '_" + idx );';
 		$script[] = '			if (idx==0) {';
 		$script[] = '				var ul = line.getParent("ul");';
@@ -57,9 +60,9 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$script[] = '					SqueezeBox.assign(line.getChildren("a"),{parse:"rel"});';
 		$script[] = '				}';
 		$script[] = '			}';
-		$script[] = '			line.getChildren("a").set("text",name);';
-		$script[] = '			line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=" + name + "&amp;fieldidx=" + idx );';
-		$script[] = '			line.getChildren("input").set("value",name);';
+		$script[] = '			line.getChildren("a").set("text",char_name);';
+		$script[] = '			line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=" + char_name + "&amp;char_id=" + char_id + "&amp;fieldidx=" + idx );';
+		$script[] = '			line.getChildren("input").set("value",char_id);';
 		$script[] = '			jRecalCharacterValue_'.$this->id.'();';
 		$script[] = '		}';
 		$script[] = '		SqueezeBox.close();';
@@ -69,7 +72,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 	
 		/* replace various possible separators to \n */
-		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $this->value );
+		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), "\n", $this->value );
 		$chars = explode( "\n", $chars);
 
 		$html = '<input type="hidden" name="' . $this->name. '" value="' . implode("\n",$chars). '" id="rp_characterEditorValue_' . $this->id . '" />';
@@ -80,6 +83,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_0">';
 		$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
 		$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
+		$html .= '<input type="hidden" value="" />';
 		$html .= '</li>';
 		
 		foreach ($chars as $char)
@@ -87,11 +91,21 @@ class JFormFieldRPCharacterEditor extends JFormField {
 			if ( trim($char) )
 			{
 				$idx ++;
-				$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars(trim($char), ENT_COMPAT, 'UTF-8') . '&amp;fieldidx=' . $idx;
+				
+				if ( strpos($char, ':') !== false ) {
+					list($char_id, $char_name) = explode (":", trim($char) );
+					$char_id = intval($char_id);
+				} else {
+					$char_id = '';
+					$char_name = trim($char);
+				}
+				
+				$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars( $char_name, ENT_COMPAT, 'UTF-8') . '&amp;char_id=' . $char_id . '&amp;fieldidx=' . $idx;
 	
 				$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
 				$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
-				$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char . '</a>';
+				$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char_name . '</a>';
+				$html .= '<input type="hidden" value="' . $char_id . '" />';
 				$html .= '</li>';
 			}
 		}
