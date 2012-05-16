@@ -130,7 +130,7 @@ class RaidPlannerHelper
 		if ((!self::$use_joomla_acl) && (self::getJVersion() >= '1.6')) {
 		// use of Joomla ACL is not set and Joomla >= 1.6, check the database.
 			$db = & JFactory::getDBO();
-			$db->setQuery("SELECT COUNT(*) FROM #__raidplanner_permissions");
+			$db->setQuery("SELECT COUNT(*) FROM #__raidplanner_groups");
 			if ($db->loadResult() == 0) {
 				// no RaidPlanner group defined, use Joomla ACL.
 				self::$use_joomla_acl = true;
