@@ -209,7 +209,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						// Add the script to the document head.
 						JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 						
-						$chars = RaidPlannerHelper::getProfileChars( $value );
+						$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 				
 						$html = '<input type="hidden" name="' . $field->name. '" value="' . htmlspecialchars ( $value, ENT_COMPAT, 'UTF-8' ) . '" id="rp_characterEditorValue_' . $field->fieldid . '" />';
 						$html .= '<div style="width:' . $field->params->get('cols', 40) . 'em;height:' . $field->params->get('rows',5) . 'em;overflow-y:auto;overflow-x:hidden;border:1px inset gray;">';
@@ -230,7 +230,11 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				
 							$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_' . $idx . '">';
 							$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$field->fieldid.'();" style="float:right;margin:0;" />';
-							$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
+							$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'];
+							if ($char['guild_name']!='') {
+								$html .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+							}
+							$html .= '</a>';
 							$html .= '<input type="hidden" value="' . $char['char_id'] . '" />';
 							$html .= '</li>';
 						}
@@ -247,10 +251,14 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				case 'html':
 				case 'rss':
 						$value = $user->get( $field->name );
-						$chars = RaidPlannerHelper::getProfileChars( $value );
+						$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 						$oReturn = '';
 						foreach ($chars as $char) {
-							$oReturn .= $char['char_name'] . "\n";
+							$oReturn .= $char['char_name'];
+							if ($char['guild_name']!='') {
+								$oReturn .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+							}
+							$oReturn .= "\n";
 						}
 						$oReturn = str_replace( "\n" , "<br />" , trim($oReturn) );
 					break;

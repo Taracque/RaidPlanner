@@ -486,35 +486,48 @@ class RaidPlannerHelper
 	 * Parse a string which contains a separated list of chars. Separator can be , ; \n \r \t
 	 * if $forceids is true, character id is given back even if it's not in the data (fetched from the database by name)
 	 */
-	public static function getProfileChars( $data , $forceids = false)
+	public static function getProfileChars( $data , $forceids = false, $getGuild = false)
 	{
 		$reply = array();
 		
-		if ( $forceids ) {
-			$db = & JFactory::getDBO();
-		}
+		$db = & JFactory::getDBO();
 
 		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), "\n", $data );
 		$charlist = explode( "\n", $chars);
 		
 		foreach ($charlist as $char) {
 			if ($char) {
+				$guild_id = '';
+				$guild_name = '';
 				if ( strpos($char, ':') !== false ) {
 					list($char_id, $char_name) = explode (":", trim($char) );
 					$char_id = intval($char_id);
+					if ($getGuild) {
+						$query = "SELECT c.character_id,g.guild_id,g.guild_name FROM #__raidplanner_character AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=c.guild_id WHERE c.character_id='" . trim($char_id) . "' ORDER BY g.guild_id ASC, c.char_name ASC LIMIT 1";
+						$db->setQuery( $query );
+						if ($result = $db->loadObject()) {
+							$guild_name = $result->guild_name;
+							$guild_id = $result->guild_id;
+						}
+					}
 				} else {
 					$char_name = trim($char);
+					$char_id = '';
 					if ( $forceids ) {
-						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name='" . trim($char) . "' ORDER BY char_name ASC LIMIT 1";
+						$query = "SELECT c.character_id,g.guild_id,g.guild_name FROM #__raidplanner_character AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=c.guild_id WHERE c.char_name='" . trim($char) . "' ORDER BY g.guild_id ASC, c.char_name ASC LIMIT 1";
 						$db->setQuery( $query );
-						$char_id = $db->loadResult();
-					} else {
-						$char_id = '';
+						if ($result = $db->loadObject()) {
+							$guild_name = $result->guild_name;
+							$guild_id = $result->guild_id;
+							$char_id = $result->character_id;
+						}
 					}
 				}
 				$reply[] = array(
 					'char_id'	=>	$char_id,
 					'char_name'	=>	$char_name,
+					'guild_id'	=>	$guild_id,
+					'guild_name'	=>	$guild_name
 				);
 			}
 		}

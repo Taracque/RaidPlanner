@@ -74,7 +74,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 	
 		/* replace various possible separators to \n */
-		$chars = RaidPlannerHelper::getProfileChars( $this->value );
+		$chars = RaidPlannerHelper::getProfileChars( $this->value, true, true );
 
 		$html = '<input type="hidden" name="' . $this->name. '" value="' . htmlspecialchars ( $this->value, ENT_COMPAT, 'UTF-8') . '" id="rp_characterEditorValue_' . $this->id . '" />';
 		$html .= '<div style="width:' . $this->element['cols'] . 'em;height:' . ($this->element['rows'] * 2) . 'em;overflow-y:auto;overflow-x:hidden;border: 1px inset gray;">';
@@ -95,7 +95,11 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 			$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
 			$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
-			$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
+			$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'];
+			if ($char['guild_name']!='') {
+				$html .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+			}
+			$html .= '</a>';
 			$html .= '<input type="hidden" value="' . $char['char_id'] . '" />';
 			$html .= '</li>';
 		}
@@ -162,10 +166,14 @@ class plgUserRaidPlanner extends JPlugin
 	public static function characters($value)
 	{
 		if ($value) {
-			$chars = RaidPlannerHelper::getProfileChars( $value );
+			$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 			$ret = '';
 			foreach ($chars as $char) {
-				$ret .= $char['char_name'] . "\n";
+				$ret .= $char['char_name'];
+				if ($char['guild_name']!='') {
+					$html .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+				}
+				$ret .= "\n";
 			}
 			$ret = str_replace( "\n" , "; " , trim($ret) );
 
