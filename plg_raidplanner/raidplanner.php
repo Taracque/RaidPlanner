@@ -171,7 +171,7 @@ class plgUserRaidPlanner extends JPlugin
 			foreach ($chars as $char) {
 				$ret .= $char['char_name'];
 				if ($char['guild_name']!='') {
-					$html .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+					$ret .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
 				}
 				$ret .= "\n";
 			}
