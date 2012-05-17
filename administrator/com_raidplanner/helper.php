@@ -535,6 +535,25 @@ class RaidPlannerHelper
 		return $reply;
 	}
 
+	public static function autoRepeatRaids()
+	{
+		$db = & JFactory::getDBO();
+		
+		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) as new_time,* FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
+		$db->setQuery( $query );
+		$raids = $db->loadObjectList();
+		
+		foreach ($raids as $raid) {
+			/* Duplicate it, but 7 day later */
+
+
+			/* Change the original to a non template version */
+			$query = "UPDATE $__raidplanner_raid SET is_template = 0 WHERE raid_id=" . intval($raid['raid_id']);
+			$db->setQuery( $query );
+			$db->query();
+		}
+	}
+
 	public static function detectMobile()
 	{
 		$isMobile	= false;

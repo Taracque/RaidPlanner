@@ -111,7 +111,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo $row->guild_name; ?>
             </td>
             <td>
-				<?php echo ($row->is_template) ? JText::_(JYES) : '-' ; ?>
+				<?php echo ($row->is_template == 0) ? '-' : ( ($row->is_template == 1) ? JText::_( 'JYES' ) : JText::sprintf( 'COM_RAIDPLANNER_DAYS_BEFORE', $row->is_template ) ) ; ?>
             </td>
         </tr>
         <?php

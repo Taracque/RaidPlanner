@@ -32,10 +32,16 @@ switch ( RaidPlannerHelper::getJVersion() ) {
 			<input class="text_area" type="text" name="location" id="location" size="32" maxlength="250" value="<?php echo @$this->raid->location;?>" />
 		</li>
 		<li>
-			<label for="is_template_set"><?php echo JText::_( 'COM_RAIDPLANNER_TEMPLATE' ); ?>:</label>
-			<fieldset id="is_template_set" class="radio inputbox">
-				<?php echo JHTML::_('select.booleanlist', 'is_template', 'class="inputbox"', @$this->raid->is_template );?>
-			</fieldset>
+			<label for="is_template"><?php echo JText::_( 'COM_RAIDPLANNER_TEMPLATE' ); ?>:</label>
+			<select name="is_template" id="is_template">
+				<option value="0"></option>
+				<option value="1" <?php if ( @$this->is_template) { echo "selected=\"selected\""; }?>><?php echo JText::_( 'JYES' );?></option>
+				<optgroup label="<?php echo JText::_( 'COM_RAIDPLANNER_AUTO_REPEAT_DAYS' );?>">
+					<?php for($i=1;$i<14;$i++): ?>
+					<option value="<?php echo -$i;?>" <?php if (-$i == @$this->is_template) { echo "selected=\"selected\""; }?>><?php echo JText::sprintf( 'COM_RAIDPLANNER_DAYS_BEFORE', $i ); ?></option>
+					<?php endfor; ?>
+				</optgroup>
+			</select>
 		</li>
 		<li>
 			<label for="description"><?php echo JText::_( 'JGLOBAL_DESCRIPTION' ); ?>:</label>
@@ -43,7 +49,7 @@ switch ( RaidPlannerHelper::getJVersion() ) {
 		</li>
 		<li>
 			<label for="start_time"><?php echo JText::_( 'COM_RAIDPLANNER_START_TIME' ); ?>:</label>
-			<?php echo JHTML::_('calendar', JHTML::_('date', $this->raid->start_time, $dateformat), 'start_time', 'start_time', '%Y-%m-%d %H:%M:%S' );?>
+			<?php echo JHTML::_('calendar', JHTML::_('date', @$this->raid->start_time, $dateformat), 'start_time', 'start_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
 		<li>
 			<label for="duration_mins"><?php echo JText::_( 'COM_RAIDPLANNER_DURATION' ); ?>:</label>
@@ -51,7 +57,7 @@ switch ( RaidPlannerHelper::getJVersion() ) {
 		</li>
 		<li>
 			<label for="invite_time"><?php echo JText::_( 'COM_RAIDPLANNER_INVITE_TIME' ); ?>:</label>
-			<?php echo JHTML::_('calendar', JHTML::_('date', $this->raid->invite_time, $dateformat), 'invite_time', 'invite_time', '%Y-%m-%d %H:%M:%S' );?>
+			<?php echo JHTML::_('calendar', JHTML::_('date', @$this->raid->invite_time, $dateformat), 'invite_time', 'invite_time', '%Y-%m-%d %H:%M:%S' );?>
 		</li>
 		<li>
 			<label for="freeze_time"><?php echo JText::_( 'COM_RAIDPLANNER_FREEZE_TIME' ); ?>:</label>

@@ -174,12 +174,12 @@ function com_install()
 	}
 	
 	/* Drop primary index from profile table */
-	$query = "SHOW KEYS FROM `#__raidplanner_profile` WHERE Key_name = 'PRIMARY'";
+	$query = "SHOW KEYS FROM `#__raidplanner_raid` WHERE Key_name = 'is_template'";
 	$db->setQuery($query);
 	$db->query();
-	if ( $db->getNumRows() > 0  )
+	if ( $db->getNumRows() == 0  )
 	{
-		$query = "ALTER TABLE `#__raidplanner_profile` DROP PRIMARY KEY , ADD INDEX (  `profile_id` ), ADD INDEX (  `group_id` )";
+		$query = "ALTER TABLE `#__raidplanner_raid` ADD INDEX (  `is_template` ), ADD INDEX (  `freeze_time` )";
 		$db->setQuery($query);
 		$db->query();
 	}
@@ -222,8 +222,8 @@ function com_install()
 		$db->query();
 		$db->setQuery( "ALTER TABLE `#__raidplanner_race` ADD `race_css` varchar(45) NOT NULL DEFAULT ''" );
 		$db->query();
-	}
-
+	}	
+	
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );
 	$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
