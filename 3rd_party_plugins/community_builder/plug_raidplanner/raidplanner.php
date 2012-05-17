@@ -244,6 +244,14 @@ class CBfield_rpcharacters extends CBfield_textarea {
 					break;
 				case 'html':
 				case 'rss':
+						$value = $user->get( $field->name );
+						$chars = RaidPlannerHelper::getProfileChars( $value );
+						$oReturn = '';
+						foreach ($chars as $char) {
+							$oReturn .= $char['char_name'] . "\n";
+						}
+						$oReturn = str_replace( "\n" , "<br />" , trim($oReturn) );
+					break;
 				case 'json':
 				case 'php':
 				case 'xml':
