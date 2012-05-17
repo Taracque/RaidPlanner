@@ -32,14 +32,14 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$script[] = '		var ul = document.id("rp_characterEditorList_' . $this->id . '");';
 		$script[] = '		var val = "";';
 		$script[] = '		ul.getChildren("li").each(function(li){';
-		$script[] = '			if (li.get("id") && (li.get("id") != "rp_characterEditorField_' . $this->id . '_0") && (li.getChildren("a").get("text") != "") ) {';
-		$script[] = '				if (li.getChildren("input").get("value")) {';
-		$script[] = '					val = val + li.getChildren("input").get("value") + ":";';
+		$script[] = '			if (li.get("id") && (li.get("id") != "rp_characterEditorField_' . $this->id . '_0") && (li.getChildren("a")[0].get("text") != "") ) {';
+		$script[] = '				if (li.getChildren("input")[0].get("value")) {';
+		$script[] = '					val = val + li.getChildren("input")[0].get("value") + ":";';
 		$script[] = '				}';
-		$script[] = '				val = val + li.getChildren("a").get("text") + "\n";';
+		$script[] = '				val = val + li.getChildren("a")[0].get("text") + ";";';
 		$script[] = '			}';
 		$script[] = '		})';
-		$script[] = '		document.id("rp_characterEditorValue_' . $this->id . '").set("value", val);';
+		$script[] = '		document.id("rp_characterEditorValue_' . $this->id . '").set("value", val );';
 		$script[] = '	}';
 		$script[] = '';
 		$script[] = '	function jSelectCharacter_'.$this->id.'(idx, char_id, char_name) {';
@@ -59,12 +59,12 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		$script[] = '				line.set("id","rp_characterEditorField_' . $this->id . '_" + (idx));';
 		$script[] = '				ul.grab(line,"top");';
 		$script[] = '				if (SqueezeBox) {';
-		$script[] = '					SqueezeBox.assign(line.getChildren("a"),{parse:"rel"});';
+		$script[] = '					SqueezeBox.assign(line.getChildren("a")[0],{parse:"rel"});';
 		$script[] = '				}';
 		$script[] = '			}';
-		$script[] = '			line.getChildren("a").set("text",char_name);';
-		$script[] = '			line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=" + char_name + "&amp;char_id=" + char_id + "&amp;fieldidx=" + idx );';
-		$script[] = '			line.getChildren("input").set("value",char_id);';
+		$script[] = '			line.getChildren("a")[0].set("text",char_name);';
+		$script[] = '			line.getChildren("a")[0].set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=" + char_name + "&amp;char_id=" + char_id + "&amp;fieldidx=" + idx );';
+		$script[] = '			line.getChildren("input")[0].set("value",char_id);';
 		$script[] = '			jRecalCharacterValue_'.$this->id.'();';
 		$script[] = '		}';
 		$script[] = '		SqueezeBox.close();';
@@ -89,6 +89,8 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		
 		foreach ($chars as $char)
 		{
+			$idx++;
+		
 			$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars( $char['char_name'], ENT_COMPAT, 'UTF-8') . '&amp;char_id=' . $char['char_id'] . '&amp;fieldidx=' . $idx;
 
 			$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
@@ -131,25 +133,46 @@ class plgUserRaidPlanner extends JPlugin
 			return true;
 		}
 
-		$userId = isset($data->id) ? $data->id : 0;
-		if ($userId) {
-			$juser =& JFactory::getUser($userId);
-			if ($this->params->get('raidplanner-profile-group', 1) == 0)
-			{
-				$data_key = 'params';
-			} else {
-				$data_key = 'raidplanner';
+		if (is_object($data)) {
+			$userId = isset($data->id) ? $data->id : 0;
+			if ($userId) {
+				$juser =& JFactory::getUser($userId);
+				if ($this->params->get('raidplanner-profile-group', 1) == 0)
+				{
+					$data_key = 'params';
+				} else {
+					$data_key = 'raidplanner';
+				}
+	
+				$data->$data_key = array(
+					'characters' => $juser->getParam('characters', ''),
+					'calendar_secret' => $juser->getParam('calendar_secret', ''),
+					'vacation' => $juser->getParam('vacation', '')
+				);
+	
 			}
-
-			$data->$data_key = array(
-				'characters' => $juser->getParam('characters', ''),
-				'calendar_secret' => $juser->getParam('calendar_secret', ''),
-				'vacation' => $juser->getParam('vacation', '')
-			);
-
+			if (!JHtml::isRegistered('users.characters')) {
+				JHtml::register('users.characters', array(__CLASS__, 'characters'));
+			}
 		}
 
 		return true;
+	}
+
+	public static function characters($value)
+	{
+		if ($value) {
+			$chars = RaidPlannerHelper::getProfileChars( $value );
+			$ret = '';
+			foreach ($chars as $char) {
+				$ret .= $char['char_name'] . "\n";
+			}
+			$ret = str_replace( "\n" , "; " , trim($ret) );
+
+			return "<div>" . $ret . "</div>";
+		} else {
+			return "";
+		}
 	}
 
 	/**

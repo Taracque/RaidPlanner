@@ -163,13 +163,13 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$script[] = '		var val = "";';
 						$script[] = '		ul.getChildren("li").each(function(li){';
 						$script[] = '			if (li.get("id") && (li.get("id") != "rp_characterEditorField_' . $field->fieldid . '_0") && (li.getChildren("a").get("text") != "") ) {';
-						$script[] = '				if (li.getChildren("input").get("value")) {';
-						$script[] = '					val = val + li.getChildren("input").get("value") + ":";';
+						$script[] = '				if (li.getChildren("input")[0].get("value")) {';
+						$script[] = '					val = val + li.getChildren("input")[0].get("value") + ":";';
 						$script[] = '				}';
-						$script[] = '				val = val + li.getChildren("a").get("text") + "\n";';
+						$script[] = '				val = val + li.getChildren("a")[0].get("text") + ";";';
 						$script[] = '			}';
 						$script[] = '		})';
-						$script[] = '		document.id("rp_characterEditorValue_' . $field->fieldid . '").set("value", val);';
+						$script[] = '		document.id("rp_characterEditorValue_' . $field->fieldid . '").set("value", val );';
 						$script[] = '	}';
 						$script[] = '';
 						$script[] = '	function jSelectCharacter_'.$field->fieldid.'(idx, char_id, char_name) {';
@@ -199,9 +199,9 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$script[] = '				}';
 						$script[] = '			}';
 						$script[] = '		}';
-						$script[] = '		line.getChildren("a").set("text",char_name);';
-						$script[] = '		line.getChildren("a").set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=" + char_name + "&amp;char_id=" + char_id + "&amp;fieldidx=" + idx );';
-						$script[] = '		line.getChildren("input").set("value",char_id);';
+						$script[] = '		line.getChildren("a")[0].set("text",char_name);';
+						$script[] = '		line.getChildren("a")[0].set("href","' . JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=" + char_name + "&amp;char_id=" + char_id + "&amp;fieldidx=" + idx );';
+						$script[] = '		line.getChildren("input")[0].set("value",char_id);';
 						$script[] = '		SqueezeBox.close();';
 						$script[] = '		jRecalCharacterValue_'.$field->fieldid.'();';
 						$script[] = '	}';
@@ -224,6 +224,8 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						
 						foreach ($chars as $char)
 						{
+							$idx++;
+
 							$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=' . htmlspecialchars( $char['char_name'] , ENT_COMPAT, 'UTF-8') . '&amp;char_id=' . intval($char['char_id']) . '&amp;fieldidx=' . $idx;
 				
 							$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_' . $idx . '">';
