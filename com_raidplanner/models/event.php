@@ -213,17 +213,6 @@ class RaidPlannerModelEvent extends JModel
     	return $result;
 	}
 
-	/* Create an array of characters which is stored in joomla user profile */ 
-	function getProfileCharList($user)
-	{
-		$charset = $user->getParam('characters');
-		$charset = str_replace( array("\n", ",", ";", "\r", "\t"), " ", $charset );
-		$charset = preg_replace('!\s+!', ' ', $charset);
-		$charset = explode( " ", $charset);
-		
-		return $charset;
-	}
-
 	function syncProfile($user)
 	{
 		// Not guest, and we are not using Joomla ACL
@@ -266,14 +255,15 @@ class RaidPlannerModelEvent extends JModel
 					" . $where . " ORDER BY c.char_name ASC";
 		// reload the list
 		$db->setQuery($query);
-		$result = $db->loadObjectList('char_name');
+		$result = $db->loadObjectList( 'character_id' );
 
 		$charlist = array();
-		$charset = $this->getProfileCharList($user);
+		$charset = RaidPlannerHelper::getProfileChars( $user->getParam('characters') , true );
 		
     	// reorder if set in characters parameters
     	foreach ($charset as $userchar) {
-    		if (isset($result[$userchar])) {
+    		/* If character id  matches add this character */
+    		if ( (isset($result[$userchar['char_id']])) && ($result[$userchar['char_id']]->character_id == $userchar['char_id']) ) {
 				$charlist[$userchar] = $result[$userchar];
 				/* Write it back to the database, if needed */
 				if ( $result[$userchar]->profile_id == 0 )	/* no profile attached to it */
@@ -283,7 +273,7 @@ class RaidPlannerModelEvent extends JModel
 					$db->query();
 				}
 
-				unset($result[$userchar]);
+				unset( $result[ $userchar['char_id'] ]);
 			}
     	}
 		if (is_array($result))

@@ -441,7 +441,7 @@ class RaidPlannerHelper
 			$errno = 0;
 			$errstr = '';
 
-			$fsock = @fsockopen("update.kunena.org", 80, $errno, $errstr, 10);
+			$fsock = @fsockopen( $url, 80, $errno, $errstr, 10);
 
 			if ($fsock) {
 				@fputs($fsock, "GET /kunena_update.xml HTTP/1.1\r\n");
@@ -480,6 +480,46 @@ class RaidPlannerHelper
 		}
 		
 		return $data;
+	}
+	
+	/**
+	 * Parse a string which contains a separated list of chars. Separator can be , ; \n \r \t
+	 * if $forceids is true, character id is given back even if it's not in the data (fetched from the database by name)
+	 */
+	public static function getProfileChars( $data , $forceids = false)
+	{
+		$reply = array();
+		
+		if ( $forceids ) {
+			$db = & JFactory::getDBO();
+		}
+
+		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), "\n", $data );
+		$charlist = explode( "\n", $chars);
+		
+		foreach ($charlist as $char) {
+			if ($char) {
+				if ( strpos($char, ':') !== false ) {
+					list($char_id, $char_name) = explode (":", trim($char) );
+					$char_id = intval($char_id);
+				} else {
+					$char_name = trim($char);
+					if ( $forceids ) {
+						$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name='" . trim($char) . "' ORDER BY char_name ASC LIMIT 1";
+						$db->setQuery( $query );
+						$char_id = $db->loadResult();
+					} else {
+						$char_id = '';
+					}
+				}
+				$reply[] = array(
+					'char_id'	=>	$char_id,
+					'char_name'	=>	$char_name,
+				);
+			}
+		}
+		
+		return $reply;
 	}
 
 	public static function detectMobile()

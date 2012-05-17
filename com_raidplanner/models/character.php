@@ -28,12 +28,20 @@ class RaidPlannerModelCharacter extends JModel
 		// check if user have edit_characters privilegs
 		if ($this->canEdit())
 		{
+			$char_name = JRequest::getVar('char_name', null, 'default', 'STRING');
+			$class_id = JRequest::getVar('class_id', null, 'default', 'INT');
+			$gender_id = JRequest::getVar('gender_id', 1, 'default', 'INT');
+			$race_id = JRequest::getVar('race_id', null, 'default', 'INT');
+			$char_level = JRequest::getVar('char_level', null, 'default', 'INT');
+			$rank = JRequest::getVar('rank', null, 'default', 'INT');
+			$guild_id = JRequest::getVar('guild_id', null, 'default', 'INT');
+
 			$db = & JFactory::getDBO();
 
 			if ($character_id <= 0)
 			{
 				// if name is not already used
-				$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name=".$db->Quote( JRequest::getVar('char_name', null, 'default', 'STRING') )."";
+				$query = "SELECT character_id FROM #__raidplanner_character WHERE char_name=".$db->Quote( $char_name )." AND guild_id=" . intval($guild_id);
 				$db->setQuery($query);
 				if ($db->loadResult() > 0)
 				{
@@ -55,14 +63,6 @@ class RaidPlannerModelCharacter extends JModel
 	
 			if ($character_id > 0)
 			{
-				$char_name = JRequest::getVar('char_name', null, 'default', 'STRING');
-				$class_id = JRequest::getVar('class_id', null, 'default', 'INT');
-				$gender_id = JRequest::getVar('gender_id', 1, 'default', 'INT');
-				$race_id = JRequest::getVar('race_id', null, 'default', 'INT');
-				$char_level = JRequest::getVar('char_level', null, 'default', 'INT');
-				$rank = JRequest::getVar('rank', null, 'default', 'INT');
-				$guild_id = JRequest::getVar('guild_id', null, 'default', 'INT');
-		
 				// update the record
 				$query = "UPDATE #__raidplanner_character SET"
 						. " char_name=".$db->Quote($char_name)
@@ -93,9 +93,10 @@ class RaidPlannerModelCharacter extends JModel
 		$db = & JFactory::getDBO();
 		$user =& JFactory::getUser();
 		
-		$query = "SELECT c.character_id,c.char_name
-					FROM #__raidplanner_character AS c 
-					WHERE " . ( (!$ownOnly)?"c.profile_id = 0 OR":"" ) . " c.profile_id= " . $user->id . " ORDER BY c.char_name ASC";
+		$query = "SELECT c.character_id,c.char_name,g.guild_id,g.guild_name
+					FROM #__raidplanner_character AS c
+					LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id
+					WHERE " . ( (!$ownOnly)?"c.profile_id = 0 OR":"" ) . " c.profile_id= " . $user->id . " ORDER BY g.guild_id ASC, c.char_name ASC";
 		// reload the list
 		$db->setQuery($query);
 		$result = $db->loadAssocList('character_id');

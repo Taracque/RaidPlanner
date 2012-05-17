@@ -9,6 +9,8 @@ defined('JPATH_BASE') or die('Restricted access');
 
 jimport('joomla.form.formfield');
 
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+
  /**
   * Custom JForm field for Character editor
   */
@@ -72,10 +74,9 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 	
 		/* replace various possible separators to \n */
-		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), "\n", $this->value );
-		$chars = explode( "\n", $chars);
+		$chars = RaidPlannerHelper::getProfileChars( $this->value );
 
-		$html = '<input type="hidden" name="' . $this->name. '" value="' . implode("\n",$chars). '" id="rp_characterEditorValue_' . $this->id . '" />';
+		$html = '<input type="hidden" name="' . $this->name. '" value="' . htmlspecialchars ( $this->value, ENT_COMPAT, 'UTF-8') . '" id="rp_characterEditorValue_' . $this->id . '" />';
 		$html .= '<div style="width:' . $this->element['cols'] . 'em;height:' . ($this->element['rows'] * 2) . 'em;overflow-y:auto;overflow-x:hidden;border: 1px inset gray;">';
 		$html .= '<ul style="display:block;float:left;clear:left;width:100%;padding:0;margin:0;" id="rp_characterEditorList_' . $this->id . '">';
 		$idx = 0;
@@ -88,26 +89,13 @@ class JFormFieldRPCharacterEditor extends JFormField {
 		
 		foreach ($chars as $char)
 		{
-			if ( trim($char) )
-			{
-				$idx ++;
-				
-				if ( strpos($char, ':') !== false ) {
-					list($char_id, $char_name) = explode (":", trim($char) );
-					$char_id = intval($char_id);
-				} else {
-					$char_id = '';
-					$char_name = trim($char);
-				}
-				
-				$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars( $char_name, ENT_COMPAT, 'UTF-8') . '&amp;char_id=' . $char_id . '&amp;fieldidx=' . $idx;
-	
-				$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
-				$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
-				$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char_name . '</a>';
-				$html .= '<input type="hidden" value="' . $char_id . '" />';
-				$html .= '</li>';
-			}
+			$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=' . htmlspecialchars( $char['char_name'], ENT_COMPAT, 'UTF-8') . '&amp;char_id=' . $char['char_id'] . '&amp;fieldidx=' . $idx;
+
+			$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
+			$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
+			$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
+			$html .= '<input type="hidden" value="' . $char['char_id'] . '" />';
+			$html .= '</li>';
 		}
 		$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=&amp;fieldidx=';
 		$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'components/com_raidplanner/assets/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('PLG_USER_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
@@ -272,15 +260,16 @@ class plgUserRaidPlanner extends JPlugin
 					$db->setQuery($query);
 					$db->query();
 					
-					$chars = explode("\n", $data_arr['characters']);
+					$chars = RaidPlannerHelper::getProfileChars( $data_arr['characters'] );
 					foreach ($chars as $char)
 					{
-						if (trim($char) != '')
-						{
-							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE char_name='". $db->getEscaped( trim($char) ) ."'";
-							$db->setQuery($query);
-							$db->query();
+						if ($char['char_id']=='') {
+							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE char_name='". $db->getEscaped( $char['char_name'] ) ."'";
+						} else {
+							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE character_id=" . intval($char['char_id']) ." AND char_name='". $db->getEscaped( $char['char_name'] ) ."'";
 						}
+						$db->setQuery($query);
+						$db->query();
 					}
 
 					$query = 'DELETE FROM #__raidplanner_character WHERE profile_id=-'. $userId;

@@ -35,9 +35,19 @@ $function	= JRequest::getCmd('function', '');
 			<label for="select_char"><?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>:</label>
 			<select name="select_char" id="select_char" onchange="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, this.getSelected().get('value'), this.getSelected().get('text') );" style="width:50%">
 				<option></option>
-				<?php foreach ($this->characters as $character_id => $character) : ?>
-				<option value="<?php echo $character_id;?>" <?php if ($character_id==@$this->character->character_id) {?>selected="selected"<?php } ?>><?php echo $character['char_name'];?></option>
+			<?php
+				$guild_id = '';
+				foreach ($this->characters as $character_id => $character) : ?>
+				<?php if ( $guild_id != $character['guild_id']) : ?>
+					<?php if ($guild_id != '') : ?>
+					</optgroup>
+					<?php endif; ?>
+				<optgroup label="<?php echo $character['guild_name'];?>">
+				<?php $guild_id = $character['guild_id']; ?>
+				<?php endif; ?>
+					<option value="<?php echo $character_id;?>" <?php if ($character_id==@$this->character->character_id) {?>selected="selected"<?php } ?>><?php echo $character['char_name'];?></option>
 				<?php endforeach; ?>
+				</optgroup>
 			</select>
 			<input type="button" name="SelectButton" value="<?php echo JText::_('COM_RAIDPLANNER_SELECT_CHARACTER');?>" onclick="javascript:if (window.parent) window.parent.<?php echo $this->escape($function);?>(<?php echo JRequest::getInt('fieldidx');?>, document.id('select_char').getSelected().get('value'), document.id('select_char').getSelected().get('text') );" />
 		</td>
