@@ -63,13 +63,15 @@ class getRaidPlannerTab extends cbTabHandler {
 
 				$juser =& JFactory::getUser($row->user_id);
 				if (!$juser->block) {
-					$ju_params = json_decode($juser->params);
+
+					$ju_params = $juser->getParameters(false)->toObject();
 					foreach ($data as $k => $v) {
 						$juser->setParam($k, $v);
 						$ju_params->$k = $v;
 					}
-	
-					$juser->params = json_encode($ju_params);
+					if (function_exists('json_encode')) {
+						$juser->params = json_encode($ju_params);
+					}
 					$table = $juser->getTable();
 					$table->bind($juser->getProperties());
 					$table->store();
@@ -230,11 +232,10 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				
 							$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_' . $idx . '">';
 							$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$field->fieldid.'();" style="float:right;margin:0;" />';
-							$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'];
+							$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
 							if ($char['guild_name']!='') {
-								$html .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+								$html .= '<span> &lsaquo;' . $char['guild_name'] . '&rsaquo;</span>';
 							}
-							$html .= '</a>';
 							$html .= '<input type="hidden" value="' . $char['char_id'] . '" />';
 							$html .= '</li>';
 						}

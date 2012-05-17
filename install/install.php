@@ -193,14 +193,16 @@ function com_install()
 		$list = $db->loadObjectList();
 		if (count($list) > 0)
 		{
-			foreach ($list as $guild) {
-				$params = json_decode( $guild->params , true );
-				$params['guild_region'] = $guild->guild_region;
-				$params['guild_realm'] = $guild->guild_realm;
-				$params['guild_level'] = $guild->guild_level;
-				
-				$db->setQuery( "UPDATE FROM #__raidplanner_guild SET guild_realm='wow_armory',params=" . $db->Quote( json_encode($params) ) . " WHERE guild_id=".intval($guild->guild_id) );
-				$db->query();
+			if (function_exists('json_decode')) {
+				foreach ($list as $guild) {
+					$params = json_decode( $guild->params , true );
+					$params['guild_region'] = $guild->guild_region;
+					$params['guild_realm'] = $guild->guild_realm;
+					$params['guild_level'] = $guild->guild_level;
+					
+					$db->setQuery( "UPDATE FROM #__raidplanner_guild SET guild_realm='wow_armory',params=" . $db->Quote( json_encode($params) ) . " WHERE guild_id=".intval($guild->guild_id) );
+					$db->query();
+				}
 			}
 		}
 		$db->setQuery( "ALTER TABLE `#__raidplanner_guild` DROP `guild_level`, DROP `guild_region`" );

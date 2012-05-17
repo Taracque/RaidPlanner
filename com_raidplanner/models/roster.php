@@ -44,7 +44,9 @@ class RaidPlannerModelRoster extends JModel
 		}
 		$db->setQuery($query);
 		$tmp = $db->loadObject();
-		$tmp->params = json_decode($tmp->params);
+		if (function_exists('json_decode')) {
+			$tmp->params = json_decode($tmp->params);
+		}
 		
 		return ( $tmp );
 	}

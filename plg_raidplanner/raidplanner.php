@@ -95,11 +95,10 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 			$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
 			$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
-			$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'];
+			$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
 			if ($char['guild_name']!='') {
-				$html .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+				$html .= '<span> &lsaquo;' . $char['guild_name'] . '&rsaquo;</span>';
 			}
-			$html .= '</a>';
 			$html .= '<input type="hidden" value="' . $char['char_id'] . '" />';
 			$html .= '</li>';
 		}
@@ -264,7 +263,7 @@ class plgUserRaidPlanner extends JPlugin
 			try
 			{
 				$juser =& JFactory::getUser($userId);
-				$params = json_decode($juser->params);
+				$params = $juser->getParameters(false)->toObject();
 
 				if ( $data_key == 'params')
 				{
@@ -280,10 +279,12 @@ class plgUserRaidPlanner extends JPlugin
 						$params->$k = $v;
 					}
 				}
+
+				$table = &$juser->getTable();
 				$juser->params = json_encode($params);
-				$table = $juser->getTable();
 				$table->bind($juser->getProperties());
 				$table->store();
+
 				if ( (isset($data_arr['characters'])) && ($this->params->get('enable-character-editor', 0) == 1) )
 				{
 					$db	=& JFactory::getDBO();
