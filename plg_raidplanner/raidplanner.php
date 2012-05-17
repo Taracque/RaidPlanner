@@ -177,7 +177,7 @@ class plgUserRaidPlanner extends JPlugin
 			}
 			$ret = str_replace( "\n" , "; " , trim($ret) );
 
-			return "<div>" . $ret . "</div>";
+			return $ret;
 		} else {
 			return "";
 		}
