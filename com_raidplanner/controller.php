@@ -10,9 +10,12 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
- 
+
 jimport('joomla.application.component.controller');
- 
+
+// register the helper
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+
 class RaidPlannerController extends JController
 {
     /**
@@ -125,6 +128,9 @@ class RaidPlannerController extends JController
 		
 		// add event model to calendar view
 		if ($vName == 'calendar') {
+			/* Auto repeat raids if needed */
+			RaidPlannerHelper::autoRepeatRaids();
+			
 			$eventmodel = &$this->getModel('event');
 			$view->setModel($eventmodel, false);
 		}

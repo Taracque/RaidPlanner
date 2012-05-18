@@ -539,18 +539,33 @@ class RaidPlannerHelper
 	{
 		$db = & JFactory::getDBO();
 		
-		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) as new_time,* FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
+		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) as new_time FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
 		$db->setQuery( $query );
-		$raids = $db->loadObjectList();
-		
-		foreach ($raids as $raid) {
-			/* Duplicate it, but 7 day later */
+		if ($raids = $db->loadObjectList()) {
+			JTable::addIncludePath( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'tables');
+			$row =& JTable::getInstance('raid', 'Table');
 
-
-			/* Change the original to a non template version */
-			$query = "UPDATE $__raidplanner_raid SET is_template = 0 WHERE raid_id=" . intval($raid['raid_id']);
-			$db->setQuery( $query );
-			$db->query();
+			foreach ($raids as $raid) {
+				/* Duplicate it, but 7 day later */
+				if ($row->load($raid->raid_id)) {
+					/* Change the original to a non template version */
+					$old_template = $row->is_template;
+					$row->is_template = 0;
+					if (!$row->store()) {
+						JError::raiseError(500, $row->getError() );
+					}
+					
+					/* Create a duplicate one */
+					$row->raid_id = 0;
+					$row->is_template = $old_template;
+					$row->start_time = $raid->new_time;
+					if (!$row->store()) {
+						JError::raiseError(500, $row->getError() );
+					}
+				} else {
+					return JError::raiseWarning( 500, $row->getError() );
+				}
+			}
 		}
 	}
 
