@@ -211,7 +211,7 @@ class RaidPlannerHelper
 	public static function getCharacters()
 	{
 		$db = & JFactory::getDBO();
-		$query = ' SELECT character_id,char_name FROM #__raidplanner_character';
+		$query = 'SELECT character_id,char_name FROM #__raidplanner_character ORDER BY char_name ASC';
 		$db->setQuery( $query );
 		return $db->loadObjectList('character_id');
 	}
