@@ -63,11 +63,7 @@ function drawBars()
 			if (first) {
 				first=false;
 			} else {
-				if (!bars.append) {
-					bars.push( cell.get('text').toInt() );
-				} else {
-					bars.append([ cell.get('text').toInt() ]);
-				}
+				bars.push( cell.get('text').toInt() );
 			}
 		});
 		
@@ -75,7 +71,7 @@ function drawBars()
 		total = bars[bars.length-2];
 		delete bars[bars.length-1];
 		delete bars[bars.length-2];
-		total_div = new Element('div',{ style : 'border: 1px solid gray;width:' + Math.round(100*total/biggest) + '%;height:16px;overflow:hidden;position:relative;'});
+		total_div = new Element('div',{ style : 'width:' + Math.round(100*total/biggest) + '%;height:16px;overflow:hidden;position:relative;'});
 		bars.each(function(bar,idx){
 			if (colors[idx+1]!='') {
 				color = colors[idx+1];
