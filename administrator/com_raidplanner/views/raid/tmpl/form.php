@@ -35,10 +35,10 @@ switch ( RaidPlannerHelper::getJVersion() ) {
 			<label for="is_template"><?php echo JText::_( 'COM_RAIDPLANNER_TEMPLATE' ); ?>:</label>
 			<select name="is_template" id="is_template">
 				<option value="0"></option>
-				<option value="1" <?php if ( @$this->is_template) { echo "selected=\"selected\""; }?>><?php echo JText::_( 'JYES' );?></option>
+				<option value="1" <?php if ( @$this->raid->is_template) { echo "selected=\"selected\""; }?>><?php echo JText::_( 'JYES' );?></option>
 				<optgroup label="<?php echo JText::_( 'COM_RAIDPLANNER_AUTO_REPEAT_DAYS' );?>">
-					<?php for($i=1;$i<14;$i++): ?>
-					<option value="<?php echo -$i;?>" <?php if (-$i == @$this->is_template) { echo "selected=\"selected\""; }?>><?php echo JText::sprintf( 'COM_RAIDPLANNER_DAYS_BEFORE', $i ); ?></option>
+					<?php for($i=1;$i<=14;$i++): ?>
+					<option value="<?php echo -$i;?>" <?php if (-$i == @$this->raid->is_template) { echo "selected=\"selected\""; }?>><?php echo JText::sprintf( 'COM_RAIDPLANNER_DAYS_BEFORE', $i ); ?></option>
 					<?php endfor; ?>
 				</optgroup>
 			</select>
@@ -121,11 +121,6 @@ switch ( RaidPlannerHelper::getJVersion() ) {
 		</li>
 	</ul>
 	</fieldset>
-</div>
-<div class="width-65 fltrt col65">
-	<?php if ($this->raid->raid_id > 0 ) : ?>
-	<iframe style="width:100%;height:500px;border:none;" src="<?php echo JURI::base(); ?>../index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=<?php echo $this->raid->raid_id;?>"></iframe>
-	<?php endif; ?>
 </div>
 <div class="clr"></div>
 <input type="hidden" name="option" value="com_raidplanner" />
