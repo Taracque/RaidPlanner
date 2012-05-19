@@ -63,7 +63,11 @@ function drawBars()
 			if (first) {
 				first=false;
 			} else {
-				bars.append([ cell.get('text').toInt() ]);
+				if (!bars.append) {
+					bars.push( cell.get('text').toInt() );
+				} else {
+					bars.append([ cell.get('text').toInt() ]);
+				}
 			}
 		});
 		
@@ -90,6 +94,10 @@ function drawBars()
 var statReq;
 
 window.addEvent('domready', function() {
+	if (!Object.each) {
+		Object.each = $each;
+	}
+
 	statReq = new Request.JSON({
 		url : '<?php echo JRoute::_( 'index.php?option=com_raidplanner&controller=stats' ,false ); ?>',
 		method : 'get',

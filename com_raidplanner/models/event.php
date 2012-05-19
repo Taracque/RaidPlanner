@@ -264,11 +264,11 @@ class RaidPlannerModelEvent extends JModel
     	foreach ($charset as $userchar) {
     		/* If character id  matches add this character */
     		if ( (isset($result[$userchar['char_id']])) && ($result[$userchar['char_id']]->character_id == $userchar['char_id']) ) {
-				$charlist[$userchar] = $result[$userchar];
+				$charlist[$userchar['char_id']] = $result[$userchar['char_id']];
 				/* Write it back to the database, if needed */
-				if ( $result[$userchar]->profile_id == 0 )	/* no profile attached to it */
+				if ( $result[$userchar['char_id']]->profile_id == 0 )	/* no profile attached to it */
 				{
-					$query = "UPDATE #__raidplanner_character SET profile_id = " . intval($user->id) . " WHERE character_id = " . intval($result[$userchar]->character_id);
+					$query = "UPDATE #__raidplanner_character SET profile_id = " . intval($user->id) . " WHERE character_id = " . intval($result[$userchar['char_id']]->character_id);
 					$db->setQuery($query);
 					$db->query();
 				}
