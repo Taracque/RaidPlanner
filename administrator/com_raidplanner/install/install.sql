@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_raid` (
   PRIMARY KEY (`raid_id`),
   KEY `start_time` (`start_time`),
   KEY `is_template` (`is_template`),
-  KEY `freeze_time` (`freeze_time`),
+  KEY `freeze_time` (`freeze_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_role` (
