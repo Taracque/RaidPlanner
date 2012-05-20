@@ -47,6 +47,8 @@ class RaidPlannerControllerStats extends RaidPlannerController
 		$db =& JFactory::getDBO();
 		if ($group_id > 0) {
 			$where[] = 'p.group_id=' . intval($group_id);
+			$where[] = 'r.invited_group_id=' . intval($group_id);
+			$stat_x[5] = 'COUNT(r.invited_group_id=' . intval($group_id) . ') AS raids';
 		}
 		if ($char_id > 0) {
 			$where[] = 'c.character_id=' . intval($char_id);
