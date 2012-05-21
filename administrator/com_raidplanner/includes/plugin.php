@@ -17,6 +17,8 @@ class RaidPlannerPlugin
 	protected $guild_name = null;
 	protected $guild_id = null;
 	
+	public $provide_sync = false;
+	
 	function __construct( $guild_id, $guild_name, $params)
 	{
 		$this->params = $params;
@@ -58,5 +60,10 @@ class RaidPlannerPlugin
 	public function guildHeader()
 	{
 		return "<h2>" . $this->guild_name . "</h2>";
+	}
+	
+	public function loadCSS()
+	{
+		return false;
 	}
 }

@@ -64,6 +64,8 @@ class RaidPlannerViewEvent extends JView
 				$all_characters = array();
 			}
 
+			RaidPlannerHelper::loadGuildCSS( @$event->guild_id );
+
 			$this->assignRef( 'params', $params);
 			$this->assignRef( 'macro', $macro);
 			$this->assignRef( 'event', $event );

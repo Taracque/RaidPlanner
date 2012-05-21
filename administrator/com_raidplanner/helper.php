@@ -47,9 +47,19 @@ class RaidPlannerHelper
 		}
 	}
 
+	public static function loadGuildCSS( $guild_id )
+	{
+		if ($plugin = self::getGuildPlugin( $guild_id ) )
+		{
+			return $plugin->loadCSS();
+		}
+		
+		return false;
+	}
+
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
-		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
+		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ($plugin->provide_sync) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
 		{
 			$plugin->doSync( $showOkStatus );
 		}

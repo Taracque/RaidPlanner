@@ -42,6 +42,8 @@ class RaidPlannerViewRoster extends JView
 			$guild_plugin->doSync();
 		}
 
+		RaidPlannerHelper::loadGuildCSS( $guild_id );
+
 		$this->assignRef( 'guild_plugin', $guild_plugin );
 		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
