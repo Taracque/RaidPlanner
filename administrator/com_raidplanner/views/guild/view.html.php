@@ -40,6 +40,9 @@ class RaidPlannerViewGuild extends JView
 		$plugin_params = array();
 		if ($guild->sync_plugin != '') {
 			$plugin_params = RaidPlannerHelper::getSyncPluginParams( $guild->sync_plugin );
+			
+			$plugin = RaidPlannerHelper::getGuildPlugin( $guild->guild_id );
+			$this->assignRef( 'do_sync', $plugin->provide_sync );
 		}
 
 		$this->assignRef( 'sync_plugins', $plugins );
