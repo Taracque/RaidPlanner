@@ -549,7 +549,7 @@ class RaidPlannerHelper
 	{
 		$db = & JFactory::getDBO();
 		
-		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) as new_time FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
+		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) as new_time,location,invited_group_id,guild_id FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
 		$db->setQuery( $query );
 		if ($raids = $db->loadObjectList()) {
 			JTable::addIncludePath( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'tables');
@@ -565,12 +565,17 @@ class RaidPlannerHelper
 						JError::raiseError(500, $row->getError() );
 					}
 					
-					/* Create a duplicate one */
-					$row->raid_id = 0;
-					$row->is_template = $old_template;
-					$row->start_time = $raid->new_time;
-					if (!$row->store()) {
-						JError::raiseError(500, $row->getError() );
+					/* Check if no raid present with the same settings */
+					$query = "SELECT raid_id FROM #__raidplanner_raid WHERE start_time='" . $raid->new_time . "' AND location=" . $db->Quote($raid->location) . " AND guild_id=" . intval($raid->guild_id) . " AND invited_group_id=" . intval($raid->invited_group_id) . "";
+					$db->setQuery($query);
+					if (!$db->loadResult()) {
+						/* Create a duplicate one */
+						$row->raid_id = 0;
+						$row->is_template = $old_template;
+						$row->start_time = $raid->new_time;
+						if (!$row->store()) {
+							JError::raiseError(500, $row->getError() );
+						}
 					}
 				} else {
 					return JError::raiseWarning( 500, $row->getError() );
