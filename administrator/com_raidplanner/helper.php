@@ -40,8 +40,11 @@ class RaidPlannerHelper
 			$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
 
 			JLoader::register( $plug_class, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $guild->sync_plugin . DS . $guild->sync_plugin . '.php' );
-
-			return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
+			if ( JLoader::load( $plug_class ) ) {
+				return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
+			} else {
+				return null;
+			}
 		} else {
 			return null;
 		}
