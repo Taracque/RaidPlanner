@@ -40,9 +40,10 @@ class RaidPlannerHelper
 			$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
 
 			JLoader::register( $plug_class, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $guild->sync_plugin . DS . $guild->sync_plugin . '.php' );
-			if ( JLoader::load( $plug_class ) ) {
+			try {
 				return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
-			} else {
+			} catch (Exception $e) {
+				JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
 				return null;
 			}
 		} else {

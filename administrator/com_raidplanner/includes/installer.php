@@ -239,9 +239,9 @@ class RaidPlannerInstaller
 	{
 		$installed = array();
 		$xmlfiles = JFolder::files( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'themes' . DS, '.xml$', 1, true);
-		$xml =& JFactory::getXMLParser( 'simple' );
 		foreach ($xmlfiles as $xmlfile)
 		{
+			$xml =& JFactory::getXMLParser( 'simple' );
 			$xml->loadFile( $xmlfile );
 			if ( ( $type == '') || ( str_replace( 'raidplanner_' , '' , $xml->document->attributes ( "type" ) ) == $type ) )
 			$installed[] = array(
