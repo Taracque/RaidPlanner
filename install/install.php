@@ -251,9 +251,11 @@ function com_install()
 			} catch (Exception $e) {
 				$ret = 0;
 			}
-			$out .= "\nCommunity Builder installed in Joomla. RaidPlanner Community builder installation:" . (($ret)?"[OK]":"[Failed]");
+			$out .= "\nCommunity Builder installed in Joomla. RaidPlanner Community builder installation:" . (($ret)?"[OK]":"[Failed]") . "<br />";
 		}
 	}
+	
+	$out .= "<br />IMPORTANT!<br />Read the <a href=\"http://taracque.hu/wiki/raidplanner-docs/whats-new/\" target=\"_blank\">What's new section of RaidPlanner documentation</a> for latest changes!<br />";
 
 	$installer->set('message', $out);
 }
