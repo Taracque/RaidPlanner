@@ -222,6 +222,18 @@ function com_install()
 		$db->query();
 		$db->setQuery( "ALTER TABLE `#__raidplanner_race` ADD `race_css` varchar(45) NOT NULL DEFAULT ''" );
 		$db->query();
+		
+		/* check if wow_armory plugin is used */
+		$db->setQuery("SELECT * FROM `#__raidplanner_guild` WHERE sync_plugin='wow_armory'");
+		$db->query();
+		if ( $db->getNumRows() > 0  )
+		{
+			/* display a warning */
+			$out .= '<span class="message"><h3 class="error">WoW Armory plugin detected. Please download RaidPlanner-wow theme package, and install it using RaidPlanner installer!</h3><br />';
+			$out .= 'More information can be found on the <a href="http://taracque.hu/wiki/raidplanner-docs/whats-new/">What\'s new page</a>.<br /><br />';
+			$out .= '<script type="text/javascript">alert("WoW Armory plugin detected.\nPlease download RaidPlanner-wow theme package, and install it using RaidPlanner installer!");</script>';
+			$out .= '</span>';
+		}
 	}	
 	
 	/* Detect Community Builder */
