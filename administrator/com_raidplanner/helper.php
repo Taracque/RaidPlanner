@@ -181,12 +181,20 @@ class RaidPlannerHelper
 
 		return $result;
 	}
-	
-	public static function getTimezone( $user = null )
+
+	public static function getTimezone( $user = null, $forcenumeric = true )
 	{
 		$user =& JFactory::getUser( $user );
 		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
-		
+		if ((!is_numeric($tz)) && ($forcenumeric)) {
+			$date = new JDate('now',$tz);
+			if (method_exists($date,'getOffsetFromGMT')) {
+				$tz = $date->getOffsetFromGMT(true);
+			} else {
+				$tz = $date->getOffset();
+			}
+		}
+
 		return $tz;
 	}
 
@@ -316,7 +324,7 @@ class RaidPlannerHelper
 	{
 		if ($tzOffset === null)
 		{
-			$tzOffset = self::getTimezone();
+			$tzOffset = self::getTimezone( null, false);
 		}
 		try {
 			$reply =& JFactory::getDate( $date, $tzOffset );
