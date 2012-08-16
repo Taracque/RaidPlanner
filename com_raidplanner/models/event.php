@@ -158,7 +158,7 @@ class RaidPlannerModelEvent extends JModel
    				ORDER BY s.confirmed DESC, s.queue DESC,r.role_name DESC";
     	
     	$db->setQuery($query);
-    	$result = $db->loadObjectList('profile_id');
+    	$result = $db->loadObjectList();
 		
     	return $result;
     }
@@ -462,6 +462,10 @@ class RaidPlannerModelEvent extends JModel
 				$db->setQuery($query);
 				$db->query();
 			}
+			// remove the same character, before adding it once again
+			$query = "DELETE FROM #__raidplanner_signups WHERE character_id=".intval($new_char_id)." AND raid_id=".$raid_id;
+			$db->setQuery($query);
+			$db->query();
 				
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
 					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
