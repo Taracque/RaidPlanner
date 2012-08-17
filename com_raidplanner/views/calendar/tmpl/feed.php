@@ -20,13 +20,13 @@ VERSION:2.0
 PRODID:-//RaidPlanner//NONSGML v1.0//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:<?php echo $config['config.sitename']; ?>
+X-WR-CALNAME:<?php echo $config['sitename']; ?>
 
 X-WR-TIMEZONE:<?php echo $this->tzname; ?>
 
 X-ORIGINAL-URL:<?php echo JURI::base() . JRoute::_('index.php'); ?>
 
-X-WR-CALDESC:<?php echo $config['config.sitename']; ?> raidplanner
+X-WR-CALDESC:<?php echo $config['sitename']; ?> raidplanner
 <?php foreach ($this->events as $event):?>
 <?php if ($event[0]->raid_id):?>
 BEGIN:VEVENT

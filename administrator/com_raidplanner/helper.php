@@ -186,7 +186,7 @@ class RaidPlannerHelper
 	{
 		$user =& JFactory::getUser( $user );
 		$config = JFactory::getConfig()->toArray();
-		$tz = $user->getParam('timezone', $config['config.offset']);
+		$tz = $user->getParam('timezone', $config['offset']);
 		
 		return $tz;
 	}
@@ -313,7 +313,7 @@ class RaidPlannerHelper
 		return $reply;
 	}
 	
-	public static function getDate( $date = 'now', $tzOffset = null )
+	public static function getDate( $date = 'now', $tzOffset = null, $format = null )
 	{
 		if ($tzOffset === null)
 		{
@@ -325,7 +325,13 @@ class RaidPlannerHelper
 			JError::raiseNotice( 500, 'Invalid date (' . $date .') entered' );
 			$reply =& JFactory::getDate();
 		}
-		
+		if ($format != null) {
+			if (method_exists($reply,'format')) {
+				return $reply->format( $format );
+			} else {
+				return $reply->toFormat( $format );
+			}
+		}
 		return $reply;
 	}
 	
