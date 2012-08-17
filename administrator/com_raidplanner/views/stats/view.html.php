@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-JHTML::_('behavior.mootools');
+JHTML::_('behavior.framework');
 
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 

@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 // add css and js
-JHTML::_('behavior.mootools');
+JHTML::_('behavior.framework');
 
 if ( RaidPlannerHelper::getJVersion() == '1.5') {
 	JFactory::getLanguage()->load('com_raidplanner.j15', JPATH_ADMINISTRATOR);
