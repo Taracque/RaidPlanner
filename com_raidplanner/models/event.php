@@ -15,7 +15,12 @@ jimport( 'joomla.application.component.model' );
 jimport( 'joomla.application.component.helper' );
 jimport( 'joomla.utilities.date' );
 
-class RaidPlannerModelEvent extends JModel
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelEvent extends JModelLegacy
 {
 
     /**
