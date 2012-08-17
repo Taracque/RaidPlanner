@@ -139,9 +139,9 @@ window.addEvent('domready', function() {
 			<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
 			<?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?>:
 			<?php
-				echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-3 month'), null, '%Y-%m-%d' ), 'start_time', 'start_time', '%Y-%m-%d' );
+				echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-3 month'), null, RaidPlannerHelper::sqlDateFormat() ), 'start_time', 'start_time', '%Y-%m-%d' );
 			?> - <?php
-				echo JHTML::_('calendar', RaidPlannerHelper::getDate('now', null, '%Y-%m-%d' ), 'end_time', 'end_time', '%Y-%m-%d' );
+				echo JHTML::_('calendar', RaidPlannerHelper::getDate('now', null, RaidPlannerHelper::sqlDateFormat() ), 'end_time', 'end_time', '%Y-%m-%d' );
 			?>
 			<select name="character_id" id="character_id">
 				<option></option>

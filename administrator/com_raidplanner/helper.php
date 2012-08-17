@@ -442,6 +442,15 @@ class RaidPlannerHelper
 		return $dateformat;
 	}
 
+	public static function loadJSFramework()
+	{
+		if (self::getJVersion() == '1.5') {
+			JHTML::_('behavior.mootools');
+		} else {
+			JHTML::_('behavior.framework');
+		}
+	}
+
 	public static function downloadData( $url )
 	{
 		if(function_exists('curl_init') && function_exists('curl_exec')) {

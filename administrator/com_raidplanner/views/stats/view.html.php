@@ -13,7 +13,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-JHTML::_('behavior.framework');
+// register the helper
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
+
+RaidPlannerHelper::loadJSFramework();
 
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 
