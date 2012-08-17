@@ -16,7 +16,12 @@ jimport( 'joomla.application.component.controller' );
 
 JHTML::_('behavior.tooltip');
 
-class RaidPlannerViewCalendar extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewCalendar extends JViewLegacy
 {
     function display($tpl = null)
     {

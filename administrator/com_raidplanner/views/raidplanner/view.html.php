@@ -17,7 +17,12 @@ require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/insta
 
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 
-class RaidPlannerViewRaidPlanner extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewRaidPlanner extends JViewLegacy
 {
 	/**
 	 * display method of Hello view

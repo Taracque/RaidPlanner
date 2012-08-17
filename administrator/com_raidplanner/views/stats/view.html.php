@@ -17,7 +17,12 @@ JHTML::_('behavior.mootools');
 
 JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 
-class RaidPlannerViewStats extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewStats extends JViewLegacy
 {
 	/**
 	 * display method of Stats view

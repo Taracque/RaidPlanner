@@ -19,7 +19,12 @@ if ( RaidPlannerHelper::getJVersion() == '1.5') {
 }
 JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');
 
-class RaidPlannerViewRoster extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewRoster extends JViewLegacy
 {
 	function display($tpl = null)
 	{

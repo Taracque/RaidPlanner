@@ -14,7 +14,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view' );
 jimport( 'joomla.application.component.controller' );
 
-class RaidPlannerViewRaid extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewRaid extends JViewLegacy
 {
 	/**
 	 * display method of Hello view

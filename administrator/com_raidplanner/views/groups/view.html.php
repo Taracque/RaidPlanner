@@ -15,7 +15,12 @@ jimport( 'joomla.application.component.view' );
 
 JHtml::_('behavior.modal', 'a.modal');
 
-class RaidPlannerViewGroups extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewGroups extends JViewLegacy
 {
 
     function display($tpl = null)

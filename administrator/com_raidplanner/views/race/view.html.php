@@ -13,7 +13,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-class RaidPlannerViewRace extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewRace extends JViewLegacy
 {
 
 	function display($tpl = null)
