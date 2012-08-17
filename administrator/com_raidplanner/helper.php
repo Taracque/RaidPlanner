@@ -185,7 +185,8 @@ class RaidPlannerHelper
 	public static function getTimezone( $user = null )
 	{
 		$user =& JFactory::getUser( $user );
-		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+		$config = JFactory::getConfig()->toArray();
+		$tz = $user->getParam('timezone', $config['config.offset']);
 		
 		return $tz;
 	}
