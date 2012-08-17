@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://www.joomla.org/xml/dtd/1.5/component-install.dtd">
-<extension type="component" version="2.5.0" method="upgrade">
+<install type="component" version="1.5.0" method="upgrade">
 	<name>RaidPlanner</name>
 	<creationDate>2011-03-05</creationDate>
 	<author>Taracque</author>
@@ -105,8 +105,4 @@
 			<language tag="sk-SK">sk-SK.com_raidplanner.sys.ini</language>
 		</languages>
 	</administration>
-	<!-- UPDATESERVER DEFINITION -->
-	<updateservers>
-		<server type="extension" priority="1" name="RaidPlanner GitHub Site">https://raw.github.com/Taracque/RaidPlanner/master/raidplanner-updates.xml</server>
-	</updateservers>
-</extension>
+</install
