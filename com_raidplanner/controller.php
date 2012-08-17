@@ -16,7 +16,12 @@ jimport('joomla.application.component.controller');
 // register the helper
 JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
-class RaidPlannerController extends JController
+/* create JControllerLegacy if not exist */
+if (!class_exists('JControllerLegacy')) {
+	class JControllerLegacy extends JController {}
+}
+
+class RaidPlannerController extends JControllerLegacy
 {
     /**
      * Method to display the view

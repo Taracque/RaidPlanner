@@ -13,7 +13,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/installer.php' );
+// register the installer
+JLoader::register('RaidPlannerInstaller', JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/installer.php' );
+
+/* create JControllerLegacy if not exist */
+if (!class_exists('JControllerLegacy')) {
+	class JControllerLegacy extends JController {}
+}
 
 /**
  * Raid Planner Component Controller
@@ -21,7 +27,7 @@ require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/insta
  * @package    RaidPlanner
  * @subpackage Components
  */
-class RaidPlannerController extends JController
+class RaidPlannerController extends JControllerLegacy
 {
 	/**
 	 * Method to display the view
