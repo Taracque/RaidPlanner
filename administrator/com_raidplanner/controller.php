@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-require_once ( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'includes' . DS . 'installer.php' );
+require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/installer.php' );
 
 /**
  * Raid Planner Component Controller

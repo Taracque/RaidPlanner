@@ -11,13 +11,13 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-require_once ( JPATH_BASE . DS . 'includes' . DS . 'defines.php' );
-require_once ( JPATH_BASE . DS . 'includes' . DS . 'framework.php' );
+require_once ( JPATH_BASE . '/includes/defines.php' );
+require_once ( JPATH_BASE . '/includes/framework.php' );
 
 jimport( 'joomla.error.error' );
 jimport( 'joomla.filesystem.file' );
 
-require_once ( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'includes' . DS . 'plugin.php' );
+require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/plugin.php' );
 
 class RaidPlannerHelper
 {
@@ -39,7 +39,7 @@ class RaidPlannerHelper
 			$guild->params = json_decode( $guild->params, true );
 			$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
 
-			JLoader::register( $plug_class, JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $guild->sync_plugin . DS . $guild->sync_plugin . '.php' );
+			JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
 			if ( class_exists( $plug_class ) ) {
 				return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
 			} else {
@@ -71,7 +71,7 @@ class RaidPlannerHelper
 	
 	public static function getSyncPlugins()
 	{
-		$plugins = JFolder::folders( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins', '.', false );
+		$plugins = JFolder::folders( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins', '.', false );
 		/* FIXME: needs to be veryfied if there is anything in those folder */
 		
 		return $plugins;
@@ -82,7 +82,7 @@ class RaidPlannerHelper
 		$params = array();
 		
 		/* FIXME: Plugin name must be sanitized */
-		$plug_xml_file = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'plugins' . DS . $plugin . DS . $plugin . '.xml';
+		$plug_xml_file = JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $plugin . '/' . $plugin . '.xml';
 		if (JFile::exists( $plug_xml_file )) {
 			$plug_xml =& JFactory::getXMLParser( 'simple' );
 			$plug_xml->loadFile( $plug_xml_file );
@@ -556,7 +556,7 @@ class RaidPlannerHelper
 		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) as new_time,location,invited_group_id,guild_id FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
 		$db->setQuery( $query );
 		if ($raids = $db->loadObjectList()) {
-			JTable::addIncludePath( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'tables');
+			JTable::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_raidplanner/tables');
 			$row =& JTable::getInstance('raid', 'Table');
 
 			foreach ($raids as $raid) {

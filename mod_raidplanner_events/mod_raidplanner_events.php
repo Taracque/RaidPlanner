@@ -13,10 +13,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 JHtml::_('behavior.modal', 'a.modal');
 
 // register RaidPlanner Helper
-JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 // include the helper file
-require_once(dirname(__FILE__).DS.'helper.php');
+require_once(dirname(__FILE__) . '/helper.php');
 
 JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
 

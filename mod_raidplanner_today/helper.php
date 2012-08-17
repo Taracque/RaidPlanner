@@ -11,8 +11,8 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-require_once ( JPATH_BASE .DS.'includes'.DS.'defines.php' );
-require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
+require_once ( JPATH_BASE . '/includes/defines.php' );
+require_once ( JPATH_BASE . '/includes/framework.php' );
 
 class modRaidPlannerTodayHelper
 {

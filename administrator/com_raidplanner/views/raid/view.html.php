@@ -48,7 +48,7 @@ class RaidPlannerViewRaid extends JView
 	
 	function getIcons()
 	{
-		$path = JPATH_BASE . DS . '..' . DS . 'images' . DS . 'raidplanner' . DS . 'raid_icons';
+		$path = JPATH_BASE . '/../images/raidplanner/raid_icons';
 		
 		$dhandle = opendir($path);
 		$files = array();
@@ -64,8 +64,8 @@ class RaidPlannerViewRaid extends JView
 					($fname != basename($_SERVER['PHP_SELF']))
 				) {
 					// store the filename
-					if (!is_dir( $path . DS . $fname )) {
-						$info = pathinfo( $path . DS . $fname );
+					if (!is_dir( $path . '/' . $fname )) {
+						$info = pathinfo( $path . '/' . $fname );
 						$files[$fname] = ucwords(str_replace("_"," ",basename($fname,'.'.$info['extension'])));
 					}
 				}

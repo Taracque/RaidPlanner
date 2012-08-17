@@ -9,7 +9,7 @@ defined('JPATH_BASE') or die('Restricted access');
 
 jimport('joomla.form.formfield');
 
-JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
  /**
   * Custom JForm field for Character editor

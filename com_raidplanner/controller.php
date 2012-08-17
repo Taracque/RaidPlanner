@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.component.controller');
 
 // register the helper
-JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 class RaidPlannerController extends JController
 {
@@ -118,7 +118,6 @@ class RaidPlannerController extends JController
 		
 		// Get/Create the view
 		$view = &$this->getView( $vName, $vType);
-		// $view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.strtolower($vName).DS.'tmpl');
 
 		// Get/Create the model
 		if ($model = &$this->getModel($mName)) {

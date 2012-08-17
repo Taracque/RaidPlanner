@@ -24,14 +24,14 @@ function com_install()
 	$extInstaller = new JInstaller();
 
 	// intsall RaidPlanner Today Module
-	if ( $extInstaller->install($source . DS . 'mod_raidplanner_today') ) {
+	if ( $extInstaller->install($source . '/mod_raidplanner_today') ) {
 		// module installed
 		$out .= 'RaidPlanner Today module installed!<br />';
 	} else {
 		$out .= 'RaidPlanner Today module installation failed!<br />';
 	}
 	// intsall RaidPlanner Today Module
-	if ( $extInstaller->install($source . DS . 'mod_raidplanner_events') ) {
+	if ( $extInstaller->install($source . '/mod_raidplanner_events') ) {
 		// module installed
 		$out .= 'RaidPlanner Events module installed!<br />';
 	} else {
@@ -43,7 +43,7 @@ function com_install()
 	$version = new JVersion();
 	if ($version->RELEASE >= '1.6') {
 		// install RaidPlanner User Plugin (just for J 1.6!)
-		if ( $extInstaller->install($source . DS . 'plg_raidplanner') ) {
+		if ( $extInstaller->install($source . '/plg_raidplanner') ) {
 			// module installed
 			$out .= 'RaidPlanner User plugin installed!<br />';
 		} else {
@@ -56,23 +56,23 @@ function com_install()
 		{
 			$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
 			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . DS . $lang['tag'] . '.com_raidplanner.ini' ))
+			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
 			{
-				$content = JFile::read( $target . DS . $lang['tag'] . '.com_raidplanner.ini' );
+				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
 				if ($content != false)
 				{
 					// copy menu.ini language files
-					JFile::copy( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.menu.ini', $target .DS . $lang['tag'] . '.com_raidplanner.menu.ini' );
+					JFile::copy( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.menu.ini', $target . '/' . $lang['tag'] . '.com_raidplanner.menu.ini' );
 					
 					// merge sys.ini and j15.ini file to admin language file
-					if (JFile::exists( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.sys.ini' ))
+					if (JFile::exists( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' ))
 					{
-						$content .= "\n" . JFile::read( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.sys.ini' );
+						$content .= "\n" . JFile::read( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
 					}
-					JFile::write( $target . DS . $lang['tag'] . '.com_raidplanner.ini', $content );
+					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
 
 					// remove sys.ini language file
-					JFile::delete( $target . DS . $lang['tag'] . '.com_raidplanner.sys.ini' );
+					JFile::delete( $target . '/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
 
 					$out .= 'Language file for admin language ' . $lang['name'] . ' patched for Joomla 1.5<br />';
 				}
@@ -83,16 +83,16 @@ function com_install()
 		{
 			$target = JLanguage::getLanguagePath( JPATH_SITE, $lang['tag'] );
 			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . DS . $lang['tag'] . '.com_raidplanner.ini' ))
+			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
 			{
-				$content = JFile::read( $target . DS . $lang['tag'] . '.com_raidplanner.ini' );
+				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
 				if ($content != false)
 				{
-					if (JFile::exists( $source . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.j15.ini' ))
+					if (JFile::exists( $source . '/language/' . $lang['tag'] . '.com_raidplanner.j15.ini' ))
 					{
-						$content .= "\n" . JFile::read( $source . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.j15.ini' );
+						$content .= "\n" . JFile::read( $source . '/language/' . $lang['tag'] . '.com_raidplanner.j15.ini' );
 					}
-					JFile::write( $target . DS . $lang['tag'] . '.com_raidplanner.ini', $content );
+					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
 	
 					$out .= 'Language file for frontend language ' . $lang['name'] . ' patched for Joomla 1.5<br />';
 				}
@@ -105,17 +105,17 @@ function com_install()
 		{
 			$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
 			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . DS . $lang['tag'] . '.com_raidplanner.ini' ))
+			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
 			{
-				$content = JFile::read( $target . DS . $lang['tag'] . '.com_raidplanner.ini' );
+				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
 				if ($content != false)
 				{
 					// merge sys.ini file to admin language file
-					if (JFile::exists( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.sys.ini' ))
+					if (JFile::exists( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' ))
 					{
-						$content .= "\n" . JFile::read( $source . DS . 'administrator' . DS . 'language' . DS . $lang['tag'] . '.com_raidplanner.sys.ini' );
+						$content .= "\n" . JFile::read( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
 					}
-					JFile::write( $target . DS . $lang['tag'] . '.com_raidplanner.ini', $content );
+					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
 
 					$out .= 'Language file for admin language ' . $lang['name'] . ' merged for Joomla 1.6/1.7<br />';
 				}
@@ -257,7 +257,7 @@ function com_install()
 		
 				$CB_installer = new cbInstallerPlugin();
 		
-				$install_dir = $source . DS . '3rd_party_plugins' . DS . 'community_builder' . DS . 'plug_raidplanner' . DS;
+				$install_dir = $source . '/3rd_party_plugins/community_builder/plug_raidplanner/';
 				
 				$ret = $CB_installer->install( $install_dir );
 			} catch (Exception $e) {
