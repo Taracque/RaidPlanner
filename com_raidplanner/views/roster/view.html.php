@@ -14,11 +14,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
-if ( RaidPlannerHelper::getJVersion() == '1.5') {
-	JHTML::script('mootools.more.125.additional.js', 'components/com_raidplanner/assets/');
-}
-JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');
-
 /* create JViewLegacy if not exist */
 if (!class_exists('JViewLegacy')) {
 	class JViewLegacy extends JView {}
@@ -28,6 +23,10 @@ class RaidPlannerViewRoster extends JViewLegacy
 {
 	function display($tpl = null)
 	{
+		/* Load required javascripts */
+		RaidPlannerHelper::loadJSFramework( true );
+		JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');
+
 		$model = &$this->getModel();
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JRequest::getInt( 'Itemid' );

@@ -16,10 +16,6 @@ jimport( 'joomla.application.component.view' );
 // register the helper
 JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
-RaidPlannerHelper::loadJSFramework();
-
-JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
-
 /* create JViewLegacy if not exist */
 if (!class_exists('JViewLegacy')) {
 	class JViewLegacy extends JView {}
@@ -33,8 +29,11 @@ class RaidPlannerViewStats extends JViewLegacy
 	 **/
 	function display($tpl = null)
 	{
-		//get the data
+		/* Load Javascript and CSS files */
+		RaidPlannerHelper::loadJSFramework();
+		JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
 
+		//get the data
 		JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_STATS' ) );
 
 		RaidPlannerHelper::showToolbarButtons();

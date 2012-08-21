@@ -442,12 +442,15 @@ class RaidPlannerHelper
 		return $dateformat;
 	}
 
-	public static function loadJSFramework()
+	public static function loadJSFramework( $load_extras = false )
 	{
 		if (self::getJVersion() == '1.5') {
 			JHTML::_('behavior.mootools');
+			if ( $load_extras ) {
+				JHTML::script('mootools.more.125.additional.js', 'components/com_raidplanner/assets/');
+			}
 		} else {
-			JHTML::_('behavior.framework');
+			JHTML::_('behavior.framework',  $load_extras);
 		}
 	}
 
