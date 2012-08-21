@@ -35,6 +35,9 @@ class RaidPlannerViewGroups extends JViewLegacy
 			JToolBarHelper::deleteList();
 			JToolBarHelper::editListX();
 			JToolBarHelper::addNewX();
+		} else {
+			/* Add the Options button if no groups defined */
+			JToolBarHelper::preferences( 'com_raidplanner' );
 		}
 
 		RaidPlannerHelper::showToolbarButtons();
