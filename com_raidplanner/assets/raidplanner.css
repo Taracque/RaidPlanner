@@ -120,6 +120,7 @@
 	margin: 0 4px;
 	display: block;
 	-webkit-transition: color 0.2s ease-out;
+	position: relative;
 }
 
 .rp_calendar_body td .event.signed_0 {
@@ -333,4 +334,25 @@ tr.rp_header {
 .rp_container .rp_filter {
 	float:left;
 	margin-left:40px;
+}
+
+.rp_extended_tooltip {
+	z-index: 100;
+	position: absolute;
+	top: 10px;
+	left: 0;
+	opacity: 0;
+	background-color: black;
+	color: white;
+	-webkit-transition: opacity 0.2s ease-out;
+}
+
+.rp_extended_tooltip img {
+    -moz-transform:scale(0.5);
+    -webkit-transform:scale(0.5);
+    transform:scale(0.5);
+}
+
+.rp_calendar_body td .event a:hover .rp_extended_tooltip {
+	opacity: 1;
 }

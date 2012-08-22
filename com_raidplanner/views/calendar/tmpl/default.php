@@ -96,6 +96,14 @@ window.addEvent('domready',function(){
 										<?php else: ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 										<?php endif; ?>
+										<div class="rp_extended_tooltip">
+											<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$event->icon_name;?>" alt="<?php echo $event->location; ?>" style="float:left;"/><b><?php echo $event->description; ?></b>
+											<ul>
+											<?php foreach ($event->attendants as $attendant) :?>
+											<li><?php echo $attendant->char_name; ?></li>
+											<?php endforeach; ?>
+											</ul>
+										</div>
 									<?php else: ?>
 									<a>
 									<?php endif; ?>

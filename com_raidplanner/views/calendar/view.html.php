@@ -119,7 +119,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$this->assignRef( 'monthonly', $monthonly);
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		
-        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01" ) );
+        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null, true ) );
         $this->assignRef( 'eventmodel', $eventmodel );
 		$this->assignRef( 'timeformat', $timeformat );
 
