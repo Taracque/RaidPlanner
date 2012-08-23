@@ -96,14 +96,26 @@ window.addEvent('domready',function(){
 										<?php else: ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 										<?php endif; ?>
-										<div class="rp_extended_tooltip">
-											<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$event->icon_name;?>" alt="<?php echo $event->location; ?>" style="float:left;"/><b><?php echo $event->description; ?></b>
-											<ul>
-											<?php foreach ($event->attendants as $attendant) :?>
-											<li><?php echo $attendant->char_name; ?></li>
-											<?php endforeach; ?>
-											</ul>
+										<div class="rp_extended_tooltip" id="rp_tooltip_<?php echo $event->raid_id;?>" style="display:none;">
+											<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$event->icon_name;?>" alt="<?php echo $event->location; ?>" style="float:left;"/>
+											<b><?php echo $event->description; ?></b><br />
+											<small>
+												<b><?php echo JText::_('COM_RAIDPLANNER_RAID_LEADER');?>:</b> <?php echo $event->raid_leader; ?><br />
+											<?php if ($event->attendants) :?>
+												<b><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></b> (<?php echo count($event->attendants);?>):
+												<?php foreach ($event->attendants as $attendant) :?>
+												<?php echo $attendant->char_name; ?>, 
+												<?php endforeach; ?>
+											<?php endif; ?>
+											</small>
 										</div>
+										<script type="text/javascript">
+											window.addEvent('domready',function() {
+												document.id('event_<?php echo $event->raid_id;?>').addEvent('mouseenter',function(){
+													ToolTip.instance(document.id('event_<?php echo $event->raid_id;?>'),document.id('rp_tooltip_<?php echo $event->raid_id;?>').clone().setStyle('display')).show();
+												});
+											});
+										</script>
 									<?php else: ?>
 									<a>
 									<?php endif; ?>
