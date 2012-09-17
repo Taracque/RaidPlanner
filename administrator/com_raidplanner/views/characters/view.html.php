@@ -26,8 +26,8 @@ class RaidPlannerViewCharacters extends JViewLegacy
     
         JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_CHARACTERS' ), 'generic.png' );
         JToolBarHelper::deleteList();
-        JToolBarHelper::editListX();
-        JToolBarHelper::addNewX();
+        JToolBarHelper::editList();
+        JToolBarHelper::addNew();
 
 		RaidPlannerHelper::showToolbarButtons();
 

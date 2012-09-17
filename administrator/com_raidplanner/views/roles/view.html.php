@@ -26,8 +26,8 @@ class RaidPlannerViewRoles extends JViewLegacy
     
         JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_ROLES' ), 'generic.png' );
         JToolBarHelper::deleteList();
-        JToolBarHelper::editListX();
-        JToolBarHelper::addNewX();
+        JToolBarHelper::editList();
+        JToolBarHelper::addNew();
 
 		RaidPlannerHelper::showToolbarButtons();
 

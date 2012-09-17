@@ -33,8 +33,8 @@ class RaidPlannerViewGroups extends JViewLegacy
 		if ($groups) {
 			JToolBarHelper::makeDefault('setDefault');
 			JToolBarHelper::deleteList();
-			JToolBarHelper::editListX();
-			JToolBarHelper::addNewX();
+			JToolBarHelper::editList();
+			JToolBarHelper::addNew();
 		} else {
 			/* Add the Options button if no groups defined */
 			JToolBarHelper::preferences( 'com_raidplanner' );
