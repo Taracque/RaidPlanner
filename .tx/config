@@ -1,0 +1,28 @@
+[main]
+host = https://www.transifex.com
+
+[RaidPlanner.com_raidplanner_front]
+file_filter = language/<lang>.com_raidplanner.ini
+source_file = language/en-GB.com_raidplanner.ini
+source_lang = en
+
+[RaidPlanner.com_raidplanner_j15]
+file_filter = language/<lang>.com_raidplanner.j15.ini
+source_file = language/en-GB.com_raidplanner.j15.ini
+source_lang = en
+
+[RaidPlanner.com_raidplanner]
+file_filter = administrator/language/<lang>.com_raidplanner.ini
+source_file = administrator/language/en-GB.com_raidplanner.ini
+source_lang = en
+
+[RaidPlanner.com_raidplanner_sys]
+file_filter = administrator/language/<lang>.com_raidplanner.sys.ini
+source_file = administrator/language/en-GB.com_raidplanner.sys.ini
+source_lang = en
+
+[RaidPlanner.com_raidplanner_menu]
+file_filter = administrator/language/<lang>.com_raidplanner.menu.ini
+source_file = administrator/language/en-GB.com_raidplanner.menu.ini
+source_lang = en
+
