@@ -326,10 +326,14 @@ class RaidPlannerHelper
 			$reply =& JFactory::getDate();
 		}
 		if ($format != null) {
-			if (method_exists($reply,'format')) {
-				return $reply->format( $format );
+			if ($format == 'sql') {
+				return self::date2Sql( $reply );
 			} else {
-				return $reply->toFormat( $format );
+				if (method_exists($reply,'format')) {
+					return $reply->format( $format );
+				} else {
+					return $reply->toFormat( $format );
+				}
 			}
 		}
 		return $reply;
@@ -357,8 +361,8 @@ class RaidPlannerHelper
 							." WHERE r.invited_group_id>0"
 							." AND s.raid_id IS NULL"
 							." AND p.user_id = ".intval($user_id)
-							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . $date->toMySQL() . "'"
-							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . $date->toMySQL() . "'";
+							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . self::date2Sql($date) . "'"
+							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . self::date2Sql($date) . "'";
 				} else {
 					$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
 							." LEFT JOIN #__raidplanner_profile AS p ON p.group_id = r.invited_group_id"
@@ -366,8 +370,8 @@ class RaidPlannerHelper
 							." WHERE r.invited_group_id>0"
 							." AND s.raid_id IS NULL"
 							." AND p.profile_id = ".intval($user_id)
-							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . $date->toMySQL() . "'"
-							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . $date->toMySQL() . "'";
+							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . self::date2Sql($date) . "'"
+							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . self::date2Sql($date) . "'";
 				}
 				$db->setQuery( $query );
 				self::$invite_alert_requested = true;
@@ -440,6 +444,15 @@ class RaidPlannerHelper
 			break;
 		}
 		return $dateformat;
+	}
+
+	public static function date2Sql( $date )
+	{
+		if (method_exists($date,'toSql')) {
+			return $date->toSql();
+		} else {
+			return $date->toMySQL();
+		}
 	}
 
 	public static function loadJSFramework( $load_extras = false )

@@ -352,7 +352,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$db->query();
 			
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -400,7 +400,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$user =& JFactory::getUser();
 			$user_id = $user->id;
 			$date = RaidPlannerHelper::getDate();
-			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . $date->toMySQL() . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
+			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . RaidPlannerHelper::date2Sql( $date ) . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
 			$db->setQuery($query);
 			if ($db->loadResult() == 1) {
 				$can_signup = RaidPlannerHelper::getPermission('allow_signup', $user_id);
@@ -469,7 +469,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			}
 				
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -513,8 +513,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 				. " location=".$db->Quote($location)
 				. ",description=".$db->Quote($description)
 				. ",raid_leader=".$db->Quote($user->name)
-				. ",invite_time='".$invite_time->toMySQL()."'"
-				. ",start_time='".$start_time->toMySQL()."'"
+				. ",invite_time='".RaidPlannerHelper::date2Sql( $invite_time )."'"
+				. ",start_time='".RaidPlannerHelper::date2Sql( $start_time )."'"
 				. ",duration_mins=".intval($duration_mins)
 				. ",freeze_time=".intval($freeze_time)
 				. ",profile_id=".intval($user_id)
