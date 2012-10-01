@@ -275,9 +275,9 @@ $hasChars = !empty($this->characters);
 					<tr>
 						<td>
 							<ul class="queue">
-								<li><label><input type="radio" name="queue" value="1" <?php if (($this->selfstatus->queue==1) || (intval(@$this->selfstatus->queue)==0)) { ?>checked="checked"<?php } ?> /><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></label></li>
-								<li><label><input type="radio" name="queue" value="-1" <?php if ($this->selfstatus->queue==-1) { ?>checked="checked"<?php } ?> /><?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?></label></li>
-								<li><label><input type="radio" name="queue" value="2" <?php if ($this->selfstatus->queue==2) { ?>checked="checked"<?php } ?> /><?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?></label></li>
+								<li><input type="radio" name="queue" id="rp_radio_queue1" value="1" <?php if (($this->selfstatus->queue==1) || (intval(@$this->selfstatus->queue)==0)) { ?>checked="checked"<?php } ?> /><label for="rp_radio_queue1"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></label></li>
+								<li><input type="radio" name="queue" id="rp_radio_queue2" value="-1" <?php if ($this->selfstatus->queue==-1) { ?>checked="checked"<?php } ?> /><label for="rp_radio_queue2"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?></label></li>
+								<li><input type="radio" name="queue" id="rp_radio_queue3" value="2" <?php if ($this->selfstatus->queue==2) { ?>checked="checked"<?php } ?> /><label for="rp_radio_queue3"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?></label></li>
 							</ul>
 						</td>
 						<td>
@@ -287,7 +287,7 @@ $hasChars = !empty($this->characters);
 									$this->selfstatus->role_id=$role->role_id;
 								}
 							?>
-								<li><label><input type="radio" name="role" value="<?php echo $role->role_id;?>" <?php if ($this->selfstatus->role_id==$role->role_id) { ?>checked="checked"<?php } ?> /><?php echo $role->role_name;?></label></li>
+								<li><input type="radio" name="role" id="rp_radio_role<?php echo $role->role_id;?>" value="<?php echo $role->role_id;?>" <?php if ($this->selfstatus->role_id==$role->role_id) { ?>checked="checked"<?php } ?> /><label for="rp_radio_role<?php echo $role->role_id;?>"><?php echo $role->role_name;?></label></li>
 							<?php } ?>
 							</ul>
 						</td>
