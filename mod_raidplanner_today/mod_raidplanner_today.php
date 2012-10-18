@@ -18,6 +18,14 @@ JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_ra
 // include the helper file
 require_once(dirname(__FILE__) . '/helper.php');
 
+// load CSS and JS from component
+$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+if ($paramsObj->get('load_css', '1')) {
+	JHTML::stylesheet('raidplanner.css', 'components/com_raidplanner/assets/');
+}
+JHTML::script('raidplanner.js', 'components/com_raidplanner/assets/');
+
+
 JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
 
 //get user ID

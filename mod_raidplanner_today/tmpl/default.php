@@ -32,7 +32,7 @@ switch ( RaidPlannerHelper::getJVersion() ) {
 	<h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3>
 	<ul>
 	<?php foreach($invitationAlerts as $invitation):?>
-		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent=' . $invitation->raid_id . '&Itemid=' . $itemid);?>"><?php echo $invitation->location . " (" . JHTML::_('date', $invitation->start_time, RaidPlannerHelper::shortDateFormat() ) . ")"; ?></a></li>
+		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $invitation->raid_id . '&Itemid=' . $itemid);?>" class="modal"><?php echo $invitation->location . " (" . JHTML::_('date', $invitation->start_time, RaidPlannerHelper::shortDateFormat() ) . ")"; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
 </div>
@@ -82,7 +82,7 @@ if (count($items) == 0): ?>
 	?>
 	<tr>
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent=' . $item->raid_id . '&Itemid=' . $itemid);?>">
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $item->raid_id . '&Itemid=' . $itemid);?>" class="modal">
 				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
 					<strong><?php echo JHTML::_('date', $item->start_time, $timeformat);?> </strong><?php echo $item->location;?>
 				</span>
