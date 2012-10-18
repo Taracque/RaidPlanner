@@ -290,14 +290,23 @@ class RaidPlannerModelEvent extends JModel
     	return $charlist;
 	}
 
-	function getUserStatus($attendants,$user_id = null)
+	function getUserStatus($event_id,$user_id = null)
 	{
 		if (!$user_id) {
 			$user =& JFactory::getUser();
 			$user_id = $user->id;
 		}
-		if (isset($attendants[$user_id])) {
-			return $attendants[$user_id];
+		
+    	$db = & JFactory::getDBO();
+		$query = "SELECT s.character_id,s.role_id,s.queue,s.confirmed,s.comments
+    			FROM #__raidplanner_signups AS s 
+   				WHERE s.raid_id = " . intval($event_id) . "
+   				AND s.profile_id = " . intval($user_id) . "";
+
+    	$db->setQuery($query);
+    	$result = $db->loadObject();
+    	if ( $result->character_id ) {
+    		return $result;
 		} else {
 			$status->character_id = null;
 			$status->role_id = null;
