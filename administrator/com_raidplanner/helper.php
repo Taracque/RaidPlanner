@@ -86,25 +86,24 @@ class RaidPlannerHelper
 		$plug_xml_file = JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $plugin . '/' . $plugin . '.xml';
 		if (JFile::exists( $plug_xml_file )) {
 			$plug_xml = simplexml_load_file( $plug_xml_file );
-
-			foreach( $plug_xml->params[0]->param as $param ) {
+			foreach( $plug_xml->params->param as $param ) {
 				$data = null;
-				if ($param->attributes( 'type' ) == 'list')
+				if ( (string)$param->attributes()->type == 'list')
 				{
 					$data = array();
 					foreach ( $param->option as $option )
 					{
 						$data[] = array(
-							'value'	=>	$option->attributes( 'value' ),
+							'value'	=>	(string)$option->attributes()->value,
 							'label'	=>	(string)$option
 						);
 					}
 				}
 				$params[] = array(
-					'type'	=>	$param->attributes( 'type' ),
-					'name'	=>	$param->attributes( 'name' ),
-					'label'	=>	$param->attributes( 'label' ),
-					'description'	=>	$param->attributes( 'description' ),
+					'type'	=>	(string)$param->attributes()->type,
+					'name'	=>	(string)$param->attributes()->name,
+					'label'	=>	(string)$param->attributes()->label,
+					'description'	=>	(string)$param->attributes()->description,
 					'data'	=>	$data
 				);
 			}

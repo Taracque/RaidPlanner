@@ -77,13 +77,13 @@ class RaidPlannerInstaller
 		}
 		foreach ($filesets as $files) {
 			$attributes = $files->attributes();
-			if (isset($attributes['folder'])) {
-				$source_folder = $attributes['folder'] . '/';
+			if (isset($attributes->folder)) {
+				$source_folder = (string)$attributes->folder . '/';
 			} else {
 				$source_folder = "";
 			}
-			if (isset($attributes['destination'])) {
-				$destination = $attributes['destination'] . '/';
+			if (isset($attributes->destination)) {
+				$destination = (string)$attributes->destination . '/';
 			} else {
 				$destination = "";
 			}
@@ -167,8 +167,8 @@ class RaidPlannerInstaller
 		foreach ($xmlnode->sql as $sql) {
 			$attributes = $sql->attributes();
 			$condition_met = true;
-			if ($attributes['condition']) {
-				$db->setQuery( $attributes['condition'] );
+			if ($attributes->condition) {
+				$db->setQuery( (string)$attributes->condition );
 				$condition_met = (boolean) $db->loadResult();
 			}
 			if ($condition_met) {
@@ -194,7 +194,7 @@ class RaidPlannerInstaller
 			$xml = simplexml_load_file( $xmlfile );
 
 			$attributes = $xml->attributes();
-			if ($attributes['type'] == "raidplanner_theme") {
+			if ( (string)$attributes->type == "raidplanner_theme") {
 				// copy the manifest file
 				JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xml_name, null, true );
 				$this->doCopy( $xml->fileset, $basepath, JPATH_SITE . '/images/raidplanner' );
@@ -202,7 +202,7 @@ class RaidPlannerInstaller
 				// do SQL commands
 				$this->doSQL( $xml->install[0] );
 			} else {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UNKNOWN_TYPE', $xml->attributes()->type), 'warning' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UNKNOWN_TYPE', (string)$xml->attributes()->type), 'warning' );
 			}
 		}
 		JFolder::delete( $folder );
@@ -216,7 +216,7 @@ class RaidPlannerInstaller
 	{
 		$xml = simplexml_load_file( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile );
 		$attributes = $xml->attributes();
-		if ($attributes['type'] == "raidplanner_theme") {
+		if ( (string)$attributes->type == "raidplanner_theme") {
 			// do SQL commands
 			$this->doSQL( $xml->uninstall[0] );
 			// remove files
@@ -224,7 +224,7 @@ class RaidPlannerInstaller
 			$this->doRemove( $xml->administrator[0]->fileset, JPATH_ADMINISTRATOR . '/components/com_raidplanner' );
 			// remove the manifest file
 			if ( !JFile::delete( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile ) ) {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $xml->attributes()->type), 'warning' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', (string)$xml->attributes()->type), 'warning' );
 				return false;
 			}
 		}
