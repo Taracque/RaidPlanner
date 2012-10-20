@@ -49,7 +49,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				</label>
 			</td>
 			<td>
-				<table class="adminlist">
+				<table class="adminlist table table-striped">
 					<thead style="display:block;width:300px;">
 						<tr>
 							<th width="20">&nbsp;</th>
@@ -82,7 +82,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				</label>
 			</td>
 			<td>
-				<table class="adminlist">
+				<table class="adminlist table table-striped">
 					<thead style="display:block;width:300px;">
 						<tr>
 							<th width="20">&nbsp;</th>

@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			</td>
 		</tr>
 	</table>
-    <table class="adminlist">
+    <table class="adminlist table table-striped">
     <thead>
         <tr>
 			<th width="20">

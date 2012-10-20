@@ -15,9 +15,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<h2><?php echo JText::_( 'COM_RAIDPLANNER_USE_JOOMLAACL' );?></h2>
 	<p><?php echo JText::_( 'COM_RAIDPLANNER_USE_JOOMLAACL_DESC' );?></p>
 <?php else: ?>
-<form action="index.php" method="post" name="adminForm">
+<form action="index.php" method="post" name="adminForm" id="adminForm">
 <div id="editcell">
-    <table class="adminlist">
+    <table class="adminlist table table-striped">
     <thead>
         <tr>
 			<th width="20">

@@ -16,6 +16,7 @@ require_once ( JPATH_BASE . '/includes/framework.php' );
 
 jimport( 'joomla.error.error' );
 jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.folder' );
 
 require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/plugin.php' );
 

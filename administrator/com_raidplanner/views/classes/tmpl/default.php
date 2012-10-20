@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <form action="index.php" method="post" name="adminForm">
 <div id="editcell">
-    <table class="adminlist">
+    <table class="adminlist table table-striped">
     <thead>
         <tr>
 			<th width="20">
