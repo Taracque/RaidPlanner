@@ -89,15 +89,15 @@ class RaidPlannerInstaller
 			}
 			if ($filelist = @$files->file) {
 				foreach ($filelist as $file) {
-					if (! JFile::delete( $dest . '/' . $destination . $file->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $file->data() ), 'warning' );
+					if (! JFile::delete( $dest . '/' . $destination . (string)$file, null, true ) ) {
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', (string)$file ), 'warning' );
 					}
 				}
 			}
 			if ($folderlist = @$files->folder) {
 				foreach ($folderlist as $folder) {
-					if (! JFolder::delete( $dest . '/' . $destination . $folder->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $folder->data() ), 'warning' );
+					if (! JFolder::delete( $dest . '/' . $destination . (string)$folder, null, true ) ) {
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', (string)$folder ), 'warning' );
 					}
 				}
 			}
@@ -129,15 +129,15 @@ class RaidPlannerInstaller
 			}
 			if ($filelist = @$files->file) {
 				foreach ($filelist as $file) {
-					if (! JFile::copy( $basepath . '/' . $source_folder . $file->data(), $dest . '/' . $destination . $file->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_COPY_FAILED', $file->data() ), 'warning' );
+					if (! JFile::copy( $basepath . '/' . $source_folder . (string)$file, $dest . '/' . $destination . (string)$file, null, true ) ) {
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_COPY_FAILED', (string)$file ), 'warning' );
 					}
 				}
 			}
 			if ($folderlist = @$files->folder) {
 				foreach ($folderlist as $folder) {
-					if (! JFolder::copy( $basepath . '/' . $source_folder . $folder->data(), $dest . '/' . $destination . $folder->data(), null, true ) ) {
-						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_COPY_FAILED', $folder->data() ), 'warning' );
+					if (! JFolder::copy( $basepath . '/' . $source_folder . (string)$folder, $dest . '/' . $destination . (string)$folder, null, true ) ) {
+						$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_COPY_FAILED', (string)$folder ), 'warning' );
 					}
 				}
 			}
@@ -172,7 +172,7 @@ class RaidPlannerInstaller
 				$condition_met = (boolean) $db->loadResult();
 			}
 			if ($condition_met) {
-				$db->setQuery( $sql->data() );
+				$db->setQuery( (string)$sql );
 				$db->query();
 			}
 		}
@@ -185,30 +185,24 @@ class RaidPlannerInstaller
 	{
 		// find the manifest file
 		$xmlfiles = JFolder::files($folder, '.xml$', 1, true);
-		if (!method_exists(JFactory, 'getXML')) {
-			$xml =& JFactory::getXMLParser( 'simple' );
-		}
 		foreach ($xmlfiles as $xmlfile)
 		{
 			// get parent folder of $xmlfile for reference
 			$basepath = pathinfo( $xmlfile, PATHINFO_DIRNAME );
 			$xml_name = basename( $xmlfile );
 			// install using the xml
-			if (!method_exists(JFactory, 'getXML')) {
-				$xml->loadFile( $xmlfile );
-			} else {
-				$xml = JFactory::getXML( $xmlfile, true );
-			}
-			$attributes = $xml->document->attributes();
+			$xml = simplexml_load_file( $xmlfile );
+
+			$attributes = $xml->attributes();
 			if ($attributes['type'] == "raidplanner_theme") {
 				// copy the manifest file
 				JFile::copy( $xmlfile, JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xml_name, null, true );
-				$this->doCopy( $xml->document->fileset, $basepath, JPATH_SITE . '/images/raidplanner' );
-				$this->doCopy( $xml->document->administrator[0]->fileset, $basepath, JPATH_ADMINISTRATOR . '/components/com_raidplanner' );
+				$this->doCopy( $xml->fileset, $basepath, JPATH_SITE . '/images/raidplanner' );
+				$this->doCopy( $xml->administrator[0]->fileset, $basepath, JPATH_ADMINISTRATOR . '/components/com_raidplanner' );
 				// do SQL commands
-				$this->doSQL( $xml->document->install[0] );
+				$this->doSQL( $xml->install[0] );
 			} else {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UNKNOWN_TYPE', $xml->document->attributes()->type), 'warning' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_UNKNOWN_TYPE', $xml->attributes()->type), 'warning' );
 			}
 		}
 		JFolder::delete( $folder );
@@ -220,22 +214,17 @@ class RaidPlannerInstaller
 	 */
 	public function uninstall( $xmlfile )
 	{
-		if (!method_exists(JFactory, 'getXML')) {
-			$xml =& JFactory::getXMLParser( 'simple' );
-			$xml->loadFile( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile );
-		} else {
-			$xml = JFactory::getXML( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile, true );
-		}
-		$attributes = $xml->document->attributes();
+		$xml = simplexml_load_file( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile );
+		$attributes = $xml->attributes();
 		if ($attributes['type'] == "raidplanner_theme") {
 			// do SQL commands
-			$this->doSQL( $xml->document->uninstall[0] );
+			$this->doSQL( $xml->uninstall[0] );
 			// remove files
-			$this->doRemove( $xml->document->fileset, JPATH_SITE . '/images/raidplanner' );
-			$this->doRemove( $xml->document->administrator[0]->fileset, JPATH_ADMINISTRATOR . '/components/com_raidplanner' );
+			$this->doRemove( $xml->fileset, JPATH_SITE . '/images/raidplanner' );
+			$this->doRemove( $xml->administrator[0]->fileset, JPATH_ADMINISTRATOR . '/components/com_raidplanner' );
 			// remove the manifest file
 			if ( !JFile::delete( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile ) ) {
-				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $xml->document->attributes()->type), 'warning' );
+				$this->_app->enqueueMessage ( JText::sprintf('COM_RAIDPLANNER_INSTALLER_DELETE_FAILED', $xml->attributes()->type), 'warning' );
 				return false;
 			}
 		}
@@ -251,22 +240,18 @@ class RaidPlannerInstaller
 		$xmlfiles = JFolder::files( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/', '.xml$', 1, true);
 		foreach ($xmlfiles as $xmlfile)
 		{
-			if (!method_exists(JFactory, 'getXML')) {
-				$xml =& JFactory::getXMLParser( 'simple' );
-				$xml->loadFile( $xmlfile );
-			} else {
-				$xml = JFactory::getXML( $xmlfile, true );
-			}
-			if ( ( $type == '') || ( str_replace( 'raidplanner_' , '' , $xml->document->attributes ( "type" ) ) == $type ) )
+			$xml = simplexml_load_file( $xmlfile );
+
+			if ( ( $type == '') || ( str_replace( 'raidplanner_' , '' , $xml->attributes ( "type" ) ) == $type ) )
 			$installed[] = array(
-				'name'			=>	$xml->document->name[0]->data(),
-				'type'			=>	str_replace( 'raidplanner_' , '' , $xml->document->attributes ( "type" ) ),
+				'name'			=>	(string)$xml->name[0],
+				'type'			=>	str_replace( 'raidplanner_' , '' , $xml->attributes ( "type" ) ),
 				'filename'		=>	basename($xmlfile),
-				'creationDate'	=>	$xml->document->creationDate[0]->data(),
-				'author'		=>	$xml->document->author[0]->data(),
-				'authorEmail'	=>	$xml->document->authorEmail[0]->data(),
-				'version'		=>	$xml->document->version[0]->data(),
-				'description'	=>	$xml->document->description[0]->data()
+				'creationDate'	=>	(string)$xml->creationDate[0],
+				'author'		=>	(string)$xml->author[0],
+				'authorEmail'	=>	(string)$xml->authorEmail[0],
+				'version'		=>	(string)$xml->version[0],
+				'description'	=>	(string)$xml->description[0]
 			);
 		}
 		
