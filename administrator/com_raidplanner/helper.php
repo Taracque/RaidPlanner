@@ -84,8 +84,12 @@ class RaidPlannerHelper
 		/* FIXME: Plugin name must be sanitized */
 		$plug_xml_file = JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $plugin . '/' . $plugin . '.xml';
 		if (JFile::exists( $plug_xml_file )) {
-			$plug_xml =& JFactory::getXMLParser( 'simple' );
-			$plug_xml->loadFile( $plug_xml_file );
+			if (!method_exists(JFactory, 'getXML')) {
+				$plug_xml =& JFactory::getXMLParser( 'simple' );
+				$plug_xml->loadFile( $plug_xml_file );
+			} else {
+				$plug_xml = JFactory::getXML( $plug_xml_file, true );
+			}
 
 			foreach( $plug_xml->document->params[0]->param as $param ) {
 				$data = null;

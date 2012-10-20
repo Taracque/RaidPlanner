@@ -185,14 +185,20 @@ class RaidPlannerInstaller
 	{
 		// find the manifest file
 		$xmlfiles = JFolder::files($folder, '.xml$', 1, true);
-		$xml =& JFactory::getXMLParser( 'simple' );
+		if (!method_exists(JFactory, 'getXML')) {
+			$xml =& JFactory::getXMLParser( 'simple' );
+		}
 		foreach ($xmlfiles as $xmlfile)
 		{
 			// get parent folder of $xmlfile for reference
 			$basepath = pathinfo( $xmlfile, PATHINFO_DIRNAME );
 			$xml_name = basename( $xmlfile );
 			// install using the xml
-			$xml->loadFile( $xmlfile );
+			if (!method_exists(JFactory, 'getXML')) {
+				$xml->loadFile( $xmlfile );
+			} else {
+				$xml = JFactory::getXML( $xmlfile, true );
+			}
 			$attributes = $xml->document->attributes();
 			if ($attributes['type'] == "raidplanner_theme") {
 				// copy the manifest file
@@ -214,8 +220,12 @@ class RaidPlannerInstaller
 	 */
 	public function uninstall( $xmlfile )
 	{
-		$xml =& JFactory::getXMLParser( 'simple' );
-		$xml->loadFile( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile );
+		if (!method_exists(JFactory, 'getXML')) {
+			$xml =& JFactory::getXMLParser( 'simple' );
+			$xml->loadFile( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile );
+		} else {
+			$xml = JFactory::getXML( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/' . $xmlfile, true );
+		}
 		$attributes = $xml->document->attributes();
 		if ($attributes['type'] == "raidplanner_theme") {
 			// do SQL commands
@@ -241,8 +251,12 @@ class RaidPlannerInstaller
 		$xmlfiles = JFolder::files( JPATH_ADMINISTRATOR . '/components/com_raidplanner/themes/', '.xml$', 1, true);
 		foreach ($xmlfiles as $xmlfile)
 		{
-			$xml =& JFactory::getXMLParser( 'simple' );
-			$xml->loadFile( $xmlfile );
+			if (!method_exists(JFactory, 'getXML')) {
+				$xml =& JFactory::getXMLParser( 'simple' );
+				$xml->loadFile( $xmlfile );
+			} else {
+				$xml = JFactory::getXML( $xmlfile, true );
+			}
 			if ( ( $type == '') || ( str_replace( 'raidplanner_' , '' , $xml->document->attributes ( "type" ) ) == $type ) )
 			$installed[] = array(
 				'name'			=>	$xml->document->name[0]->data(),
