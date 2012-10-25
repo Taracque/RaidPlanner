@@ -26,19 +26,48 @@ X-WR-TIMEZONE:<?php echo $this->tzname; ?>
 
 X-ORIGINAL-URL:<?php echo JURI::base() . JRoute::_('index.php'); ?>
 
-X-WR-CALDESC:<?php echo $config['sitename']; ?> raidplanner
+X-WR-CALDESC:<?php echo $config['sitename']; ?> RaidPlanner
+
+<?php if (class_exists('DateTimeZone')) : ?>
+BEGIN:VTIMEZONE
+
+TZID:<?php echo $this->tzname; ?>
+<?php
+	$timezone = new DateTimeZone( $this->tzname );
+	$transitions = $timezone->getTransitions();
+?>
+<?php foreach($transitions as $tridx => $transition) :?>
+<?php if($tridx>0) : ?>
+BEGIN:<?php echo ($transition['isdst']==1)?'DAYLIGHT':'STANDARD';?>
+
+TZOFFSETFROM:<?php printf('%+05d', ($transitions[$tridx - 1]['offset']/36) ); ?>
+
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+
+DTSTART:<?php str_replace(array('-',':'),'',substr($transition['time'],0,-5)); ?>
+
+TZNAME:<?php echo $transition['abbr'];?>
+
+TZOFFSETTO:<?php printf('%+05d', ($transition['offset']/36) ); ?>
+
+END:DAYLIGHT
+<?php endif; ?>
+<?php endforeach; ?>
+
+END:VTIMEZONE
+<?php endif; ?>
 <?php foreach ($this->events as $event):?>
 <?php if ($event[0]->raid_id):?>
 BEGIN:VEVENT
 UID:RPEVENTID<?php echo $event[0]->raid_id;?>
 
-DTSTAMP;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->start_time, $this->dateformat, $this->tzoffset);?>
+DTSTAMP;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->start_time, $this->tzoffset, $this->dateformat);?>
 
 ORGANIZER:<?php echo $event[0]->raid_leader;?>
 
-DTSTART;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->start_time, $this->dateformat, $this->tzoffset);?>
+DTSTART;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->start_time, $this->tzoffset, $this->dateformat);?>
 
-DTEND;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->end_time, $this->dateformat, $this->tzoffset);?>
+DTEND;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->end_time, $this->tzoffset, $this->dateformat);?>
 
 SUMMARY:<?php echo $event[0]->location;?>
 
@@ -48,7 +77,7 @@ URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplan
 
 BEGIN:VALARM
 ACTION:AUDIO
-TRIGGER;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->invite_time, $this->dateformat, $this->tzoffset);?>
+TRIGGER;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->invite_time, $this->tzoffset, $this->dateformat);?>
 
 REPEAT:1
 END:VALARM

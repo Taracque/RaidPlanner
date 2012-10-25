@@ -35,7 +35,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 			}
 		}
 		$tz = RaidPlannerHelper::getTimezone();
-    	$tzname = timezone_name_from_abbr("", $tz * 3600, 0);
+    	$tzname = RaidPlannerHelper::getTimezoneName();
     	
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
 

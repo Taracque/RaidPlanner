@@ -190,6 +190,17 @@ class RaidPlannerHelper
 		return $tz;
 	}
 
+	public static function getTimezoneName( $user = null )
+	{
+		if (method_exists( 'JDate', 'getTimezone' )) {
+			$timezoneName = self::getDate('now', self::getTimezone( $user ))->getTimezone()->getName();
+		} else {
+	    	$timezoneName = timezone_name_from_abbr("", self::getTimezone( $user ) * 3600, 0);
+	    }
+	    
+	    return $timezoneName;
+	}
+
 	public static function getGuilds()
 	{
 		$db = & JFactory::getDBO();
