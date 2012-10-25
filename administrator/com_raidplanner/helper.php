@@ -486,11 +486,13 @@ class RaidPlannerHelper
 			$errno = 0;
 			$errstr = '';
 
-			$fsock = @fsockopen( $url, 80, $errno, $errstr, 10);
+			$url_parts = parse_url($url);
+			
+			$fsock = @fsockopen( $url_parts['host'], 80, $errno, $errstr, 10);
 
 			if ($fsock) {
-				@fputs($fsock, "GET /kunena_update.xml HTTP/1.1\r\n");
-				@fputs($fsock, "HOST: update.kunena.org\r\n");
+				@fputs($fsock, "GET " . $url_parts['path'] . " HTTP/1.1\r\n");
+				@fputs($fsock, "HOST: " . $url_parts['host'] . "\r\n");
 				@fputs($fsock, "Connection: close\r\n\r\n");
 				@stream_set_blocking($fsock, 1);
 				@stream_set_timeout($fsock, 30);
