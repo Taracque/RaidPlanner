@@ -597,7 +597,7 @@ class RaidPlannerHelper
 	{
 		$db = & JFactory::getDBO();
 		
-		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) AS new_time,DATE_ADD(invite_time, INTERVAL 7 DAYS) AS new_invite location,invited_group_id,guild_id FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
+		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) AS new_time,DATE_ADD(invite_time, INTERVAL 7 DAY) AS new_invite location,invited_group_id,guild_id FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
 		$db->setQuery( $query );
 		if ($raids = $db->loadObjectList()) {
 			JTable::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_raidplanner/tables');
