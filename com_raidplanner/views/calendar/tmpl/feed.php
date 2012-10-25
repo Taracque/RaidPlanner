@@ -27,10 +27,8 @@ X-WR-TIMEZONE:<?php echo $this->tzname; ?>
 X-ORIGINAL-URL:<?php echo JURI::base() . JRoute::_('index.php'); ?>
 
 X-WR-CALDESC:<?php echo $config['sitename']; ?> RaidPlanner
-
 <?php if (class_exists('DateTimeZone')) : ?>
 BEGIN:VTIMEZONE
-
 TZID:<?php echo $this->tzname; ?>
 <?php
 	$timezone = new DateTimeZone( $this->tzname );
@@ -38,21 +36,21 @@ TZID:<?php echo $this->tzname; ?>
 ?>
 <?php foreach($transitions as $tridx => $transition) :?>
 <?php if($tridx>0) : ?>
+
 BEGIN:<?php echo ($transition['isdst']==1)?'DAYLIGHT':'STANDARD';?>
 
 TZOFFSETFROM:<?php printf('%+05d', ($transitions[$tridx - 1]['offset']/36) ); ?>
 
 RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-
-DTSTART:<?php str_replace(array('-',':'),'',substr($transition['time'],0,-5)); ?>
+DTSTART:<?php echo str_replace(array('-',':'),'',substr($transition['time'],0,-5)); ?>
 
 TZNAME:<?php echo $transition['abbr'];?>
 
 TZOFFSETTO:<?php printf('%+05d', ($transition['offset']/36) ); ?>
 
-END:DAYLIGHT
-<?php endif; ?>
-<?php endforeach; ?>
+END:<?php echo ($transition['isdst']==1)?'DAYLIGHT':'STANDARD'; ?>
+<?php endif;
+endforeach; ?>
 
 END:VTIMEZONE
 <?php endif; ?>
