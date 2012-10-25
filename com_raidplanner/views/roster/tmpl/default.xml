@@ -15,6 +15,15 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</param>
+			<param name="initial_sort" type="list" default="0" label="COM_RAIDPLANNER_INITIAL_SORT" description="COM_RAIDPLANNER_INITIAL_SORT_DESCRIPTION">
+				<option value="0">COM_RAIDPLANNER_CHARACTER_NAME</option>
+				<option value="1">JGLOBAL_USERNAME</option>
+				<option value="2">COM_RAIDPLANNER_LEVEL</option>
+				<option value="3">COM_RAIDPLANNER_GENDER</option>
+				<option value="4">COM_RAIDPLANNER_RACE</option>
+				<option value="5">COM_RAIDPLANNER_CLASS</option>
+				<option value="6">COM_RAIDPLANNER_RANK</option>
+			</param>
 		</params>
 	</state>
 	<fields name="params">
@@ -27,6 +36,15 @@
 			<field name="show_account" type="radio" default="0" label="COM_RAIDPLANNER_SHOW_ACCOUNT" description="COM_RAIDPLANNER_SHOW_ACCOUNT_DESCRIPTION">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
+			</field>
+			<field name="initial_sort" type="list" default="0" label="COM_RAIDPLANNER_INITIAL_SORT" description="COM_RAIDPLANNER_INITIAL_SORT_DESCRIPTION">
+				<option value="0">COM_RAIDPLANNER_CHARACTER_NAME</option>
+				<option value="1">JGLOBAL_USERNAME</option>
+				<option value="2">COM_RAIDPLANNER_LEVEL</option>
+				<option value="3">COM_RAIDPLANNER_GENDER</option>
+				<option value="4">COM_RAIDPLANNER_RACE</option>
+				<option value="5">COM_RAIDPLANNER_CLASS</option>
+				<option value="6">COM_RAIDPLANNER_RANK</option>
 			</field>
 		</fieldset>
 	</fields>

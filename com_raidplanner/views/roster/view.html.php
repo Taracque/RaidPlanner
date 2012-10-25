@@ -38,7 +38,10 @@ class RaidPlannerViewRoster extends JViewLegacy
 		}
 
 		$guild_id = $paramsObj->get('guild_id', '0');
+
 		$show_account = $paramsObj->get('show_account', '0');
+		$initial_sort = $paramsObj->get('initial_sort', '0');
+
 		$guild_plugin = RaidPlannerHelper::getGuildPlugin( $guild_id );
 		if (($paramsObj->get('armory_sync', '0') == 1) && ($guild_plugin) && ($guild_plugin->needSync( $paramsObj->get( 'sync_interval', 4 ) ) ))
 		{
@@ -53,6 +56,7 @@ class RaidPlannerViewRoster extends JViewLegacy
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
 		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );
 		$this->assignRef( 'show_account', $show_account );
+		$this->assignRef( 'initial_sort', $initial_sort );
 
 		parent::display($tpl);
 	}
