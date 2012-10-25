@@ -470,7 +470,7 @@ class RaidPlannerHelper
 		if (self::getJVersion() == '1.5') {
 			JHTML::_('behavior.mootools');
 			if ( $load_extras ) {
-				JHTML::script('com_raidplanner/js/mootools.more.125.additional.js', false, true);
+				JHTML::script('com_raidplanner/mootools.more.125.additional.js', false, true);
 			}
 		} else {
 			JHTML::_('behavior.framework',  $load_extras);

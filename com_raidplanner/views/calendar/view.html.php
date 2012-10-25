@@ -25,7 +25,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 {
     function display($tpl = null)
     {
-		JHTML::script('com_raidplanner/js/ToolTip.js', false, true);
+		JHTML::script('com_raidplanner/ToolTip.js', false, true);
 
 		$eventmodel = &$this->getModel('event');
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );

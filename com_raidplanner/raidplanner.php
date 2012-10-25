@@ -21,9 +21,9 @@ if ( RaidPlannerHelper::getJVersion() == '1.5') {
 
 $paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 if ($paramsObj->get('load_css', '1')) {
-	JHTML::stylesheet('com_raidplanner/css/raidplanner.css', false, true, false);
+	JHTML::stylesheet('com_raidplanner/raidplanner.css', false, true, false);
 }
-JHTML::script('com_raidplanner/js/raidplanner.js', false, true);
+JHTML::script('com_raidplanner/raidplanner.js', false, true);
 
 // Require the base controller
  

@@ -15,7 +15,7 @@ jimport( 'joomla.application.component.view' );
 
 require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/installer.php' );
 
-JHTML::stylesheet('com_raidplanner/css/raidplanner_admin.css', false, true, false);
+JHTML::stylesheet('com_raidplanner/raidplanner_admin.css', false, true, false);
 
 /* create JViewLegacy if not exist */
 if (!class_exists('JViewLegacy')) {
