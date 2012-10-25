@@ -37,7 +37,6 @@
 		<filename>raidplanner.php</filename>
 		<filename>router.php</filename>
 		<filename>index.html</filename>
-		<folder>assets</folder>
 		<folder>models</folder>
 		<folder>views</folder>
 	</files>
@@ -50,6 +49,12 @@
 		<language tag="sk-SK">sk-SK.com_raidplanner.ini</language>
 	</languages>
 	<!-- Site Main Media File Copy Section -->
+    <media folder="media" destination="com_raidplanner">
+		<filename>index.html</filename>
+		<folder>css</folder>
+		<folder>js</folder>
+		<folder>images</folder>
+	</media>
 	<media destination="../images/raidplanner" folder="images">
 		<folder>raid_icons</folder>
 		<folder>role_icons</folder>
@@ -59,7 +64,7 @@
 	<administration>
 		<!-- Administration Menu Section -->
 		<!-- Name to display at the component menu. Should be the same as the extension commercial name -->
-		<menu img="components/com_raidplanner/assets/images/raidplanner-favicon.png">COM_RAIDPLANNER</menu>
+		<menu img="media/com_raidplanner/images/raidplanner-favicon.png">COM_RAIDPLANNER</menu>
 		<submenu>
 			<menu view="raids">COM_RAIDPLANNER_RAIDS</menu>
 			<menu view="guilds">COM_RAIDPLANNER_GUILDS</menu>
@@ -81,7 +86,6 @@
 			<filename>controller.php</filename>
 			<filename>config.xml</filename>
 			<filename>access.xml</filename>
-			<folder>assets</folder>
 			<folder>includes</folder>
 			<folder>models</folder>
 			<folder>views</folder>

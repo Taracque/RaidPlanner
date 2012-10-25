@@ -31,7 +31,7 @@ class RaidPlannerViewStats extends JViewLegacy
 	{
 		/* Load Javascript and CSS files */
 		RaidPlannerHelper::loadJSFramework();
-		JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
+		JHTML::stylesheet('com_raidplanner/css/raidplanner_admin.css', false, true, false);
 
 		//get the data
 		JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_STATS' ) );

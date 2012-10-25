@@ -28,7 +28,7 @@ jimport( 'joomla.utilities.date');
 								cellpadding: 5
 							},
 							sortable: true,
-							sortIndex: <?php echo $this->intial_sort;?>,
+							sortIndex: <?php echo $this->initial_sort;?>,
 							zebra: true,
 							selectable: true,
 							allowMultiSelect: false,
