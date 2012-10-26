@@ -32,7 +32,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </fieldset>
 <fieldset>
 	<legend><?php echo JText::_('COM_RAIDPLANNER_PLUGINS'); ?></legend>
-	<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm" class="adminform">
+	<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm" class="adminform" id="adminForm">
 		<input type="hidden" name="task" value="doInstall" />
 		<input type="hidden" name="option" value="com_raidplanner" />
 		<label for="install_theme"><?php echo JText::_( 'COM_RAIDPLANNER_INSTALLER_PACKAGE_FILE' );?></label> <input class="input_box" name="install_theme" id="install_theme" type="file" size="57" /><br />
