@@ -18,37 +18,37 @@
 }
 
 .rp_raids {
-	background-image: url(images/event.png);
+	background-image: url(../images/event.png);
 }
 
 .rp_guilds {
-	background-image: url(images/guilds.png);
+	background-image: url(../images/guilds.png);
 }
 
 .rp_chars {
-	background-image: url(images/roster.png);
+	background-image: url(../images/roster.png);
 }
 
 .rp_groups {
-	background-image: url(images/groups.png);
+	background-image: url(../images/groups.png);
 }
 
 .rp_roles {
-	background-image: url(images/roles.png);
+	background-image: url(../images/roles.png);
 }
 
 .rp_classes {
-	background-image: url(images/classes.png);
+	background-image: url(../images/classes.png);
 }
 
 .rp_races {
-	background-image: url(images/races.png);
+	background-image: url(../images/races.png);
 }
 
 .rp_service {
-	background-image: url(images/service.png);
+	background-image: url(../images/service.png);
 }
 
 .rp_stats {
-	background-image: url(images/stats.png);
+	background-image: url(../images/stats.png);
 }
