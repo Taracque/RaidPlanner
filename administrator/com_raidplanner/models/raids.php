@@ -114,11 +114,18 @@ class RaidPlannerModelRaids extends JModelLegacy
      */
     function _buildQuery()
     {
-        $query = ' SELECT * '
-            . ' FROM #__raidplanner_raid AS r'
-            . ' LEFT JOIN #__raidplanner_groups AS g ON g.group_id = r.invited_group_id '
-            . ' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
-            . $this->_buildQueryWhere();
+        $query = ' SELECT * ';
+        if (RaidPlannerHelper::checkACL())
+        {
+        	$query .= ' ,ug.title AS group_name';
+        	$query .= ' FROM #__raidplanner_raid AS r';
+	        $query .= ' LEFT JOIN #__usergroups AS ug ON ug.id = r.invited_group_id';
+        } else {
+        	$query .= ' FROM #__raidplanner_raid AS r';
+	        $query .= ' LEFT JOIN #__raidplanner_groups AS g ON g.group_id = r.invited_group_id ';
+	    }
+		$query .=	' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
+            		. $this->_buildQueryWhere();
         
         return $query;
     }
