@@ -26,9 +26,11 @@ class RaidPlannerHelper
 	private static $use_joomla_acl = false;
 	private static $jversion = null;
 	private static $acl_map = array(
-		'raidplanner.edit_raids_own'	=>	'core.edit.own',
-		'raidplanner.edit_raids_any'	=>	'core.edit',
-		'raidplanner.delete_raid_any'	=>	'core.delete'
+		'raidplanner.edit_raids_own'	=>	'raidplanner.edit.own',
+		'raidplanner.edit_raids_any'	=>	'raidplanner.edit',
+		'raidplanner.delete_raid_any'	=>	'raidplanner.delete',
+		'raidplanner.delete_raid_own'	=>	'raidplanner.delete.own',
+		
 	);
 
 	public static function getGuildPlugin( $guild_id )

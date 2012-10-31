@@ -3,10 +3,10 @@
 	<section name="component">
 		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
 		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
-		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
-		<action name="raidplanner.delete_raid_own" title="COM_RAIDPLANNER_DELETE_OWN" description="COM_RAIDPLANNER_DELETE_OWN_DESC" />
-		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
-		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="raidplanner.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="raidplanner.delete.own" title="COM_RAIDPLANNER_DELETE_OWN" description="COM_RAIDPLANNER_DELETE_OWN_DESC" />
+		<action name="raidplanner.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="raidplanner.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
 		<action name="raidplanner.allow_signup" title="COM_RAIDPLANNER_ALLOW_SIGNUP" description="COM_RAIDPLANNER_ALLOW_SIGNUP_DESC" />
 		<action name="raidplanner.view_raids" title="COM_RAIDPLANNER_VIEW_RAIDS" description="COM_RAIDPLANNER_VIEW_RAIDS_DESC" />
 		<action name="raidplanner.view_calendar" title="COM_RAIDPLANNER_VIEW_CALENDAR" description="COM_RAIDPLANNER_VIEW_CALENDAR_DESC" />
