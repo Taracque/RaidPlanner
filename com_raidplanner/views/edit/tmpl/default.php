@@ -34,15 +34,18 @@ $start_time = array(
 );
 ?>
 <div class="rp_container">
-	<form action="<?php echo JRoute::_('index.php');?>" method="post" id="rp_edit_form">
-		<label for="location"><?php echo JText::_('COM_RAIDPLANNER_RAID_NAME');?>:</label><input type="text" name="location" value="<?php echo $this->event->location;?>">
-		<label for="icon_name"><?php echo JText::_('COM_RAIDPLANNER_ICON');?></label><select name="icon_name" id="icon_name">
+	<form action="<?php echo JRoute::_('index.php');?>" method="post" id="rp_edit_form" class="form-inline">
+		<label for="location"><?php echo JText::_('COM_RAIDPLANNER_RAID_NAME');?>:</label>
+		<input type="text" name="location" value="<?php echo $this->event->location;?>">
+		<label for="icon_name"><?php echo JText::_('COM_RAIDPLANNER_ICON');?></label>
+		<select name="icon_name" id="icon_name">
 			<option value=""></option>
 			<?php foreach ($this->icons as $icon_file => $icon_name) : ?>
 			<option value="<?php echo $icon_file;?>"<?php if ($icon_file==@$this->event->icon_name) {?> selected="selected"<?php } ?>><?php echo $icon_name;?></option>
 			<?php endforeach; ?>
 		</select>
-		<label for="template_id"><?php echo JText::_('COM_RAIDPLANNER_TEMPLATE');?></label><select name="template_id" id="template_id" onchange="document.getElementById('rp_edit_form').submit();">
+		<label for="template_id"><?php echo JText::_('COM_RAIDPLANNER_TEMPLATE');?></label>
+		<select name="template_id" id="template_id" onchange="document.getElementById('rp_edit_form').submit();">
 			<option value=""></option>
 			<?php foreach ($this->templates as $template) : ?>
 			<option value="<?php echo $template->raid_id;?>"><?php echo $template->location;?></option>
@@ -50,9 +53,11 @@ $start_time = array(
 		</select>
 		<br />
 		<label for="description"><?php echo JText::_('JGLOBAL_DESCRIPTION');?>:</label><br />
-			<textarea name="description" cols="40" rows="5"><?php echo $this->event->description;?></textarea>
+		<textarea name="description" cols="40" rows="5"><?php echo $this->event->description;?></textarea>
 		<br />
-		<label for="start_time_0"><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: </label><?php echo JHTML::calendar( $start_time['date'], 'start_time[0]', 'start_time_0', $dateFormat);?> <input type="text" name="start_time[1]" id="start_time_1" value="<?php echo $start_time['time'];?>" size="6" /><br />
+		<label for="start_time_0"><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: </label>
+		<?php echo JHTML::calendar( $start_time['date'], 'start_time[0]', 'start_time_0', $dateFormat);?> <input type="text" name="start_time[1]" id="start_time_1" value="<?php echo $start_time['time'];?>" size="6" />
+		<br />
 		<label for="duration_mins"><?php echo JText::_('COM_RAIDPLANNER_DURATION');?>: </label><input type="text" name="duration_mins" id="duration_mins" value="<?php echo @$this->event->duration_mins;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES');?><br />
 		<label for="invite_time_0"><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: </label><?php echo JHTML::calendar( $invite_time['date'], 'invite_time[0]', 'invite_time_0', $dateFormat);?> <input type="text" name="invite_time[1]" id="invite_time_1" value="<?php echo $invite_time['time'];?>" size="6" /><br />
 		<label for="freeze_time"><?php echo JText::_('COM_RAIDPLANNER_FREEZE_TIME');?>: </label><input type="text" name="freeze_time" id="freeze_time" value="<?php echo @$this->event->freeze_time;?>" size="3" /> <?php echo JText::_('COM_RAIDPLANNER_MINUTES_BEFORE_START');?><br />
@@ -81,8 +86,8 @@ $start_time = array(
 				<?php endforeach; ?>
 			</select>
 		<br />
-	
-		<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
+
+		<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary" />
 <?php if($this->candelete) : ?>
 		<script type="text/javascript">
 			function confirmDelete() {
@@ -92,9 +97,9 @@ $start_time = array(
 				}
 			}
 		</script>
-		<input type="button" name="DeleteButton" value="<?php echo JText::_('JACTION_DELETE');?>" onclick="confirmDelete();"/>
+		<input type="button" name="DeleteButton" value="<?php echo JText::_('JACTION_DELETE');?>" onclick="confirmDelete();" class="btn" />
 <?php endif; ?>
-		
+	
 		<input type="hidden" name="option" value="com_raidplanner" />
 		<input type="hidden" name="Itemid" value="<?php echo JSite::getMenu()->getActive()->id; ?>" />
 		<input type="hidden" name="task" id="task" value="saveevent" />
