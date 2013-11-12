@@ -51,9 +51,9 @@ class RaidPlannerViewCalendar extends JViewLegacy
 
 		if (RaidPlannerHelper::getPermission('view_calendar') != 1) {
 			// redirect to the index page
-			$app = &JFactory::getApplication();
+			$app = JFactory::getApplication();
 			$msg = JText::_('JGLOBAL_AUTH_ACCESS_DENIED');
-			$app->redirect( JRoute::_(''), $msg);
+			$app->redirect( JRoute::_(JURI::root().'index.php'), $msg);
 		}
 
 		$user =& JFactory::getUser();

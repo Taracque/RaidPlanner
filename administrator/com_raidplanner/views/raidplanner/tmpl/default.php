@@ -12,7 +12,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <h3>RaidPlanner</h3>
 <p>Raid organizer component.</p>
-<p>If RaidPlanner plugin is installed and enabled, and users has a <code>characters</code> attribute added (and characters are spearated by newline), characters are automatically assigned to Joomla User.</p>
 <fieldset>
 	<legend><?php echo JText::_('PLUGINS');?></legend>
 	<ul>
@@ -67,13 +66,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <fieldset>
 	<legend><?php echo JText::_('COM_RAIDPLANNER_UTILITIES');?>:</legend>
 	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=raidplanner&task=service">
+		<a href="index.php?option=com_raidplanner&view=raidplanner&task=service" class="btn">
 			<span class="rp_service"></span>
 			<?php echo JText::_('COM_RAIDPLANNER_DB_CHECKS');?>
 		</a>
 	</div>
 	<div class="rp_icon_button">
-		<a href="index.php?option=com_raidplanner&view=stats">
+		<a href="index.php?option=com_raidplanner&view=stats" class="btn">
 			<span class="rp_stats"></span>
 			<?php echo JText::_('COM_RAIDPLANNER_STATS');?>
 		</a>
