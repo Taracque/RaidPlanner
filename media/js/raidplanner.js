@@ -81,7 +81,7 @@ window.addEvent('domready',function() {
 		SqueezeBox.handlers.extend({
 			ajax: function(url) {
 				var options = this.options.ajaxOptions || {};
-				this.asset = new Request.HTML($merge({
+				this.asset = new Request.HTML(Object.merge({
 					method: 'get',
 					evalScripts: false,
 					onSuccess: function(responseTree, responseElements, responseHTML, responseJavaScript) {
