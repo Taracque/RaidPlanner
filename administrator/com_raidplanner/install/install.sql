@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_character` (
   PRIMARY KEY (`character_id`),
   KEY `profile_id` (`profile_id`),
   KEY `char_level` (`char_level`),
-  KEY `rank` (`rank`)
+  KEY `rank` (`rank`),
+  KEY `guild_id` (`guild_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_class` (
