@@ -223,7 +223,7 @@
 }
 
 .rp_event_attendants td a.edit_button {
-	background: transparent url(edit_butt.gif) no-repeat right center;
+	background: transparent url(../images/edit_butt.gif) no-repeat right center;
 	width: 15px;
 	height: 15px;
 	display: block;
@@ -232,7 +232,7 @@
 
 .rp_event_attendants td .attendance.rp_tooltips {
 	padding-right: 20px;
-	background: transparent url(has_comment.png) no-repeat right center;
+	background: transparent url(../images/has_comment.png) no-repeat right center;
 	border-bottom: 1px dotted black;
 	cursor: default;
 }
@@ -305,15 +305,15 @@ tr.rp_header {
 }
 .rp_header span.table-th-sort-span {
 	padding-left: 15px;
-	background: transparent url(sort-default.png) no-repeat left center;
+	background: transparent url(../images/sort-default.png) no-repeat left center;
 }
 
 .rp_header.table-th-sort span.table-th-sort-span {
-	background-image: url(sort-desc.png);
+	background-image: url(../images/sort-desc.png);
 }
 
 .rp_header.table-th-sort-rev span.table-th-sort-span {
-	background-image: url(sort-asc.png);
+	background-image: url(../images/sort-asc.png);
 }
 .rp_roster_table {
 	clear:both;
@@ -398,7 +398,7 @@ tr.rp_header {
 	color: #fff;
 }
 .rp_tooltip div.close {
-	background: url(tooltip-close.png) no-repeat;
+	background: url(../images/tooltip-close.png) no-repeat;
 	border: 1px solid #000;
 	float: right;
 	height: 6px;
