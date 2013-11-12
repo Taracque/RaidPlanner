@@ -104,10 +104,10 @@ HtmlTable = Class.refactor(HtmlTable, {
 	},
 
 	updatePaginationControl: function(){
-		if($defined((this.options.controlDiv))){
+		if(this.options.controlDiv != undefined){
 			this.options.pageCtrl.empty();
 			this.options.rowsCtrl.empty();
-			if($defined(this.body.rows)){
+			if(this.body.rows != undefined){
 				var numOfRows = 0;
 				for (row=0;row<this.body.rows.length;row++){
 					if (!this.body.rows[row].hasClass('filtered')){
