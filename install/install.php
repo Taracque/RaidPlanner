@@ -41,84 +41,34 @@ function com_install()
 	
 	// version specific installation
 	$version = new JVersion();
-	if ($version->RELEASE >= '1.6') {
-		// install RaidPlanner User Plugin (just for J 1.6!)
-		if ( $extInstaller->install($source . '/plg_raidplanner') ) {
-			// module installed
-			$out .= 'RaidPlanner User plugin installed!<br />';
-		} else {
-			$out .= 'RaidPlanner User plugin installation failed!<br />';
-		}
-	}
-	if ($version->RELEASE == '1.5') {
-		$langs =& JLanguage::getKnownLanguages( JPATH_ADMINISTRATOR );
-		foreach ($langs as $lang)
-		{
-			$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
-			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
-			{
-				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
-				if ($content != false)
-				{
-					// copy menu.ini language files
-					JFile::copy( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.menu.ini', $target . '/' . $lang['tag'] . '.com_raidplanner.menu.ini' );
-					
-					// merge sys.ini and j15.ini file to admin language file
-					if (JFile::exists( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' ))
-					{
-						$content .= "\n" . JFile::read( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
-					}
-					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
 
-					// remove sys.ini language file
-					JFile::delete( $target . '/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
-
-					$out .= 'Language file for admin language ' . $lang['name'] . ' patched for Joomla 1.5<br />';
-				}
-			}
-		}
-		$langs =& JLanguage::getKnownLanguages( JPATH_SITE );
-		foreach ($langs as $lang)
-		{
-			$target = JLanguage::getLanguagePath( JPATH_SITE, $lang['tag'] );
-			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
-			{
-				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
-				if ($content != false)
-				{
-					if (JFile::exists( $source . '/language/' . $lang['tag'] . '.com_raidplanner.j15.ini' ))
-					{
-						$content .= "\n" . JFile::read( $source . '/language/' . $lang['tag'] . '.com_raidplanner.j15.ini' );
-					}
-					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
-	
-					$out .= 'Language file for frontend language ' . $lang['name'] . ' patched for Joomla 1.5<br />';
-				}
-			}
-		}
+	// install RaidPlanner User Plugin (just for J 1.6!)
+	if ( $extInstaller->install($source . '/plg_raidplanner') ) {
+		// module installed
+		$out .= 'RaidPlanner User plugin installed!<br />';
 	} else {
-		// copy sys.ini into .ini language files
-		$langs =& JLanguage::getKnownLanguages( JPATH_ADMINISTRATOR );
-		foreach ($langs as $lang)
-		{
-			$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
-			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
-			{
-				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
-				if ($content != false)
-				{
-					// merge sys.ini file to admin language file
-					if (JFile::exists( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' ))
-					{
-						$content .= "\n" . JFile::read( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
-					}
-					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
+		$out .= 'RaidPlanner User plugin installation failed!<br />';
+	}
 
-					$out .= 'Language file for admin language ' . $lang['name'] . ' merged for Joomla 1.6/1.7<br />';
+	// copy sys.ini into .ini language files
+	$langs =& JLanguage::getKnownLanguages( JPATH_ADMINISTRATOR );
+	foreach ($langs as $lang)
+	{
+		$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
+		// check if raidplanner has it language file in $target
+		if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
+		{
+			$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
+			if ($content != false)
+			{
+				// merge sys.ini file to admin language file
+				if (JFile::exists( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' ))
+				{
+					$content .= "\n" . JFile::read( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
 				}
+				JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
+
+				$out .= 'Language file for admin language ' . $lang['name'] . ' merged for Joomla 1.6/1.7<br />';
 			}
 		}
 	}

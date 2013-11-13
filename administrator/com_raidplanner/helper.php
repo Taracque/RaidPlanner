@@ -432,30 +432,12 @@ class RaidPlannerHelper
 	
 	public static function shortDateFormat()
 	{
-		switch ( self::getJVersion() ) {
-			case '1.5':
-				$dateformat = JText::_('DATE_FORMAT_LC4') . ' %H:%M';
-			break;
-			default:
-			case '1.6':
-				$dateformat = JText::_('DATE_FORMAT_LC4') . ' H:i';
-			break;
-		}
-		return $dateformat;
+		return JText::_('DATE_FORMAT_LC4') . ' H:i';
 	}
 
 	public static function sqlDateFormat()
 	{
-		switch ( self::getJVersion() ) {
-			case '1.5':
-				$dateformat = '%Y-%m-%d';
-			break;
-			default:
-			case '1.6':
-				$dateformat = 'Y-m-d';
-			break;
-		}
-		return $dateformat;
+		return 'Y-m-d';
 	}
 
 	public static function date2Sql( $date )
@@ -469,14 +451,7 @@ class RaidPlannerHelper
 
 	public static function loadJSFramework( $load_extras = false )
 	{
-		if (self::getJVersion() == '1.5') {
-			JHTML::_('behavior.mootools');
-			if ( $load_extras ) {
-				JHTML::script('com_raidplanner/mootools.more.125.additional.js', false, true);
-			}
-		} else {
-			JHTML::_('behavior.framework',  $load_extras);
-		}
+		JHTML::_('behavior.framework',  $load_extras);
 	}
 
 	public static function downloadData( $url )

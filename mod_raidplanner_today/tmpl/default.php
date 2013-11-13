@@ -17,15 +17,7 @@ $event_count = 0;
 $lang =& JFactory::getLanguage();
 $lang->load('com_raidplanner');
 
-switch ( RaidPlannerHelper::getJVersion() ) {
-	case '1.5':
-		$timeformat = '%H:%M';
-	break;
-	default:
-	case '1.6':
-		$timeformat = 'H:i';
-	break;
-}
+$timeformat = 'H:i';
 ?>
 <?php if ($invitationAlerts): ?>
 <div id="rp_invitation_alert">

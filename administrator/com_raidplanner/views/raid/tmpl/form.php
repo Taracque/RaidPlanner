@@ -11,15 +11,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-switch ( RaidPlannerHelper::getJVersion() ) {
-	case '1.5':
-		$dateformat = '%Y-%m-%d %H:%M';
-	break;
-	default:
-	case '1.6':
-		$dateformat = 'Y-m-d H:i';
-	break;
-}
+$dateformat = RaidPlannerHelper::shortDateFormat();
 ?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">

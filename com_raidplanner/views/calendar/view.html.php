@@ -93,15 +93,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$monthonly = date("m",mktime(0,0,0,$display_month,1,$display_year));
 		$shift = date("w",mktime(0,0,0,$display_month,1,$display_year));
 
-		switch ( RaidPlannerHelper::getJVersion() ) {
-			case '1.5':
-				$timeformat = '%H:%M';
-			break;
-			default:
-			case '1.6':
-				$timeformat = 'H:i';
-			break;
-		}
+		$timeformat = 'H:i';
 
 		if ($user->getParam('calendar_secret', '') != '') {
 			$calendar_mode = 'subscribe';

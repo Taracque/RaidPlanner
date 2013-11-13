@@ -65,15 +65,9 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$db = & JFactory::getDBO();
 
 		/* quick and dirty query on users */
-		switch ( RaidPlannerHelper::getJVersion() ) {
-			case '1.5':
-				$query = "SELECT id,name FROM #__users WHERE params LIKE '%vacation=2%' ORDER BY id ASC";
-			break;
-			default:
-			case '1.6':
-				$query = "SELECT id,name FROM #__users WHERE params LIKE '%\"vacation\":\"2%' ORDER BY id ASC";
-			break;
-		}
+		/* FIXME, needs to be a Joomla way */
+		$query = "SELECT id,name FROM #__users WHERE params LIKE '%\"vacation\":\"2%' ORDER BY id ASC";
+
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		foreach ($results as $result) {

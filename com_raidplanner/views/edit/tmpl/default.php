@@ -11,19 +11,10 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-switch ( RaidPlannerHelper::getJVersion() ) {
-	case '1.5':
-		$timeformat = '%H:%M';
-		$dateFormat = JText::_('%Y-%M-%D');
-		$jsdateformat = JText::_('%Y-%M-%D');
-	break;
-	default:
-	case '1.6':
-		$timeformat = 'H:i';
-		$dateFormat = '%Y-%m-%d';
-		$jsdateformat = 'Y-m-d';
-	break;
-}
+$timeformat = 'H:i';
+$dateFormat = '%Y-%m-%d';
+$jsdateformat = 'Y-m-d';
+
 $invite_time = array(
 	'date'	=>	JHTML::_('date', $this->event->invite_time, $jsdateformat),
 	'time'	=>	JHTML::_('date', $this->event->invite_time, $timeformat ),
