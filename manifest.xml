@@ -70,7 +70,6 @@
 			<menu view="raids">COM_RAIDPLANNER_RAIDS</menu>
 			<menu view="guilds">COM_RAIDPLANNER_GUILDS</menu>
 			<menu view="characters">COM_RAIDPLANNER_CHARACTERS</menu>
-			<menu view="groups">COM_RAIDPLANNER_GROUPS</menu>
 			<menu view="roles">COM_RAIDPLANNER_ROLES</menu>
 			<menu view="classes">COM_RAIDPLANNER_CLASSES</menu>
 			<menu view="races">COM_RAIDPLANNER_RACES</menu>

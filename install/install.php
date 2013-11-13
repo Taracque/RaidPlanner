@@ -186,6 +186,15 @@ function com_install()
 		}
 	}	
 	
+	/* drop raidplanner_groups */
+	$query = "DROP TABLE IF EXISTS `#__raidplanner_groups`;";
+	$db->setQuery($query);
+	$db->query();
+	$query = "DROP TABLE IF EXISTS `#__raidplanner_profile`;";
+	$db->setQuery($query);
+	$db->query();
+
+	
 	/* Detect Community Builder */
 	jimport( 'joomla.application.component.helper' );
 	$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';

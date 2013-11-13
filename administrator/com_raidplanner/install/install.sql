@@ -33,27 +33,10 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_gender` (
 INSERT IGNORE INTO `#__raidplanner_gender` (`gender_id`, `gender_name`) VALUES (1,	'Male');
 INSERT IGNORE INTO `#__raidplanner_gender` (`gender_id`, `gender_name`) VALUES (2,	'Female');
 
-CREATE TABLE IF NOT EXISTS `#__raidplanner_groups` (
-  `group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(45) NOT NULL DEFAULT '',
-  `default` tinyint(1) NOT NULL,
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-INSERT IGNORE INTO `#__raidplanner_groups` (`group_id`, `group_name`, `default`) VALUES (1, 'Guest', 0);
-INSERT IGNORE INTO `#__raidplanner_groups` (`group_id`, `group_name`, `default`) VALUES (2, 'Registered', 1);
-
 CREATE TABLE IF NOT EXISTS `#__raidplanner_permissions` (
   `permission_name` varchar(45) NOT NULL DEFAULT '',
   `permission_value` tinyint(1) NOT NULL DEFAULT '0',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
-  KEY `group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `#__raidplanner_profile` (
-  `profile_id` int(10) unsigned NOT NULL,
-  `group_id` int(10) unsigned NOT NULL DEFAULT '0',
-  KEY `profile_id` (`profile_id`),
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

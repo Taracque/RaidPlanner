@@ -212,25 +212,6 @@ class RaidPlannerModelEvent extends JModelLegacy
     	return $result;
 	}
 
-	function syncProfile($user)
-	{
-		// Not guest, and we are not using Joomla ACL
-		if ( (!$user->guest) && (!RaidPlannerHelper::checkACL()) ) {
-			$db = & JFactory::getDBO();
-	
-			// check if raidplanner profile exists
-			$query = "SELECT profile_id FROM #__raidplanner_profile WHERE profile_id = ".$user->id;
-			$db->setQuery($query);
-			$profile_id = $db->loadResult();
-			if (!$profile_id) {
-				// DEFAULT GROUP
-				$query = "INSERT INTO #__raidplanner_profile (profile_id, group_id) VALUES (".$user->id.", (SELECT group_id FROM #__raidplanner_groups WHERE `default`=1))";
-				$db->setQuery($query);
-				$db->query();
-			}
-		}
-	}
-	
 	/**
 	* Gets the list of user's characters
 	*/
@@ -238,8 +219,6 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$db = & JFactory::getDBO();
 		$user =& JFactory::getUser();
 		
-		$this->syncProfile($user);
-
 		if (!$everyone) {
 			$where = " WHERE (c.profile_id=" . intval($user->id) . " OR c.profile_id = 0)";
 		} else {

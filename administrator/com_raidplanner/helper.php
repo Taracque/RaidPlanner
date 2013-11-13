@@ -133,28 +133,12 @@ class RaidPlannerHelper
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RAIDS'), 'index.php?option=com_raidplanner&view=raids', ($view == 'raids'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_GUILDS'), 'index.php?option=com_raidplanner&view=guilds', ($view == 'guilds'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CHARACTERS'), 'index.php?option=com_raidplanner&view=characters', ($view == 'characters'));
-		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_GROUPS'), 'index.php?option=com_raidplanner&view=groups', ($view == 'groups'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_ROLES'), 'index.php?option=com_raidplanner&view=roles', ($view == 'roles'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_CLASSES'), 'index.php?option=com_raidplanner&view=classes', ($view == 'classes'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_RACES'), 'index.php?option=com_raidplanner&view=races', ($view == 'races'));
 		JSubMenuHelper::addEntry(JText::_('COM_RAIDPLANNER_STATS'), 'index.php?option=com_raidplanner&view=stats', ($view == 'stats'));
 	}
 	
-	public static function checkACL()
-	{
-		if ((!self::$use_joomla_acl) && (self::getJVersion() >= '1.6')) {
-		// use of Joomla ACL is not set and Joomla >= 1.6, check the database.
-			$db = & JFactory::getDBO();
-			$db->setQuery("SELECT COUNT(*) FROM #__raidplanner_groups");
-			if ($db->loadResult() == 0) {
-				// no RaidPlanner group defined, use Joomla ACL.
-				self::$use_joomla_acl = true;
-			}
-		}
-		
-		return self::$use_joomla_acl;
-	}
-
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
@@ -255,23 +239,15 @@ class RaidPlannerHelper
 
 	public static function getGroups( $guest = true )
 	{
-		self::checkACL();
 		$db	=& JFactory::getDBO();
 
-		if (self::$use_joomla_acl) {
-			// Joomla ACL used, return Joomla groups
-			if ($guest) {
-				$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups ORDER BY title ASC";
-			} else {
-				$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups WHERE parent_id<>0 ORDER BY title ASC";
-			}
+		// Joomla ACL used, return Joomla groups
+		if ($guest) {
+			$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups ORDER BY title ASC";
 		} else {
-			if ($guest) {
-				$query = "SELECT group_id,group_name FROM #__raidplanner_groups ORDER BY group_name ASC";
-			} else {
-				$query = "SELECT group_id,group_name FROM #__raidplanner_groups WHERE group_name<>'Guest' ORDER BY group_name ASC";
-			}
+			$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups WHERE parent_id<>0 ORDER BY title ASC";
 		}
+
 		$db->setQuery($query);
 		$db->query();
 		
@@ -283,43 +259,12 @@ class RaidPlannerHelper
 		$reply = false;
 		
 		if ($permission!='') {
-			self::checkACL();
-			// Joomla ACL
-			if (self::$use_joomla_acl) {
-				$permission = 'raidplanner.' . $permission;
-				if (isset(self::$acl_map[ $permission ])) {
-					$permission = self::$acl_map[ $permission ];
-				}
-				if (JFactory::getUser()->authorise($permission, 'com_raidplanner')) {
-					$reply = true;
-				}
-			} else {
-			// RaidPlanner groups
-				$guest = false;
-				if (!$user_id) {
-					$user =& JFactory::getUser();
-					$user_id = $user->id;
-					$guest = $user->guest;
-				}
-				$db	=& JFactory::getDBO();
-				if (!$guest) {
-					/* check if user is member of a group, if not, default group used */
-					$query = "SELECT count(*) FROM #__raidplanner_profile AS profile WHERE profile.profile_id=".intval($user_id)."";
-					$db->setQuery($query);
-					$count = $db->loadResult();
-					if ($count>0)
-					{
-						$query = "SELECT permission_value FROM #__raidplanner_profile AS profile LEFT JOIN #__raidplanner_permissions AS perm ON profile.group_id = perm.group_id WHERE profile.profile_id=".intval($user_id)." AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
-					} else {
-						$query = "SELECT permission_value FROM #__raidplanner_groups AS groups LEFT JOIN #__raidplanner_permissions AS perm ON groups.group_id = perm.group_id WHERE groups.`default`=1 AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
-					}
-				} else {
-					$query = "SELECT permission_value FROM #__raidplanner_permissions AS perm LEFT JOIN #__raidplanner_groups AS g ON g.group_id = perm.group_id WHERE g.group_name='Guest' AND perm.permission_name = ".$db->Quote($permission)." AND perm.permission_value=1";
-				}
-				$db->setQuery($query);
-	
-				$dbreply = ($db->loadResultArray());
-				$reply = (@$dbreply[0] === "1");
+			$permission = 'raidplanner.' . $permission;
+			if (isset(self::$acl_map[ $permission ])) {
+				$permission = self::$acl_map[ $permission ];
+			}
+			if (JFactory::getUser()->authorise($permission, 'com_raidplanner')) {
+				$reply = true;
 			}
 		}
 		return $reply;
@@ -364,27 +309,16 @@ class RaidPlannerHelper
 				$db = & JFactory::getDBO();
 				$date = RaidPlannerHelper::getDate();
 				
-				self::checkACL();
 				// Joomla ACL
-				if (self::$use_joomla_acl) {
-					$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
-							." LEFT JOIN #__user_usergroup_map AS p ON p.group_id = r.invited_group_id"
-							." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.user_id"
-							." WHERE r.invited_group_id>0"
-							." AND s.raid_id IS NULL"
-							." AND p.user_id = ".intval($user_id)
-							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . self::date2Sql($date) . "'"
-							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . self::date2Sql($date) . "'";
-				} else {
-					$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
-							." LEFT JOIN #__raidplanner_profile AS p ON p.group_id = r.invited_group_id"
-							." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.profile_id"
-							." WHERE r.invited_group_id>0"
-							." AND s.raid_id IS NULL"
-							." AND p.profile_id = ".intval($user_id)
-							." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . self::date2Sql($date) . "'"
-							." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . self::date2Sql($date) . "'";
-				}
+				$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
+						." LEFT JOIN #__user_usergroup_map AS p ON p.group_id = r.invited_group_id"
+						." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id AND s.profile_id = p.user_id"
+						." WHERE r.invited_group_id>0"
+						." AND s.raid_id IS NULL"
+						." AND p.user_id = ".intval($user_id)
+						." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . self::date2Sql($date) . "'"
+						." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . self::date2Sql($date) . "'";
+
 				$db->setQuery( $query );
 				self::$invite_alert_requested = true;
 
