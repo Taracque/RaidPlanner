@@ -31,8 +31,6 @@
 		</sql>
 	</uninstall>
 	<scriptfile>install/install.script.php</scriptfile>
-	<installfile>install/install.php</installfile>
-	<uninstallfile>install/install.php</uninstallfile>
 	<files folder="com_raidplanner">
 		<filename>controller.php</filename>
 		<filename>raidplanner.php</filename>
