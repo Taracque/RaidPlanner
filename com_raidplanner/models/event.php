@@ -157,7 +157,7 @@ class RaidPlannerModelEvent extends JModelLegacy
    				ORDER BY s.confirmed DESC, s.queue DESC,r.role_name DESC";
     	
     	$db->setQuery($query);
-    	$result = $db->loadObjectList('profile_id');
+    	$result = $db->loadObjectList();
 		
     	return $result;
     }
@@ -268,14 +268,23 @@ class RaidPlannerModelEvent extends JModelLegacy
     	return $charlist;
 	}
 
-	function getUserStatus($attendants,$user_id = null)
+	function getUserStatus($event_id,$user_id = null)
 	{
 		if (!$user_id) {
 			$user =& JFactory::getUser();
 			$user_id = $user->id;
 		}
-		if (isset($attendants[$user_id])) {
-			return $attendants[$user_id];
+		
+    	$db = & JFactory::getDBO();
+		$query = "SELECT s.character_id,s.role_id,s.queue,s.confirmed,s.comments
+    			FROM #__raidplanner_signups AS s 
+   				WHERE s.raid_id = " . intval($event_id) . "
+   				AND s.profile_id = " . intval($user_id) . "";
+
+    	$db->setQuery($query);
+    	$result = $db->loadObject();
+    	if ( $result->character_id ) {
+    		return $result;
 		} else {
 			$status->character_id = null;
 			$status->role_id = null;
@@ -440,6 +449,10 @@ class RaidPlannerModelEvent extends JModelLegacy
 				$db->setQuery($query);
 				$db->query();
 			}
+			// remove the same character, before adding it once again
+			$query = "DELETE FROM #__raidplanner_signups WHERE character_id=".intval($new_char_id)." AND raid_id=".$raid_id;
+			$db->setQuery($query);
+			$db->query();
 				
 			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
 					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
