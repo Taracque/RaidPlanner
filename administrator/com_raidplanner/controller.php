@@ -50,8 +50,6 @@ class RaidPlannerController extends JControllerLegacy
 			$installer = new RaidPlannerInstaller();
 			$installer->uninstall( JRequest::getVar( 'plugin' ) );
 		}
-
-		parent::display();
 		
 		if ($this->getTask() == 'service') {
 			$db	=& JFactory::getDBO();
@@ -68,7 +66,7 @@ class RaidPlannerController extends JControllerLegacy
 					$db->query();
 				}
 			}
-			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ) . "<br />";
+			JFactory::getApplication()->enqueueMessage( JText::sprintf('COM_RAIDPLANNER_REMOVING_UNANCHORED_SIGNUPS', count($list) ) );
 
 			// remove characters that doesn't have guild
 			$query = 'SELECT c.character_id,c.profile_id FROM #__raidplanner_character AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id = c.guild_id WHERE g.guild_name IS NULL'; 
@@ -81,8 +79,10 @@ class RaidPlannerController extends JControllerLegacy
 					$db->query();
 				}
 			}
-			echo JText::sprintf('COM_RAIDPLANNER_REMOVING_GUILDLESS_CHARS', count($list) ) . "<br />";
+			JFactory::getApplication()->enqueueMessage( JText::sprintf('COM_RAIDPLANNER_REMOVING_GUILDLESS_CHARS', count($list) ) );
 		}
+		
+		parent::display();
 	}
 
 }
