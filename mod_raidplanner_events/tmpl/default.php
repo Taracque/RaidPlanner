@@ -16,6 +16,9 @@ $event_count = 0;
 
 $lang =& JFactory::getLanguage();
 $lang->load('com_raidplanner');
+
+jimport('joomla.application.component.helper');
+$use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
 ?>
 <?php if ($invitationAlerts): ?>
 <div id="rp_invitation_alert">
@@ -65,7 +68,11 @@ $lang->load('com_raidplanner');
 	?>
 	<tr>
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent='.$item->raid_id.'&Itemid='.$itemid);?>">
+			<?php if ($use_modal) : ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $item->raid_id . '&Itemid=' . $itemid);?>" class="modal">
+			<?php else: ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . $item->raid_id . '&Itemid=' . $itemid);?>">
+			<?php endif; ?>
 				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
 					<strong><?php echo JHTML::_('date', $item->start_time, RaidPlannerHelper::shortDateFormat() );?> </strong><?php echo $item->location;?>
 				</span>
