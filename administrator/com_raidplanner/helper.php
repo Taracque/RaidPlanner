@@ -170,7 +170,7 @@ class RaidPlannerHelper
 	public static function getTimezone( $user = null, $forcenumeric = true )
 	{
 		$user =& JFactory::getUser( $user );
-		$tz = $user->getParam('timezone', JFactory::getConfig()->getValue('config.offset'));
+		$tz = $user->getParam('timezone', JFactory::getApplication()->getCfg('offset'));
 		if ((!is_numeric($tz)) && ($forcenumeric)) {
 			$date = new JDate('now',$tz);
 			if (method_exists($date,'getOffsetFromGMT')) {

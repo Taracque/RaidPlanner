@@ -69,7 +69,7 @@ class RaidPlannerModelRaids extends JModelLegacy
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_order_Dir) ) &&
-			(in_array($filter_order, array('r.start_time', 'r.location', 'r.minimum_level', 'r.maximum_level', 'r.minimum_rank', 'r.is_template', 'g.group_name') ) ) &&
+			(in_array($filter_order, array('r.start_time', 'r.location', 'r.minimum_level', 'r.maximum_level', 'r.minimum_rank', 'r.is_template', 'g.title') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
@@ -116,11 +116,10 @@ class RaidPlannerModelRaids extends JModelLegacy
     {
         $query = ' SELECT * ';
 
-		$query .= ' ,ug.title AS group_name';
+		$query .= ' ,g.title AS group_name';
 		$query .= ' FROM #__raidplanner_raid AS r';
-		$query .= ' LEFT JOIN #__usergroups AS ug ON ug.id = r.invited_group_id';
-
-		$query .=	' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
+		$query .= ' LEFT JOIN #__usergroups AS g ON g.id = r.invited_group_id';
+		$query .= ' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
             		. $this->_buildQueryWhere();
         
         return $query;
