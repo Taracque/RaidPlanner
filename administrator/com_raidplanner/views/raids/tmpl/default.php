@@ -18,7 +18,7 @@ JHtml::_('formbehavior.chosen', 'select');
 	<div id="filter-bar" class="btn-toolbar">
 		<div class="filter-search btn-group pull-left">
 			<label for="search" class="element-invisible"><?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?></label>
-			<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" onchange="document.adminForm.submit();" />
+			<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" onchange="document.adminForm.submit();" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" >
 		</div>
 		<div class="btn-group pull-left hidden-phone">
 			<label for="start_time_min" class="element-invisible"><?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?></label>
@@ -50,7 +50,7 @@ JHtml::_('formbehavior.chosen', 'select');
 		<thead>
 			<tr>
 				<th width="20">
-					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(<?php echo count( $this->raids ); ?>);" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this);" />
 				</th>
 				<th width="100">
 					<?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_START_TIME', 'r.start_time', $this->lists['order_Dir'], $this->lists['order']); ?>

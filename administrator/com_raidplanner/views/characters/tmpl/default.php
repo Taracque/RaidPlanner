@@ -18,14 +18,14 @@ JHtml::_('formbehavior.chosen', 'select');
 	<div id="filter-bar" class="btn-toolbar">
 		<div class="filter-search btn-group pull-left">
 			<label for="search" class="element-invisible"><?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?></label>
-			<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
+			<input type="text" name="search" id="search" value="<?php echo htmlspecialchars($this->lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" >
 		</div>
 		<div class="btn-group pull-left hidden-phone">
 			<label for="level_min" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_LEVEL' ); ?></label>
 			<div class="input-append input-prepend">
-				<input type="text" name="level_min" id="level_min" value="<?php echo htmlspecialchars($this->lists['level_min']);?>" class="input-minimal" onchange="document.adminForm.submit();" />
+				<input type="text" name="level_min" id="level_min" value="<?php echo htmlspecialchars($this->lists['level_min']);?>" class="input-mini" onchange="document.adminForm.submit();" class="hasTooltip" data-original-title="<?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>">
 				<span class="add-on">-</span>
-				<input type="text" name="level_max" id="level_max" value="<?php echo htmlspecialchars($this->lists['level_max']);?>" class="input-minimal" onchange="document.adminForm.submit();" />
+				<input type="text" name="level_max" id="level_max" value="<?php echo htmlspecialchars($this->lists['level_max']);?>" class="input-mini" onchange="document.adminForm.submit();"class="hasTooltip" data-original-title="<?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>" >
 			</div>
 			<label for="guild_filter" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?></label>
 			<select name="guild_filter" onchange="document.adminForm.submit();">
@@ -53,7 +53,7 @@ JHtml::_('formbehavior.chosen', 'select');
     <thead>
         <tr>
 			<th width="20">
-				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $this->characters ); ?>);" />
+				<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this);" />
 			</th>
             <th>
                 <?php echo JHTML::_( 'grid.sort', 'COM_RAIDPLANNER_CHARACTER_NAME', 'c.char_name', $this->lists['order_Dir'], $this->lists['order']); ?>
