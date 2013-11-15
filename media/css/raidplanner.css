@@ -4,6 +4,7 @@
 }
 .rp_container td,.rp_header_container td {
 	vertical-align: top;
+	padding:0;
 }
 .rp_header_container {
 	border-bottom: 1px inset #ccc;
@@ -14,6 +15,9 @@
 }
 .rp_header ul {
 	text-align: left;
+}
+.rp_header_left {
+	width: auto;
 }
 .rp_header_left a, a.rp_button {
 	background: #E8E8E8;
@@ -160,26 +164,15 @@
 	line-height: 20px;
 	-webkit-transition: color 0.2s ease-out;
 	float: left;
-	background-color: #33383C;
+	background-color: #888;
 	text-align: center;
 	text-decoration: none;
-	margin: 0 1px;
+	margin: 0 2px;
+	padding: 2px;
 	font-weight: bold;
-}
-
-.rp_event_buttons div a:first-child {
-	border-bottom-left-radius : 6px;
-	-moz-border-radius-bottomleft : 6px;
-	-webkit-border-bottom-left-radius : 6px;
 	border-top-left-radius : 6px;
 	-moz-border-radius-topleft : 6px;
 	-webkit-border-top-left-radius : 6px;
-}
-
-.rp_event_buttons div a:last-child {
-	border-bottom-right-radius : 6px;
-	-moz-border-radius-bottomright : 6px;
-	-webkit-border-bottom-right-radius : 6px;
 	border-top-right-radius : 6px;
 	-moz-border-radius-topright : 6px;
 	-webkit-border-top-right-radius : 6px;
@@ -188,12 +181,12 @@
 
 .rp_event_buttons div a:hover, .rp_event_buttons div a.active {
 	color: white;
-	background-color: #888;
+	background-color: #33383C;
 }
 
 .rp_event_attendants table,
 .rp_event_signup table {
-	margin: 0;
+	margin: 0 0 0.5em 0;
 	padding: 0;
 	width: 100%;
 	border-spacing: 0px 0px;

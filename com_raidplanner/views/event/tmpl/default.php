@@ -21,7 +21,7 @@ $hasChars = !empty($this->characters);
 			<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" style="float:left; margin: 0 5px 5px 0;" alt="<?php echo $this->event->icon_name; ?>" />
 		<?php endif; ?>
 		<?php if ($this->isOfficer) { ?>
-			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit"><?php echo JText::_('JGLOBAL_EDIT');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit btn"><?php echo JText::_('JGLOBAL_EDIT');?></a>
 		<?php } ?>
 			<ul>
 				<li><h2><?php echo $this->event->location; ?><?php if ($this->event->guild_name) { echo " - " . $this->event->guild_name;}?></h2></li>
@@ -153,7 +153,7 @@ $hasChars = !empty($this->characters);
 								<a href="#" onclick="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_queue_<?php echo $attendant->character_id;?>');" id="att_char_queue_<?php echo $attendant->character_id;?>" class="attendance<?php if ($attendant->comments!='') { ?> rp_tooltips" title="<?php echo htmlspecialchars($attendant->comments, ENT_QUOTES, "UTF-8");?><?php } ?>"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_'.$attendant->queue); ?></a>
 								<?php if ($this->isOfficer) : ?>
 									<a href="#" onclick="javascript:rpEditQueue('<?php echo $attendant->character_id;?>');return false;" id="att_char_edit_button_<?php echo $attendant->character_id;?>" class="edit_button">&nbsp;</a>
-									<select name="queue[<?php echo $attendant->character_id;?>]" id="att_char_edit_queue_<?php echo $attendant->character_id;?>" style="display:none">
+									<select name="queue[<?php echo $attendant->character_id;?>]" id="att_char_edit_queue_<?php echo $attendant->character_id;?>" style="display:none" class="input-small">
 										<option value="1" <?php if ($attendant->queue==1) { ?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></option>
 										<option value="-1" <?php if ($attendant->queue==-1) { ?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?></option>
 										<option value="2" <?php if ($attendant->queue==2) { ?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?></option>
@@ -174,7 +174,7 @@ $hasChars = !empty($this->characters);
 								if (!$this->isOfficer) {
 									echo $attendant->role_name;
 								} else { ?>
-								<select name="role[<?php echo $attendant->character_id;?>]">
+								<select name="role[<?php echo $attendant->character_id;?>]" class="input-small">
 									<option value="0">-</option>
 								<?php foreach ($this->roles as $role) { ?>
 									<option value="<?php echo $role->role_id;?>" <?php if ($role->role_id==$attendant->role_id) {?>selected="selected"<?php } ?>><?php echo $role->role_name;?></option>
@@ -186,7 +186,7 @@ $hasChars = !empty($this->characters);
 								if (!$this->isOfficer) {
 									echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_'.$attendant->confirmed);
 								} else {
-							?><select name="confirm[<?php echo $attendant->character_id;?>]">
+							?><select name="confirm[<?php echo $attendant->character_id;?>]" class="input-small">
 								<option value="0">-</option>
 								<option value="-1" <?php if ($attendant->confirmed==-1) {?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_-1');?></option>
 								<option value="1" <?php if ($attendant->confirmed==1) {?>selected="selected"<?php } ?>><?php echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_1');?></option>
@@ -201,7 +201,7 @@ $hasChars = !empty($this->characters);
 			<?php if ($this->isOfficer) : ?>
 						<tr>
 							<td>
-								<select name="new_character">
+								<select name="new_character" class="input-normal">
 									<option value=""></option>
 								<?php foreach($this->all_characters as $onechar) {?>
 									<option value="<?php echo $onechar->character_id;?>"><?php echo $onechar->char_name;?></option>
@@ -209,14 +209,14 @@ $hasChars = !empty($this->characters);
 								</select>
 							</td>
 							<td>
-								<select name="new_queue">
+								<select name="new_queue" class="input-small">
 									<?php for($i=-1;$i<=2;$i++) { if ($i!=0) { ?>
 									<option value="<?php echo $i;?>"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_'.$i); ?></option>
 									<?php } } ?>
 								</select>
 							</td>
 							<td>
-								<select name="new_role">
+								<select name="new_role" class="input-small">
 									<option value="0">-</option>
 								<?php foreach ($this->roles as $role) { ?>
 									<option value="<?php echo $role->role_id;?>"><?php echo $role->role_name;?></option>
@@ -224,7 +224,7 @@ $hasChars = !empty($this->characters);
 								</select>
 							</td>
 							<td>
-								<select name="new_confirm">
+								<select name="new_confirm" class="input-small">
 									<option value="0">-</option>
 									<option value="-1"><?php echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_-1');?></option>
 									<option value="1"><?php echo JText::_('COM_RAIDPLANNER_CONFIRMATIONS_1');?></option>
@@ -238,7 +238,7 @@ $hasChars = !empty($this->characters);
 					</tbody>
 				</table>
 			<?php if ($this->isOfficer) : ?>
-				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" />
+				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
 				<div class="rp_history_editor">
 				<?php if ($this->params['show_history']==1) : ?>
 					<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:<br />
