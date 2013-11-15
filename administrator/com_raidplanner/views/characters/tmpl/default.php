@@ -23,9 +23,9 @@ JHtml::_('formbehavior.chosen', 'select');
 		<div class="btn-group pull-left hidden-phone">
 			<label for="level_min" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_LEVEL' ); ?></label>
 			<div class="input-append input-prepend">
-				<input type="text" name="level_min" id="level_min" value="<?php echo htmlspecialchars($this->lists['level_min']);?>" class="input-mini" onchange="document.adminForm.submit();" class="hasTooltip" data-original-title="<?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>">
+				<input type="text" name="level_min" id="level_min" value="<?php echo htmlspecialchars($this->lists['level_min']);?>" class="input-mini hasTooltip" onchange="document.adminForm.submit();" data-original-title="<?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>">
 				<span class="add-on">-</span>
-				<input type="text" name="level_max" id="level_max" value="<?php echo htmlspecialchars($this->lists['level_max']);?>" class="input-mini" onchange="document.adminForm.submit();"class="hasTooltip" data-original-title="<?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>" >
+				<input type="text" name="level_max" id="level_max" value="<?php echo htmlspecialchars($this->lists['level_max']);?>" class="input-mini hasTooltip" onchange="document.adminForm.submit();" data-original-title="<?php echo JText::_( 'COM_RAIDPLANNER_LEVEL_RANGE' ); ?>" >
 			</div>
 			<label for="guild_filter" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?></label>
 			<select name="guild_filter" onchange="document.adminForm.submit();">
