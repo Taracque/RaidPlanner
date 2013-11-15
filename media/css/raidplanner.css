@@ -10,8 +10,11 @@
 	border-bottom: 1px inset #ccc;
 }
 .rp_header td {
-	width: 33%;
 	text-align: center;
+}
+.rp_header_center,
+.rp_header_right {
+	width: 33%;
 }
 .rp_header ul {
 	text-align: left;
