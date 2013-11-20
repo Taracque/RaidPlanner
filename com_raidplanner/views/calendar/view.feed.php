@@ -34,8 +34,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 				die('Invalid access!');
 			}
 		}
-		$tz = RaidPlannerHelper::getTimezone();
-    	$tzname = RaidPlannerHelper::getTimezoneName();
+    	$tzname = 'UTC';
     	
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
 
@@ -44,7 +43,6 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$model = &$this->getModel();
 		
 		$this->assignRef( 'canView', $canView );
-		$this->assignRef( 'tzoffset', $tz );
 		$this->assignRef( 'tzname', $tzname );
 		$this->assignRef( 'dateformat', $dateformat );
         $this->assignRef( 'events', $model->getEvents('own', $user->id) );
