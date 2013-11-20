@@ -20,19 +20,19 @@
 			<fieldset name="basic">
 				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
 				<field name="@spacer" type="spacer" default="" label="" description="" />
-				<field name="raidshowReg" type="radio" default="1" label="Show Regristration" description="Show regristration status">
+				<field name="raidshowReg" type="radio" default="1" class="btn-group btn-group-yesno" label="Show Regristration" description="Show regristration status">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
-				<field name="raidshowRole" type="radio" default="1" label="Show Role" description="Show raid role (confirmed by Raidleader)">
+				<field name="raidshowRole" type="radio" default="1" class="btn-group btn-group-yesno" label="Show Role" description="Show raid role (confirmed by Raidleader)">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
-				<field name="raidshowChar" type="radio" default="1" label="Show Character" description="Show signed up character">
+				<field name="raidshowChar" type="radio" default="1" class="btn-group btn-group-yesno" label="Show Character" description="Show signed up character">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
-				<field name="raidshowDate" type="radio" default="1" label="Show Today Date" description="Show today's date">
+				<field name="raidshowDate" type="radio" default="1" class="btn-group btn-group-yesno" label="Show Today Date" description="Show today's date">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
