@@ -12,6 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.folder' );
 
 class com_raidplannerInstallerScript
 {

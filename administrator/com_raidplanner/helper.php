@@ -40,9 +40,16 @@ class RaidPlannerHelper
 		$db->setQuery($query);
 		if ($guild = $db->loadObject()) {
 			$guild->params = json_decode( $guild->params, true );
-			$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
-
-			JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
+			if (JPluginHelper::importPlugin('raidplanner', $guild->sync_plugin)) {
+				/* Plugin loaded */
+				JEventDispatcher::getInstance()->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
+				
+				return true;
+			} else {
+				/* old way loading, DEPRECATED will be removed as of 0.9 */
+				$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
+				JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
+			}
 			if ( class_exists( $plug_class ) ) {
 				return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
 			} else {
@@ -58,7 +65,12 @@ class RaidPlannerHelper
 	{
 		if ($plugin = self::getGuildPlugin( $guild_id ) )
 		{
-			return $plugin->loadCSS();
+			if ($plugin === true) {
+				JEventDispatcher::getInstance()->trigger( 'onRPLoadCSS' );
+			} else {
+				/* old way, DEPRECATED will be removed as of 0.9 */
+				return $plugin->loadCSS();
+			}
 		}
 		
 		return false;
@@ -66,16 +78,27 @@ class RaidPlannerHelper
 
 	public static function RosterSync( $guild_id , $sync_interval , $showOkStatus = false )
 	{
-		if ( ($plugin = self::getGuildPlugin( $guild_id ) ) && ($plugin->provide_sync) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
+		if ($plugin = self::getGuildPlugin( $guild_id ) )
 		{
-			$plugin->doSync( $showOkStatus );
+			if ($plugin === true) {
+				JEventDispatcher::getInstance()->trigger( 'onRPSyncGuild' , array( $showOkStatus, $sync_interval, true ) );
+			} elseif ( ($plugin->provide_sync) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
+			{
+				/* old way, DEPRECATED will be removed as of 0.9 */
+				$plugin->doSync( $showOkStatus );
+			}
 		}
 	}
 	
 	public static function getSyncPlugins()
 	{
-		$plugins = JFolder::folders( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins', '.', false );
-		/* FIXME: needs to be veryfied if there is anything in those folder */
+		$plugins = array();
+		$j_plugs = JPluginHelper::getPlugin( 'raidplanner' );
+		foreach ($j_plugs as $jplug) {
+			$plugins[] = $jplug->name;
+		}
+		/* load older version of plugins for backward compatibility */
+		$plugins = array_merge($plugins, JFolder::folders( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins', '.', false ) );
 		
 		return $plugins;
 	}
@@ -85,7 +108,11 @@ class RaidPlannerHelper
 		$params = array();
 		
 		/* FIXME: Plugin name must be sanitized */
-		$plug_xml_file = JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $plugin . '/' . $plugin . '.xml';
+		$plug_xml_file = JPATH_SITE . '/plugins/raidplanner/' . $plugin . '/' . $plugin .'.xml';
+		if (!JFile::exists( $plug_xml_file )) {
+			// old type plugin, DEPRECATED, will be removed at 0.9
+			$plug_xml_file = JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $plugin . '/' . $plugin . '.xml';
+		}
 		if (JFile::exists( $plug_xml_file )) {
 			$plug_xml = simplexml_load_file( $plug_xml_file );
 			foreach( $plug_xml->params->param as $param ) {

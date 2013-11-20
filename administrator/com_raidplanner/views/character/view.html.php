@@ -28,7 +28,7 @@ class RaidPlannerViewCharacter extends JViewLegacy
 		$isNew	= ($char->character_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
-		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_CHARACTER' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_CHARACTER' ).': ' . $text.'' );
 		JToolBarHelper::save();
 		JToolBarHelper::apply();
 		if ($isNew)  {

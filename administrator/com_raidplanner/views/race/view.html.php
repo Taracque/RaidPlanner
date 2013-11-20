@@ -28,7 +28,7 @@ class RaidPlannerViewRace extends JViewLegacy
 		$isNew	= ($race->race_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
-		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_RACE' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_RACE' ).': ' . $text.'' );
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();

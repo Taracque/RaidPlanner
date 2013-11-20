@@ -28,7 +28,7 @@ class RaidPlannerViewRole extends JViewLegacy
 		$isNew	= ($role->role_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
-		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_ROLE' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_ROLE' ).': ' . $text.'' );
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();

@@ -32,7 +32,7 @@ class RaidPlannerViewRaid extends JViewLegacy
 		$isNew		= ($raid->raid_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
-		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_RAID' ).': <small><small>[ ' . $text.' ]</small></small>' );
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_RAID' ).': ' . $text.'' );
 		JToolBarHelper::save();
 		JToolBarHelper::apply();
 		if ($isNew)  {

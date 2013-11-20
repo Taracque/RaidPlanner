@@ -24,6 +24,29 @@ if (!class_exists('JViewLegacy')) {
 
 class RaidPlannerViewRaidPlanner extends JViewLegacy
 {
+	private function getPluginList()
+	{
+		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_plugins/models');
+		$plugins_model = JModelLegacy::getInstance('plugins', 'pluginsModel');
+		$plugin_state = $plugins_model->getState();
+
+		$plugins_model->setState('filter.folder','raidplanner');
+		$plugins_model->setState('filter.search','');
+		$plugins_model->setState('filter.access','0');
+		$plugins_model->setState('filter.enabled','');
+		$plugins_model->setState('filter.language','');
+		
+		$plugins = $plugins_model->getItems();
+
+		$plugins_model->setState( 'filter.folder',$plugin_state->{'filter.folder'} );
+		$plugins_model->setState( 'filter.search',$plugin_state->{'filter.search'} );
+		$plugins_model->setState( 'filter.access',$plugin_state->{'filter.access'} );
+		$plugins_model->setState( 'filter.enabled',$plugin_state->{'filter.enabled'} );
+		$plugins_model->setState( 'filter.language',$plugin_state->{'filter.language'} );
+		
+		return $plugins;
+	}
+
 	/**
 	 * display method of Hello view
 	 * @return void
@@ -37,7 +60,9 @@ class RaidPlannerViewRaidPlanner extends JViewLegacy
 
 		RaidPlannerHelper::showToolbarButtons();
 		
-		$this->assignRef( 'installed_plugins', RaidPlannerInstaller::getInstalledList() );
+		$plugins = $this->getPluginList();
+
+		$this->assignRef( 'installed_plugins', $plugins );
 
 		parent::display($tpl);
 	}

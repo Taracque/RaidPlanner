@@ -36,21 +36,6 @@ class RaidPlannerController extends JControllerLegacy
 	 */
 	function display()
 	{
-		if ($this->getTask() == 'doInstall') {
-			$installer = new RaidPlannerInstaller();
-			if ( !$installer->installUploaded( 'install_theme' ) ) {
-				if ( $url = JRequest::getVar ( 'install_url', NULL ) ) {
-					$installer->installFromURL( $url );
-				} else {
-					$installer->installPackage( JRequest::getVar ( 'install_directory', NULL ) );
-				}
-			}
-		}
-		if ($this->getTask() == 'doUninstall') {
-			$installer = new RaidPlannerInstaller();
-			$installer->uninstall( JRequest::getVar( 'plugin' ) );
-		}
-		
 		if ($this->getTask() == 'service') {
 			$db	=& JFactory::getDBO();
 

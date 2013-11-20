@@ -28,9 +28,9 @@ class RaidPlannerViewGuild extends JViewLegacy
 		$isNew	= ($guild->guild_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
-		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_GUILD' ).': <small><small>[ ' . $text.' ]</small></small>' );
-		JToolBarHelper::save();
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_GUILD' ).': ' . $text.'' );
 		JToolBarHelper::apply();
+		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
 		} else {
@@ -45,7 +45,8 @@ class RaidPlannerViewGuild extends JViewLegacy
 		$plugin_params = array();
 		if ( ($guild->sync_plugin != '') && ($plugin = RaidPlannerHelper::getGuildPlugin( $guild->guild_id )) ) {
 			$plugin_params = RaidPlannerHelper::getSyncPluginParams( $guild->sync_plugin );
-			$this->assignRef( 'do_sync', $plugin->provide_sync );
+			$this->assign( 'do_sync', true );
+			/* FIXME, don't know if this plugin provide sync abilities */
 		} else {
 			$this->assign( 'do_sync', false );
 		}
