@@ -43,10 +43,20 @@ class RaidPlannerViewRoster extends JViewLegacy
 		$initial_sort = $paramsObj->get('initial_sort', '0');
 
 		$guild_plugin = RaidPlannerHelper::getGuildPlugin( $guild_id );
-		if (($paramsObj->get('armory_sync', '0') == 1) && ($guild_plugin) && ($guild_plugin->needSync( $paramsObj->get( 'sync_interval', 4 ) ) ))
+		
+		$sync_interval = $paramsObj->get( 'sync_interval', 4 );
+		$sync_enabled = ($paramsObj->get('armory_sync', '0') == 1);
+		
+		if ($sync_enabled )
 		{
-			// sync armory
-			$guild_plugin->doSync();
+			if (($guild_plugin === true) {
+				RaidPlannerHelper::RosterSync( $guild_id, $sync_interval );
+			}
+			elseif ( ($guild_plugin) && ($guild_plugin->needSync( $sync_interval ) ) )
+			{
+				/* old way sync, DEPRECATED, will be removed in 0.9 */
+				$guild_plugin->doSync();
+			}
 		}
 
 		RaidPlannerHelper::loadGuildCSS( $guild_id );
