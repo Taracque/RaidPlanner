@@ -29,6 +29,7 @@ class RaidPlannerViewRole extends JViewLegacy
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
 		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_ROLE' ).': ' . $text.'' );
+		JToolBarHelper::apply();
 		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
@@ -47,7 +48,7 @@ class RaidPlannerViewRole extends JViewLegacy
 
 	function getIcons()
 	{
-		$path = JPATH_BASE . '/../images/raidplanner/role_icons';
+		$path = JPATH_SITE . '/media/com_raidplanner/role_icons';
 		
 		$dhandle = opendir($path);
 		$files = array();

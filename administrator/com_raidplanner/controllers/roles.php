@@ -38,6 +38,11 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 		parent::display();
 	}
 
+	function apply()
+	{
+		$this->save();
+	}
+
 	/**
 	 * save a record (and redirect to main page)
 	 * @return void
@@ -55,7 +60,12 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
-		$this->setRedirect('index.php?option=com_raidplanner&view=roles', $msg);
+		if ($task == 'apply') {
+			$link = 'index.php?option=com_raidplanner&view=role&controller=roles&task=edit&cid[]='.$role_id;
+		} else {
+			$link = 'index.php?option=com_raidplanner&view=roles';
+		}
+		$this->setRedirect($link, $msg);
 	}
 
 	/**
