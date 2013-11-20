@@ -24,7 +24,7 @@ X-WR-CALNAME:<?php echo $config['sitename']; ?>
 
 X-WR-TIMEZONE:<?php echo $this->tzname; ?>
 
-X-ORIGINAL-URL:<?php echo JURI::base() . JRoute::_('index.php'); ?>
+X-ORIGINAL-URL:<?php echo JRoute::_('index.php', true, -1); ?>
 
 X-WR-CALDESC:<?php echo $config['sitename']; ?> RaidPlanner
 <?php if (class_exists('DateTimeZone')) : ?>
@@ -71,7 +71,7 @@ SUMMARY:<?php echo $event[0]->location;?>
 
 DESCRIPTION:<?php echo $event[0]->description;?>
 
-URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$event[0]->raid_id.'');?>
+URL:<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$event[0]->raid_id.'', true, -1);?>
 
 BEGIN:VALARM
 ACTION:AUDIO
