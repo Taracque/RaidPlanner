@@ -12,48 +12,31 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 
-<form action="index.php" method="post" name="adminForm" id="adminForm">
-<div class="col100">
+<form action="index.php" method="post" name="adminForm" id="adminForm" class="form-horizontal">
 	<fieldset class="adminform">
 		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
-		<table class="admintable">
-		<tr>
-			<td width="100" align="right" class="key">
-				<label for="class_name">
-					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_NAME' ); ?>:
-				</label>
-			</td>
-			<td>
+		<div class="control-group">
+			<label class="control-label" for="class_name"><?php echo JText::_( 'COM_RAIDPLANNER_CLASS_NAME' ); ?></label>
+			<div class="controls">
 				<input class="text_area" type="text" name="class_name" id="class_name" size="32" maxlength="250" value="<?php echo $this->class->class_name;?>" />
-			</td>
-		</tr>
-		<tr>
-			<td width="100" align="right" class="key">
-				<label for="class_color">
-					<?php echo JText::_( 'COM_RAIDPLANNER_CLASS_COLOR' ); ?>:
-				</label>
-			</td>
-			<td>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="class_color"><?php echo JText::_( 'COM_RAIDPLANNER_CLASS_COLOR' ); ?></label>
+			<div class="controls">
 				<input class="text_area" type="text" name="class_color" id="class_color" size="10" maxlength="7" value="<?php echo $this->class->class_color;?>" />
-			</td>
-		</tr>
-		<tr>
-			<td width="100" align="right" class="key">
-				<label for="class_css">
-					<?php echo JText::_( 'COM_RAIDPLANNER_CSS_NAME' ); ?>:
-				</label>
-			</td>
-			<td>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="class_css"><?php echo JText::_( 'COM_RAIDPLANNER_CSS_NAME' ); ?></label>
+			<div class="controls">
 				<input class="text_area" type="text" name="class_css" id="class_css" size="20" maxlength="45" value="<?php echo $this->class->class_css;?>" />
-			</td>
-		</tr>
-	</table>
+			</div>
+		</div>
 	</fieldset>
-</div>
-<div class="clr"></div>
-<input type="hidden" name="option" value="com_raidplanner" />
-<input type="hidden" name="class_id" value="<?php echo $this->class->class_id; ?>" />
-<input type="hidden" name="task" value="" />
-<input type="hidden" name="view" value="classes" />
-<input type="hidden" name="controller" value="classes" />
+	<input type="hidden" name="option" value="com_raidplanner" />
+	<input type="hidden" name="class_id" value="<?php echo $this->class->class_id; ?>" />
+	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="view" value="classes" />
+	<input type="hidden" name="controller" value="classes" />
 </form>

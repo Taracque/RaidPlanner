@@ -83,7 +83,7 @@ class RaidPlannerModelRole extends JModelLegacy
 			return false;
 		}
 
-		return true;
+		return $row->role_id;
 	}
 
 	/**

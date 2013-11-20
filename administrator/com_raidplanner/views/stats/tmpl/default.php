@@ -9,6 +9,9 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
+JHtml::_('bootstrap.tooltip');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
 <script type="text/javascript">
 var colors = [
@@ -133,40 +136,45 @@ window.addEvent('domready', function() {
 	getStats();
 });
 </script>
-<table>
-	<tr>
-		<td width="100%">
-			<?php echo JText::_( 'JSEARCH_FILTER_LABEL' ); ?>
-			<?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?>:
-			<?php
-				echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-3 month'), null, RaidPlannerHelper::sqlDateFormat() ), 'start_time', 'start_time', '%Y-%m-%d' );
-			?> - <?php
-				echo JHTML::_('calendar', RaidPlannerHelper::getDate('now', null, RaidPlannerHelper::sqlDateFormat() ), 'end_time', 'end_time', '%Y-%m-%d' );
-			?>
-			<select name="character_id" id="character_id">
-				<option></option>
-				<?php foreach ($this->characters as $character_id => $character) : ?>
-				<option value="<?php echo $character_id;?>"><?php echo $character->char_name;?></option>
-				<?php endforeach; ?>
-			</select>
-			<select name="group_id" id="group_id">
-				<option></option>
-				<?php foreach ($this->groups as $group_id => $group) : ?>
-				<option value="<?php echo $group_id;?>"><?php echo $group->group_name;?></option>
-				<?php endforeach; ?>
-			</select>
-			<select name="guild_id" id="guild_id">
-				<option></option>
-				<?php foreach ($this->guilds as $guild_id => $guild) : ?>
-				<option value="<?php echo $guild_id;?>"><?php echo $guild->guild_name;?></option>
-				<?php endforeach; ?>
-			</select>
-		</td>
-		<td nowrap="nowrap">
-			<button onclick="getStats();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
-			<button onclick="document.getElementById('search').value='';document.getElementById('start_time_min').value='';document.getElementById('start_time_max').value='';this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
-		</td>
-	</tr>
-</table>
+<div id="filter-bar" class="btn-toolbar">
+	<div class="filter-search btn-group pull-left">
+		<label for="start_time_min" class="element-invisible"><?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?></label>
+		<div class="input-append input-prepend">
+			<?php echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-3 month'), null, RaidPlannerHelper::sqlDateFormat() ), 'start_time', 'start_time', '%Y-%m-%d',array('class' => 'input-small' ) ); ?>
+			<span class="add-on">-</span>
+			<?php echo JHTML::_('calendar', RaidPlannerHelper::getDate('now', null, RaidPlannerHelper::sqlDateFormat() ), 'end_time', 'end_time', '%Y-%m-%d', array('class' => 'input-small' ) ); ?>
+		</div>
+		<label for="character_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_CHARACTER' ); ?></label>
+		<select name="character_id" id="character_id" class="input-normal">
+			<option></option>
+			<?php foreach ($this->characters as $character_id => $character) : ?>
+			<option value="<?php echo $character_id;?>"><?php echo $character->char_name;?></option>
+			<?php endforeach; ?>
+		</select>
+		<label for="group_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GROUP' ); ?></label>
+		<select name="group_id" id="group_id" class="input-small">
+			<option></option>
+			<?php foreach ($this->groups as $group_id => $group) : ?>
+			<option value="<?php echo $group_id;?>"><?php echo $group->group_name;?></option>
+			<?php endforeach; ?>
+		</select>
+		<label for="guild_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?></label>
+		<select name="guild_id" id="guild_id" class="input-small">
+			<option></option>
+			<?php foreach ($this->guilds as $guild_id => $guild) : ?>
+			<option value="<?php echo $guild_id;?>"><?php echo $guild->guild_name;?></option>
+			<?php endforeach; ?>
+		</select>
+	</div>
+	<div class="btn-group pull-left hidden-phone">
+		<button class="btn" onclick="getStats();" data-original-title="<?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?>">
+			<i class="icon-search"></i>
+		</button>
+		<button class="btn" onclick="document.getElementById('search').value='';document.getElementById('start_time_min').value='';document.getElementById('start_time_max').value='';this.form.submit();" data-original-title="<?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?>">
+			<i class="icon-remove"></i>
+		</button>
+	</div>
+</div>
+<div class="clearfix"></div>
 <table class="adminlist" id="chart">
 </table>

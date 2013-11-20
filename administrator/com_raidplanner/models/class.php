@@ -83,7 +83,7 @@ class RaidPlannerModelClass extends JModelLegacy
 			return false;
 		}
 
-		return true;
+		return $row->class_id;
 	}
 
 	/**

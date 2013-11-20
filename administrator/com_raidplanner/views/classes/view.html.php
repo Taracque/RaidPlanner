@@ -25,9 +25,9 @@ class RaidPlannerViewClasses extends JViewLegacy
     {
     
         JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_CLASSES' ), 'generic.png' );
-        JToolBarHelper::deleteList();
-        JToolBarHelper::editList();
         JToolBarHelper::addNew();
+        JToolBarHelper::editList();
+        JToolBarHelper::deleteList();
 
 		RaidPlannerHelper::showToolbarButtons();
 

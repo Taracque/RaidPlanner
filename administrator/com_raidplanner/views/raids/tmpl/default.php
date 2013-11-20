@@ -22,8 +22,11 @@ JHtml::_('formbehavior.chosen', 'select');
 		</div>
 		<div class="btn-group pull-left hidden-phone">
 			<label for="start_time_min" class="element-invisible"><?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?></label>
-			<?php echo JHTML::_('calendar', $this->lists['start_time_min'], 'start_time_min', 'start_time_min', '%Y-%m-%d' ,'class="input-small"' ); ?>
-			<?php echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', '%Y-%m-%d' ,'class="input-small"'); ?>
+			<div class="input-append input-prepend">
+				<?php echo JHTML::_('calendar', $this->lists['start_time_min'], 'start_time_min', 'start_time_min', '%Y-%m-%d' , array('class' => 'input-small' ) ); ?>
+				<span class="add-on">-</span>
+				<?php echo JHTML::_('calendar', $this->lists['start_time_max'], 'start_time_max', 'start_time_max', '%Y-%m-%d' , array('class' => 'input-small' ) ); ?>
+			</div>
 			<label for="guild_filter" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?></label>
 			<select name="guild_filter" onchange="document.adminForm.submit();" class="input-medium">
 				<option></option>

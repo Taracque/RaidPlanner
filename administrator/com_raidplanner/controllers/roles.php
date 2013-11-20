@@ -50,10 +50,11 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 	function save()
 	{
 		$model = $this->getModel('role');
+		$task = $this->getTask();
 
         $post = JRequest::get('post');
 
-		if ($model->store($post)) {
+		if ($role_id = $model->store($post)) {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_ROLE') );
 		} else {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_ROLE') );
