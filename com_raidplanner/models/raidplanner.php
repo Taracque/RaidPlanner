@@ -45,8 +45,9 @@ class RaidPlannerModelRaidPlanner extends JModelLegacy
 	    	$query = "SELECT r.raid_id,r.location,r.description,r.icon_name,r.status,r.raid_leader,r.start_time,(DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE)) AS end_time,r.description,r.invite_time
 	    				FROM #__raidplanner_signups AS s
 	    				LEFT JOIN #__raidplanner_raid AS r ON r.raid_id=s.raid_id
-	    				WHERE s.profile_id = ".$user->id."
-	    				GROUP BY raid_id
+	    				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
+	    				WHERE c.profile_id = ".$user->id."
+	    				GROUP BY r.raid_id
 	    				ORDER BY r.start_time ASC, r.location ASC";
     	} else {
 	    	$query = "SELECT r.raid_id,r.location,r.description,r.icon_name,r.status,r.raid_leader,r.start_time,(DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE)) AS end_time,s.queue
