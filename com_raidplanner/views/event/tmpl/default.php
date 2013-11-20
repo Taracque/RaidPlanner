@@ -18,7 +18,7 @@ $hasChars = !empty($this->characters);
 	<tr>
 		<td class="rp_header">
 		<?php if ($this->event->icon_name) : ?>
-			<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" style="float:left; margin: 0 5px 5px 0;" alt="<?php echo $this->event->icon_name; ?>" />
+			<img src="<?php echo JURI::base()."media/com_raidplanner/raid_icons/".$this->event->icon_name;?>" style="float:left; margin: 0 5px 5px 0;" alt="<?php echo $this->event->icon_name; ?>" />
 		<?php endif; ?>
 		<?php if ($this->isOfficer) { ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit btn"><?php echo JText::_('JGLOBAL_EDIT');?></a>
@@ -42,7 +42,7 @@ $hasChars = !empty($this->characters);
 						<?php if ( (isset($this->confirmed_roles[0])) && (@$this->confirmed_roles[0]) ) : ?>
 							<?php foreach ($this->confirmed_roles[0] as $key => $role) : ?>
 								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."images/raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
 								<?php else: ?>
 								<strong><?php echo $key;?></strong>
 								<?php endif; ?>
@@ -58,7 +58,7 @@ $hasChars = !empty($this->characters);
 						<?php if (@$this->confirmed_roles[1]) : ?>
 							<?php foreach ($this->confirmed_roles[1] as $key => $role) : ?>
 								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."images/raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
 								<?php else: ?>
 								<strong><?php echo $key;?></strong>
 								<?php endif; ?>
@@ -71,7 +71,7 @@ $hasChars = !empty($this->characters);
 						<?php if (@$this->confirmed_roles[2]) : ?>
 							<?php foreach ($this->confirmed_roles[2] as $key => $role) : ?>
 								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."images/raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
 								<?php else: ?>
 								<strong><?php echo $key;?></strong>
 								<?php endif; ?>
@@ -84,7 +84,7 @@ $hasChars = !empty($this->characters);
 						<?php if (@$this->confirmed_roles[-1]) :?>
 							<?php foreach ($this->confirmed_roles[-1] as $key => $role) : ?>
 								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."images/raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
 								<?php else: ?>
 								<strong><?php echo $key;?></strong>
 								<?php endif; ?>

@@ -282,17 +282,20 @@ class RaidPlannerModelEvent extends JModelLegacy
    				AND s.profile_id = " . intval($user_id) . "";
 
     	$db->setQuery($query);
-    	$result = $db->loadObject();
-    	if ( $result->character_id ) {
-    		return $result;
-		} else {
-			$status->character_id = null;
-			$status->role_id = null;
-			$status->queue = null;
-			$status->confirmed = null;
-			$status->comments = null;
+    	if ( $result = $db->loadObject() ) {
+			if ( $result->character_id ) {
+				return $result;
+			} else {
+				$status->character_id = null;
+				$status->role_id = null;
+				$status->queue = null;
+				$status->confirmed = null;
+				$status->comments = null;
 			
-			return $status;
+				return $status;
+			}
+		} else {
+			return false;
 		}
 	}
 

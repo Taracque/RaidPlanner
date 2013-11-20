@@ -55,7 +55,7 @@
 		<folder>js</folder>
 		<folder>images</folder>
 	</media>
-	<media destination="../images/raidplanner" folder="images">
+	<media folder="images" destination="com_raidplanner">
 		<folder>raid_icons</folder>
 		<folder>role_icons</folder>
 		<folder>class_icons</folder>

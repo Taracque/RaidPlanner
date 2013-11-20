@@ -97,7 +97,7 @@ window.addEvent('domready',function(){
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 										<?php endif; ?>
 										<div class="rp_extended_tooltip" id="rp_tooltip_<?php echo $event->raid_id;?>" style="display:none;">
-											<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$event->icon_name;?>" alt="<?php echo $event->location; ?>" style="float:left;"/>
+											<img src="<?php echo JURI::base()."media/com_raidplanner/raid_icons/".$event->icon_name;?>" alt="<?php echo $event->location; ?>" style="float:left;"/>
 											<b><?php echo ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description; ?></b><br />
 											<small>
 												<b><?php echo JText::_('COM_RAIDPLANNER_RAID_LEADER');?>:</b> <?php echo $event->raid_leader; ?><br />

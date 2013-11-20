@@ -53,7 +53,7 @@ class RaidPlannerViewRaid extends JViewLegacy
 	
 	function getIcons()
 	{
-		$path = JPATH_BASE . '/../images/raidplanner/raid_icons';
+		$path = JPATH_ROOT . '/media/com_raidplanner/raid_icons';
 		
 		$dhandle = opendir($path);
 		$files = array();
