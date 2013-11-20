@@ -49,7 +49,7 @@ class RaidPlannerViewRoster extends JViewLegacy
 		
 		if ($sync_enabled )
 		{
-			if (($guild_plugin === true) {
+			if ($guild_plugin === true) {
 				RaidPlannerHelper::RosterSync( $guild_id, $sync_interval );
 			}
 			elseif ( ($guild_plugin) && ($guild_plugin->needSync( $sync_interval ) ) )
