@@ -98,7 +98,7 @@ window.addEvent('domready', function() {
 	}
 
 	statReq = new Request.JSON({
-		url : '<?php echo JRoute::_( 'index.php?option=com_raidplanner&controller=stats' ,false ); ?>',
+		url : '<?php echo JRoute::_( 'index.php?option=com_raidplanner&view=stats&task=getjson' ,false ); ?>',
 		method : 'get',
 		onSuccess : function (responseJSON, responseText)
 		{
@@ -146,6 +146,7 @@ window.addEvent('domready', function() {
 		</div>
 	</div>
 	<div class="filter-search btn-group pull-left">
+		<?php if ($this->by_chars == 1) : ?>
 		<label for="character_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_CHARACTER' ); ?></label>
 		<select name="character_id" id="character_id" class="input-normal">
 			<option></option>
@@ -153,6 +154,9 @@ window.addEvent('domready', function() {
 			<option value="<?php echo $character_id;?>"><?php echo $character->char_name;?></option>
 			<?php endforeach; ?>
 		</select>
+		<?php else: ?>
+		<input type="hidden" name="character_id" id="character_id" value="" >
+		<?php endif; ?>
 		<label for="group_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GROUP' ); ?></label>
 		<select name="group_id" id="group_id" class="input-small">
 			<option></option>
@@ -160,6 +164,7 @@ window.addEvent('domready', function() {
 			<option value="<?php echo $group_id;?>"><?php echo $group->group_name;?></option>
 			<?php endforeach; ?>
 		</select>
+		<?php if ($this->guild_id == 0) : ?>
 		<label for="guild_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?></label>
 		<select name="guild_id" id="guild_id" class="input-small">
 			<option></option>
@@ -167,12 +172,16 @@ window.addEvent('domready', function() {
 			<option value="<?php echo $guild_id;?>"><?php echo $guild->guild_name;?></option>
 			<?php endforeach; ?>
 		</select>
+		<?php else: ?>
+		<label for="guild_id" class="btn disabled"><?php echo $this->guilds[$this->guild_id]->guild_name; ?></label>
+		<input type="hidden" name="guild_id" id="guild_id" value="<?php echo $this->guild_id;?>" >
+		<?php endif; ?>
 	</div>
 	<div class="btn-group pull-left hidden-phone">
 		<button class="btn" onclick="getStats();" data-original-title="<?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?>">
 			<i class="icon-search"></i>
 		</button>
-		<button class="btn" onclick="document.getElementById('search').value='';document.getElementById('start_time_min').value='';document.getElementById('start_time_max').value='';this.form.submit();" data-original-title="<?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?>">
+		<button class="btn" onclick="document.id('character_id').value='';document.id('group_id').value='';document.id('start_time').value='';document.id('end_time').value='';this.form.submit();" data-original-title="<?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?>">
 			<i class="icon-remove"></i>
 		</button>
 	</div>

@@ -8,13 +8,16 @@
 			<field name="guild_id" type="modal_guilds"
 				description="COM_RAIDPLANNER_GUILD_DESC"
 				label="COM_RAIDPLANNER_GUILD_DESC"
-				required="true"
 			/>
 			<field name="allowed_groups" type="usergroup"
 					label="COM_RAIDPLANNER_GROUPS"
 					description="COM_RAIDPLANNER_GROUPS_DESC"
 					multiple="multiple"
 			/>
+			<field name="stats_by_chars" type="radio" default="0" class="btn-group btn-group-yesno" label="COM_RAIDPLANNER_STATS_BY_CHARACTERS" description="COM_RAIDPLANNER_STATS_BY_CHARACTERS_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 		</fieldset>
 	</fields>
 </metadata>

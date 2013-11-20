@@ -102,6 +102,12 @@ class RaidPlannerController extends JControllerLegacy
 				JRequest::setVar('character_id', $model->saveCharacter());
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 			break;
+			case 'getjson':
+				$vName = 'stats';
+				$vType = 'json';
+				$mName = 'stats';
+				$vLayout = JRequest::getCmd( 'layout', 'default' );
+			break;
 			default:
 			case 'default':
 				switch (JRequest::getVar('view'))

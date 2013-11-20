@@ -12,6 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
+jimport( 'joomla.application.component.helper' );
 
 /* create JViewLegacy if not exist */
 if (!class_exists('JViewLegacy')) {
@@ -29,9 +30,15 @@ class RaidPlannerViewStats extends JViewLegacy
 		/* Load Javascript and CSS files */
 		RaidPlannerHelper::loadJSFramework();
 
-		 /* Call the state object */
-		$state = $this->get( 'state' );
-		
+		 /* Get state, and params */
+		$app		= JFactory::getApplication();
+		$params		= $app->getParams();
+		$state 		= $this->get( 'state' );
+
+		$guild_id = $params->get('guild_id', '0');
+		$groups = $params->get('allowed_groups');
+		$by_chars = $params->get('stats_by_chars', 0);
+
 		/* Get the values from the state object that were inserted in the model's construct function */
 		$lists['filter_start_time'] = $state->get( 'filter_start_time' );
 		$lists['filter_end_time'] = $state->get( 'filter_end_time' );
@@ -39,9 +46,11 @@ class RaidPlannerViewStats extends JViewLegacy
 		$lists['filter_group_id'] = $state->get( 'filter_group_id' );
 
 		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
-		$this->assignRef( 'groups', RaidPlannerHelper::getGroups() );
+		$this->assignRef( 'groups', RaidPlannerHelper::getGroups( true, $groups ) );
 		$this->assignRef( 'characters', RaidPlannerHelper::getCharacters() );
 		$this->assignRef( 'lists', $lists );
+		$this->assignRef( 'by_chars', $by_chars );
+		$this->assignRef( 'guild_id', $guild_id );
 
 		parent::display($tpl);
 	}

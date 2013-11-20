@@ -270,12 +270,17 @@ class RaidPlannerHelper
 		return $db->loadObjectList('id');
 	}
 
-	public static function getGroups( $guest = true )
+	public static function getGroups( $guest = true, $only_groups = array() )
 	{
 		$db	=& JFactory::getDBO();
 
 		// Joomla ACL used, return Joomla groups
-		if ($guest) {
+		if (is_array($only_groups) && !empty($only_groups)) {
+			foreach ($only_groups as &$group) {
+				$group = intval($group);
+			}
+			$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups WHERE id IN (" . implode(",", $only_groups) . ") ORDER BY title ASC";
+		} elseif ($guest) {
 			$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups ORDER BY title ASC";
 		} else {
 			$query = "SELECT id AS group_id,title AS group_name FROM #__usergroups WHERE parent_id<>0 ORDER BY title ASC";
