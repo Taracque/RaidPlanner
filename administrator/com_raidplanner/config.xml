@@ -1,42 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<params>
-		<param type="radio" name="load_css" default="1" label="COM_RAIDPLANNER_LOAD_CSS" description="COM_RAIDPLANNER_LOAD_CSS_DESCRIPTION">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</param>
-		<param type="radio" name="use_modal" default="1" label="COM_RAIDPLANNER_USE_MODAL" description="COM_RAIDPLANNER_USE_MODAL_DESCRIPTION">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</param>
-		<param type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_SYNC" description="COM_RAIDPLANNER_SYNC_DESC">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</param>
-		<param type="text" name="sync_interval" default="4" label="COM_RAIDPLANNER_SYNC_INTERVAL" description="COM_RAIDPLANNER_SYNC_INTERVAL_DESC"></param>
-		<param type="text" name="ranks_0" default="Guild Master" label="Rank 0"></param>
-		<param type="text" name="ranks_1" default="Officer" label="Rank 1"></param>
-		<param type="text" name="ranks_2" default="Member" label="Rank 2"></param>
-		<param type="text" name="ranks_3" default="Trial" label="Rank 3"></param>
-		<param type="text" name="ranks_4" default="- rank 4 -" label="Rank 4"></param>
-		<param type="text" name="ranks_5" default="- rank 5 -" label="Rank 5"></param>
-		<param type="text" name="ranks_6" default="- rank 6 -" label="Rank 6"></param>
-		<param type="text" name="ranks_7" default="- rank 7 -" label="Rank 7"></param>
-		<param type="text" name="ranks_8" default="- rank 8 -" label="Rank 8"></param>
-		<param type="text" name="ranks_9" default="- rank 9 -" label="Rank 9"></param>
-	</params>
 	<fieldset name="settings" label="COM_RAIDPLANNER_SETTINGS">
-		<field type="radio" name="load_css" default="1" label="COM_RAIDPLANNER_LOAD_CSS" description="COM_RAIDPLANNER_LOAD_CSS_DESCRIPTION">
+		<field type="radio" name="load_css" class="btn-group btn-group-yesno" default="1" label="COM_RAIDPLANNER_LOAD_CSS" description="COM_RAIDPLANNER_LOAD_CSS_DESCRIPTION">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		<field type="radio" name="use_modal" default="1" label="COM_RAIDPLANNER_USE_MODAL" description="COM_RAIDPLANNER_USE_MODAL_DESCRIPTION">
+		<field type="radio" name="use_modal" class="btn-group btn-group-yesno" default="1" label="COM_RAIDPLANNER_USE_MODAL" description="COM_RAIDPLANNER_USE_MODAL_DESCRIPTION">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	<fieldset name="guild" label="COM_RAIDPLANNER_GUILD_SETTINGS">
-		<field type="radio" name="armory_sync" default="1" label="COM_RAIDPLANNER_SYNC" description="COM_RAIDPLANNER_SYNC_DESC">
+		<field type="radio" name="armory_sync" class="btn-group btn-group-yesno" default="1" label="COM_RAIDPLANNER_SYNC" description="COM_RAIDPLANNER_SYNC_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
