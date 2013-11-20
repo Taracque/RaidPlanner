@@ -114,6 +114,10 @@ class RaidPlannerController extends JControllerLegacy
 						$vName = 'character';
 						$mName = 'character';
 					break;
+					case 'stats':
+						$vName = 'stats';
+						$mName = 'stats';
+					break;
 					default:
 						$vName = 'calendar';
 				}
