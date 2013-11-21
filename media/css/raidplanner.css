@@ -162,7 +162,6 @@
 .rp_event_buttons div a {
 	color: #bbb;
 	display: block;
-	width: 100px;
 	height: 20px;
 	line-height: 20px;
 	-webkit-transition: color 0.2s ease-out;
@@ -171,7 +170,7 @@
 	text-align: center;
 	text-decoration: none;
 	margin: 0 2px;
-	padding: 2px;
+	padding: 2px 10px;
 	font-weight: bold;
 	border-top-left-radius : 6px;
 	-moz-border-radius-topleft : 6px;
@@ -196,7 +195,8 @@
 	border-collapse: collapse;
 }
 .rp_event_attendants table th,
-.rp_event_signup table th {
+.rp_event_signup table th,
+.rp_event_rating table th {
 	background: #33383C;
 	color: #BBBFC3;
 	font-weight: bold;

@@ -33,7 +33,10 @@ class RaidPlannerModelEvent extends JModelLegacy
     	if ($id>0) {
 			$db = & JFactory::getDBO();
 	
-			$query = "SELECT r.*,g.guild_name,DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS end_time FROM #__raidplanner_raid AS r LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=r.guild_id  WHERE r.raid_id=".intval($id);
+			$query = "SELECT r.*,g.guild_name,DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS end_time,NOW()>DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS finished 
+						FROM #__raidplanner_raid AS r
+						LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=r.guild_id
+						WHERE r.raid_id=".intval($id);
 			
 			$db->setQuery($query);
 			$result = $db->loadObject();

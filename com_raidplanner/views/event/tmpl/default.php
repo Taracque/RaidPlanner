@@ -124,6 +124,9 @@ $hasChars = !empty($this->characters);
 			<?php if ( ($this->params['show_history']==1) && ($this->event->raid_history!='') ) : ?>
 				<a href="#" id="rp_switcher_history" class="rp_switchers" onclick="javascript:rpSwitchTab('history');return false;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?></a>
 			<?php endif; ?>
+			<?php if (($this->finished) && ($hasChars) && ($this->params['allow_rating']==1)) : ?>
+				<a href="#" id="rp_switcher_rating" class="rp_switchers" onclick="javascript:rpSwitchTab('rating');return false;"><?php echo JText::_('COM_RAIDPLANNER_RATING');?></a>
+			<?php endif; ?>
 			</div>
 		</td>
 	</tr>
@@ -323,6 +326,32 @@ $hasChars = !empty($this->characters);
 			<div class="rp_history_viewer" id="rp_history_viewer">
 				<?php echo $this->event->raid_history; ?>
 			</div>
+		</td>
+	</tr>
+<?php endif; ?>
+<?php if (($this->finished) && ($hasChars) && ($this->params['allow_rating']==1)) : ?>
+	<tr class="rp_event_rating" id="rp_event_rating" style="display:none;">
+		<td>
+			<form action="index.php" method="post">
+				<table onclick="javascript:rpMakeSortable(this);">
+					<thead>
+						<tr>
+							<th><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
+							<th><?php echo JText::_('COM_RAIDPLANNER_ROLE');?></th>
+							<th><?php echo JText::_('COM_RAIDPLANNER_RATING');?></th>
+						</tr>
+					</thead>
+					<tbody>
+			<?php foreach ($this->attendants as $attendant) : ?>
+						<tr>
+							<td><?php echo $attendant->char_name; ?></td>
+							<td><?php echo $attendant->role_name; ?></td>
+							<td></td>
+						</tr>
+			<?php endforeach; ?>
+					</tbody>
+				</table>
+			</form>
 		</td>
 	</tr>
 <?php endif; ?>

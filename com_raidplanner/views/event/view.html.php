@@ -34,7 +34,8 @@ class RaidPlannerViewEvent extends JViewLegacy
 		}
 		$params = array(
 			'show_history'	=> $paramsObj->get('show_history', 0),
-			'macro_format'	=> $paramsObj->get('macro_format', '')
+			'macro_format'	=> $paramsObj->get('macro_format', ''),
+			'allow_rating'	=> $paramsObj->get('allow_rating', 0)
 		);
 
 		if ( RaidPlannerHelper::getPermission('view_raids') != 1 ) {
@@ -88,6 +89,7 @@ class RaidPlannerViewEvent extends JViewLegacy
 			$this->assignRef( 'isOfficer' , $isOfficer );
 			$this->assignRef( 'canSignup' , $model->userCanSignUp( $event->raid_id ) );
 			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
+			$this->assignRef( 'finished' , $event->finished );
 
 			parent::display($tpl);
 		}
