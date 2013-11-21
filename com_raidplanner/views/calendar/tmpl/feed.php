@@ -22,16 +22,15 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:<?php echo $config['sitename']; ?>
 
-X-WR-TIMEZONE:<?php echo $this->tzname; ?>
-
+X-WR-TIMEZONE:UTC
 X-ORIGINAL-URL:<?php echo JRoute::_('index.php', true, -1); ?>
 
 X-WR-CALDESC:<?php echo $config['sitename']; ?> RaidPlanner
 <?php if (class_exists('DateTimeZone')) : ?>
 BEGIN:VTIMEZONE
-TZID:<?php echo $this->tzname; ?>
+TZID:UTC
 <?php
-	$timezone = new DateTimeZone( $this->tzname );
+	$timezone = new DateTimeZone( 'UTC' );
 	$transitions = $timezone->getTransitions();
 ?>
 <?php foreach($transitions as $tridx => $transition) :?>
@@ -51,7 +50,6 @@ TZOFFSETTO:<?php printf('%+05d', ($transition['offset']/36) ); ?>
 END:<?php echo ($transition['isdst']==1)?'DAYLIGHT':'STANDARD'; ?>
 <?php endif;
 endforeach; ?>
-
 END:VTIMEZONE
 <?php endif; ?>
 <?php foreach ($this->events as $event):?>
@@ -59,13 +57,13 @@ END:VTIMEZONE
 BEGIN:VEVENT
 UID:RPEVENTID<?php echo $event[0]->raid_id;?>
 
-DTSTAMP;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->start_time, $this->tzoffset, $this->dateformat);?>
+DTSTAMP;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->start_time );?>
 
 ORGANIZER:<?php echo $event[0]->raid_leader;?>
 
-DTSTART;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->start_time, $this->tzoffset, $this->dateformat);?>
+DTSTART;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->start_time );?>
 
-DTEND;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->end_time, $this->tzoffset, $this->dateformat);?>
+DTEND;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->end_time );?>
 
 SUMMARY:<?php echo $event[0]->location;?>
 
@@ -75,7 +73,7 @@ URL:<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalev
 
 BEGIN:VALARM
 ACTION:AUDIO
-TRIGGER;TZID=<?php echo $this->tzname; ?>:<?php echo RaidPlannerHelper::getDate($event[0]->invite_time, $this->tzoffset, $this->dateformat);?>
+TRIGGER;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->invite_time );?>
 
 REPEAT:1
 END:VALARM

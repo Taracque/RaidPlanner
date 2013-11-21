@@ -34,17 +34,11 @@ class RaidPlannerViewCalendar extends JViewLegacy
 				die('Invalid access!');
 			}
 		}
-    	$tzname = 'UTC';
-    	
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
 
-		$dateformat = 'Ymd\THis';
-		
 		$model = &$this->getModel();
 		
 		$this->assignRef( 'canView', $canView );
-		$this->assignRef( 'tzname', $tzname );
-		$this->assignRef( 'dateformat', $dateformat );
         $this->assignRef( 'events', $model->getEvents('own', $user->id) );
 		
 		header("Content-Type: text/Calendar");
