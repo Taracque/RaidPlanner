@@ -241,25 +241,27 @@ $hasChars = !empty($this->characters);
 					</tbody>
 				</table>
 			<?php if ($this->isOfficer) : ?>
-				<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
-				<div class="rp_history_editor">
-				<?php if ($this->params['show_history']==1) : ?>
-					<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:<br />
-						<textarea name="history" style="float:left;" rows="3" cols="20"><?php echo $this->xml_history; ?></textarea>
+				<div class="form-actions">
+					<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
+					<div class="rp_history_editor">
+					<?php if ($this->params['show_history']==1) : ?>
+						<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:<br />
+							<textarea name="history" style="float:left;" rows="3" cols="20"><?php echo $this->xml_history; ?></textarea>
+						</label>
+					<?php endif; ?>
+					<?php if ($this->macro) : ?>
+					<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_INVITE_MACRO');?>:<br />
+						<textarea style="float:left;" cols="20" rows="3"><?php echo $this->macro;?></textarea>
 					</label>
-				<?php endif; ?>
-				<?php if ($this->macro) : ?>
-				<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_INVITE_MACRO');?>:<br />
-					<textarea style="float:left;" cols="20" rows="3"><?php echo $this->macro;?></textarea>
-				</label>
-				<?php endif; ?>
-				</div>
+					<?php endif; ?>
+					</div>
 
-				<input type="hidden" name="option" value="com_raidplanner" />
-				<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
-				<input type="hidden" name="task" value="confirm" />
-				<input type="hidden" name="layout" value="default" />
-				<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
+					<input type="hidden" name="option" value="com_raidplanner" />
+					<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
+					<input type="hidden" name="task" value="confirm" />
+					<input type="hidden" name="layout" value="default" />
+					<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
+				</div>
 			<?php endif; ?>
 			</form>
 		</td>
@@ -309,10 +311,12 @@ $hasChars = !empty($this->characters);
 					</tr>
 					<tr>
 						<td colspan="4">
-							<input type="submit" name="SubmitButton" value="<?php echo JText::_('Save');?>" />
-							<input type="hidden" name="option" value="com_raidplanner" />
-							<input type="hidden" name="task" value="signup" />
-							<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
+							<div class="form-actions">
+								<input type="submit" name="SubmitButton" value="<?php echo JText::_('Save');?>" class="btn btn-primary" />
+								<input type="hidden" name="option" value="com_raidplanner" />
+								<input type="hidden" name="task" value="signup" />
+								<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
+							</div>
 						</td>
 					</tr>
 				</table>
@@ -333,7 +337,7 @@ $hasChars = !empty($this->characters);
 	<tr class="rp_event_rating" id="rp_event_rating" style="display:none;">
 		<td>
 			<form action="index.php" method="post">
-				<table>
+				<table class="table-striped">
 					<thead>
 						<tr>
 							<th><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
@@ -344,6 +348,11 @@ $hasChars = !empty($this->characters);
 						<tr>
 							<td colspan="2">
 								<?php echo JText::_( 'COM_RADIPLANNER_RATING_EXPLANATION' ); ?>
+							</td>
+						</tr>
+						<tr>
+							<td><strong><?php echo JText::_( 'COM_RAIDPLANNER_RAID_RATING' ); ?></td>
+							<td>
 								<div class="controls">
 									<fieldset class="radio btn-group rp-vote">
 										<input type="radio" id="raid_vote_neg" name="raid_vote" value="-1">
@@ -375,6 +384,18 @@ $hasChars = !empty($this->characters);
 							</td>
 						</tr>
 			<?php endforeach; ?>
+						<tr>
+							<td colspan="2">
+								<div class="form-actions">
+									<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
+									<input type="hidden" name="option" value="com_raidplanner" />
+									<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
+									<input type="hidden" name="task" value="rate" />
+									<input type="hidden" name="layout" value="default" />
+									<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
+								</div>
+							</td>
+						</td>
 					</tbody>
 				</table>
 			</form>

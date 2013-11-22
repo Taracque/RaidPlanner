@@ -151,7 +151,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     	$db = & JFactory::getDBO();
 
     	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
-    				cl.class_name,cl.class_color,c.char_level,s.profile_id,s.role_id,s.queue,cl.class_css
+    				cl.class_name,cl.class_color,c.char_level,c.profile_id,s.role_id,s.queue,cl.class_css
     			FROM #__raidplanner_signups AS s 
     				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
     				LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id
@@ -281,8 +281,9 @@ class RaidPlannerModelEvent extends JModelLegacy
     	$db = & JFactory::getDBO();
 		$query = "SELECT s.character_id,s.role_id,s.queue,s.confirmed,s.comments
     			FROM #__raidplanner_signups AS s 
+    			LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id 
    				WHERE s.raid_id = " . intval($event_id) . "
-   				AND s.profile_id = " . intval($user_id) . "";
+   				AND c.profile_id = " . intval($user_id) . "";
 
     	$db->setQuery($query);
     	if ( $result = $db->loadObject() ) {

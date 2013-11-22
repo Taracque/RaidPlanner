@@ -86,13 +86,12 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_signups` (
   `character_id` int(10) unsigned NOT NULL DEFAULT '0',
   `queue` tinyint(1) NOT NULL DEFAULT '0',
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
-  `profile_id` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
   `comments` varchar(255) NOT NULL DEFAULT '',
   `timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `class_id` int(10) unsigned NOT NULL DEFAULT '0',
   KEY `raid_id` (`raid_id`),
-  KEY `profile_id` (`profile_id`)
+  KEY `character_id` (`character_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_history` (
@@ -110,3 +109,16 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_guild` (
   PRIMARY KEY (`guild_id`),
   KEY `lastSync` (`lastSync`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `#__raidplanner_rating` (
+  `rating_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `raid_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `character_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_value` int(10) unsigned NOT NULL DEFAULT '0',
+  `reted_by` text NOT NULL,
+  PRIMARY KEY (`rating_id`),
+  KEY `raid_id` (`raid_id`),
+  KEY `character_id` (`character_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
