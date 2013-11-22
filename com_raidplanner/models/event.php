@@ -451,7 +451,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 
 			if ($profile_id > 0)
 			{
-				$query = "DELETE FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($profile_id)." AND #__raidplanner_signups.raid_id=".$raid_id;
+				$query = "DELETE #__raidplanner_signups FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($profile_id)." AND #__raidplanner_signups.raid_id=".$raid_id;
 				$db->setQuery($query);
 				$db->query();
 			}
