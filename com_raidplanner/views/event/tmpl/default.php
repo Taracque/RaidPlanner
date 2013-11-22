@@ -353,6 +353,7 @@ $hasChars = !empty($this->characters);
 						<tr>
 							<td><strong><?php echo JText::_( 'COM_RAIDPLANNER_RAID_RATING' ); ?></td>
 							<td>
+			<?php if ($this->canRate) : ?>
 								<div class="controls">
 									<fieldset class="radio btn-group rp-vote">
 										<input type="radio" id="raid_vote_neg" name="raid_vote" value="-1">
@@ -363,6 +364,7 @@ $hasChars = !empty($this->characters);
 										<label for="raid_vote_pos" class="btn btn-mini"><i class="icon-plus"></i></label>
 									</fieldset>
 								</div>
+			<?php endif; ?>
 							</td>
 						</td>
 			<?php foreach ($this->attendants as $attendant) : ?>
@@ -373,17 +375,22 @@ $hasChars = !empty($this->characters);
 								</a>
 							</td>
 							<td>
-								<fieldset class="radio btn-group rp-vote">
-									<input type="radio" id="char_vote_neg_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="-1">
-									<label for="char_vote_neg_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-minus"></i></label>
-									<input type="radio" id="char_vote_pass_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="0" checked="checked">
-									<label for="char_vote_pass_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-question"></i></label>
-									<input type="radio" id="char_vote_pos_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="1">
-									<label for="char_vote_pos_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-plus"></i></label>
-								</fieldset>
+			<?php if ($this->canRate) : ?>
+								<div class="controls">
+									<fieldset class="radio btn-group rp-vote">
+										<input type="radio" id="char_vote_neg_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="-1">
+										<label for="char_vote_neg_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-minus"></i></label>
+										<input type="radio" id="char_vote_pass_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="0" checked="checked">
+										<label for="char_vote_pass_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-question"></i></label>
+										<input type="radio" id="char_vote_pos_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="1">
+										<label for="char_vote_pos_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-plus"></i></label>
+									</fieldset>
+								</div>
+			<?php endif; ?>
 							</td>
 						</tr>
 			<?php endforeach; ?>
+			<?php if ($this->canRate) : ?>
 						<tr>
 							<td colspan="2">
 								<div class="form-actions">
@@ -395,7 +402,8 @@ $hasChars = !empty($this->characters);
 									<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
 								</div>
 							</td>
-						</td>
+						</tr>
+			<?php endif; ?>
 					</tbody>
 				</table>
 			</form>

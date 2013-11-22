@@ -395,11 +395,40 @@ class RaidPlannerModelEvent extends JModelLegacy
 				$can_signup = RaidPlannerHelper::getPermission('allow_signup', $user_id);
 			}
 		}
-		
 		return $can_signup;
-	
 	}
-	
+
+	/*
+		Returns true if user is allowed to rate the particular raid_history
+		Rating is allowed if:
+			 user has at least one character in the signup table
+			 rating is allowed
+			 and user didn't rated the raid before
+	*/
+	function userCanRate($raid_id = null) {
+		$can_rate = false;
+		if ($raid_id>0) {
+			$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+			if ($paramsObj->get('allow_rating', 0) == 1) {
+				$db = JFactory::getDBO();
+				$user = JFactory::getUser();
+				$user_id = $user->id;
+				$query = "SELECT rt.rated_by
+							FROM #__raidplanner_raid AS r
+							LEFT JOIN #__raidplanner_rating AS rt ON rt.raid_id=r.raid_id AND rt.character_id=0
+							WHERE r.raid_id = ".intval($raid_id);
+				$db->setQuery($query);
+				if ($profiles = $db->loadResult()) {
+					$user_ids = json_decode($profiles);
+					$can_rate = !in_array($user_id, $user_ids);
+				} else {	// $profiles is empty, no rates yet… 
+					$can_rate = true;
+				}
+			}
+		}
+		return $can_rate;
+	}
+
 	function confirmEvent() {
 		if (!$this->userIsOfficer()) {
 			return false;

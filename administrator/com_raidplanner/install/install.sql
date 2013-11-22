@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_rating` (
   `character_id` int(10) unsigned NOT NULL DEFAULT '0',
   `rate_count` int(10) unsigned NOT NULL DEFAULT '0',
   `rate_value` int(10) unsigned NOT NULL DEFAULT '0',
-  `reted_by` text NOT NULL,
+  `rated_by` text NOT NULL,
   PRIMARY KEY (`rating_id`),
   KEY `raid_id` (`raid_id`),
   KEY `character_id` (`character_id`)
