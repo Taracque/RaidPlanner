@@ -333,23 +333,46 @@ $hasChars = !empty($this->characters);
 	<tr class="rp_event_rating" id="rp_event_rating" style="display:none;">
 		<td>
 			<form action="index.php" method="post">
-				<table onclick="javascript:rpMakeSortable(this);">
+				<table>
 					<thead>
 						<tr>
 							<th><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
-							<th><?php echo JText::_('COM_RAIDPLANNER_ROLE');?></th>
 							<th><?php echo JText::_('COM_RAIDPLANNER_RATING');?></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td colspan="3"><?php echo JText::_( 'COM_RADIPLANNER_RATING_EXPLANATION' ); ?></td>
+							<td colspan="2">
+								<?php echo JText::_( 'COM_RADIPLANNER_RATING_EXPLANATION' ); ?>
+								<div class="controls">
+									<fieldset class="radio btn-group rp-vote">
+										<input type="radio" id="raid_vote_neg" name="raid_vote" value="-1">
+										<label for="raid_vote_neg" class="btn btn-mini"><i class="icon-minus"></i></label>
+										<input type="radio" id="raid_vote_pass" name="raid_vote" value="0" checked="checked">
+										<label for="raid_vote_pass" class="btn btn-mini"><i class="icon-question"></i></label>
+										<input type="radio" id="raid_vote_pos" name="raid_vote" value="1">
+										<label for="raid_vote_pos" class="btn btn-mini"><i class="icon-plus"></i></label>
+									</fieldset>
+								</div>
+							</td>
 						</td>
 			<?php foreach ($this->attendants as $attendant) : ?>
 						<tr>
-							<td><?php echo $attendant->char_name; ?></td>
-							<td><?php echo $attendant->role_name; ?></td>
-							<td></td>
+							<td class="<?php echo $attendant->class_css;?>">
+								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
+									<strong><?php echo $attendant->char_name;?></strong>
+								</a>
+							</td>
+							<td>
+								<fieldset class="radio btn-group rp-vote">
+									<input type="radio" id="char_vote_neg_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="-1">
+									<label for="char_vote_neg_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-minus"></i></label>
+									<input type="radio" id="char_vote_pass_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="0" checked="checked">
+									<label for="char_vote_pass_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-question"></i></label>
+									<input type="radio" id="char_vote_pos_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="1">
+									<label for="char_vote_pos_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-plus"></i></label>
+								</fieldset>
+							</td>
 						</tr>
 			<?php endforeach; ?>
 					</tbody>

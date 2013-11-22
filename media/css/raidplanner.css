@@ -187,7 +187,8 @@
 }
 
 .rp_event_attendants table,
-.rp_event_signup table {
+.rp_event_signup table,
+.rp_event_rating table {
 	margin: 0 0 0.5em 0;
 	padding: 0;
 	width: 100%;
@@ -403,4 +404,12 @@ tr.rp_header {
 }
 .rp_tooltip div.close:hover {
 	border-style: outset;
+}
+
+.rp-vote input[type=radio]:checked + label { 
+	background-image: none;
+	color: blue;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
 }
