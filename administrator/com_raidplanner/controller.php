@@ -41,13 +41,13 @@ class RaidPlannerController extends JControllerLegacy
 
 			// do service things, remove unanchored database entries
 			// remove signups that doesn't have character
-			$query = 'SELECT s.raid_id,s.character_id,s.profile_id FROM #__raidplanner_signups AS s LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id WHERE c.char_name IS NULL'; 
+			$query = 'SELECT s.raid_id,s.character_id,c.profile_id FROM #__raidplanner_signups AS s LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id WHERE c.char_name IS NULL'; 
 			$db->setQuery($query);
 			$list = $db->loadObjectList();
 			if (count($list) > 0)
 			{
 				foreach ($list as $remove) {
-					$db->setQuery( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)." AND profile_id=".intval($remove->profile_id) );
+					$db->setQuery( "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($remove->raid_id)." AND character_id=".intval($remove->character_id)."" );
 					$db->query();
 				}
 			}

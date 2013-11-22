@@ -335,12 +335,12 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$user =& JFactory::getUser();
 
 			// throw all sigunps by same profile for same raid
-			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
+			$query = "DELETE FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($user->id)." AND #__raidplanner_signups.raid_id=".$raid_id;
 			$db->setQuery($query);
 			$db->query();
 			
-			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,role_id,comments,`timestamp`,class_id) ".
+					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -451,7 +451,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 
 			if ($profile_id > 0)
 			{
-				$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
+				$query = "DELETE FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($profile_id)." AND #__raidplanner_signups.raid_id=".$raid_id;
 				$db->setQuery($query);
 				$db->query();
 			}
@@ -460,8 +460,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$db->setQuery($query);
 			$db->query();
 				
-			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,role_id,confirmed,comments,`timestamp`,class_id) ".
+					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
