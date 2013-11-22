@@ -16,8 +16,3 @@ source_lang = en
 file_filter = administrator/language/<lang>.com_raidplanner_sys.ini
 source_file = administrator/language/en-GB.com_raidplanner.sys.ini
 source_lang = en
-
-[raidplanner.com_raidplanner_menu]
-file_filter = administrator/language/<lang>.com_raidplanner_menu.ini
-source_file = administrator/language/en-GB.com_raidplanner.menu.ini
-source_lang = en
