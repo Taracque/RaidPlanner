@@ -53,7 +53,7 @@ class RaidPlannerViewEvent extends JViewLegacy
 				foreach($attendants as $att_key => $att_char) {
 					// remove that from all_characters
 					foreach ($all_characters as $all_key => $all_char) {
-						if ($att_char->character_id == $all_char->charater_id) {
+						if ($att_char->character_id == $all_char->character_id) {
 							unset($all_characters[$all_key]);
 							break;
 						}

@@ -342,6 +342,9 @@ $hasChars = !empty($this->characters);
 						</tr>
 					</thead>
 					<tbody>
+						<tr>
+							<td colspan="3"><?php echo JText::_( 'COM_RADIPLANNER_RATING_EXPLANATION' ); ?></td>
+						</td>
 			<?php foreach ($this->attendants as $attendant) : ?>
 						<tr>
 							<td><?php echo $attendant->char_name; ?></td>
