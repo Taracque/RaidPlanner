@@ -51,10 +51,10 @@ window.addEvent('domready',function(){
 		<input type="text" value="<?php echo JURI::base()."index.php?option=com_raidplanner&view=feed&task=feed&user=".$this->user_id."&secret=".$this->calendar_secret;?>" size="40" />
 	</label>
 <?php else: ?>
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button btn"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button btn"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
 <?php endif; ?>
 <?php if ($this->isOfficer) : ?>
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new btn"><?php echo JText::_('COM_RAIDPLANNER_NEW_EVENT');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new btn"><?php echo JText::_('COM_RAIDPLANNER_NEW_EVENT');?></a>
 <?php endif; ?>
 		</td>
 	</tr>

@@ -28,7 +28,8 @@ $hasChars = !empty($this->characters);
 				<li>
 					<strong><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>:</strong> <?php echo JHTML::_('date', $this->event->invite_time, $dateFormat); ?>, 
 					<strong><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>:</strong> <?php echo JHTML::_('date', $this->event->start_time, $dateFormat); ?>,
-					<strong><?php echo JText::_('COM_RAIDPLANNER_END_TIME');?>:</strong> <?php echo JHTML::_('date', $this->event->end_time, $dateFormat); ?></li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_END_TIME');?>:</strong> <?php echo JHTML::_('date', $this->event->end_time, $dateFormat); ?>
+				</li>
 				<li>
 					<strong><?php echo JText::_('COM_RAIDPLANNER_RAID_LEADER');?>:</strong> <?php echo $this->event->raid_leader;?>
 				</li>
@@ -280,9 +281,24 @@ $hasChars = !empty($this->characters);
 					<tr>
 						<td>
 							<ul class="queue">
-								<li><input type="radio" name="queue" id="rp_radio_queue1" value="1" <?php if (($this->selfstatus->queue==1) || (intval(@$this->selfstatus->queue)==0)) { ?>checked="checked"<?php } ?> /><label for="rp_radio_queue1"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></label></li>
-								<li><input type="radio" name="queue" id="rp_radio_queue2" value="-1" <?php if ($this->selfstatus->queue==-1) { ?>checked="checked"<?php } ?> /><label for="rp_radio_queue2"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?></label></li>
-								<li><input type="radio" name="queue" id="rp_radio_queue3" value="2" <?php if ($this->selfstatus->queue==2) { ?>checked="checked"<?php } ?> /><label for="rp_radio_queue3"><?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?></label></li>
+								<li>
+									<label for="rp_radio_queue1" class="radio">
+										<input type="radio" name="queue" id="rp_radio_queue1" value="1" <?php if (($this->selfstatus->queue==1) || (intval(@$this->selfstatus->queue)==0)) { ?>checked="checked"<?php } ?> />
+										<?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?>
+									</label>
+								</li>
+								<li>
+									<label for="rp_radio_queue2" class="radio">
+										<input type="radio" name="queue" id="rp_radio_queue2" value="-1" <?php if ($this->selfstatus->queue==-1) { ?>checked="checked"<?php } ?> />
+										<?php echo JText::_('COM_RAIDPLANNER_STATUSES_-1');?>
+									</label>
+								</li>
+								<li>
+									<label for="rp_radio_queue3" class="radio">
+										<input type="radio" name="queue" id="rp_radio_queue3" value="2" <?php if ($this->selfstatus->queue==2) { ?>checked="checked"<?php } ?> />
+										<?php echo JText::_('COM_RAIDPLANNER_STATUSES_2');?>
+									</label>
+								</li>
 							</ul>
 						</td>
 						<td>
@@ -292,7 +308,12 @@ $hasChars = !empty($this->characters);
 									$this->selfstatus->role_id=$role->role_id;
 								}
 							?>
-								<li><input type="radio" name="role" id="rp_radio_role<?php echo $role->role_id;?>" value="<?php echo $role->role_id;?>" <?php if ($this->selfstatus->role_id==$role->role_id) { ?>checked="checked"<?php } ?> /><label for="rp_radio_role<?php echo $role->role_id;?>"><?php echo $role->role_name;?></label></li>
+								<li>
+									<label for="rp_radio_role<?php echo $role->role_id;?>" class="radio">
+										<input type="radio" name="role" id="rp_radio_role<?php echo $role->role_id;?>" value="<?php echo $role->role_id;?>" <?php if ($this->selfstatus->role_id==$role->role_id) { ?>checked="checked"<?php } ?> />
+										<?php echo $role->role_name;?>
+									</label>
+								</li>
 							<?php } ?>
 							</ul>
 						</td>
@@ -309,6 +330,27 @@ $hasChars = !empty($this->characters);
 							<textarea name="comments" rows="5" style="width:95%;padding:0;"><?php echo $this->selfstatus->comments; ?></textarea></label>
 						</td>
 					</tr>
+<?php if ($this->params['multi_raid_signup']==1) : ?>
+					<tr>
+						<th colspan="4"><?php echo JText::_( 'COM_RAIDPLANNER_MULTIRAIDSIGNUP_EXPLANATION' );?></th>
+					</tr>
+					<tr>
+						<th><?php echo JText::_( 'COM_RAIDPLANNER_START_TIME' );?></th>
+						<th><?php echo JText::_( 'COM_RAIDPLANNER_LOCATION' );?></th>
+						<th><?php echo JText::_( 'COM_RAIDPLANNER_STATUS' );?></th>
+						<th><?php echo JText::_( 'COM_RAIDPLANNER_SIGNUP' );?></th>
+					<tr>
+	<?php foreach ($this->upcoming as $upcoming) : ?>
+		<?php if ($upcoming->raid_id != $this->event->raid_id) : ?>
+					<tr>
+						<td><?php echo JHTML::_('date', $upcoming->start_time, $dateFormat); ?></td>
+						<td><a href="#" title="<?php echo $upcoming->description; ?>"><?php echo $upcoming->location; ?><?php if (@$upcoming->guild_name) { echo " - " . $upcoming->guild_name;}?></a></td>
+						<td><?php echo JText::_('COM_RAIDPLANNER_STATUSES_' . intval($upcoming->queue) );?></td>
+						<td><label for="signup_raid_<?php echo $upcoming->raid_id; ?>" class="checkbox"><input type="checkbox" value="1" name="signup_raid[<?php echo $upcoming->raid_id;?>]" id="signup_raid_<?php echo $upcoming->raid_id; ?>"><?php echo JText::_( 'COM_RAIDPLANNER_SIGNUP' );?></label>
+					</tr>
+		<?php endif; ?>
+	<?php endforeach; ?>
+<?php endif; ?>
 					<tr>
 						<td colspan="4">
 							<div class="form-actions">

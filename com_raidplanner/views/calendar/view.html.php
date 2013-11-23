@@ -37,11 +37,11 @@ class RaidPlannerViewCalendar extends JViewLegacy
 			$paramsObj->merge( $menuparams );
 		}
 		$params = array(
-			'first_dow'		=> $paramsObj->get('first_dow', 0),
-			'popup_width'	=> $paramsObj->get('popup_width', 750),
-			'popup_height'	=> $paramsObj->get('popup_height', 500),
-			'show_history'	=> $paramsObj->get('show_history', 0),
-			'use_modal'		=> $paramsObj->get('use_modal', 1)
+			'first_dow'			=> $paramsObj->get('first_dow', 0),
+			'popup_width'		=> $paramsObj->get('popup_width', 750),
+			'popup_height'		=> $paramsObj->get('popup_height', 500),
+			'show_history'		=> $paramsObj->get('show_history', 0),
+			'use_modal'			=> $paramsObj->get('use_modal', 1)
 		);
 		$is_mobile = RaidPlannerHelper::detectMobile();
 		if ((!$is_mobile) && ($params['use_modal']==1))
@@ -115,7 +115,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
         $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null, true ) );
         $this->assignRef( 'eventmodel', $eventmodel );
 		$this->assignRef( 'timeformat', $timeformat );
-
+	
         parent::display($tpl);
     }
     
