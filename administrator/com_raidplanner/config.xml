@@ -13,6 +13,10 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field name="multi_raid_signup" type="radio" default="0" class="btn-group btn-group-yesno" label="COM_RAIDPLANNER_MULTIRAIDSIGNUP" description="COM_RAIDPLANNER_MULTIRAIDSIGNUP_DESCRIPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 	</fieldset>
 	<fieldset name="guild" label="COM_RAIDPLANNER_GUILD_SETTINGS">
 		<field type="radio" name="armory_sync" class="btn-group btn-group-yesno" default="1" label="COM_RAIDPLANNER_SYNC" description="COM_RAIDPLANNER_SYNC_DESC">

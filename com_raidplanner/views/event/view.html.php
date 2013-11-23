@@ -33,9 +33,10 @@ class RaidPlannerViewEvent extends JViewLegacy
 			$paramsObj->merge( $menuparams );
 		}
 		$params = array(
-			'show_history'	=> $paramsObj->get('show_history', 0),
-			'macro_format'	=> $paramsObj->get('macro_format', ''),
-			'allow_rating'	=> $paramsObj->get('allow_rating', 0)
+			'show_history'		=> $paramsObj->get('show_history', 0),
+			'macro_format'		=> $paramsObj->get('macro_format', ''),
+			'allow_rating'		=> $paramsObj->get('allow_rating', 0),
+			'multi_raid_signup'	=> $paramsObj->get('multi_raid_signup', 0)
 		);
 
 		if ( RaidPlannerHelper::getPermission('view_raids') != 1 ) {
@@ -75,6 +76,11 @@ class RaidPlannerViewEvent extends JViewLegacy
 			}
 
 			RaidPlannerHelper::loadGuildCSS( @$event->guild_id );
+			
+			if ( $params['multi_raid_signup'] == 1 ) {
+				$upcoming = $model->getUpcomingEvents( $event->start_time );
+				$this->assignRef( 'upcoming', $upcoming );
+			}
 
 			$this->assignRef( 'params', $params);
 			$this->assignRef( 'macro', $macro);
@@ -92,6 +98,7 @@ class RaidPlannerViewEvent extends JViewLegacy
 			$this->assignRef( 'finished' , $event->finished );
 			$this->assignRef( 'canRate' , $model->userCanRate( $event->raid_id ) );
 			$this->assignRef( 'ratings' , $model->getRates( $event->raid_id ) ); 
+			
 			parent::display($tpl);
 		}
     }

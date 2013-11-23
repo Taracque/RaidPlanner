@@ -322,12 +322,30 @@ class RaidPlannerModelEvent extends JModelLegacy
 	}
 
 	/**
+	*
+	*/
+	function getUpcomingEvents( $date )
+	{
+    	$db = JFactory::getDBO();
+		$user = JFactory::getUser();
+		$query = "SELECT r.raid_id,r.location,r.description,r.icon_name,r.status,r.raid_leader,r.start_time,s.queue
+					FROM #__raidplanner_raid AS r
+					LEFT JOIN #__raidplanner_signups AS s ON s.raid_id=r.raid_id 
+					LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id AND c.profile_id=".$user->id." 
+					WHERE r.start_time>='" . $date . "'
+					GROUP BY raid_id
+					ORDER BY r.start_time ASC, r.location ASC";
+		$db->setQuery( $query );
+		return $db->loadObjectList();
+	}
+
+	/**
 	* Save ratings for an event
 	*/
 	function rateEvent() {
 		$raid_id = JRequest::getVar('raid_id', null, 'INT');
 		if ($this->userCanRate($raid_id)) {
-			$rates = JRequest::getVar('character_vote', null, 'ARRAY');
+			$rates = JRequest::getVar('character_vote', null, 'post', 'ARRAY');
 			$db = JFactory::getDBO();
 			$user = JFactory::getUser();
 			$user_id = $user->id;
@@ -370,13 +388,13 @@ class RaidPlannerModelEvent extends JModelLegacy
 	* Signup for an event
 	*/
 	function signupEvent() {
-		$raid_id = JRequest::getVar('raid_id', null, 'INT');
+		$raid_id = JRequest::getVar('raid_id', null, 'post', 'INT');
 		if ($this->userCanSignUp($raid_id)) {
-			$role = JRequest::getVar('role', null, 'INT');
-			$queue = JRequest::getVar('queue', null, 'INT');
-			$comments = JRequest::getVar('comments', null, 'STRING');
-			$char_id = JRequest::getVar('character_id', null, 'INT');
-	
+			$role = JRequest::getVar('role', null, 'post', 'INT');
+			$queue = JRequest::getVar('queue', null, 'post', 'INT');
+			$comments = JRequest::getVar('comments', null, 'post', 'STRING');
+			$char_id = JRequest::getVar('character_id', null, 'post', 'INT');
+
 			$db = & JFactory::getDBO();
 			$user =& JFactory::getUser();
 
@@ -389,6 +407,25 @@ class RaidPlannerModelEvent extends JModelLegacy
 					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
 			$db->setQuery($query);
 			$db->query();
+
+			/* signup for other raids if available */
+			$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+			if ($paramsObj->get('multi_raid_signup', 0) == 1) {
+				$signup_raid = JRequest::getVar('signup_raid', null, 'post', 'ARRAY');
+				foreach ($signup_raid as $raid_id => $signup) {
+					if ( ( $signup == 1 ) && ( $this->userCanSignUp( $raid_id ) ) ) {
+						// throw all sigunps by same profile for same raid
+						$query = "DELETE #__raidplanner_signups FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($user->id)." AND #__raidplanner_signups.raid_id=".$raid_id;
+						$db->setQuery($query);
+						$db->query();
+			
+						$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,role_id,comments,`timestamp`,class_id) ".
+								"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+						$db->setQuery($query);
+						$db->query();
+					}
+				}
+			}
 		}
 	}
 	
@@ -481,13 +518,13 @@ class RaidPlannerModelEvent extends JModelLegacy
 
 		$db = & JFactory::getDBO();
 
-		$raid_id = JRequest::getVar('raid_id', null, 'INT');
-		$roles = JRequest::getVar('role', null, 'ARRAY');
-		$comments = JRequest::getVar('comments', null, 'ARRAY');
-		$confirm = JRequest::getVar('confirm', null, 'ARRAY');
-		$characters = JRequest::getVar('characters', null, 'ARRAY');
+		$raid_id = JRequest::getVar('raid_id', null, 'post', 'INT');
+		$roles = JRequest::getVar('role', null, 'post', 'ARRAY');
+		$comments = JRequest::getVar('comments', null, 'post', 'ARRAY');
+		$confirm = JRequest::getVar('confirm', null, 'post', 'ARRAY');
+		$characters = JRequest::getVar('characters', null, 'post', 'ARRAY');
 		$history = trim( JRequest::getVar('history', '', 'post', 'string', JREQUEST_ALLOWRAW ) );
-		$queues = JRequest::getVar('queue', null, 'ARRAY');
+		$queues = JRequest::getVar('queue', null, 'post', 'ARRAY');
 
 		if (is_array($characters))
 		{
