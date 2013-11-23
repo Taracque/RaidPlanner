@@ -63,7 +63,8 @@ $start_time = array(
 		<div class="control-group">
 			<label class="control-label" for="start_time_0"><?php echo JText::_('COM_RAIDPLANNER_START_TIME');?>: </label>
 			<div class="controls">
-				<?php echo JHTML::calendar( $start_time['date'], 'start_time[0]', 'start_time_0', $dateFormat, 'class="input-small"');?> <input type="text" name="start_time[1]" id="start_time_1" value="<?php echo $start_time['time'];?>" size="6" class="input-mini" />
+				<?php echo JHTML::calendar( $start_time['date'], 'start_time[0]', 'start_time_0', $dateFormat, array('class' => 'input-small') );?>
+				<input type="text" name="start_time[1]" id="start_time_1" value="<?php echo $start_time['time'];?>" size="6" class="input-mini" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -79,7 +80,7 @@ $start_time = array(
 		<div class="control-group">
 			<label class="control-label" for="invite_time_0"><?php echo JText::_('COM_RAIDPLANNER_INVITE_TIME');?>: </label>
 			<div class="controls">
-				<?php echo JHTML::calendar( $invite_time['date'], 'invite_time[0]', 'invite_time_0', $dateFormat, 'class="input-small"');?>
+				<?php echo JHTML::calendar( $invite_time['date'], 'invite_time[0]', 'invite_time_0', $dateFormat, array('class' => 'input-small') );?>
 				<input type="text" name="invite_time[1]" id="invite_time_1" value="<?php echo $invite_time['time'];?>" size="6" class="input-mini" />
 			</div>
 		</div>
