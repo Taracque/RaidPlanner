@@ -353,6 +353,19 @@ $hasChars = !empty($this->characters);
 						<tr>
 							<td><strong><?php echo JText::_( 'COM_RAIDPLANNER_RAID_RATING' ); ?></td>
 							<td>
+			<?php
+				$rating = $this->ratings[$attendant->character_id]->rating;
+				$red = 0;
+				$green = 0;
+				if ($rating > 0) {
+					$green = (int) ($rating * 255);
+				} else {
+					$red = (int) ( abs($rating) * 255);
+				}
+			?>
+								<div class="rp_rating" style="background-color:rgb(<?php echo $red;?>,<?php echo $green; ?>,0);">
+									<span><?php echo (100*$rating)."%";?></span>
+								</div>
 			<?php if ($this->canRate) : ?>
 								<div class="controls">
 									<fieldset class="radio btn-group rp-vote">
@@ -375,6 +388,19 @@ $hasChars = !empty($this->characters);
 								</a>
 							</td>
 							<td>
+			<?php
+				$rating = $this->ratings[$attendant->character_id]->rating;
+				$red = 0;
+				$green = 0;
+				if ($rating > 0) {
+					$green = (int) ($rating * 255);
+				} else {
+					$red = (int) ( abs($rating) * 255);
+				}
+			?>
+								<div class="rp_rating" style="background-color:rgb(<?php echo $red;?>,<?php echo $green; ?>,0);">
+									<span><?php echo (100*$rating)."%";?></span>
+								</div>
 			<?php if ($this->canRate) : ?>
 								<div class="controls">
 									<fieldset class="radio btn-group rp-vote">

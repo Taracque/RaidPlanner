@@ -91,7 +91,7 @@ class RaidPlannerViewEvent extends JViewLegacy
 			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
 			$this->assignRef( 'finished' , $event->finished );
 			$this->assignRef( 'canRate' , $model->userCanRate( $event->raid_id ) );
-
+			$this->assignRef( 'ratings' , $model->getRates( $event->raid_id ) ); 
 			parent::display($tpl);
 		}
     }

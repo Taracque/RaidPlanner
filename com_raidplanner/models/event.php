@@ -352,6 +352,21 @@ class RaidPlannerModelEvent extends JModelLegacy
 	}
 
 	/**
+	* Get ratings for an event
+	*/
+	function getRates( $raid_id ) {
+		$rates = array();
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+		if ($paramsObj->get('allow_rating', 0) == 1) {
+			$db = JFactory::getDBO();
+			$query = "SELECT character_id,(rate_value/rate_count) AS rating FROM #__raidplanner_rating WHERE raid_id = " . intval($raid_id);
+			$db->setQuery( $query );
+			$rates = $db->loadObjectList( 'character_id' );
+		}
+		return $rates;
+	}
+
+	/**
 	* Signup for an event
 	*/
 	function signupEvent() {
