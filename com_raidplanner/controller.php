@@ -54,6 +54,14 @@ class RaidPlannerController extends JControllerLegacy
 				$month = $model->getMonth();
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
 			break;
+			case 'rate':
+				$vName = 'calendar';
+				$vLayout = JRequest::getCmd( 'layout', 'default' );
+				$model = &$this->getModel('event');
+				$model->rateEvent();
+				$month = $model->getMonth();
+				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
+			break;
 			case 'saveevent':
 				$template_id = JRequest::getVar('template_id');
 				if (intval($template_id) > 0) {

@@ -245,14 +245,14 @@ $hasChars = !empty($this->characters);
 					<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
 					<div class="rp_history_editor">
 					<?php if ($this->params['show_history']==1) : ?>
-						<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?>:<br />
+						<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_HISTORY');?><br />
 							<textarea name="history" style="float:left;" rows="3" cols="20"><?php echo $this->xml_history; ?></textarea>
 						</label>
 					<?php endif; ?>
 					<?php if ($this->macro) : ?>
-					<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_INVITE_MACRO');?>:<br />
-						<textarea style="float:left;" cols="20" rows="3"><?php echo $this->macro;?></textarea>
-					</label>
+						<label style="float:right;"><?php echo JText::_('COM_RAIDPLANNER_INVITE_MACRO');?><br />
+							<textarea style="float:left;" cols="20" rows="3"><?php echo $this->macro;?></textarea>
+						</label>
 					<?php endif; ?>
 					</div>
 
@@ -356,11 +356,11 @@ $hasChars = !empty($this->characters);
 			<?php if ($this->canRate) : ?>
 								<div class="controls">
 									<fieldset class="radio btn-group rp-vote">
-										<input type="radio" id="raid_vote_neg" name="raid_vote" value="-1">
+										<input type="radio" id="raid_vote_neg" name="character_vote[0]" value="-1">
 										<label for="raid_vote_neg" class="btn btn-mini"><i class="icon-minus"></i></label>
-										<input type="radio" id="raid_vote_pass" name="raid_vote" value="0" checked="checked">
+										<input type="radio" id="raid_vote_pass" name="character_vote[0]" value="0" checked="checked">
 										<label for="raid_vote_pass" class="btn btn-mini"><i class="icon-question"></i></label>
-										<input type="radio" id="raid_vote_pos" name="raid_vote" value="1">
+										<input type="radio" id="raid_vote_pos" name="character_vote[0]" value="1">
 										<label for="raid_vote_pos" class="btn btn-mini"><i class="icon-plus"></i></label>
 									</fieldset>
 								</div>
@@ -378,11 +378,11 @@ $hasChars = !empty($this->characters);
 			<?php if ($this->canRate) : ?>
 								<div class="controls">
 									<fieldset class="radio btn-group rp-vote">
-										<input type="radio" id="char_vote_neg_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="-1">
+										<input type="radio" id="char_vote_neg_<?php echo $attendant->character_id;?>" name="character_vote[<?php echo $attendant->character_id;?>]" value="-1">
 										<label for="char_vote_neg_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-minus"></i></label>
-										<input type="radio" id="char_vote_pass_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="0" checked="checked">
+										<input type="radio" id="char_vote_pass_<?php echo $attendant->character_id;?>" name="character_vote[<?php echo $attendant->character_id;?>]" value="0" checked="checked">
 										<label for="char_vote_pass_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-question"></i></label>
-										<input type="radio" id="char_vote_pos_<?php echo $attendant->character_id;?>" name="character_vode[<?php echo $attendant->character_id;?>]" value="1">
+										<input type="radio" id="char_vote_pos_<?php echo $attendant->character_id;?>" name="character_vote[<?php echo $attendant->character_id;?>]" value="1">
 										<label for="char_vote_pos_<?php echo $attendant->character_id;?>" class="btn btn-mini"><i class="icon-plus"></i></label>
 									</fieldset>
 								</div>
