@@ -244,6 +244,13 @@ class com_raidplannerInstallerScript
 		$installer->set('message', $out);
 	}
 
+	public function postflight( $type, $parent ) {
+		echo '<div class="alert alert-info">';
+		echo '<h2>RaidPlanner What\'s new?</h2>';
+		echo '<iframe frameborder="0" width="800px" height="200px" style="border:none;" src="http://taracque.hu/raidplanner/whats-new.php"></iframe>';
+		echo '</div>';
+	}
+
 	public function uninstall($adapter)
 	{
 		$installer = JInstaller::getInstance();
