@@ -507,35 +507,55 @@ class RaidPlannerHelper
 			if ($char) {
 				$guild_id = '';
 				$guild_name = '';
+				$class_css = '';
+				$race_css = '';
+
 				if ( strpos($char, ':') !== false ) {
 					list($char_id, $char_name) = explode (":", trim($char) );
 					$char_id = intval($char_id);
 					if ($getGuild) {
-						$query = "SELECT c.character_id,g.guild_id,g.guild_name FROM #__raidplanner_character AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=c.guild_id WHERE c.character_id='" . trim($char_id) . "' ORDER BY g.guild_id ASC, c.char_name ASC LIMIT 1";
+						$query = "SELECT c.character_id,g.guild_id,g.guild_name,cl.class_css,r.race_css
+									FROM #__raidplanner_character AS c
+									LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=c.guild_id
+									LEFT JOIN #_raidplanner_race AS r ON r.race_id=c.race_id
+									LEFT JOIN #_raidplanner_class AS cl ON cl.class_id=c.class_id
+									WHERE c.character_id='" . trim($char_id) . "' ORDER BY g.guild_id ASC, c.char_name ASC LIMIT 1";
 						$db->setQuery( $query );
 						if ($result = $db->loadObject()) {
 							$guild_name = $result->guild_name;
 							$guild_id = $result->guild_id;
+							$class_css = $result->class_css;
+							$race_css = $result->race_css;
 						}
 					}
 				} else {
 					$char_name = trim($char);
 					$char_id = '';
 					if ( $forceids ) {
-						$query = "SELECT c.character_id,g.guild_id,g.guild_name FROM #__raidplanner_character AS c LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=c.guild_id WHERE c.char_name='" . trim($char) . "' ORDER BY g.guild_id ASC, c.char_name ASC LIMIT 1";
+						$query = "SELECT c.character_id,g.guild_id,g.guild_name,cl.class_css,r.race_css
+									FROM #__raidplanner_character AS c
+									LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=c.guild_id
+									LEFT JOIN #_raidplanner_race AS r ON r.race_id=c.race_id
+									LEFT JOIN #_raidplanner_class AS cl ON cl.class_id=c.class_id
+									WHERE c.char_name='" . trim($char) . "'
+									ORDER BY g.guild_id ASC, c.char_name ASC LIMIT 1";
 						$db->setQuery( $query );
 						if ($result = $db->loadObject()) {
 							$guild_name = $result->guild_name;
 							$guild_id = $result->guild_id;
 							$char_id = $result->character_id;
+							$class_css = $result->class_css;
+							$race_css = $result->race_css;
 						}
 					}
 				}
 				$reply[] = array(
-					'char_id'	=>	$char_id,
-					'char_name'	=>	$char_name,
-					'guild_id'	=>	$guild_id,
-					'guild_name'	=>	$guild_name
+					'char_id'		=>	$char_id,
+					'char_name'		=>	$char_name,
+					'guild_id'		=>	$guild_id,
+					'guild_name'	=>	$guild_name,
+					'class_css'		=>	$class_css,
+					'race_css'		=>	$race_css
 				);
 			}
 		}
