@@ -24,7 +24,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 
     function display($tpl = null)
     {
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		if($user->id == 0) {
 			// user not logged in
 			$user =& JUser::getInstance( intval(@$_REQUEST['user']) );

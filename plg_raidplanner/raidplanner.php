@@ -139,7 +139,7 @@ class plgUserRaidPlanner extends JPlugin
 		if (is_object($data)) {
 			$userId = isset($data->id) ? $data->id : 0;
 			if ($userId) {
-				$juser =& JFactory::getUser($userId);
+				$juser =JFactory::getUser($userId);
 				if ($this->params->get('raidplanner-profile-group', 1) == 0)
 				{
 					$data_key = 'params';
@@ -262,7 +262,7 @@ class plgUserRaidPlanner extends JPlugin
 		{
 			try
 			{
-				$juser =& JFactory::getUser($userId);
+				$juser =JFactory::getUser($userId);
 				$params = $juser->getParameters(false)->toObject();
 
 				if ( $data_key == 'params')
@@ -288,7 +288,7 @@ class plgUserRaidPlanner extends JPlugin
 
 				if ( (isset($data_arr['characters'])) && ($this->params->get('enable-character-editor', 0) == 1) )
 				{
-					$db	=& JFactory::getDBO();
+					$db	=JFactory::getDBO();
 					$query = 'UPDATE #__raidplanner_character SET profile_id=-profile_id WHERE profile_id='. $userId;
 					$db->setQuery($query);
 					$db->query();

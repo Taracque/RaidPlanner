@@ -56,7 +56,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 			$app->redirect( JRoute::_(JURI::root().'index.php'), $msg);
 		}
 
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
  		$this->assignRef( 'isOfficer', $eventmodel->userIsOfficer() );

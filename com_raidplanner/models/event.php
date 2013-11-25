@@ -31,7 +31,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     {
     	$result = new stdClass;
     	if ($id>0) {
-			$db = & JFactory::getDBO();
+			$db = JFactory::getDBO();
 	
 			$query = "SELECT r.*,g.guild_name,DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS end_time,NOW()>DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS finished 
 						FROM #__raidplanner_raid AS r
@@ -65,7 +65,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     function usersOnVacation( $date )
     {
     	$onvacation = array();
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		/* quick and dirty query on users */
 		/* FIXME, needs to be a Joomla way */
@@ -99,7 +99,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     {
     	$html = '';
 
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT history FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);
 		$db->setQuery($query);
 		$string = $db->loadResult();
@@ -148,7 +148,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     */
     function getAttendants($id)
     {
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
 
     	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
     				cl.class_name,cl.class_color,c.char_level,c.profile_id,s.role_id,s.queue,cl.class_css
@@ -190,7 +190,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 	
 	function getRoles()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__raidplanner_role ORDER BY role_name ASC";
 
 		$db->setQuery($query);
@@ -206,7 +206,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 	
     function getTemplates()
     {
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
     	$query = "SELECT raid_id,location FROM #__raidplanner_raid WHERE is_template = 1 ORDER BY location ASC";
     	
     	$db->setQuery($query);
@@ -219,8 +219,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 	* Gets the list of user's characters
 	*/
 	function getCharacters($min_level = null, $max_level = null, $min_rank = null, $guild_id = null, $everyone = false) {
-		$db = & JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user =JFactory::getUser();
 		
 		if (!$everyone) {
 			$where = " WHERE (c.profile_id=" . intval($user->id) . " OR c.profile_id = 0)";
@@ -274,11 +274,11 @@ class RaidPlannerModelEvent extends JModelLegacy
 	function getUserStatus($event_id,$user_id = null)
 	{
 		if (!$user_id) {
-			$user =& JFactory::getUser();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 		}
 		
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
 		$query = "SELECT s.character_id,s.role_id,s.queue,s.confirmed,s.comments
     			FROM #__raidplanner_signups AS s 
     			LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id 
@@ -395,8 +395,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$comments = JRequest::getVar('comments', null, 'post', 'STRING');
 			$char_id = JRequest::getVar('character_id', null, 'post', 'INT');
 
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 
 			// throw all sigunps by same profile for same raid
 			$query = "DELETE #__raidplanner_signups FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($user->id)." AND #__raidplanner_signups.raid_id=".$raid_id;
@@ -436,8 +436,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$own_raid = true;
 
 		if ($raid_id>0) {
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 
 			$query = "SELECT profile_id FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
@@ -452,8 +452,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$own_raid = false;
 
 		if ($raid_id>0) {
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 
 			$query = "SELECT profile_id FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
@@ -467,8 +467,8 @@ class RaidPlannerModelEvent extends JModelLegacy
 	function userCanSignUp($raid_id = null) {
 		$can_signup = false;
 		if ($raid_id>0) {
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 			$date = RaidPlannerHelper::getDate();
 			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . RaidPlannerHelper::date2Sql( $date ) . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
@@ -516,7 +516,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			return false;
 		}
 
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		$raid_id = JRequest::getVar('raid_id', null, 'post', 'INT');
 		$roles = JRequest::getVar('role', null, 'post', 'ARRAY');
@@ -588,9 +588,9 @@ class RaidPlannerModelEvent extends JModelLegacy
 			return false;
 		}
 
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		$user_id = $user->id;
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		if ($raid_id == -1) {
 			// insert an empty record first
 			$query = "INSERT INTO #__raidplanner_raid (profile_id) VALUES (".$user_id.")";
@@ -650,7 +650,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			return false;
 		}
 
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		// delete the record
 		$query = "DELETE FROM #__raidplanner_raid WHERE raid_id=".intval($raid_id);

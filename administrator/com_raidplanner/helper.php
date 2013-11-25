@@ -35,7 +35,7 @@ class RaidPlannerHelper
 
 	public static function getGuildPlugin( $guild_id )
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT guild_id, guild_name, sync_plugin, params FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
 		$db->setQuery($query);
 		if ($guild = $db->loadObject()) {
@@ -196,7 +196,7 @@ class RaidPlannerHelper
 
 	public static function getTimezone( $user = null, $forcenumeric = true )
 	{
-		$user =& JFactory::getUser( $user );
+		$user =JFactory::getUser( $user );
 		$tz = $user->getParam('timezone', JFactory::getApplication()->getCfg('offset'));
 		if ((!is_numeric($tz)) && ($forcenumeric)) {
 			$date = new JDate('now',$tz);
@@ -222,7 +222,7 @@ class RaidPlannerHelper
 
 	public static function getGuilds()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = ' SELECT guild_name,guild_id FROM #__raidplanner_guild ORDER BY guild_name ASC ';
 		$db->setQuery( $query );
 		return $db->loadObjectList('guild_id');
@@ -230,7 +230,7 @@ class RaidPlannerHelper
 	
 	public static function getClasses()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = ' SELECT class_name,class_id,class_color FROM #__raidplanner_class ORDER BY class_name ASC ';
 		$db->setQuery( $query );
 		return $db->loadObjectList('class_id');
@@ -238,7 +238,7 @@ class RaidPlannerHelper
 	
 	public static function getGenders()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = ' SELECT gender_name,gender_id FROM #__raidplanner_gender';
 		$db->setQuery( $query );
 		return $db->loadObjectList('gender_id');
@@ -246,7 +246,7 @@ class RaidPlannerHelper
 
 	public static function getRaces()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = ' SELECT race_name,race_id FROM #__raidplanner_race';
 		$db->setQuery( $query );
 		return $db->loadObjectList('race_id');
@@ -254,7 +254,7 @@ class RaidPlannerHelper
 
 	public static function getCharacters()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'SELECT character_id,char_name FROM #__raidplanner_character ORDER BY char_name ASC';
 		$db->setQuery( $query );
 		return $db->loadObjectList('character_id');
@@ -262,7 +262,7 @@ class RaidPlannerHelper
 
 	public static function getUsers()
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 		$query = "SELECT id,username FROM #__users ORDER BY username ASC";
 		$db->setQuery($query);
 		$db->query();
@@ -272,7 +272,7 @@ class RaidPlannerHelper
 
 	public static function getGroups( $guest = true, $only_groups = array() )
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 
 		// Joomla ACL used, return Joomla groups
 		if (is_array($only_groups) && !empty($only_groups)) {
@@ -315,10 +315,10 @@ class RaidPlannerHelper
 			$tzOffset = self::getTimezone( null, false);
 		}
 		try {
-			$reply =& JFactory::getDate( $date, $tzOffset );
+			$reply =JFactory::getDate( $date, $tzOffset );
 		} catch (Exception $e) {
 			JError::raiseNotice( 500, 'Invalid date (' . $date .') entered' );
-			$reply =& JFactory::getDate();
+			$reply =JFactory::getDate();
 		}
 		if ($format != null) {
 			if ($format == 'sql') {
@@ -340,11 +340,11 @@ class RaidPlannerHelper
 		if (!self::$invite_alert_requested)
 		{
 			if (!$user_id) {
-				$user =& JFactory::getUser();
+				$user =JFactory::getUser();
 				$user_id = $user->id;
 			}
 			if ($user_id) {
-				$db = & JFactory::getDBO();
+				$db = JFactory::getDBO();
 				$date = RaidPlannerHelper::getDate();
 				
 				// Joomla ACL
@@ -498,7 +498,7 @@ class RaidPlannerHelper
 	{
 		$reply = array();
 		
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		$chars = str_replace( array("\n", ",", ";", "\r", "\t"), "\n", $data );
 		$charlist = explode( "\n", $chars);
@@ -545,7 +545,7 @@ class RaidPlannerHelper
 
 	public static function autoRepeatRaids()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		
 		$query = "SELECT raid_id,DATE_ADD(start_time, INTERVAL 7 DAY) AS new_time,DATE_ADD(invite_time, INTERVAL 7 DAY) AS new_invite,location,invited_group_id,guild_id FROM #__raidplanner_raid WHERE is_template<0 AND DATE_ADD(start_time, INTERVAL is_template DAY)<NOW()";
 		$db->setQuery( $query );

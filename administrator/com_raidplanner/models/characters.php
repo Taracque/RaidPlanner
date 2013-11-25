@@ -81,7 +81,7 @@ class RaidPlannerModelCharacters extends JModelLegacy
 
 	function _buildQueryWhere()
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 		
 		$filter_char_level_min = $this->getState('filter_char_level_min');
 		$filter_char_level_max = $this->getState('filter_char_level_max');

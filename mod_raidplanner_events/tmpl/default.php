@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 $format = JText::_('DATE_FORMAT_LC');
 $event_count = 0;
 
-$lang =& JFactory::getLanguage();
+$lang =JFactory::getLanguage();
 $lang->load('com_raidplanner');
 
 jimport('joomla.application.component.helper');

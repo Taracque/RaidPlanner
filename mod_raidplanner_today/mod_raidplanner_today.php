@@ -29,7 +29,7 @@ JHTML::script('com_raidplanner/raidplanner.js', false, true);
 JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
 
 //get user ID
-$user =& JFactory::getUser();
+$user =JFactory::getUser();
 $user_id = ($user->id);
 
 // get the parameters from the module's configuration

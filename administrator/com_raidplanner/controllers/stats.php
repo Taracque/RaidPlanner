@@ -44,7 +44,7 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			5	=>	JText::_( 'COM_RAIDPLANNER_RAIDS')
 		);
 
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		if ($group_id > 0) {
 			$where[] = 'p.group_id=' . intval($group_id);
 			$where[] = 'r.invited_group_id=' . intval($group_id);

@@ -27,9 +27,9 @@ class RaidPlannerModelRaidPlanner extends JModelLegacy
     */
     function getEvents($year_month = null, $user_id = null, $attendants = false)
     {
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
 		if (!$user_id) {
-			$user = & JFactory::getUser();
+			$user = JFactory::getUser();
 		} else {
 			$user =& JUser::getInstance( intval( $user_id ) );
 		}

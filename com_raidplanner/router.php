@@ -105,7 +105,7 @@ function RaidPlannerParseRoute( $segments )
 			$vars['id'] = intval(@$segments[2]);
 		break;
 		default:
-			$app =& JFactory::getApplication();
+			$app =JFactory::getApplication();
 			$menu =& $app->getMenu();
 			$item =& $menu->getActive();
 			if ($item)

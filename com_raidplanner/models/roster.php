@@ -24,7 +24,7 @@ class RaidPlannerModelRoster extends JModelLegacy
 {
 	function getGuildCharacters( $guild_id )
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__raidplanner_character AS chars
 					LEFT JOIN #__raidplanner_class AS class ON class.class_id = chars.class_id
 					LEFT JOIN #__raidplanner_race AS race ON race.race_id = chars.race_id
@@ -40,7 +40,7 @@ class RaidPlannerModelRoster extends JModelLegacy
 
 	public function getGuildInfo($guild_id = null)
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		if (intval($guild_id)>0)
 		{
 			$query = "SELECT * FROM #__raidplanner_guild WHERE guild_id = " . intval($guild_id);

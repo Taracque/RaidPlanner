@@ -79,7 +79,7 @@ class RaidPlannerModelRaids extends JModelLegacy
 
 	function _buildQueryWhere()
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 		
 		$filter_raid_start_time_min = $this->getState('filter_raid_start_time_min');
 		$filter_raid_start_time_max = $this->getState('filter_raid_start_time_max');

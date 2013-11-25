@@ -37,7 +37,7 @@ class RaidPlannerController extends JControllerLegacy
 	function display()
 	{
 		if ($this->getTask() == 'service') {
-			$db	=& JFactory::getDBO();
+			$db	= JFactory::getDBO();
 
 			// do service things, remove unanchored database entries
 			// remove signups that doesn't have character

@@ -163,7 +163,7 @@ class RaidPlannerInstaller
 	 */
 	private function doSQL( $xmlnode )
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		foreach ($xmlnode->sql as $sql) {
 			$attributes = $sql->attributes();
 			$condition_met = true;

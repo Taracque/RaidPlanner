@@ -27,7 +27,7 @@ class RaidPlannerModelCharacter extends JModelLegacy
 	*/
 	function saveCharacter() {
 		$character_id = JRequest::getVar('character_id', null, 'INT');
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		$user_id = $user->id;
 
 		// check if user have edit_characters privilegs
@@ -41,7 +41,7 @@ class RaidPlannerModelCharacter extends JModelLegacy
 			$rank = JRequest::getVar('rank', null, 'default', 'INT');
 			$guild_id = JRequest::getVar('guild_id', null, 'default', 'INT');
 
-			$db = & JFactory::getDBO();
+			$db = JFactory::getDBO();
 
 			if ($character_id <= 0)
 			{
@@ -95,8 +95,8 @@ class RaidPlannerModelCharacter extends JModelLegacy
 	* Gets the list of own/unasigned characters
 	*/
 	function getCharacters( $ownOnly = false) {
-		$db = & JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user = JFactory::getUser();
 		
 		$query = "SELECT c.character_id,c.char_name,g.guild_id,g.guild_name
 					FROM #__raidplanner_character AS c
@@ -110,8 +110,8 @@ class RaidPlannerModelCharacter extends JModelLegacy
 	}
 
 	function getCharacter( $char_name, $char_id = null ) {
-		$db = & JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user = JFactory::getUser();
 		
 		if (intval($char_id) <= 0)
 		{

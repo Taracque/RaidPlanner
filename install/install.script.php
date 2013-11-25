@@ -121,7 +121,7 @@ class com_raidplannerInstallerScript
 		$out = "";
 	
 		// check if #__raidplanner_guild table exists
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = "SHOW TABLES LIKE '%_raidplanner_guild'";
 		$db->setQuery($query);

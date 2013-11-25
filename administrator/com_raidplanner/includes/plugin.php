@@ -28,7 +28,7 @@ class RaidPlannerPlugin
 
 	public function needSync( $sync_interval = 4)
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT IF(lastSync IS NULL,-1,DATE_ADD(lastSync, INTERVAL " . intval( $sync_interval ) . " HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_id=" . intval($this->guild_id); 
 		$db->setQuery($query);
 		if ( ($needsync = $db->loadResult()) && ( $needsync<0 ) )

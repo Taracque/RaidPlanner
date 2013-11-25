@@ -61,7 +61,7 @@ class getRaidPlannerTab extends cbTabHandler {
 					$data['calendar_secret'] = $row->$calsec_field;
 				}
 
-				$juser =& JFactory::getUser($row->user_id);
+				$juser =JFactory::getUser($row->user_id);
 				if (!$juser->block) {
 
 					$ju_params = $juser->getParameters(false)->toObject();
@@ -80,7 +80,7 @@ class getRaidPlannerTab extends cbTabHandler {
 				if ( (isset($data['characters'])) && ($params->get('rpPlugDirectSync', "0") == 1) )
 				{
 					$userId = $juser->id;
-					$db	=& JFactory::getDBO();
+					$db	= JFactory::getDBO();
 					$query = 'UPDATE #__raidplanner_character SET profile_id=-profile_id WHERE profile_id='. $userId;
 					$db->setQuery($query);
 					$db->query();
