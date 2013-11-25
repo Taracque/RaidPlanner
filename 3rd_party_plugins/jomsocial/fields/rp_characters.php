@@ -1,15 +1,16 @@
 <?php
 /**
- * @copyright (C) 2008 by Slashes & Dots Sdn Bhd - All rights reserved!
+ * @copyright (C) 2013 by Taracque - All rights reserved!
  * @license		GNU/GPL, see LICENSE.php
  */
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-require_once (COMMUNITY_COM_PATH.DS.'libraries'.DS.'fields'.DS.'profilefield.php');
+require_once (COMMUNITY_COM_PATH.'/libraries/fields/profilefield.php');
 
 JLoader::import('plugins.user.raidplanner.raidplanner',JPATH_SITE);
+
 
 class CFieldRPCharacterEditor extends JFormFieldRPCharacterEditor {
 	

@@ -22,6 +22,8 @@ class com_raidplannerInstallerScript
 
 	public function install($adapter)
 	{
+		$app       = JFactory::getApplication();
+
 		$installer = JInstaller::getInstance();
 		$source = $installer->getPath('source');
 	
@@ -51,29 +53,6 @@ class com_raidplannerInstallerScript
 			$out .= 'RaidPlanner User plugin installed!<br />';
 		} else {
 			$out .= 'RaidPlanner User plugin installation failed!<br />';
-		}
-
-		// copy sys.ini into .ini language files
-		$langs =& JLanguage::getKnownLanguages( JPATH_ADMINISTRATOR );
-		foreach ($langs as $lang)
-		{
-			$target = JLanguage::getLanguagePath( JPATH_ADMINISTRATOR, $lang['tag'] );
-			// check if raidplanner has it language file in $target
-			if (JFile::exists( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' ))
-			{
-				$content = JFile::read( $target . '/' . $lang['tag'] . '.com_raidplanner.ini' );
-				if ($content != false)
-				{
-					// merge sys.ini file to admin language file
-					if (JFile::exists( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' ))
-					{
-						$content .= "\n" . JFile::read( $source . '/administrator/language/' . $lang['tag'] . '.com_raidplanner.sys.ini' );
-					}
-					JFile::write( $target . '/' . $lang['tag'] . '.com_raidplanner.ini', $content );
-
-					$out .= 'Language file for admin language ' . $lang['name'] . ' merged for Joomla 1.6/1.7/2.5/3.0<br />';
-				}
-			}
 		}
 
 		/* Detect Community Builder */
@@ -106,14 +85,33 @@ class com_raidplannerInstallerScript
 				$out .= "\nCommunity Builder installed in Joomla. RaidPlanner Community builder installation:" . (($ret)?"[OK]":"[Failed]") . "<br />";
 			}
 		}
-		
+		/* Detect JomSocial */
+		if ( file_exists( JPATH_SITE . '/components/com_community/libraries/core.php' ) )
+		{
+			$ret = $extInstaller->install( $source . '/3rd_party_plugins/jomsocial/' );
+			$out .= "\nJomSocial is installed in Joomla. RaidPlanner JomSocial plugin installation:" . (($ret)?"[OK]":"[Failed]") . "<br />";
+			/* patching customfields.xml file */
+			$xml = simplexml_load_file( JPATH_SITE . '/components/com_community/libraries/fields/customfields.xml' ); 
+			$result = $xml->xpath('/jomsocial/fields/field/type[text()="rp_characters"]');
+			if (empty($result)) {
+				/* add rp_characters to customfields */
+				$newfield = $xml->fields->addChild('field');
+				$newfield->addChild('type','rp_characters');
+				$newfield->addChild('name','RaidPlanner Characters');
+				$xml->saveXML( JPATH_SITE . '/components/com_community/libraries/fields/customfields.xml' );
+				$out .= "<small>- RaidPlanner Characters fieldtype added to JomSocial</small><br>\n";
+			}
+		}
+
 		$out .= "<br />IMPORTANT!<br />Read the <a href=\"http://taracque.hu/wiki/raidplanner-docs/whats-new/\" target=\"_blank\">What's new section of RaidPlanner documentation</a> for latest changes!<br />";
 	
-		$installer->set('message', $out);
+		$app->enqueueMessage($out);
 	}
 
 	public function update($adapter)
 	{
+		$app       = JFactory::getApplication();
+
 		$this->install($adapter);
 	
 		$installer = JInstaller::getInstance();
@@ -241,7 +239,7 @@ class com_raidplannerInstallerScript
 		$db->setQuery($query);
 		$db->query();
 
-		$installer->set('message', $out);
+		$app->enqueueMessage($out);
 	}
 
 	public function postflight( $type, $parent ) {
@@ -267,14 +265,16 @@ class com_raidplannerInstallerScript
 			JFolder::delete( JPATH_SITE . '/images/raidplanner' ); 
 		}
 		echo '<h2>RaidPlanner What\'s new?</h2>';
-		echo '<iframe frameborder="0" width="800px" height="200px" style="border:none;" src="http://taracque.hu/raidplanner/whats-new.php"></iframe>';
+		echo '<iframe frameborder="0" width="800px" height="200px" style="border:none;" src="http://taracque.hu/static/raidplanner/whats-new.php"></iframe><br>';
 		echo '<a href="' . JRoute::_('index.php?option=com_raidplanner') . '" class="btn btn-primary">' . JText::_( 'COM_RAIDPLANNER' ) . '</a>';
 		echo '</div>';
 	}
 
 	public function uninstall($adapter)
 	{
+		$app       = JFactory::getApplication();
+
 		$installer = JInstaller::getInstance();
-		$installer->set('message', 'RaidPlanner Today module, and RaidPlanner user plugins needs to be removed manualy!');
+		$app->enqueueMessage('RaidPlanner Today module, and RaidPlanner user plugins needs to be removed manualy!');
 	}
 }
