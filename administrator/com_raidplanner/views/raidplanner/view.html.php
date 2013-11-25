@@ -13,8 +13,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/installer.php' );
-
 JHTML::stylesheet('com_raidplanner/raidplanner_admin.css', false, true, false);
 
 /* create JViewLegacy if not exist */
@@ -26,24 +24,26 @@ class RaidPlannerViewRaidPlanner extends JViewLegacy
 {
 	private function getPluginList()
 	{
-		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_plugins/models');
-		$plugins_model = JModelLegacy::getInstance('plugins', 'pluginsModel');
-		$plugin_state = $plugins_model->getState();
+		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_installer/models');
+		$installModel = JModelLegacy::getInstance('Manage', 'InstallerModel' , array( 'filter.type' => 'filter.plugin', 'folder' => 'raidplanner') );
+		$plugin_state = $installModel->getState();
 
-		$plugins_model->setState('filter.folder','raidplanner');
-		$plugins_model->setState('filter.search','');
-		$plugins_model->setState('filter.access','0');
-		$plugins_model->setState('filter.enabled','');
-		$plugins_model->setState('filter.language','');
+		$installModel->setState('filter.type','plugin');
+		$installModel->setState('filter.group','raidplanner');
+		$installModel->setState('filter.search','');
+		$installModel->setState('filter.access','0');
+		$installModel->setState('filter.enabled','');
+		$installModel->setState('filter.language','');
 		
-		$plugins = $plugins_model->getItems();
+		$plugins = $installModel->getItems();
 
-		$plugins_model->setState( 'filter.folder',$plugin_state->{'filter.folder'} );
-		$plugins_model->setState( 'filter.search',$plugin_state->{'filter.search'} );
-		$plugins_model->setState( 'filter.access',$plugin_state->{'filter.access'} );
-		$plugins_model->setState( 'filter.enabled',$plugin_state->{'filter.enabled'} );
-		$plugins_model->setState( 'filter.language',$plugin_state->{'filter.language'} );
-		
+		$installModel->setState( 'filter.type',$plugin_state->{'filter.type'} );
+		$installModel->setState( 'filter.group',$plugin_state->{'filter.group'} );
+		$installModel->setState( 'filter.search',$plugin_state->{'filter.search'} );
+		$installModel->setState( 'filter.access',$plugin_state->{'filter.access'} );
+		$installModel->setState( 'filter.enabled',$plugin_state->{'filter.enabled'} );
+		$installModel->setState( 'filter.language',$plugin_state->{'filter.language'} );
+
 		return $plugins;
 	}
 

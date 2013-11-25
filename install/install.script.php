@@ -248,6 +248,7 @@ class com_raidplannerInstallerScript
 		// migrate theme folder content…
 		echo '<div class="alert alert-info">';
 		if (JFolder::exists(JPATH_SITE . '/images/raidplanner' )) {
+			echo '<h2>Migrating theme files to media folder</h2>';
 			$folders = JFolder::folders( JPATH_SITE . '/images/raidplanner' );
 			foreach ($folders as $folder) {
 				echo "Migrating path: " . $folder . " [ ";
