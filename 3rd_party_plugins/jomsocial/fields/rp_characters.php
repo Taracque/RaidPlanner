@@ -10,7 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 require_once (COMMUNITY_COM_PATH.'/libraries/fields/profilefield.php');
 
 JLoader::import('plugins.user.raidplanner.raidplanner',JPATH_SITE);
-
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 class CFieldRPCharacterEditor extends JFormFieldRPCharacterEditor {
 	
@@ -43,11 +43,22 @@ class CFieldsRP_Characters extends CProfileField
 	public function getFieldData( $field )
 	{
 		$value = $field['value'];
-		
+
 		if( empty( $value ) )
 			return $value;
-		
-		return '<a rel="nofollow" href="' . $value . '" target="_blank">' . $value . '</a>';
+
+		$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
+		$oReturn = '';
+		foreach ($chars as $char) {
+			$oReturn .= '<span class="' . $char['class_css'] . ' ' . $char['race_css'] . '">' . $char['char_name'] . '<span>';
+			if ($char['guild_name']!='') {
+				$oReturn .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
+			}
+			$oReturn .= "\n";
+		}
+		$oReturn = str_replace( "\n" , "<br />" , trim($oReturn) );
+
+		return $oReturn;
 	}
 	
 	public function getFieldHTML( $field , $required )
