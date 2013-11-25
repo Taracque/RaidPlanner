@@ -245,9 +245,29 @@ class com_raidplannerInstallerScript
 	}
 
 	public function postflight( $type, $parent ) {
+		// migrate theme folder content…
 		echo '<div class="alert alert-info">';
+		if (JFolder::exists(JPATH_SITE . '/images/raidplanner' )) {
+			$folders = JFolder::folders( JPATH_SITE . '/images/raidplanner' );
+			foreach ($folders as $folder) {
+				echo "Migrating path: " . $folder . " [ ";
+				if (!JFolder::exists( JPATH_SITE . '/media/com_raidplanner/' . $folder ) ) {
+					JFolder::create( JPATH_SITE . '/media/com_raidplanner/' . $folder );
+				}
+				$files = JFolder::files( JPATH_SITE . '/images/raidplanner/' . $folder );
+				$count = 0;
+				foreach ($files as $file) {
+					$count++;
+					JFile::move( JPATH_SITE . '/images/raidplanner/' . $folder . "/" . $file, JPATH_SITE . '/media/com_raidplanner/' . $folder . "/" . $file );
+				}
+				JFolder::delete( JPATH_SITE . '/images/raidplanner/' . $folder );
+				echo $count . " files moved ]<br>";
+			}
+			JFolder::delete( JPATH_SITE . '/images/raidplanner' ); 
+		}
 		echo '<h2>RaidPlanner What\'s new?</h2>';
 		echo '<iframe frameborder="0" width="800px" height="200px" style="border:none;" src="http://taracque.hu/raidplanner/whats-new.php"></iframe>';
+		echo '<a href="' . JRoute::_('index.php?option=com_raidplanner') . '" class="btn btn-primary">' . JText::_( 'COM_RAIDPLANNER' ) . '</a>';
 		echo '</div>';
 	}
 
