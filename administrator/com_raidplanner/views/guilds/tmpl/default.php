@@ -11,6 +11,10 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+if (RaidPlannerHelper::getJVersion() < '3.0') {
+	RaidPlannerHelper::fixBootstrap();
+}
+
 $function	= JRequest::getCmd('function', '');
 ?>
 <form action="index.php" method="post" name="adminForm" id="adminForm">
@@ -28,10 +32,12 @@ $function	= JRequest::getCmd('function', '');
 				<i class="icon-remove"></i>
 			</button>
 		</div>
+<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
 		<div class="btn-group pull-right hidden-phone">
 			<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
 			<?php echo $this->pagination->getLimitBox(); ?>
 		</div>
+<?php endif; ?>
 	</div>
     <table class="adminlist table table-striped">
 		<thead>

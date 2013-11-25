@@ -10,8 +10,11 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
-?>
 
+if (RaidPlannerHelper::getJVersion() < '3.0') {
+	RaidPlannerHelper::fixBootstrap();
+}
+?>
 <form action="index.php" method="post" name="adminForm" id="adminForm" class="form-horizontal">
 	<fieldset class="adminform">
 		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>
@@ -30,6 +33,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 						<option value="<?php echo $plugin;?>" <?php if ($plugin==$this->guild->sync_plugin) { echo "selected=\"selected\" ";}?>><?php echo $plugin;?></option>
 					<?php endforeach; ?>
 				</select>
+			</div>
 		</div>
 	</fieldset>
 	<fieldset class="adminform">

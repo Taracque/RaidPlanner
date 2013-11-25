@@ -33,6 +33,33 @@ class RaidPlannerHelper
 		
 	);
 
+	/* Fixes bootstrap css elements in Joomla 2.5 */
+	public static function fixBootstrap()
+	{
+		if (self::getJVersion() < '3.0')
+		{
+			$style = '
+						div.btn-group.pull-left { float: left; }
+						div.btn-group.pull-right { float: right; }
+						div.btn-group div { float: left;}
+						div.btn-group label { float: left; margin: 0 10px; }
+						a.btn { display: inline-block; cursor: pointer; padding: 4px 12px; border-color: #e6e6e6 #e6e6e6 #bfbfbf; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05); }
+						div.input-append { float: left; }
+						span.add-on { float: left; display: inline-block; margin: 5px 5px 5px 0; }
+						div.btn-group input, div.btn-group select, div.btn-group img, div.btn-group label { float: left; }
+						';
+			JFactory::getDocument()->addStyleDeclaration( $style );
+		
+			$script = '
+				window.addEvent("domready",function() {
+					$$("i.icon-search").each( function(el) { el.getParent().set("html","' . JText::_( 'JSEARCH_FILTER_SUBMIT' ) . '"); } );
+					$$("i.icon-remove").each( function(el) { el.getParent().set("html","' . JText::_( 'JSEARCH_FILTER_CLEAR' ) . '"); } );
+				});
+					';
+			JFactory::getDocument()->addScriptDeclaration( $script );
+		}
+	}
+
 	public static function getGuildPlugin( $guild_id )
 	{
 		$db = JFactory::getDBO();
@@ -45,16 +72,16 @@ class RaidPlannerHelper
 				JEventDispatcher::getInstance()->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
 				
 				return true;
-			} else {
+			} elseif (JFolder::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin ) && JFile::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' )) {
 				/* old way loading, DEPRECATED will be removed as of 0.9 */
 				$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
 				JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
-			}
-			if ( class_exists( $plug_class ) ) {
-				return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
-			} else {
-				JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
-				return null;
+				if ( class_exists( $plug_class ) ) {
+					return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
+				} else {
+					JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
+					return null;
+				}
 			}
 		} else {
 			return null;
@@ -97,8 +124,11 @@ class RaidPlannerHelper
 		foreach ($j_plugs as $jplug) {
 			$plugins[] = $jplug->name;
 		}
-		/* load older version of plugins for backward compatibility */
-		$plugins = array_merge($plugins, JFolder::folders( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins', '.', false ) );
+		if (JFolder::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins' ) )
+		{
+			/* load older version of plugins for backward compatibility DEPRECATED will be removed as of 0.9 */
+			$plugins = array_merge($plugins, JFolder::folders( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins', '.', false ) );
+		}
 		
 		return $plugins;
 	}

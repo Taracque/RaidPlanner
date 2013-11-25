@@ -10,8 +10,11 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-JHtml::_('bootstrap.tooltip');
-JHtml::_('formbehavior.chosen', 'select');
+if (RaidPlannerHelper::getJVersion() >= '3.0') {
+	JHtml::_('formbehavior.chosen', 'select');
+} else {
+	RaidPlannerHelper::fixBootstrap();
+}
 ?>
 <script type="text/javascript">
 var colors = [

@@ -64,7 +64,7 @@
 	<administration>
 		<!-- Administration Menu Section -->
 		<!-- Name to display at the component menu. Should be the same as the extension commercial name -->
-		<menu img="media/com_raidplanner/images/raidplanner-favicon.png">COM_RAIDPLANNER</menu>
+		<menu img="../media/com_raidplanner/images/raidplanner-favicon.png">COM_RAIDPLANNER</menu>
 		<submenu>
 			<menu view="raids">COM_RAIDPLANNER_RAIDS</menu>
 			<menu view="guilds">COM_RAIDPLANNER_GUILDS</menu>
@@ -91,8 +91,6 @@
 			<folder>controllers</folder>
 			<folder>tables</folder>
 			<folder>install</folder>
-			<folder>plugins</folder>
-			<folder>themes</folder>
 		</files>
 		<!-- Administration Language File Copy Section -->
 		<languages folder="administrator/language">

@@ -12,8 +12,11 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 $dateformat = RaidPlannerHelper::shortDateFormat();
-?>
 
+if (RaidPlannerHelper::getJVersion() < '3.0') {
+	RaidPlannerHelper::fixBootstrap();
+}
+?>
 <form action="index.php" method="post" name="adminForm" id="adminForm" class="form-horizontal">
 	<fieldset class="adminform">
 		<legend><?php echo JText::_( 'JDETAILS' ); ?></legend>

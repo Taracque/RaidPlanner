@@ -9,6 +9,10 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
+if (RaidPlannerHelper::getJVersion() < '3.0') {
+	RaidPlannerHelper::fixBootstrap();
+}
 ?>
 <div class="row-fluid">
 	<div class="well well-small">

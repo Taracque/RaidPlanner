@@ -10,6 +10,10 @@
 -------------------------------------------------------------------------*/
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
+if (RaidPlannerHelper::getJVersion() < '3.0') {
+	RaidPlannerHelper::fixBootstrap();
+}
 ?>
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <div id="editcell">

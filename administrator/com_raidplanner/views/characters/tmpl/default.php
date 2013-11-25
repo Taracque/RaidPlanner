@@ -11,8 +11,11 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-JHtml::_('bootstrap.tooltip');
-JHtml::_('formbehavior.chosen', 'select');
+if (RaidPlannerHelper::getJVersion() >= '3.0') {
+	JHtml::_('formbehavior.chosen', 'select');
+} else {
+	RaidPlannerHelper::fixBootstrap();
+}
 ?>
 <form action="<?php echo JRoute::_( 'index.php' );?>" method="post" name="adminForm" id="adminForm">
 	<div id="filter-bar" class="btn-toolbar">
@@ -43,10 +46,12 @@ JHtml::_('formbehavior.chosen', 'select');
 				<i class="icon-remove"></i>
 			</button>
 		</div>
+<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
 		<div class="btn-group pull-right hidden-phone">
 			<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
 			<?php echo $this->pagination->getLimitBox(); ?>
 		</div>
+<?php endif; ?>
 	</div>
 	<div class="clearfix"> </div>
     <table class="adminlist table table-striped">
