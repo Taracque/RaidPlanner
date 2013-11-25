@@ -255,7 +255,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 						$oReturn = '';
 						foreach ($chars as $char) {
-							$oReturn .= '<span class="' . $char['class_css'] . ' ' . $char['race_css'] . '>' . $char['char_name'] . '<span>';
+							$oReturn .= '<span class="' . $char['class_css'] . ' ' . $char['race_css'] . '">' . $char['char_name'] . '<span>';
 							if ($char['guild_name']!='') {
 								$oReturn .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
 							}
