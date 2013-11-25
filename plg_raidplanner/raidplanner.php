@@ -168,7 +168,7 @@ class plgUserRaidPlanner extends JPlugin
 			$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 			$ret = '';
 			foreach ($chars as $char) {
-				$ret .= $char['char_name'];
+				$ret .= '<span class="' . $char['class_css'] . ' ' . $char['race_css'] . '>' . $char['char_name'] . '<span>';
 				if ($char['guild_name']!='') {
 					$ret .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
 				}
