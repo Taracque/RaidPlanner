@@ -7,7 +7,7 @@
 		<fieldset name="basic" label="JOPTIONS" addfieldpath="/administrator/components/com_raidplanner/models/fields">
 			<field name="guild_id" type="modal_guilds"
 				description="COM_RAIDPLANNER_GUILD_DESC"
-				label="COM_RAIDPLANNER_GUILD_DESC"
+				label="COM_RAIDPLANNER_GUILD"
 				required="true"
 			/>
 			<field name="initial_sort" type="list" default="0" label="COM_RAIDPLANNER_INITIAL_SORT" description="COM_RAIDPLANNER_INITIAL_SORT_DESCRIPTION">
