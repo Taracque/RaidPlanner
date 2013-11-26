@@ -1,6 +1,8 @@
 .rp_container,.rp_header_container {
 	min-width: 480px;
 	width: 100%;
+	border-spacing:0;
+	border-collapse:collapse;
 }
 .rp_container td,.rp_header_container td {
 	vertical-align: top;
