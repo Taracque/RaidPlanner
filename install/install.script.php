@@ -264,6 +264,10 @@ class com_raidplannerInstallerScript
 			}
 			JFolder::delete( JPATH_SITE . '/images/raidplanner' ); 
 		}
+		/* removing manifest.xml file, if exists */
+		if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_raidplanner/manifest.xml')) {
+			JFile::delete( JPATH_ADMINISTRATOR . '/components/com_raidplanner/manifest.xml' );
+		}
 		echo '<h2>RaidPlanner What\'s new?</h2>';
 		echo '<iframe frameborder="0" width="800px" height="200px" style="border:none;" src="http://taracque.hu/static/raidplanner/whats-new.php"></iframe><br>';
 		echo '<a href="' . JRoute::_('index.php?option=com_raidplanner') . '" class="btn btn-primary">' . JText::_( 'COM_RAIDPLANNER' ) . '</a>';
