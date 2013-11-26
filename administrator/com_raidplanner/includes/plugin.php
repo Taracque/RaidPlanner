@@ -66,4 +66,35 @@ class RaidPlannerPlugin
 	{
 		return false;
 	}
+	
+	/**
+	* Mimic JDispatcher->trigger function for compatibilty reasons
+	*/
+	public function trigger($event, $args = array())
+	{
+		$translate = array(
+			'onRPInitGuild'			=>	'construct',
+			'onRPSyncGuild'			=>	'doSync',
+			'onRPGetCharacterLink'	=>	'characterLink',
+			'onRPGetGuildHeader'	=>	'guildHeader',
+			'onRPLoadCSS'			=>	'loadCSS'
+		);
+		if (isset($translate[$event])) {
+			$method_name = '';
+			switch ($event) {
+				case 'onRPSyncGuild' :
+					if (($args[1] == 0) || ($this->needSync($args[1]) )) {
+						$method_name = 'doSync';
+					}
+				break;
+				default :
+					$method_name = $translate[$event];
+				break;
+			}
+			if ( ($method_name != '') && (method_exists($this, $method_name)) ) {
+				return call_user_func_array( array( $this, $method_name), $args );
+			}
+		}
+		return null;
+	}
 }

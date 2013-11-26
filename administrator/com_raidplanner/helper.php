@@ -30,8 +30,8 @@ class RaidPlannerHelper
 		'raidplanner.edit_raids_any'	=>	'raidplanner.edit',
 		'raidplanner.delete_raid_any'	=>	'raidplanner.delete',
 		'raidplanner.delete_raid_own'	=>	'raidplanner.delete.own',
-		
 	);
+	private static $rp_plugin = null;
 
 	/* Fixes bootstrap css elements in Joomla 2.5 */
 	public static function fixBootstrap()
@@ -62,29 +62,40 @@ class RaidPlannerHelper
 
 	public static function getGuildPlugin( $guild_id )
 	{
-		$db = JFactory::getDBO();
-		$query = "SELECT guild_id, guild_name, sync_plugin, params FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
-		$db->setQuery($query);
-		if ($guild = $db->loadObject()) {
-			$guild->params = json_decode( $guild->params, true );
-			if (JPluginHelper::importPlugin('raidplanner', $guild->sync_plugin)) {
-				/* Plugin loaded */
-				JEventDispatcher::getInstance()->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
-				
-				return true;
-			} elseif (JFolder::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin ) && JFile::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' )) {
-				/* old way loading, DEPRECATED will be removed as of 0.9 */
-				$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
-				JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
-				if ( class_exists( $plug_class ) ) {
-					return new $plug_class( $guild_id, $guild->guild_name, $guild->params );
-				} else {
-					JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
-					return null;
-				}
-			}
+		if ((self::$rp_plugin != null) && (self::$rp_plugin->guild_id == $guild_id)) {
+			return self::$rp_plugin;
 		} else {
-			return null;
+			$db = JFactory::getDBO();
+			$query = "SELECT guild_id, guild_name, sync_plugin, params FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
+			$db->setQuery($query);
+			if ($guild = $db->loadObject()) {
+				$guild->params = json_decode( $guild->params, true );
+				if (JPluginHelper::importPlugin('raidplanner', $guild->sync_plugin)) {
+					/* Plugin loaded */
+					if (self::getJVersion() < '3.0') {
+						$plugin = JEventDispatcher::getInstance();
+					} else {
+						$plugin = JDispatcher::getInstance();
+					}
+					$plugin->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
+				
+					return $plugin;
+				} elseif (JFolder::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin ) && JFile::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' )) {
+					/* old way loading, DEPRECATED will be removed as of 0.9 */
+					$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
+					JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
+					if ( class_exists( $plug_class ) ) {
+						self::$rp_plugin = new $plug_class( $guild_id, $guild->guild_name, $guild->params );
+						
+						return self::$rp_plugin;
+					} else {
+						JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
+						return null;
+					}
+				}
+			} else {
+				return null;
+			}
 		}
 	}
 
@@ -92,12 +103,7 @@ class RaidPlannerHelper
 	{
 		if ($plugin = self::getGuildPlugin( $guild_id ) )
 		{
-			if ($plugin === true) {
-				JEventDispatcher::getInstance()->trigger( 'onRPLoadCSS' );
-			} else {
-				/* old way, DEPRECATED will be removed as of 0.9 */
-				return $plugin->loadCSS();
-			}
+			return $plugin->trigger( 'onRPLoadCSS' );
 		}
 		
 		return false;
@@ -107,13 +113,7 @@ class RaidPlannerHelper
 	{
 		if ($plugin = self::getGuildPlugin( $guild_id ) )
 		{
-			if ($plugin === true) {
-				JEventDispatcher::getInstance()->trigger( 'onRPSyncGuild' , array( $showOkStatus, $sync_interval, true ) );
-			} elseif ( ($plugin->provide_sync) && ( ( $sync_interval == 0 ) || ( $plugin->needSync($sync_interval) ) ) )
-			{
-				/* old way, DEPRECATED will be removed as of 0.9 */
-				$plugin->doSync( $showOkStatus );
-			}
+			$plugin->trigger( 'onRPSyncGuild' , array( $showOkStatus, $sync_interval, true ) );
 		}
 	}
 	
