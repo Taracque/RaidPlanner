@@ -65,10 +65,13 @@ class RaidPlannerModelRaidPlanner extends JModelLegacy
 			$date = JHTML::_('date', $row->start_time, RaidPlannerHelper::sqlDateFormat() );
 			/* get the attendants if requested */
 			if ($attendants) {
-				$eventmodel = JModelLegacy::getInstance( 'event', 'RaidPlannerModel' );
-				$eventmodel->setState( 'id', $row->raid_id );
-				
-				$row->attendants = $eventmodel->getAttendants( $row->raid_id );
+				$query = "SELECT c.char_name
+						FROM #__raidplanner_signups AS s
+						LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
+						WHERE s.raid_id=".intval($row->raid_id)." AND s.queue=1
+						ORDER BY s.confirmed DESC, c.char_name ASC";
+		    	$db->setQuery($query);
+				$row->attendants = $db->loadResultArray();
 
 			}
     		$result[$date][] = $row;

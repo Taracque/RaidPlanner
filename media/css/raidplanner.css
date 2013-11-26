@@ -337,6 +337,8 @@ tr.rp_header {
 	background-color: black;
 	color: white;
 	width: 300px;
+	transition: all 2s;
+	-webkit-transition: all 2s;
 }
 
 .rp_extended_tooltip img {
