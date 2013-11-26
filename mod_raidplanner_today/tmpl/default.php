@@ -28,7 +28,7 @@ $use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
 	<h3><?php echo JText::_('COM_RAIDPLANNER_PENDING_INVITATIONS');?></h3>
 	<ul>
 	<?php foreach($invitationAlerts as $invitation):?>
-		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $invitation->raid_id . '&Itemid=' . $itemid);?>" class="modal"><?php echo $invitation->location . " (" . JHTML::_('date', $invitation->start_time, RaidPlannerHelper::shortDateFormat() ) . ")"; ?></a></li>
+		<li><a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent=' . $invitation->raid_id . '&Itemid=' . $itemid);?>"><?php echo $invitation->location . " (" . JHTML::_('date', $invitation->start_time, RaidPlannerHelper::shortDateFormat() ) . ")"; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
 </div>
