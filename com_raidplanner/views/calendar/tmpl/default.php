@@ -103,7 +103,7 @@ window.addEvent('domready',function(){
 												<b><?php echo JText::_('COM_RAIDPLANNER_RAID_LEADER');?>:</b> <?php echo $event->raid_leader; ?><br />
 											<?php if ($event->attendants) :?>
 												<b><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></b> (<?php echo count($event->attendants);?>):
-												<?php echo join("," $event->attendants); ?>
+												<?php echo join(",", $event->attendants); ?>
 											<?php endif; ?>
 											</small>
 										</div>
