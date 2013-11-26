@@ -23,6 +23,10 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="show_tooltips" type="radio" default="0" class="btn-group btn-group-yesno" label="COM_RAIDPLANNER_SHOW_TOOLTIPS" description="COM_RAIDPLANNER_SHOW_TOOLTIPS_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 			<field name="macro_format" type="text" default="/invite %c" label="COM_RAIDPLANNER_INVITE_MACRO_FORMAT" description="COM_RAIDPLANNER_INVITE_MACRO_FORMAT_DESCRIPTION" />
 		</fieldset>
 	</fields>
