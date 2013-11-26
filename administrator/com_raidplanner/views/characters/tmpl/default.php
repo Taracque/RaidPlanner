@@ -53,7 +53,7 @@ if (RaidPlannerHelper::getJVersion() >= '3.0') {
 		</div>
 <?php endif; ?>
 	</div>
-	<div class="clearfix"> </div>
+	<div class="clearfix clr"></div>
     <table class="adminlist table table-striped">
     <thead>
         <tr>
