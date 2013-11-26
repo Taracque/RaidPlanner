@@ -189,6 +189,6 @@ window.addEvent('domready', function() {
 		</button>
 	</div>
 </div>
-<div class="clearfix clr"></div>
-<table class="adminlist" id="chart">
+<div class="clearfix clr clear"></div>
+<table style="width:100%" id="chart">
 </table>
