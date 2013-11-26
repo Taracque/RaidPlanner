@@ -34,7 +34,7 @@ class RaidPlannerHelper
 	private static $rp_plugin = null;
 
 	/* Fixes bootstrap css elements in Joomla 2.5 */
-	public static function fixBootstrap()
+	public static function fixBootstrap( $direct_write = false )
 	{
 		if (self::getJVersion() < '3.0')
 		{
@@ -48,16 +48,33 @@ class RaidPlannerHelper
 						div.input-append { float: left; }
 						span.add-on { float: left; display: inline-block; margin: 5px 5px 5px 0; }
 						div.btn-group input, div.btn-group select, div.btn-group img, div.btn-group label { float: left; }
+						div.controls { display:inline-block; }
+						fieldset.radio.btn-group { margin: 8px 0; padding: 0; }
+						fieldset.radio.btn-group input[type=radio] { display:none; margin:10px; }
+						fieldset.radio.btn-group input[type=radio] + label { display:inline-block; margin:-2px; padding: 1px 8px; background-color: #e7e7e7; border: 1px solid #bbb; }
+						fieldset.radio.btn-group label i { font-style: normal; font-weight:bold; }
+						fieldset.radio.btn-group label i.icon-minus:after { content: "-"; }
+						fieldset.radio.btn-group label i.icon-question:after { content: "?"; }
+						fieldset.radio.btn-group label i.icon-plus:after { content: "+"; }
 						';
-			JFactory::getDocument()->addStyleDeclaration( $style );
-		
-			$script = '
-				window.addEvent("domready",function() {
-					$$("i.icon-search").each( function(el) { el.getParent().set("html","' . JText::_( 'JSEARCH_FILTER_SUBMIT' ) . '"); } );
-					$$("i.icon-remove").each( function(el) { el.getParent().set("html","' . JText::_( 'JSEARCH_FILTER_CLEAR' ) . '"); } );
-				});
-					';
-			JFactory::getDocument()->addScriptDeclaration( $script );
+			if (!$direct_write) {
+				JFactory::getDocument()->addStyleDeclaration( $style );
+			} else {
+				echo '<style type="text/css">' . $style . '</style>' . "\n";
+			}
+			/* script not added in direct write, as it will not run */
+			if (!$direct_write) {
+				$script = '
+					window.addEvent("domready",function() {
+						$$("i.icon-search").each( function(el) { el.getParent().set("html","' . JText::_( 'JSEARCH_FILTER_SUBMIT' ) . '"); } );
+						$$("i.icon-remove").each( function(el) { el.getParent().set("html","' . JText::_( 'JSEARCH_FILTER_CLEAR' ) . '"); } );
+						$$("i.icon-plus").each( function(el) { el.getParent().set("html","+"); } );
+						$$("i.icon-question").each( function(el) { el.getParent().set("html","?"); } );
+						$$("i.icon-minus").each( function(el) { el.getParent().set("html","-"); } );
+					});
+				';
+				JFactory::getDocument()->addScriptDeclaration( $script );
+			}
 		}
 	}
 

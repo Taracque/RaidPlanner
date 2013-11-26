@@ -12,6 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 $dateFormat = RaidPlannerHelper::shortDateFormat();
+RaidPlannerHelper::fixBootstrap( true );
 $hasChars = !empty($this->characters);
 ?>
 <table class="rp_header_container">
@@ -381,6 +382,13 @@ $hasChars = !empty($this->characters);
 			<form action="index.php" method="post">
 				<table class="table-striped">
 					<thead>
+			<?php if ($this->canRate) : ?>
+						<tr>
+							<th colspan="2">
+								<?php echo JText::_( 'COM_RADIPLANNER_RATING_EXPLANATION' ); ?>
+							</th>
+						</tr>
+			<?php endif; ?>
 						<tr>
 							<th><?php echo JText::_('COM_RAIDPLANNER_CHARACTER_NAME');?></th>
 							<th><?php echo JText::_('COM_RAIDPLANNER_RATING');?></th>
@@ -388,24 +396,17 @@ $hasChars = !empty($this->characters);
 					</thead>
 					<tbody>
 						<tr>
-							<td colspan="2">
-								<?php echo JText::_( 'COM_RADIPLANNER_RATING_EXPLANATION' ); ?>
-							</td>
-						</tr>
-						<tr>
 							<td><strong><?php echo JText::_( 'COM_RAIDPLANNER_RAID_RATING' ); ?></td>
 							<td>
 			<?php
-				$rating = $this->ratings[$attendant->character_id]->rating;
-				$red = 0;
-				$green = 0;
+				$rating = @$this->ratings[0]->rating;
 				if ($rating > 0) {
-					$green = (int) ($rating * 255);
+					$green = (int) 255; $red = ((1-$rating) * 255); $blue = $red;
 				} else {
-					$red = (int) ( abs($rating) * 255);
+					$red = (int) 255; $green = ( (1-abs($rating)) * 255); $blue = $green;
 				}
 			?>
-								<div class="rp_rating" style="background-color:rgb(<?php echo $red;?>,<?php echo $green; ?>,0);">
+								<div class="rp_rating" style="background-color:rgb(<?php echo $red;?>,<?php echo $green; ?>,<?php echo $blue; ?>);">
 									<span><?php echo (100*$rating)."%";?></span>
 								</div>
 			<?php if ($this->canRate) : ?>
@@ -431,16 +432,14 @@ $hasChars = !empty($this->characters);
 							</td>
 							<td>
 			<?php
-				$rating = $this->ratings[$attendant->character_id]->rating;
-				$red = 0;
-				$green = 0;
+				$rating = @$this->ratings[$attendant->character_id]->rating;
 				if ($rating > 0) {
-					$green = (int) ($rating * 255);
+					$green = (int) 255; $red = ((1-$rating) * 255); $blue = $red;
 				} else {
-					$red = (int) ( abs($rating) * 255);
+					$red = (int) 255; $green = ( (1-abs($rating)) * 255); $blue = $green;
 				}
 			?>
-								<div class="rp_rating" style="background-color:rgb(<?php echo $red;?>,<?php echo $green; ?>,0);">
+								<div class="rp_rating" style="background-color:rgb(<?php echo $red;?>,<?php echo $green; ?>,<?php echo $blue; ?>);">
 									<span><?php echo (100*$rating)."%";?></span>
 								</div>
 			<?php if ($this->canRate) : ?>
