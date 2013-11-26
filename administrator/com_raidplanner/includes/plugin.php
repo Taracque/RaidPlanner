@@ -84,6 +84,11 @@ class RaidPlannerPlugin
 			switch ($event) {
 				case 'onRPSyncGuild' :
 					if (($args[1] == 0) || ($this->needSync($args[1]) )) {
+						if (isset($args[2])) {
+							$args[0] = $args[2];
+						} else {
+							$args[0] = false;
+						}
 						$method_name = 'doSync';
 					}
 				break;

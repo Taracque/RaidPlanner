@@ -73,9 +73,9 @@ class RaidPlannerHelper
 				if (JPluginHelper::importPlugin('raidplanner', $guild->sync_plugin)) {
 					/* Plugin loaded */
 					if (self::getJVersion() < '3.0') {
-						$plugin = JEventDispatcher::getInstance();
-					} else {
 						$plugin = JDispatcher::getInstance();
+					} else {
+						$plugin = JEventDispatcher::getInstance();
 					}
 					$plugin->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
 				
