@@ -71,6 +71,8 @@ class RaidPlannerHelper
 						$$("i.icon-plus").each( function(el) { el.getParent().set("html","+"); } );
 						$$("i.icon-question").each( function(el) { el.getParent().set("html","?"); } );
 						$$("i.icon-minus").each( function(el) { el.getParent().set("html","-"); } );
+						$$("i.icon-publish").each( function(el) { el.getParent().set("html","<span class=\"jgrid\"><span class=\"state publish\"></span></span>"); } );
+						$$("i.icon-unpublish").each( function(el) { el.getParent().set("html","<span class=\"jgrid\"><span class=\"state unpublish\"></span></span>"); } );
 					});
 				';
 				JFactory::getDocument()->addScriptDeclaration( $script );
