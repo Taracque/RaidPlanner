@@ -45,7 +45,7 @@ class RaidPlannerViewGuild extends JViewLegacy
 		$plugin_params = array();
 		if ( ($guild->sync_plugin != '') && ($plugin = RaidPlannerHelper::getGuildPlugin( $guild->guild_id )) ) {
 			$plugin_params = RaidPlannerHelper::getSyncPluginParams( $guild->sync_plugin );
-			$this->assign( 'do_sync', true );
+			$this->assign( 'do_sync', $plugin->trigger( 'onRPBeforeSync' ) );
 			/* FIXME, don't know if this plugin provide sync abilities */
 		} else {
 			$this->assign( 'do_sync', false );

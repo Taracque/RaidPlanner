@@ -90,11 +90,11 @@ class RaidPlannerHelper
 						return self::$rp_plugin;
 					} else {
 						JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
-						return null;
+						return new RaidPlannerPlugin( $guild_id, $guild->guild_name, $guild->params );
 					}
 				}
 			} else {
-				return null;
+				return new RaidPlannerPlugin( $guild_id );
 			}
 		}
 	}
@@ -137,7 +137,7 @@ class RaidPlannerHelper
 	{
 		$params = array();
 		
-		/* FIXME: Plugin name must be sanitized */
+		$plugin = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin);
 		$plug_xml_file = JPATH_SITE . '/plugins/raidplanner/' . $plugin . '/' . $plugin .'.xml';
 		if (!JFile::exists( $plug_xml_file )) {
 			// old type plugin, DEPRECATED, will be removed at 0.9
