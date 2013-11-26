@@ -73,7 +73,7 @@ URL:<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalev
 
 BEGIN:VALARM
 ACTION:AUDIO
-TRIGGER;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->invite_time );?>
+TRIGGER;VALUE=DATE-TIME:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->invite_time );?>Z
 
 REPEAT:1
 END:VALARM
