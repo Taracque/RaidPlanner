@@ -396,17 +396,28 @@ class RaidPlannerHelper
 			if ($user_id) {
 				$db = JFactory::getDBO();
 				$date = RaidPlannerHelper::getDate();
-				
+				/* GET USER VACATION FIRST */
+				$user = JUser::getInstance( $result->id );
+				$vac = $user->getParam('vacation', '');
+				$vacs = explode("\n", $vac);
+
 				// Joomla ACL
 				$query = "SELECT r.raid_id,r.location,r.start_time FROM #__raidplanner_raid AS r"
 						." LEFT JOIN #__user_usergroup_map AS p ON p.group_id = r.invited_group_id"
-						." LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id"
-						." LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id AND c.profile_id = p.user_id"
+						." LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id = r.raid_id AND c.character_id = s.character_id AND c.profile_id = p.user_id)"
 						." WHERE r.invited_group_id>0"
 						." AND s.raid_id IS NULL"
 						." AND p.user_id = ".intval($user_id)
 						." AND DATE_SUB(r.start_time,interval r.freeze_time minute) > '" . self::date2Sql($date) . "'"
 						." AND DATE_SUB(r.start_time,interval (r.freeze_time + " . intval($time_before) . ") minute) < '" . self::date2Sql($date) . "'";
+				/* exclude vacation dates */
+				foreach ($vacs as $vac)
+				{
+					$vac_period = explode(" ", $vac);
+					$vac_period[0] = preg_replace('/[^0-9-]/i', '', $vac_period[0]);
+					$vac_period[1] = preg_replace('/[^0-9-]/i', '', $vac_period[1]);
+					$query .= "\nAND NOT (r.start_time>='" . $vac_period[0] . "' AND r.start_time<='" . $vac_period[1] . "')";
+				}
 
 				$db->setQuery( $query );
 				self::$invite_alert_requested = true;
