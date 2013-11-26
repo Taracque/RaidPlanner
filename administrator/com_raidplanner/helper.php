@@ -43,7 +43,8 @@ class RaidPlannerHelper
 						div.btn-group.pull-right { float: right; }
 						div.btn-group div { float: left;}
 						div.btn-group label { float: left; margin: 0 10px; }
-						a.btn { display: inline-block; cursor: pointer; padding: 4px 12px; border-color: #e6e6e6 #e6e6e6 #bfbfbf; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05); }
+						a.btn { display: inline-block; cursor: pointer; padding: 4px 12px; border-width: 1px; border-style: solid; border-color: #e6e6e6 #e6e6e6 #bfbfbf; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05); background: #fff; text-decoration: none; }
+						a.btn:hover { background: #fff; border-color: #E8F6FE; }
 						div.input-append { float: left; }
 						span.add-on { float: left; display: inline-block; margin: 5px 5px 5px 0; }
 						div.btn-group input, div.btn-group select, div.btn-group img, div.btn-group label { float: left; }
