@@ -492,7 +492,7 @@ class RaidPlannerHelper
 
 	public static function loadJSFramework( $load_extras = false )
 	{
-		JHTML::_('behavior.framework',  $load_extras);
+		JHtml::_('behavior.framework',  $load_extras);
 	}
 
 	public static function downloadData( $url )

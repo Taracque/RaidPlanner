@@ -25,8 +25,6 @@ class RaidPlannerViewCalendar extends JViewLegacy
 {
     function display($tpl = null)
     {
-		JHTML::script('com_raidplanner/ToolTip.js', false, true);
-
 		$eventmodel = &$this->getModel('event');
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JSite::getMenu()->getActive()->id;
@@ -47,7 +45,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$is_mobile = RaidPlannerHelper::detectMobile();
 		if ((!$is_mobile) && ($params['use_modal']==1))
 		{
-			JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
+			JHtml::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
 		}
 
 		if (RaidPlannerHelper::getPermission('view_calendar') != 1) {

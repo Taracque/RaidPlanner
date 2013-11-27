@@ -12,6 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.utilities.date');
+JHtml::_('behavior.tooltip');
 ?>
 <script type="text/javascript">
 <?php if ( (JRequest::getVar('modalevent')) && ($this->canView) ) : ?>
@@ -96,32 +97,23 @@ window.addEvent('domready',function(){
 										<?php else: ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 										<?php endif; ?>
-										<?php if ($this->params['show_tooltips']==1): ?>
-										<div class="rp_extended_tooltip" id="rp_tooltip_<?php echo $event->raid_id;?>" style="display:none;">
-											<img src="<?php echo JURI::base()."media/com_raidplanner/raid_icons/".$event->icon_name;?>" alt="<?php echo $event->location; ?>" style="float:left;"/>
-											<b><?php echo ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description; ?></b><br />
-											<small>
-												<b><?php echo JText::_('COM_RAIDPLANNER_RAID_LEADER');?>:</b> <?php echo $event->raid_leader; ?><br />
-											<?php if ($event->attendants) :?>
-												<b><?php echo JText::_('COM_RAIDPLANNER_STATUSES_1');?></b> (<?php echo count($event->attendants);?>):
-												<?php echo join(", ", $event->attendants); ?>
-											<?php endif; ?>
-											</small>
-										</div>
-										<script type="text/javascript">
-											window.addEvent('domready',function() {
-												document.id('event_<?php echo $event->raid_id;?>').addEvent('mouseenter',function(){
-													ToolTip.instance(document.id('event_<?php echo $event->raid_id;?>'),document.id('rp_tooltip_<?php echo $event->raid_id;?>').clone().setStyle('display')).show();
-												});
-											});
-										</script>
+										<?php if ($this->params['show_tooltips']==1) : ?>
+										<?php
+											$tooltipTitle = '' . ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description . '';
+											$tooltip = '<img src="' . JURI::base() . "media/com_raidplanner/raid_icons/" . $event->icon_name . '" alt="' . $event->location . '" style="float:left; margin:0 5px 5px 0;"/>';
+											$tooltip.= '<small><b>' . JText::_('COM_RAIDPLANNER_RAID_LEADER') . ':</b> ' . $event->raid_leader . '<br />';
+											if ($event->attendants) {
+												$tooltip.= '<b>' . JText::_('COM_RAIDPLANNER_STATUSES_1') . '</b> (' . count($event->attendants) . '): ' . join(", ", $event->attendants);
+											}
+											$tooltip.= '</small>';
+											echo JHTML::tooltip( $tooltip, $tooltipTitle, '', '<strong>' . JHTML::_('date', $event->start_time, $this->timeformat ) . '</strong> ' . $event->location );
+										?>
+										<?php else: ?>
+										<?php echo JHTML::_('date', $event->start_time, $this->timeformat );?></strong> <?php echo $event->location;?>
 										<?php endif; ?>
 									<?php else: ?>
-									<a>
+									<a><strong><?php echo JHTML::_('date', $event->start_time, $this->timeformat );?></strong> <?php echo $event->location;?>
 									<?php endif; ?>
-										<strong><?php
-											echo JHTML::_('date', $event->start_time, $this->timeformat );
-										?></strong> <?php echo $event->location;?>
 									</a>
 								</div>
 					<?php
