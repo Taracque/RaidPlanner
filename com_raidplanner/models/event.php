@@ -502,8 +502,19 @@ class RaidPlannerModelEvent extends JModelLegacy
 				if ($profiles = $db->loadResult()) {
 					$user_ids = json_decode($profiles);
 					$can_rate = !in_array($user_id, $user_ids);
-				} else {	// $profiles is empty, no rates yet… 
+				} else {	// $profiles is empty, no rates yet…
 					$can_rate = true;
+				}
+				if ($can_rate) {
+					$query = "SELECT queue
+								FROM #__raidplanner_signups AS s
+								LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
+								WHERE s.raid_id = ".intval($raid_id)." AND c.profile_id = " . $user_id;
+					$db->setQuery($query);
+					$queue = $db->loadResult();
+					if ( $queue <= 0) {
+						$can_rate = false;
+					}
 				}
 			}
 		}
