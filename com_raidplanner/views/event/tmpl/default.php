@@ -426,7 +426,7 @@ $hasChars = !empty($this->characters);
 			<?php foreach ($this->attendants as $attendant) : ?>
 						<tr>
 							<td class="<?php echo $attendant->class_css;?>">
-								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
+								<a href="#" onclick="javascript:rpShowTooltip('rate_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('rate_char_name_<?php echo $attendant->character_id;?>');" id="rate_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
 									<strong><?php echo $attendant->char_name;?></strong>
 								</a>
 							</td>
