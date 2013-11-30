@@ -33,7 +33,7 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			3	=>	'SUM(IF(s.queue=-1,1,0)) AS not_attending',
 			4	=>	'SUM(IF(s.confirmed=1,1,0)) AS confirmed',
 			5	=>	'COUNT(r.raid_id) AS raids',			// FIXME: Invited raid count
-			6	=>	'(100 * SUM(rt.rate_value)/SUM(rt.rate_count)) AS rating'
+			6	=>	'ROUND(100 * SUM(rt.rate_value)/SUM(rt.rate_count)) AS rating'
 		);
 		$stat_y = "c.char_name";
 		$titles = array( 
