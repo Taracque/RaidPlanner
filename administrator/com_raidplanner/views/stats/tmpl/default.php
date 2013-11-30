@@ -74,9 +74,10 @@ function drawBars()
 		});
 		
 		/* draw the bars itself */
-		total = bars[bars.length-2];
+		total = bars[bars.length-3];
 		delete bars[bars.length-1];
 		delete bars[bars.length-2];
+		delete bars[bars.length-3];
 		total_div = new Element('div',{ style : 'width:' + Math.round(100*total/biggest) + '%;height:16px;overflow:hidden;position:relative;'});
 		bars.each(function(bar,idx){
 			if (colors[idx+1]!='') {
