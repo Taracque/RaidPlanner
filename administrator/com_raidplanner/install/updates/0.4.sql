@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_rating` (
   `raid_id` int(10) unsigned NOT NULL DEFAULT '0',
   `character_id` int(10) unsigned NOT NULL DEFAULT '0',
   `rate_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `rate_value` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_value` int(10) NOT NULL DEFAULT '0',
   `rated_by` text NOT NULL,
   PRIMARY KEY (`rating_id`),
   KEY `raid_id` (`raid_id`),
@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_rating` (
 
 ALTER TABLE `#__raidplanner_signups` DROP INDEX `profile_id`;
 ALTER TABLE `#__raidplanner_signups` DROP `profile_id`;
-ALTER TABLE `#__raidplanner_signups` ADD INDEX (  `character_id` );
+ALTER TABLE `#__raidplanner_signups` ADD INDEX ( `character_id` );
