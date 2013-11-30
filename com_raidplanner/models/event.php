@@ -350,20 +350,24 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$user_id = $user->id;
 
 			foreach ($rates as $char_id => $rate) {
-				$query = "SELECT  rating_id, rated_by FROM #__raidplanner_rating WHERE raid_id = " . $raid_id . " AND character_id=" . $char_id;
+				$query = "SELECT queue FROM #__raidplanner_signups WHERE raid_id = " . $raid_id . " AND character_id=" . $char_id;
 				$db->setQuery( $query );
-				if ( $result = $db->loadObject() ) {
-					$ratedby = json_decode( $result->rated_by );
-					$ratedby[] = (int) $user_id;
+				if ( ( $queue = $db->loadResult() ) && ( $queue > 0) ) {
+					$query = "SELECT  rating_id, rated_by FROM #__raidplanner_rating WHERE raid_id = " . $raid_id . " AND character_id=" . $char_id;
+					$db->setQuery( $query );
+					if ( $result = $db->loadObject() ) {
+						$ratedby = json_decode( $result->rated_by );
+						$ratedby[] = (int) $user_id;
 					
-					$query = "UPDATE #__raidplanner_rating SET rate_count=rate_count+1, rate_value=rate_value + " . intval( $rate ) . ",rated_by = ) " .
-							"VALUES (" . intval($raid_id) . ", " . intval($char_id) . ", 1, " . intval($rate) . ", '" . json_encode( $ratedby ) . "')";
-				} else {
-					$query = "INSERT INTO #__raidplanner_rating (raid_id,character_id,rate_count,rate_value,rated_by) " .
-							"VALUES (" . intval($raid_id) . ", " . intval($char_id) . ", 1, " . intval($rate) . ", '" . json_encode( array( (int) $user_id ) ) . "')";
+						$query = "UPDATE #__raidplanner_rating SET rate_count=rate_count+1, rate_value=rate_value + " . intval( $rate ) . ",rated_by = ) " .
+								"VALUES (" . intval($raid_id) . ", " . intval($char_id) . ", 1, " . intval($rate) . ", '" . json_encode( $ratedby ) . "')";
+					} else {
+						$query = "INSERT INTO #__raidplanner_rating (raid_id,character_id,rate_count,rate_value,rated_by) " .
+								"VALUES (" . intval($raid_id) . ", " . intval($char_id) . ", 1, " . intval($rate) . ", '" . json_encode( array( (int) $user_id ) ) . "')";
+					}
+					$db->setQuery( $query );
+					$db->query();
 				}
-				$db->setQuery( $query );
-				$db->query();
 			}
 		}
 	}

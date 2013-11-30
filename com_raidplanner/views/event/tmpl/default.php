@@ -424,6 +424,7 @@ $hasChars = !empty($this->characters);
 							</td>
 						</td>
 			<?php foreach ($this->attendants as $attendant) : ?>
+			<?php	if ($attendant->queue > 0) : ?>
 						<tr>
 							<td class="<?php echo $attendant->class_css;?>">
 								<a href="#" onclick="javascript:rpShowTooltip('rate_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('rate_char_name_<?php echo $attendant->character_id;?>');" id="rate_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
@@ -456,6 +457,7 @@ $hasChars = !empty($this->characters);
 			<?php endif; ?>
 							</td>
 						</tr>
+			<?php	endif; ?>
 			<?php endforeach; ?>
 			<?php if ($this->canRate) : ?>
 						<tr>
