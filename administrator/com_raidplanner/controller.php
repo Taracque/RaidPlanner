@@ -13,9 +13,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-// register the installer
-JLoader::register('RaidPlannerInstaller', JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/installer.php' );
-
 /* create JControllerLegacy if not exist */
 if (!class_exists('JControllerLegacy')) {
 	class JControllerLegacy extends JController {}
