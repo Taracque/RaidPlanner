@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
- 
-class RaidPlannerModelCharacters extends JModel
+
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelCharacters extends JModelLegacy
 {
     /**
      * Data array
@@ -64,7 +69,7 @@ class RaidPlannerModelCharacters extends JModel
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_order_Dir) ) &&
-			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender_id', 'rc.race_name', 'c.char_level','g.guild_name') ) ) &&
+			(in_array($filter_order, array('c.char_name', 'u.name', 'cl.class_name', 'c.rank', 'c.gender_id', 'rc.race_name', 'c.char_level', 'g.guild_name', 'c.character_id') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 		
@@ -76,7 +81,7 @@ class RaidPlannerModelCharacters extends JModel
 
 	function _buildQueryWhere()
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 		
 		$filter_char_level_min = $this->getState('filter_char_level_min');
 		$filter_char_level_max = $this->getState('filter_char_level_max');

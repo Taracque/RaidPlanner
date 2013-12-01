@@ -16,7 +16,12 @@ jimport( 'joomla.application.component.controller' );
 
 JHTML::_('behavior.tooltip');
 
-class RaidPlannerViewCalendar extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewCalendar extends JViewLegacy
 {
     function display($tpl = null)
     {
@@ -30,28 +35,28 @@ class RaidPlannerViewCalendar extends JView
 			$paramsObj->merge( $menuparams );
 		}
 		$params = array(
-			'first_dow'		=> $paramsObj->get('first_dow', 0),
-			'popup_width'	=> $paramsObj->get('popup_width', 750),
-			'popup_height'	=> $paramsObj->get('popup_height', 500),
-			'show_history'	=> $paramsObj->get('show_history', 0),
-			'use_modal'		=> $paramsObj->get('use_modal', 1)
+			'first_dow'			=> $paramsObj->get('first_dow', 0),
+			'popup_width'		=> $paramsObj->get('popup_width', 750),
+			'popup_height'		=> $paramsObj->get('popup_height', 500),
+			'show_history'		=> $paramsObj->get('show_history', 0),
+			'use_modal'			=> $paramsObj->get('use_modal', 1),
+			'show_tooltips'		=> $paramsObj->get('show_tooltips', 1)
 		);
 		$is_mobile = RaidPlannerHelper::detectMobile();
 		if ((!$is_mobile) && ($params['use_modal']==1))
 		{
-			JHTML::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
+			JHtml::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
 		}
 
 		if (RaidPlannerHelper::getPermission('view_calendar') != 1) {
 			// redirect to the index page
-			$app = &JFactory::getApplication();
+			$app = JFactory::getApplication();
 			$msg = JText::_('JGLOBAL_AUTH_ACCESS_DENIED');
-			$app->redirect( JRoute::_(''), $msg);
+			$app->redirect( JRoute::_(JURI::root().'index.php'), $msg);
 		}
 
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		
-		$eventmodel->syncProfile( $user );
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
  		$this->assignRef( 'isOfficer', $eventmodel->userIsOfficer() );
 		$this->assignRef( 'canView', $canView );
@@ -86,15 +91,7 @@ class RaidPlannerViewCalendar extends JView
 		$monthonly = date("m",mktime(0,0,0,$display_month,1,$display_year));
 		$shift = date("w",mktime(0,0,0,$display_month,1,$display_year));
 
-		switch ( RaidPlannerHelper::getJVersion() ) {
-			case '1.5':
-				$timeformat = '%H:%M';
-			break;
-			default:
-			case '1.6':
-				$timeformat = 'H:i';
-			break;
-		}
+		$timeformat = 'H:i';
 
 		if ($user->getParam('calendar_secret', '') != '') {
 			$calendar_mode = 'subscribe';
@@ -114,10 +111,10 @@ class RaidPlannerViewCalendar extends JView
 		$this->assignRef( 'monthonly', $monthonly);
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		
-        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01" ) );
+        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null, true ) );
         $this->assignRef( 'eventmodel', $eventmodel );
 		$this->assignRef( 'timeformat', $timeformat );
-
+	
         parent::display($tpl);
     }
     

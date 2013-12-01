@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.view');
- 
-class RaidPlannerViewEvent extends JView
+
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewEvent extends JViewLegacy
 {
     function display($tpl = null)
     {
@@ -28,8 +33,10 @@ class RaidPlannerViewEvent extends JView
 			$paramsObj->merge( $menuparams );
 		}
 		$params = array(
-			'show_history'	=> $paramsObj->get('show_history', 0),
-			'macro_format'	=> $paramsObj->get('macro_format', '')
+			'show_history'		=> $paramsObj->get('show_history', 0),
+			'macro_format'		=> $paramsObj->get('macro_format', ''),
+			'allow_rating'		=> $paramsObj->get('allow_rating', 0),
+			'multi_raid_signup'	=> $paramsObj->get('multi_raid_signup', 0)
 		);
 
 		if ( RaidPlannerHelper::getPermission('view_raids') != 1 ) {
@@ -47,7 +54,7 @@ class RaidPlannerViewEvent extends JView
 				foreach($attendants as $att_key => $att_char) {
 					// remove that from all_characters
 					foreach ($all_characters as $all_key => $all_char) {
-						if ($att_char->character_id == $all_char->charater_id) {
+						if ($att_char->character_id == $all_char->character_id) {
 							unset($all_characters[$all_key]);
 							break;
 						}
@@ -69,6 +76,11 @@ class RaidPlannerViewEvent extends JView
 			}
 
 			RaidPlannerHelper::loadGuildCSS( @$event->guild_id );
+			
+			if ( $params['multi_raid_signup'] == 1 ) {
+				$upcoming = $model->getUpcomingEvents( $event->start_time );
+				$this->assignRef( 'upcoming', $upcoming );
+			}
 
 			$this->assignRef( 'params', $params);
 			$this->assignRef( 'macro', $macro);
@@ -83,7 +95,10 @@ class RaidPlannerViewEvent extends JView
 			$this->assignRef( 'isOfficer' , $isOfficer );
 			$this->assignRef( 'canSignup' , $model->userCanSignUp( $event->raid_id ) );
 			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
-
+			$this->assignRef( 'finished' , $event->finished );
+			$this->assignRef( 'canRate' , $model->userCanRate( $event->raid_id ) );
+			$this->assignRef( 'ratings' , $model->getRates( $event->raid_id ) ); 
+			
 			parent::display($tpl);
 		}
     }

@@ -1,0 +1,54 @@
+.rp_icon_button {
+	width: 72px;
+	height: 80px;
+	border: 1px solid #E5E5E5;
+	display: block;
+	margin: 5px;
+	text-align: center;
+	float: left;
+	background-color: black;
+}
+
+.rp_icon_button span {
+	width: 48px;
+	height: 48px;
+	display: block;
+	margin: 5px auto;
+	background-repeat: no-repeat;
+}
+
+.rp_raids {
+	background-image: url(../images/event.png);
+}
+
+.rp_guilds {
+	background-image: url(../images/guilds.png);
+}
+
+.rp_chars {
+	background-image: url(../images/roster.png);
+}
+
+.rp_groups {
+	background-image: url(../images/groups.png);
+}
+
+.rp_roles {
+	background-image: url(../images/roles.png);
+}
+
+.rp_classes {
+	background-image: url(../images/classes.png);
+}
+
+.rp_races {
+	background-image: url(../images/races.png);
+}
+
+.rp_service {
+	background-image: url(../images/service.png);
+}
+
+.rp_stats {
+	background-image: url(../images/stats.png);
+}

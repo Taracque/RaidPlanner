@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
- 
-class RaidPlannerModelRaids extends JModel
+
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelRaids extends JModelLegacy
 {
     /**
      * Data array
@@ -64,7 +69,7 @@ class RaidPlannerModelRaids extends JModel
 		/* Error handling is never a bad thing*/
 		if (
 			(!empty($filter_order) && !empty($filter_order_Dir) ) &&
-			(in_array($filter_order, array('r.start_time', 'r.location', 'r.minimum_level', 'r.maximum_level', 'r.minimum_rank', 'r.is_template', 'g.group_name') ) ) &&
+			(in_array($filter_order, array('r.start_time', 'r.location', 'r.minimum_level', 'r.maximum_level', 'r.minimum_rank', 'r.is_template', 'g.title') ) ) &&
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
@@ -74,7 +79,7 @@ class RaidPlannerModelRaids extends JModel
 
 	function _buildQueryWhere()
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 		
 		$filter_raid_start_time_min = $this->getState('filter_raid_start_time_min');
 		$filter_raid_start_time_max = $this->getState('filter_raid_start_time_max');
@@ -109,11 +114,13 @@ class RaidPlannerModelRaids extends JModel
      */
     function _buildQuery()
     {
-        $query = ' SELECT * '
-            . ' FROM #__raidplanner_raid AS r'
-            . ' LEFT JOIN #__raidplanner_groups AS g ON g.group_id = r.invited_group_id '
-            . ' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
-            . $this->_buildQueryWhere();
+        $query = ' SELECT * ';
+
+		$query .= ' ,g.title AS group_name';
+		$query .= ' FROM #__raidplanner_raid AS r';
+		$query .= ' LEFT JOIN #__usergroups AS g ON g.id = r.invited_group_id';
+		$query .= ' LEFT JOIN #__raidplanner_guild AS gu ON gu.guild_id = r.guild_id '
+            		. $this->_buildQueryWhere();
         
         return $query;
     }

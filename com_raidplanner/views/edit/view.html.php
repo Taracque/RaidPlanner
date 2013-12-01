@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.view');
- 
-class RaidPlannerViewEdit extends JView
+
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewEdit extends JViewLegacy
 {
     function display($tpl = null)
     {
@@ -48,7 +53,7 @@ class RaidPlannerViewEdit extends JView
 			
 			$controller = new RaidPlannerController();
 			$view = &$controller->getView( $vName, $vType);
-			$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.strtolower($vName).DS.'tmpl');
+			$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR . '/views/' . strtolower($vName) . '/tmpl');
 	
 			// Get/Create the model
 			if ($model = &$this->getModel($mName)) {
@@ -72,7 +77,7 @@ class RaidPlannerViewEdit extends JView
 
 	function getIcons()
 	{
-		$path = JPATH_BASE . DS . 'images' . DS . 'raidplanner' . DS . 'raid_icons';
+		$path = JPATH_ROOT . '/media/com_raidplanner/raid_icons';
 		
 		$dhandle = opendir($path);
 		$files = array();
@@ -88,8 +93,8 @@ class RaidPlannerViewEdit extends JView
 					($fname != basename($_SERVER['PHP_SELF']))
 				) {
 					// store the filename
-					if (!is_dir( $path . DS . $fname )) {
-						$info = pathinfo( $path . DS . $fname );
+					if (!is_dir( $path . '/' . $fname )) {
+						$info = pathinfo( $path . '/' . $fname );
 						$files[$fname] = ucwords(str_replace("_"," ",basename($fname,'.'.$info['extension'])));
 					}
 				}

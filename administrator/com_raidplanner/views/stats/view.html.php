@@ -13,11 +13,15 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-JHTML::_('behavior.mootools');
+// register the helper
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
-JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
 
-class RaidPlannerViewStats extends JView
+class RaidPlannerViewStats extends JViewLegacy
 {
 	/**
 	 * display method of Stats view
@@ -25,8 +29,11 @@ class RaidPlannerViewStats extends JView
 	 **/
 	function display($tpl = null)
 	{
-		//get the data
+		/* Load Javascript and CSS files */
+		RaidPlannerHelper::loadJSFramework();
+		JHTML::stylesheet('com_raidplanner/raidplanner_admin.css', false, true, false);
 
+		//get the data
 		JToolBarHelper::title( JText::_( 'COM_RAIDPLANNER_STATS' ) );
 
 		RaidPlannerHelper::showToolbarButtons();

@@ -14,12 +14,17 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
-class RaidPlannerViewCalendar extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewCalendar extends JViewLegacy
 {
 
     function display($tpl = null)
     {
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		if($user->id == 0) {
 			// user not logged in
 			$user =& JUser::getInstance( intval(@$_REQUEST['user']) );
@@ -29,27 +34,11 @@ class RaidPlannerViewCalendar extends JView
 				die('Invalid access!');
 			}
 		}
-		$tz = RaidPlannerHelper::getTimezone();
-    	$tzname = timezone_name_from_abbr("", $tz * 3600, 0);
-    	
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
 
-		switch ( RaidPlannerHelper::getJVersion() ) {
-			case '1.5':
-				$dateformat = '%Y%m%dT%H%M%S';
-			break;
-			default:
-			case '1.6':
-				$dateformat = 'Ymd\THis';
-			break;
-		}
-		
 		$model = &$this->getModel();
 		
 		$this->assignRef( 'canView', $canView );
-		$this->assignRef( 'tzoffset', $tz );
-		$this->assignRef( 'tzname', $tzname );
-		$this->assignRef( 'dateformat', $dateformat );
         $this->assignRef( 'events', $model->getEvents('own', $user->id) );
 		
 		header("Content-Type: text/Calendar");

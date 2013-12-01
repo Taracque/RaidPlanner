@@ -19,7 +19,7 @@ $dateFormat = RaidPlannerHelper::shortDateFormat();
 		<tr class="rp_event_details">
 			<td>
 			<?php if (@$this->event->icon_name) : ?>
-				<img src="<?php echo JURI::base()."images/raidplanner/raid_icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
+				<img src="<?php echo JURI::base()."media/com_raidplanner/raid_icons/".$this->event->icon_name;?>" float="left" style="float:left; margin: 0 5px 5px 0;" />
 			<?php endif; ?>
 				<div class="rp_event_description">
 					<strong><?php echo JText::_('JGLOBAL_EDIT');?>:</strong><br />

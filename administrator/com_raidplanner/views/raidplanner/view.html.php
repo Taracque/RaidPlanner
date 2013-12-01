@@ -13,12 +13,40 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-require_once ( JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_raidplanner' . DS . 'includes' . DS . 'installer.php' );
+JHTML::stylesheet('com_raidplanner/raidplanner_admin.css', false, true, false);
 
-JHTML::stylesheet('raidplanner.css', 'administrator/components/com_raidplanner/assets/');
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
 
-class RaidPlannerViewRaidPlanner extends JView
+class RaidPlannerViewRaidPlanner extends JViewLegacy
 {
+	private function getPluginList()
+	{
+		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_installer/models');
+		$installModel = JModelLegacy::getInstance('Manage', 'InstallerModel' , array( 'filter.type' => 'filter.plugin', 'folder' => 'raidplanner') );
+		$plugin_state = $installModel->getState();
+
+		$installModel->setState('filter.type','plugin');
+		$installModel->setState('filter.group','raidplanner');
+		$installModel->setState('filter.search','');
+		$installModel->setState('filter.access','0');
+		$installModel->setState('filter.enabled','');
+		$installModel->setState('filter.language','');
+		
+		$plugins = $installModel->getItems();
+
+		$installModel->setState( 'filter.type',$plugin_state->{'filter.type'} );
+		$installModel->setState( 'filter.group',$plugin_state->{'filter.group'} );
+		$installModel->setState( 'filter.search',$plugin_state->{'filter.search'} );
+		$installModel->setState( 'filter.access',$plugin_state->{'filter.access'} );
+		$installModel->setState( 'filter.enabled',$plugin_state->{'filter.enabled'} );
+		$installModel->setState( 'filter.language',$plugin_state->{'filter.language'} );
+
+		return $plugins;
+	}
+
 	/**
 	 * display method of Hello view
 	 * @return void
@@ -32,7 +60,9 @@ class RaidPlannerViewRaidPlanner extends JView
 
 		RaidPlannerHelper::showToolbarButtons();
 		
-		$this->assignRef( 'installed_plugins', RaidPlannerInstaller::getInstalledList() );
+		$plugins = $this->getPluginList();
+
+		$this->assignRef( 'installed_plugins', $plugins );
 
 		parent::display($tpl);
 	}

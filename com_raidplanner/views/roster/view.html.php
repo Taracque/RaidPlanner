@@ -14,15 +14,19 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 jimport( 'joomla.application.component.controller' );
 
-if ( RaidPlannerHelper::getJVersion() == '1.5') {
-	JHTML::script('mootools.more.125.additional.js', 'components/com_raidplanner/assets/');
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
 }
-JHTML::script('HtmlTable.Extended.js', 'components/com_raidplanner/assets/');
 
-class RaidPlannerViewRoster extends JView
+class RaidPlannerViewRoster extends JViewLegacy
 {
 	function display($tpl = null)
 	{
+		/* Load required javascripts */
+		RaidPlannerHelper::loadJSFramework( true );
+		JHTML::script('com_raidplanner/HtmlTable.Extended.js', false, true);
+
 		$model = &$this->getModel();
 		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JRequest::getInt( 'Itemid' );
@@ -34,21 +38,31 @@ class RaidPlannerViewRoster extends JView
 		}
 
 		$guild_id = $paramsObj->get('guild_id', '0');
-		$show_account = $paramsObj->get('show_account', '0');
-		$guild_plugin = RaidPlannerHelper::getGuildPlugin( $guild_id );
-		if (($paramsObj->get('armory_sync', '0') == 1) && ($guild_plugin) && ($guild_plugin->needSync( $paramsObj->get( 'sync_interval', 4 ) ) ))
-		{
-			// sync armory
-			$guild_plugin->doSync();
-		}
 
-		RaidPlannerHelper::loadGuildCSS( $guild_id );
+		$show_account = $paramsObj->get('show_account', '0');
+		$initial_sort = $paramsObj->get('initial_sort', '0');
+
+		$guild_plugin = RaidPlannerHelper::getGuildPlugin( $guild_id );
+		
+		if ($guild_plugin != null)
+		{
+			$sync_interval = $paramsObj->get( 'sync_interval', 4 );
+			$sync_enabled = ($paramsObj->get('armory_sync', '0') == 1);
+		
+			if ($sync_enabled )
+			{
+				$guild_plugin->trigger( 'onRPSyncGuild', array( $guild_id, $sync_interval, false ) );
+			}
+
+			$guild_plugin->trigger( 'onRPLoadCSS' );
+		}
 
 		$this->assignRef( 'guild_plugin', $guild_plugin );
 		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
 		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
 		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );
 		$this->assignRef( 'show_account', $show_account );
+		$this->assignRef( 'initial_sort', $initial_sort );
 
 		parent::display($tpl);
 	}

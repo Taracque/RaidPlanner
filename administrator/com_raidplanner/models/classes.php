@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
- 
-class RaidPlannerModelClasses extends JModel
+
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelClasses extends JModelLegacy
 {
     /**
      * Data array

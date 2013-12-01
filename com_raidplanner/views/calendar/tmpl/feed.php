@@ -13,42 +13,67 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.utilities.date');
 
-$config =& JFactory::getConfig();
+$config = JFactory::getConfig()->toArray();
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//RaidPlanner//NONSGML v1.0//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:<?php echo $config->getValue( 'config.sitename' ); ?>
+X-WR-CALNAME:<?php echo $config['sitename']; ?>
 
-X-WR-TIMEZONE:<?php echo $this->tzname; ?>
+X-WR-TIMEZONE:UTC
+X-ORIGINAL-URL:<?php echo JRoute::_('index.php', true, -1); ?>
 
-X-ORIGINAL-URL:<?php echo JURI::base() . JRoute::_('index.php'); ?>
+X-WR-CALDESC:<?php echo $config['sitename']; ?> RaidPlanner
+<?php if (class_exists('DateTimeZone')) : ?>
+BEGIN:VTIMEZONE
+TZID:UTC
+<?php
+	$timezone = new DateTimeZone( 'UTC' );
+	$transitions = $timezone->getTransitions();
+?>
+<?php foreach($transitions as $tridx => $transition) :?>
+<?php if($tridx>0) : ?>
 
-X-WR-CALDESC:<?php echo $config->getValue( 'config.sitename' ); ?> raidplanner
+BEGIN:<?php echo ($transition['isdst']==1)?'DAYLIGHT':'STANDARD';?>
+
+TZOFFSETFROM:<?php printf('%+05d', ($transitions[$tridx - 1]['offset']/36) ); ?>
+
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+DTSTART:<?php echo str_replace(array('-',':'),'',substr($transition['time'],0,-5)); ?>
+
+TZNAME:<?php echo $transition['abbr'];?>
+
+TZOFFSETTO:<?php printf('%+05d', ($transition['offset']/36) ); ?>
+
+END:<?php echo ($transition['isdst']==1)?'DAYLIGHT':'STANDARD'; ?>
+<?php endif;
+endforeach; ?>
+END:VTIMEZONE
+<?php endif; ?>
 <?php foreach ($this->events as $event):?>
 <?php if ($event[0]->raid_id):?>
 BEGIN:VEVENT
 UID:RPEVENTID<?php echo $event[0]->raid_id;?>
 
-DTSTAMP;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->start_time, $this->dateformat, $this->tzoffset);?>
+DTSTAMP;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->start_time );?>
 
 ORGANIZER:<?php echo $event[0]->raid_leader;?>
 
-DTSTART;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->start_time, $this->dateformat, $this->tzoffset);?>
+DTSTART;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->start_time );?>
 
-DTEND;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date', $event[0]->end_time, $this->dateformat, $this->tzoffset);?>
+DTEND;TZID=UTC:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->end_time );?>
 
 SUMMARY:<?php echo $event[0]->location;?>
 
 DESCRIPTION:<?php echo $event[0]->description;?>
 
-URL:<?php echo trim(JURI::base(),'/') . JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$event[0]->raid_id.'');?>
+URL:<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&modalevent='.$event[0]->raid_id.'', true, -1);?>
 
 BEGIN:VALARM
 ACTION:AUDIO
-TRIGGER;TZID=<?php echo $this->tzname; ?>:<?php echo JHTML::_('date',$event[0]->invite_time, $this->dateformat, $this->tzoffset);?>
+TRIGGER;VALUE=DATE-TIME:<?php echo str_replace( array(' ', '-', ':'), array('T', '', ''), $event[0]->invite_time );?>Z
 
 REPEAT:1
 END:VALARM

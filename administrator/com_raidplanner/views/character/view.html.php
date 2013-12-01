@@ -13,7 +13,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-class RaidPlannerViewCharacter extends JView
+/* create JViewLegacy if not exist */
+if (!class_exists('JViewLegacy')) {
+	class JViewLegacy extends JView {}
+}
+
+class RaidPlannerViewCharacter extends JViewLegacy
 {
 
 	function display($tpl = null)
@@ -23,9 +28,9 @@ class RaidPlannerViewCharacter extends JView
 		$isNew	= ($char->character_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
-		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_CHARACTER' ).': <small><small>[ ' . $text.' ]</small></small>' );
-		JToolBarHelper::save();
+		JToolBarHelper::title(   JText::_( 'COM_RAIDPLANNER_CHARACTER' ).': ' . $text.'' );
 		JToolBarHelper::apply();
+		JToolBarHelper::save();
 		if ($isNew)  {
 			JToolBarHelper::cancel();
 		} else {

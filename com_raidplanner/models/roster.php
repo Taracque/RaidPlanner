@@ -15,11 +15,16 @@ jimport( 'joomla.application.component.model' );
 jimport( 'joomla.application.component.helper' );
 jimport( 'joomla.utilities.date' );
 
-class RaidPlannerModelRoster extends JModel
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelRoster extends JModelLegacy
 {
 	function getGuildCharacters( $guild_id )
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__raidplanner_character AS chars
 					LEFT JOIN #__raidplanner_class AS class ON class.class_id = chars.class_id
 					LEFT JOIN #__raidplanner_race AS race ON race.race_id = chars.race_id
@@ -35,7 +40,7 @@ class RaidPlannerModelRoster extends JModel
 
 	public function getGuildInfo($guild_id = null)
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		if (intval($guild_id)>0)
 		{
 			$query = "SELECT * FROM #__raidplanner_guild WHERE guild_id = " . intval($guild_id);

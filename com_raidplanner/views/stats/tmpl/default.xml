@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_RAIDPLANNER_STATS_VIEW">
+    	<message><![CDATA[COM_RAIDPLANNER_STATS_VIEW_DESC]]></message>
+	</layout>
+	<fields name="params">
+		<fieldset name="basic" label="JOPTIONS" addfieldpath="/administrator/components/com_raidplanner/models/fields">
+			<field name="guild_id" type="modal_guilds"
+				description="COM_RAIDPLANNER_GUILD_DESC"
+				label="COM_RAIDPLANNER_GUILD_DESC"
+			/>
+			<field name="allowed_groups" type="usergroup"
+					label="COM_RAIDPLANNER_ALLOWED_GROUPS"
+					description="COM_RAIDPLANNER_ALLOWED_GROUPS_DESC"
+					multiple="multiple"
+			/>
+			<field name="stats_by_chars" type="radio" default="0" class="btn-group btn-group-yesno" label="COM_RAIDPLANNER_STATS_BY_CHARACTERS" description="COM_RAIDPLANNER_STATS_BY_CHARACTERS_DESCRIPTION">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>

@@ -32,7 +32,8 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			2	=>	'SUM(IF(s.queue=2,1,0)) AS late',
 			3	=>	'SUM(IF(s.queue=-1,1,0)) AS not_attending',
 			4	=>	'SUM(IF(s.confirmed=1,1,0)) AS confirmed',
-			5	=>	'COUNT(r.raid_id) AS raids'			// FIXME: Invited raid count
+			5	=>	'COUNT(r.raid_id) AS raids',			// FIXME: Invited raid count
+			6	=>	'ROUND(100 * SUM(rt.rate_value)/SUM(rt.rate_count)) AS rating'
 		);
 		$stat_y = "c.char_name";
 		$titles = array( 
@@ -41,10 +42,11 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			2	=>	JText::_( 'COM_RAIDPLANNER_STATUSES_2'),
 			3	=>	JText::_( 'COM_RAIDPLANNER_STATUSES_-1'),
 			4	=>	JText::_( 'COM_RAIDPLANNER_CONFIRMATIONS_1'),
-			5	=>	JText::_( 'COM_RAIDPLANNER_RAIDS')
+			5	=>	JText::_( 'COM_RAIDPLANNER_RAIDS'),
+			6	=>	JText::_( 'COM_RAIDPLANNER_RATING')
 		);
 
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		if ($group_id > 0) {
 			$where[] = 'p.group_id=' . intval($group_id);
 			$where[] = 'r.invited_group_id=' . intval($group_id);
@@ -64,26 +66,22 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			$where[] = 'r.start_time<=' . $db->Quote( $end_time );
 		}
 		
-		if ( RaidPlannerHelper::checkACL() ) {
-			// Joomla ACL used, use Joomla usergroups
-			$query = "SELECT " . implode(", ", $stat_x) .
-						" FROM #__raidplanner_raid AS r " .
-						" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
-						" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
+		// Joomla ACL used, use Joomla usergroups
+		$query = "SELECT " . implode(", ", $stat_x) .
+					" FROM #__raidplanner_raid AS r " .
+					" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
+					" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
+					" LEFT JOIN #__raidplanner_rating AS rt ON rt.character_id = c.character_id AND rt.raid_id = r.raid_id";
+		if ($group_id != '') {
+			$query .=
 						" LEFT JOIN #__user_usergroup_map AS p ON p.user_id = c.profile_id " .
 						" LEFT JOIN #__usergroups AS g ON g.id = p.group_id ";
-		} else {
-			$query = "SELECT " . implode(", ", $stat_x) .
-						" FROM #__raidplanner_raid AS r " .
-						" LEFT JOIN #__raidplanner_signups AS s ON s.raid_id = r.raid_id " .
-						" LEFT JOIN #__raidplanner_character AS c ON c.character_id = s.character_id " .
-						" LEFT JOIN #__raidplanner_profile AS p ON p.profile_id = c.profile_id " .
-						" LEFT JOIN #__raidplanner_groups AS g ON g.group_id = p.group_id ";
 		}
+
 		$query .= " WHERE " . implode( " AND ", $where );
 		$query .= " GROUP BY " . $stat_y;
 		$db->setQuery($query);
-		
+
 		echo json_encode(
 			array(
 				'titles'	=> $titles,

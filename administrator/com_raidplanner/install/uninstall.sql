@@ -10,3 +10,4 @@ DROP TABLE IF EXISTS `#__raidplanner_role`;
 DROP TABLE IF EXISTS `#__raidplanner_signups`;
 DROP TABLE IF EXISTS `#__raidplanner_history`;
 DROP TABLE IF EXISTS `#__raidplanner_guild`;
+DROP TABLE IF EXISTS `#__raidplanner_rating`;

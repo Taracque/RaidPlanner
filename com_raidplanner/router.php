@@ -99,8 +99,13 @@ function RaidPlannerParseRoute( $segments )
 			$vars['task'] = $segments[1];
 			$vars['id'] = intval(@$segments[2]);
 		break;
+		case 'stats':
+			$vars['view'] = 'stats';
+			$vars['task'] = $segments[1];
+			$vars['id'] = intval(@$segments[2]);
+		break;
 		default:
-			$app =& JFactory::getApplication();
+			$app =JFactory::getApplication();
 			$menu =& $app->getMenu();
 			$item =& $menu->getActive();
 			if ($item)

@@ -14,9 +14,14 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.component.controller');
 
 // register the helper
-JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
-class RaidPlannerController extends JController
+/* create JControllerLegacy if not exist */
+if (!class_exists('JControllerLegacy')) {
+	class JControllerLegacy extends JController {}
+}
+
+class RaidPlannerController extends JControllerLegacy
 {
     /**
      * Method to display the view
@@ -46,6 +51,14 @@ class RaidPlannerController extends JController
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 				$model = &$this->getModel('event');
 				$model->signupEvent();
+				$month = $model->getMonth();
+				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
+			break;
+			case 'rate':
+				$vName = 'calendar';
+				$vLayout = JRequest::getCmd( 'layout', 'default' );
+				$model = &$this->getModel('event');
+				$model->rateEvent();
 				$month = $model->getMonth();
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
 			break;
@@ -97,6 +110,12 @@ class RaidPlannerController extends JController
 				JRequest::setVar('character_id', $model->saveCharacter());
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 			break;
+			case 'getjson':
+				$vName = 'stats';
+				$vType = 'json';
+				$mName = 'stats';
+				$vLayout = JRequest::getCmd( 'layout', 'default' );
+			break;
 			default:
 			case 'default':
 				switch (JRequest::getVar('view'))
@@ -109,6 +128,10 @@ class RaidPlannerController extends JController
 						$vName = 'character';
 						$mName = 'character';
 					break;
+					case 'stats':
+						$vName = 'stats';
+						$mName = 'stats';
+					break;
 					default:
 						$vName = 'calendar';
 				}
@@ -118,7 +141,6 @@ class RaidPlannerController extends JController
 		
 		// Get/Create the view
 		$view = &$this->getView( $vName, $vType);
-		// $view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.strtolower($vName).DS.'tmpl');
 
 		// Get/Create the model
 		if ($model = &$this->getModel($mName)) {

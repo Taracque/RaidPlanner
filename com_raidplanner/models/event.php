@@ -15,7 +15,12 @@ jimport( 'joomla.application.component.model' );
 jimport( 'joomla.application.component.helper' );
 jimport( 'joomla.utilities.date' );
 
-class RaidPlannerModelEvent extends JModel
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelEvent extends JModelLegacy
 {
 
     /**
@@ -26,9 +31,12 @@ class RaidPlannerModelEvent extends JModel
     {
     	$result = new stdClass;
     	if ($id>0) {
-			$db = & JFactory::getDBO();
+			$db = JFactory::getDBO();
 	
-			$query = "SELECT r.*,g.guild_name,DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS end_time FROM #__raidplanner_raid AS r LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=r.guild_id  WHERE r.raid_id=".intval($id);
+			$query = "SELECT r.*,g.guild_name,DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS end_time,NOW()>DATE_ADD(r.start_time,INTERVAL r.duration_mins MINUTE) AS finished 
+						FROM #__raidplanner_raid AS r
+						LEFT JOIN #__raidplanner_guild AS g ON g.guild_id=r.guild_id
+						WHERE r.raid_id=".intval($id);
 			
 			$db->setQuery($query);
 			$result = $db->loadObject();
@@ -57,18 +65,12 @@ class RaidPlannerModelEvent extends JModel
     function usersOnVacation( $date )
     {
     	$onvacation = array();
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		/* quick and dirty query on users */
-		switch ( RaidPlannerHelper::getJVersion() ) {
-			case '1.5':
-				$query = "SELECT id,name FROM #__users WHERE params LIKE '%vacation=2%' ORDER BY id ASC";
-			break;
-			default:
-			case '1.6':
-				$query = "SELECT id,name FROM #__users WHERE params LIKE '%\"vacation\":\"2%' ORDER BY id ASC";
-			break;
-		}
+		/* FIXME, needs to be a Joomla way */
+		$query = "SELECT id,name FROM #__users WHERE params LIKE '%\"vacation\":\"2%' ORDER BY id ASC";
+
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		foreach ($results as $result) {
@@ -97,7 +99,7 @@ class RaidPlannerModelEvent extends JModel
     {
     	$html = '';
 
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT history FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);
 		$db->setQuery($query);
 		$string = $db->loadResult();
@@ -146,10 +148,10 @@ class RaidPlannerModelEvent extends JModel
     */
     function getAttendants($id)
     {
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
 
     	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
-    				cl.class_name,cl.class_color,c.char_level,s.profile_id,s.role_id,s.queue,cl.class_css
+    				cl.class_name,cl.class_color,c.char_level,c.profile_id,s.role_id,s.queue,cl.class_css
     			FROM #__raidplanner_signups AS s 
     				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
     				LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id
@@ -188,7 +190,7 @@ class RaidPlannerModelEvent extends JModel
 	
 	function getRoles()
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__raidplanner_role ORDER BY role_name ASC";
 
 		$db->setQuery($query);
@@ -204,7 +206,7 @@ class RaidPlannerModelEvent extends JModel
 	
     function getTemplates()
     {
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
     	$query = "SELECT raid_id,location FROM #__raidplanner_raid WHERE is_template = 1 ORDER BY location ASC";
     	
     	$db->setQuery($query);
@@ -213,34 +215,13 @@ class RaidPlannerModelEvent extends JModel
     	return $result;
 	}
 
-	function syncProfile($user)
-	{
-		// Not guest, and we are not using Joomla ACL
-		if ( (!$user->guest) && (!RaidPlannerHelper::checkACL()) ) {
-			$db = & JFactory::getDBO();
-	
-			// check if raidplanner profile exists
-			$query = "SELECT profile_id FROM #__raidplanner_profile WHERE profile_id = ".$user->id;
-			$db->setQuery($query);
-			$profile_id = $db->loadResult();
-			if (!$profile_id) {
-				// DEFAULT GROUP
-				$query = "INSERT INTO #__raidplanner_profile (profile_id, group_id) VALUES (".$user->id.", (SELECT group_id FROM #__raidplanner_groups WHERE `default`=1))";
-				$db->setQuery($query);
-				$db->query();
-			}
-		}
-	}
-	
 	/**
 	* Gets the list of user's characters
 	*/
 	function getCharacters($min_level = null, $max_level = null, $min_rank = null, $guild_id = null, $everyone = false) {
-		$db = & JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user =JFactory::getUser();
 		
-		$this->syncProfile($user);
-
 		if (!$everyone) {
 			$where = " WHERE (c.profile_id=" . intval($user->id) . " OR c.profile_id = 0)";
 		} else {
@@ -293,28 +274,32 @@ class RaidPlannerModelEvent extends JModel
 	function getUserStatus($event_id,$user_id = null)
 	{
 		if (!$user_id) {
-			$user =& JFactory::getUser();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 		}
 		
-    	$db = & JFactory::getDBO();
+    	$db = JFactory::getDBO();
 		$query = "SELECT s.character_id,s.role_id,s.queue,s.confirmed,s.comments
     			FROM #__raidplanner_signups AS s 
+    			LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id 
    				WHERE s.raid_id = " . intval($event_id) . "
-   				AND s.profile_id = " . intval($user_id) . "";
+   				AND c.profile_id = " . intval($user_id) . "";
 
     	$db->setQuery($query);
-    	$result = $db->loadObject();
-    	if ( $result->character_id ) {
-    		return $result;
-		} else {
-			$status->character_id = null;
-			$status->role_id = null;
-			$status->queue = null;
-			$status->confirmed = null;
-			$status->comments = null;
+    	if ( $result = $db->loadObject() ) {
+			if ( $result->character_id ) {
+				return $result;
+			} else {
+				$status->character_id = null;
+				$status->role_id = null;
+				$status->queue = null;
+				$status->confirmed = null;
+				$status->comments = null;
 			
-			return $status;
+				return $status;
+			}
+		} else {
+			return false;
 		}
 	}
 
@@ -335,30 +320,115 @@ class RaidPlannerModelEvent extends JModel
 			return date("Y-m");
 		}
 	}
-	
+
+	/**
+	*
+	*/
+	function getUpcomingEvents( $date )
+	{
+    	$db = JFactory::getDBO();
+		$user = JFactory::getUser();
+		$query = "SELECT r.raid_id,r.location,r.description,r.icon_name,r.status,r.raid_leader,r.start_time,s.queue
+					FROM #__raidplanner_raid AS r
+					LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id=r.raid_id AND c.character_id=s.character_id AND c.profile_id=".$user->id.")
+					WHERE r.start_time>='" . $date . "'
+					GROUP BY raid_id
+					ORDER BY r.start_time ASC, r.location ASC";
+		$db->setQuery( $query );
+		return $db->loadObjectList();
+	}
+
+	/**
+	* Save ratings for an event
+	*/
+	function rateEvent() {
+		$raid_id = JRequest::getVar('raid_id', null, 'INT');
+		if ($this->userCanRate($raid_id)) {
+			$rates = JRequest::getVar('character_vote', null, 'post', 'ARRAY');
+			$db = JFactory::getDBO();
+			$user = JFactory::getUser();
+			$user_id = $user->id;
+
+			foreach ($rates as $char_id => $rate) {
+				$query = "SELECT queue FROM #__raidplanner_signups WHERE raid_id = " . $raid_id . " AND character_id=" . $char_id;
+				$db->setQuery( $query );
+				if ( ( $queue = $db->loadResult() ) && ( $queue > 0) ) {
+					$query = "SELECT  rating_id, rated_by FROM #__raidplanner_rating WHERE raid_id = " . $raid_id . " AND character_id=" . $char_id;
+					$db->setQuery( $query );
+					if ( $result = $db->loadObject() ) {
+						$ratedby = json_decode( $result->rated_by );
+						$ratedby[] = (int) $user_id;
+					
+						$query = "UPDATE #__raidplanner_rating SET rate_count=rate_count+1, rate_value=rate_value + " . intval( $rate ) . ",rated_by = ) " .
+								"VALUES (" . intval($raid_id) . ", " . intval($char_id) . ", 1, " . intval($rate) . ", '" . json_encode( $ratedby ) . "')";
+					} else {
+						$query = "INSERT INTO #__raidplanner_rating (raid_id,character_id,rate_count,rate_value,rated_by) " .
+								"VALUES (" . intval($raid_id) . ", " . intval($char_id) . ", 1, " . intval($rate) . ", '" . json_encode( array( (int) $user_id ) ) . "')";
+					}
+					$db->setQuery( $query );
+					$db->query();
+				}
+			}
+		}
+	}
+
+	/**
+	* Get ratings for an event
+	*/
+	function getRates( $raid_id ) {
+		$rates = array();
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+		if ($paramsObj->get('allow_rating', 0) == 1) {
+			$db = JFactory::getDBO();
+			$query = "SELECT character_id,(rate_value/rate_count) AS rating FROM #__raidplanner_rating WHERE raid_id = " . intval($raid_id);
+			$db->setQuery( $query );
+			$rates = $db->loadObjectList( 'character_id' );
+		}
+		return $rates;
+	}
+
 	/**
 	* Signup for an event
 	*/
 	function signupEvent() {
-		$raid_id = JRequest::getVar('raid_id', null, 'INT');
+		$raid_id = JRequest::getVar('raid_id', null, 'post', 'INT');
 		if ($this->userCanSignUp($raid_id)) {
-			$role = JRequest::getVar('role', null, 'INT');
-			$queue = JRequest::getVar('queue', null, 'INT');
-			$comments = JRequest::getVar('comments', null, 'STRING');
-			$char_id = JRequest::getVar('character_id', null, 'INT');
-	
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$role = JRequest::getVar('role', null, 'post', 'INT');
+			$queue = JRequest::getVar('queue', null, 'post', 'INT');
+			$comments = JRequest::getVar('comments', null, 'post', 'STRING');
+			$char_id = JRequest::getVar('character_id', null, 'post', 'INT');
+
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 
 			// throw all sigunps by same profile for same raid
-			$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($user->id)." AND raid_id=".$raid_id;
+			$query = "DELETE #__raidplanner_signups FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($user->id)." AND #__raidplanner_signups.raid_id=".$raid_id;
 			$db->setQuery($query);
 			$db->query();
 			
-			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".$user->id.",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,role_id,comments,`timestamp`,class_id) ".
+					"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
 			$db->setQuery($query);
 			$db->query();
+
+			/* signup for other raids if available */
+			$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+			if ($paramsObj->get('multi_raid_signup', 0) == 1) {
+				$signup_raid = JRequest::getVar('signup_raid', null, 'post', 'ARRAY');
+				foreach ($signup_raid as $raid_id => $signup) {
+					if ( ( $signup == 1 ) && ( $this->userCanSignUp( $raid_id ) ) ) {
+						// throw all sigunps by same profile for same raid
+						$query = "DELETE #__raidplanner_signups FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($user->id)." AND #__raidplanner_signups.raid_id=".$raid_id;
+						$db->setQuery($query);
+						$db->query();
+			
+						$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,role_id,comments,`timestamp`,class_id) ".
+								"VALUES (".intval($raid_id).",".intval($char_id).",".intval($queue).",".intval($role).",".$db->Quote($comments).",'".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($char_id)."))";
+						$db->setQuery($query);
+						$db->query();
+					}
+				}
+			}
 		}
 	}
 	
@@ -369,8 +439,8 @@ class RaidPlannerModelEvent extends JModel
 		$own_raid = true;
 
 		if ($raid_id>0) {
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 
 			$query = "SELECT profile_id FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
@@ -385,8 +455,8 @@ class RaidPlannerModelEvent extends JModel
 		$own_raid = false;
 
 		if ($raid_id>0) {
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 
 			$query = "SELECT profile_id FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
@@ -400,35 +470,75 @@ class RaidPlannerModelEvent extends JModel
 	function userCanSignUp($raid_id = null) {
 		$can_signup = false;
 		if ($raid_id>0) {
-			$db = & JFactory::getDBO();
-			$user =& JFactory::getUser();
+			$db = JFactory::getDBO();
+			$user =JFactory::getUser();
 			$user_id = $user->id;
 			$date = RaidPlannerHelper::getDate();
-			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . $date->toMySQL() . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
+			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . RaidPlannerHelper::date2Sql( $date ) . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
 			$db->setQuery($query);
 			if ($db->loadResult() == 1) {
 				$can_signup = RaidPlannerHelper::getPermission('allow_signup', $user_id);
 			}
 		}
-		
 		return $can_signup;
-	
 	}
-	
+
+	/*
+		Returns true if user is allowed to rate the particular raid_history
+		Rating is allowed if:
+			 user has at least one character in the signup table
+			 rating is allowed
+			 and user didn't rated the raid before
+	*/
+	function userCanRate($raid_id = null) {
+		$can_rate = false;
+		if ($raid_id>0) {
+			$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+			if ($paramsObj->get('allow_rating', 0) == 1) {
+				$db = JFactory::getDBO();
+				$user = JFactory::getUser();
+				$user_id = $user->id;
+				$query = "SELECT rt.rated_by
+							FROM #__raidplanner_raid AS r
+							LEFT JOIN #__raidplanner_rating AS rt ON rt.raid_id=r.raid_id AND rt.character_id=0
+							WHERE r.raid_id = ".intval($raid_id);
+				$db->setQuery($query);
+				if ($profiles = $db->loadResult()) {
+					$user_ids = json_decode($profiles);
+					$can_rate = !in_array($user_id, $user_ids);
+				} else {	// $profiles is empty, no rates yet…
+					$can_rate = true;
+				}
+				if ($can_rate) {
+					$query = "SELECT queue
+								FROM #__raidplanner_signups AS s
+								LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
+								WHERE s.raid_id = ".intval($raid_id)." AND c.profile_id = " . $user_id;
+					$db->setQuery($query);
+					$queue = $db->loadResult();
+					if ( $queue <= 0) {
+						$can_rate = false;
+					}
+				}
+			}
+		}
+		return $can_rate;
+	}
+
 	function confirmEvent() {
 		if (!$this->userIsOfficer()) {
 			return false;
 		}
 
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
-		$raid_id = JRequest::getVar('raid_id', null, 'INT');
-		$roles = JRequest::getVar('role', null, 'ARRAY');
-		$comments = JRequest::getVar('comments', null, 'ARRAY');
-		$confirm = JRequest::getVar('confirm', null, 'ARRAY');
-		$characters = JRequest::getVar('characters', null, 'ARRAY');
+		$raid_id = JRequest::getVar('raid_id', null, 'post', 'INT');
+		$roles = JRequest::getVar('role', null, 'post', 'ARRAY');
+		$comments = JRequest::getVar('comments', null, 'post', 'ARRAY');
+		$confirm = JRequest::getVar('confirm', null, 'post', 'ARRAY');
+		$characters = JRequest::getVar('characters', null, 'post', 'ARRAY');
 		$history = trim( JRequest::getVar('history', '', 'post', 'string', JREQUEST_ALLOWRAW ) );
-		$queues = JRequest::getVar('queue', null, 'ARRAY');
+		$queues = JRequest::getVar('queue', null, 'post', 'ARRAY');
 
 		if (is_array($characters))
 		{
@@ -467,7 +577,7 @@ class RaidPlannerModelEvent extends JModel
 
 			if ($profile_id > 0)
 			{
-				$query = "DELETE FROM #__raidplanner_signups WHERE profile_id=".intval($profile_id)." AND raid_id=".$raid_id;
+				$query = "DELETE #__raidplanner_signups FROM #__raidplanner_signups LEFT JOIN #__raidplanner_character AS c ON c.character_id=#__raidplanner_signups.character_id WHERE c.profile_id=".intval($profile_id)." AND #__raidplanner_signups.raid_id=".$raid_id;
 				$db->setQuery($query);
 				$db->query();
 			}
@@ -476,8 +586,8 @@ class RaidPlannerModelEvent extends JModel
 			$db->setQuery($query);
 			$db->query();
 				
-			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,profile_id,role_id,confirmed,comments,`timestamp`,class_id) ".
-					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".$profile_id.",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now')->toMySQL()."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
+			$query="INSERT INTO #__raidplanner_signups (raid_id,character_id,queue,role_id,confirmed,comments,`timestamp`,class_id) ".
+					"VALUES (".intval($raid_id).",".intval($new_char_id).",".intval($new_queue).",".intval($new_role).",".intval($new_confirm).",'','".RaidPlannerHelper::getDate('now', null, 'sql')."',(SELECT class_id FROM #__raidplanner_character WHERE character_id = ".intval($new_char_id)."))";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -492,9 +602,9 @@ class RaidPlannerModelEvent extends JModel
 			return false;
 		}
 
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		$user_id = $user->id;
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		if ($raid_id == -1) {
 			// insert an empty record first
 			$query = "INSERT INTO #__raidplanner_raid (profile_id) VALUES (".$user_id.")";
@@ -521,8 +631,8 @@ class RaidPlannerModelEvent extends JModel
 				. " location=".$db->Quote($location)
 				. ",description=".$db->Quote($description)
 				. ",raid_leader=".$db->Quote($user->name)
-				. ",invite_time='".$invite_time->toMySQL()."'"
-				. ",start_time='".$start_time->toMySQL()."'"
+				. ",invite_time='".RaidPlannerHelper::date2Sql( $invite_time )."'"
+				. ",start_time='".RaidPlannerHelper::date2Sql( $start_time )."'"
 				. ",duration_mins=".intval($duration_mins)
 				. ",freeze_time=".intval($freeze_time)
 				. ",profile_id=".intval($user_id)
@@ -554,7 +664,7 @@ class RaidPlannerModelEvent extends JModel
 			return false;
 		}
 
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		// delete the record
 		$query = "DELETE FROM #__raidplanner_raid WHERE raid_id=".intval($raid_id);
@@ -564,7 +674,11 @@ class RaidPlannerModelEvent extends JModel
 		$query = "DELETE FROM #__raidplanner_signups WHERE raid_id=".intval($raid_id);
 		$db->setQuery($query);
 		$db->query();
-		
+
+		$query = "DELETE FROM #__raidplanner_rating WHERE raid_id=".intval($raid_id);
+		$db->setQuery($query);
+		$db->query();
+
 		return true;
 
 	}

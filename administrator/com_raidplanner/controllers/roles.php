@@ -38,6 +38,11 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 		parent::display();
 	}
 
+	function apply()
+	{
+		$this->save();
+	}
+
 	/**
 	 * save a record (and redirect to main page)
 	 * @return void
@@ -45,17 +50,23 @@ class RaidPlannerControllerRoles extends RaidPlannerController
 	function save()
 	{
 		$model = $this->getModel('role');
+		$task = $this->getTask();
 
         $post = JRequest::get('post');
 
-		if ($model->store($post)) {
+		if ($role_id = $model->store($post)) {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_ROLE') );
 		} else {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_ROLE') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
-		$this->setRedirect('index.php?option=com_raidplanner&view=roles', $msg);
+		if ($task == 'apply') {
+			$link = 'index.php?option=com_raidplanner&view=role&controller=roles&task=edit&cid[]='.$role_id;
+		} else {
+			$link = 'index.php?option=com_raidplanner&view=roles';
+		}
+		$this->setRedirect($link, $msg);
 	}
 
 	/**

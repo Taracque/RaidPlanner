@@ -27,7 +27,8 @@ jimport( 'joomla.utilities.date');
 								cellspacing: 1,
 								cellpadding: 5
 							},
-							sortable :true,
+							sortable: true,
+							sortIndex: <?php echo $this->initial_sort;?>,
 							zebra: true,
 							selectable: true,
 							allowMultiSelect: false,
@@ -54,7 +55,7 @@ jimport( 'joomla.utilities.date');
 			}
 		});
 	</script>
-	<?php echo $this->guild_plugin->guildHeader(); ?>
+	<?php echo $this->guild_plugin->trigger( 'onRPGetGuildHeader' ); ?>
 	</div>
 	<div class="rp_roster_table">
 		<table class="rp_container" id="roster_table">
@@ -75,7 +76,7 @@ jimport( 'joomla.utilities.date');
 			<?php foreach($this->characters as $character) : ?>
 				<tr class="rp_roster">
 					<td>
-						<a href="<?php echo $this->guild_plugin->characterLink($character['char_name']);?>"><?php echo $character['char_name']; ?></a>
+						<a href="<?php echo $this->guild_plugin->trigger( 'onRPGetCharacterLink', array($character['char_name']) );?>"><?php echo $character['char_name']; ?></a>
 					</td>
 					<?php if ($this->show_account == 1) : ?>
 					<td><a href="<?php echo "#";?>"><?php echo $character['username'];?></a>

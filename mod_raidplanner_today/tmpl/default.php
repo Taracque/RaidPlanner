@@ -14,18 +14,14 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 $format = JText::_('DATE_FORMAT_LC');
 $event_count = 0;
 
-$lang =& JFactory::getLanguage();
+$lang =JFactory::getLanguage();
 $lang->load('com_raidplanner');
 
-switch ( RaidPlannerHelper::getJVersion() ) {
-	case '1.5':
-		$timeformat = '%H:%M';
-	break;
-	default:
-	case '1.6':
-		$timeformat = 'H:i';
-	break;
-}
+$timeformat = 'H:i';
+
+jimport('joomla.application.component.helper');
+$use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
+
 ?>
 <?php if ($invitationAlerts): ?>
 <div id="rp_invitation_alert">
@@ -82,7 +78,11 @@ if (count($items) == 0): ?>
 	?>
 	<tr>
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=default&modalevent=' . $item->raid_id . '&Itemid=' . $itemid);?>">
+			<?php if ($use_modal) : ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $item->raid_id . '&Itemid=' . $itemid);?>" class="modal">
+			<?php else: ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . $item->raid_id . '&Itemid=' . $itemid);?>">
+			<?php endif; ?>
 				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
 					<strong><?php echo JHTML::_('date', $item->start_time, $timeformat);?> </strong><?php echo $item->location;?>
 				</span>

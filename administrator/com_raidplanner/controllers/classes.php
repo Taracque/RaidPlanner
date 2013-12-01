@@ -38,6 +38,11 @@ class RaidPlannerControllerClasses extends RaidPlannerController
 		parent::display();
 	}
 
+	function apply()
+	{
+		$this->save();
+	}
+
 	/**
 	 * save a record (and redirect to main page)
 	 * @return void
@@ -45,17 +50,23 @@ class RaidPlannerControllerClasses extends RaidPlannerController
 	function save()
 	{
 		$model = $this->getModel('class');
+		$task = $this->getTask();
 
         $post = JRequest::get('post');
 
-		if ($model->store($post)) {
+		if ($class_id = $model->store($post)) {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_X_SAVED', JText::_('COM_RAIDPLANNER_CLASS') );
 		} else {
 			$msg = JText::sprintf( 'COM_RAIDPLANNER_ERROR_SAVING_X', JText::_('COM_RAIDPLANNER_CLASS') );
 		}
 
 		// Check the table in so it can be edited.... we are done with it anyway
-		$this->setRedirect('index.php?option=com_raidplanner&view=classes', $msg);
+		if ($task == 'apply') {
+			$link = 'index.php?option=com_raidplanner&view=class&task=edit&cid[]=' . $class_id;
+		} else {
+			$link = 'index.php?option=com_raidplanner&view=classes';
+		}
+		$this->setRedirect($link, $msg);
 	}
 
 	/**

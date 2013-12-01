@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_character` (
   PRIMARY KEY (`character_id`),
   KEY `profile_id` (`profile_id`),
   KEY `char_level` (`char_level`),
-  KEY `rank` (`rank`)
+  KEY `rank` (`rank`),
+  KEY `guild_id` (`guild_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_class` (
@@ -32,27 +33,10 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_gender` (
 INSERT IGNORE INTO `#__raidplanner_gender` (`gender_id`, `gender_name`) VALUES (1,	'Male');
 INSERT IGNORE INTO `#__raidplanner_gender` (`gender_id`, `gender_name`) VALUES (2,	'Female');
 
-CREATE TABLE IF NOT EXISTS `#__raidplanner_groups` (
-  `group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(45) NOT NULL DEFAULT '',
-  `default` tinyint(1) NOT NULL,
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-INSERT IGNORE INTO `#__raidplanner_groups` (`group_id`, `group_name`, `default`) VALUES (1, 'Guest', 0);
-INSERT IGNORE INTO `#__raidplanner_groups` (`group_id`, `group_name`, `default`) VALUES (2, 'Registered', 1);
-
 CREATE TABLE IF NOT EXISTS `#__raidplanner_permissions` (
   `permission_name` varchar(45) NOT NULL DEFAULT '',
   `permission_value` tinyint(1) NOT NULL DEFAULT '0',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
-  KEY `group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `#__raidplanner_profile` (
-  `profile_id` int(10) unsigned NOT NULL,
-  `group_id` int(10) unsigned NOT NULL DEFAULT '0',
-  KEY `profile_id` (`profile_id`),
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -102,13 +86,12 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_signups` (
   `character_id` int(10) unsigned NOT NULL DEFAULT '0',
   `queue` tinyint(1) NOT NULL DEFAULT '0',
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
-  `profile_id` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
   `comments` varchar(255) NOT NULL DEFAULT '',
   `timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `class_id` int(10) unsigned NOT NULL DEFAULT '0',
   KEY `raid_id` (`raid_id`),
-  KEY `profile_id` (`profile_id`)
+  KEY `character_id` (`character_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__raidplanner_history` (
@@ -126,3 +109,16 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_guild` (
   PRIMARY KEY (`guild_id`),
   KEY `lastSync` (`lastSync`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `#__raidplanner_rating` (
+  `rating_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `raid_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `character_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_value` int(10) NOT NULL DEFAULT '0',
+  `rated_by` text NOT NULL,
+  PRIMARY KEY (`rating_id`),
+  KEY `raid_id` (`raid_id`),
+  KEY `character_id` (`character_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+

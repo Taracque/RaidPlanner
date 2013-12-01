@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
- 
-class RaidPlannerModelGuilds extends JModel
+
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelGuilds extends JModelLegacy
 {
     /**
      * Data array
@@ -70,7 +75,7 @@ class RaidPlannerModelGuilds extends JModel
 
 	function _buildQueryWhere()
 	{
-		$db	=& JFactory::getDBO();
+		$db	= JFactory::getDBO();
 		
 		$filter_guild_search = $this->getState('filter_guild_search');
 

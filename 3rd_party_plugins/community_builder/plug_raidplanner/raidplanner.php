@@ -13,7 +13,7 @@
 /** ensure this file is being included by a parent file */
 if ( ! ( defined( '_VALID_CB' ) || defined( '_JEXEC' ) || defined( '_VALID_MOS' ) ) ) { die( 'Direct Access to this location is not allowed.' ); }
 
-JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 global $_PLUGINS;
 
@@ -61,7 +61,7 @@ class getRaidPlannerTab extends cbTabHandler {
 					$data['calendar_secret'] = $row->$calsec_field;
 				}
 
-				$juser =& JFactory::getUser($row->user_id);
+				$juser =JFactory::getUser($row->user_id);
 				if (!$juser->block) {
 
 					$ju_params = $juser->getParameters(false)->toObject();
@@ -80,7 +80,7 @@ class getRaidPlannerTab extends cbTabHandler {
 				if ( (isset($data['characters'])) && ($params->get('rpPlugDirectSync', "0") == 1) )
 				{
 					$userId = $juser->id;
-					$db	=& JFactory::getDBO();
+					$db	= JFactory::getDBO();
 					$query = 'UPDATE #__raidplanner_character SET profile_id=-profile_id WHERE profile_id='. $userId;
 					$db->setQuery($query);
 					$db->query();
@@ -219,7 +219,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$idx = 0;
 				
 						$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_0">';
-						$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
+						$html .= '<img src="' . JURI::root() . 'media/com_raidplanner/images/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
 						$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
 						$html .= '<input type="hidden" value="" />';
 						$html .= '</li>';
@@ -231,7 +231,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 							$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=' . htmlspecialchars( $char['char_name'] , ENT_COMPAT, 'UTF-8') . '&amp;char_id=' . intval($char['char_id']) . '&amp;fieldidx=' . $idx;
 				
 							$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_' . $idx . '">';
-							$html .= '<img src="' . JURI::root() . 'components/com_raidplanner/assets/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$field->fieldid.'();" style="float:right;margin:0;" />';
+							$html .= '<img src="' . JURI::root() . 'media/com_raidplanner/images/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$field->fieldid.'();" style="float:right;margin:0;" />';
 							$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
 							if ($char['guild_name']!='') {
 								$html .= '<span> &lsaquo;' . $char['guild_name'] . '&rsaquo;</span>';
@@ -240,7 +240,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 							$html .= '</li>';
 						}
 						$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=&amp;char_id=&amp;fieldidx=';
-						$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;background-image:none;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'components/com_raidplanner/assets/new.png" alt="' . JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '" style="margin:0;" /> '. JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
+						$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;background-image:none;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'media/com_raidplanner/images/new.png" alt="' . JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '" style="margin:0;" /> '. JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
 				
 						$html .= '</ul>';
 						$html .= '</div>';
@@ -255,7 +255,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 						$oReturn = '';
 						foreach ($chars as $char) {
-							$oReturn .= $char['char_name'];
+							$oReturn .= '<span class="' . $char['class_css'] . ' ' . $char['race_css'] . '">' . $char['char_name'] . '<span>';
 							if ($char['guild_name']!='') {
 								$oReturn .= ' &lsaquo;' . $char['guild_name'] . '&rsaquo;';
 							}

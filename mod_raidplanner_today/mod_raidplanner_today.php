@@ -13,15 +13,23 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 JHtml::_('behavior.modal', 'a.modal');
 
 // register RaidPlanner Helper
-JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 // include the helper file
-require_once(dirname(__FILE__).DS.'helper.php');
+require_once(dirname(__FILE__) . '/helper.php');
+
+// load CSS and JS from component
+$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+if ($paramsObj->get('load_css', '1')) {
+	JHTML::stylesheet('com_raidplanner/raidplanner.css', false, true, false);
+}
+JHTML::script('com_raidplanner/raidplanner.js', false, true);
+
 
 JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE);
 
 //get user ID
-$user =& JFactory::getUser();
+$user =JFactory::getUser();
 $user_id = ($user->id);
 
 // get the parameters from the module's configuration

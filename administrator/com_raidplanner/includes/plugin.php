@@ -28,7 +28,7 @@ class RaidPlannerPlugin
 
 	public function needSync( $sync_interval = 4)
 	{
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "SELECT IF(lastSync IS NULL,-1,DATE_ADD(lastSync, INTERVAL " . intval( $sync_interval ) . " HOUR)-NOW()) AS needSync FROM #__raidplanner_guild WHERE guild_id=" . intval($this->guild_id); 
 		$db->setQuery($query);
 		if ( ($needsync = $db->loadResult()) && ( $needsync<0 ) )
@@ -42,7 +42,7 @@ class RaidPlannerPlugin
 	protected function getData( $url )
 	{
 		// register the helper
-		JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_raidplanner'.DS.'helper.php' );
+		JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
 
 		return RaidPlannerHelper::downloadData( $url );
 	}
@@ -65,5 +65,41 @@ class RaidPlannerPlugin
 	public function loadCSS()
 	{
 		return false;
+	}
+	
+	/**
+	* Mimic JDispatcher->trigger function for compatibilty reasons
+	*/
+	public function trigger($event, $args = array())
+	{
+		$translate = array(
+			'onRPInitGuild'			=>	'construct',
+			'onRPSyncGuild'			=>	'doSync',
+			'onRPGetCharacterLink'	=>	'characterLink',
+			'onRPGetGuildHeader'	=>	'guildHeader',
+			'onRPLoadCSS'			=>	'loadCSS'
+		);
+		if (isset($translate[$event])) {
+			$method_name = '';
+			switch ($event) {
+				case 'onRPSyncGuild' :
+					if (($args[1] == 0) || ($this->needSync($args[1]) )) {
+						if (isset($args[2])) {
+							$args[0] = $args[2];
+						} else {
+							$args[0] = false;
+						}
+						$method_name = 'doSync';
+					}
+				break;
+				default :
+					$method_name = $translate[$event];
+				break;
+			}
+			if ( ($method_name != '') && (method_exists($this, $method_name)) ) {
+				return call_user_func_array( array( $this, $method_name), $args );
+			}
+		}
+		return null;
 	}
 }

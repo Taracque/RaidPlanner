@@ -1,4 +1,5 @@
-<install type="module" version="1.5.0" method="upgrade" client="site">
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="1.6.0" method="upgrade" client="site">
 	<name>RaidPlanner Events</name>
 	<author>Taracque</author>
 	<creationDate>2011-10-04</creationDate>
@@ -15,30 +16,6 @@
 		<filename>tmpl/default.php</filename>
 		<filename>tmpl/index.html</filename>
 	</files>
-	<params>
-		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="raidshowReg" type="radio" default="1" label="Show Regristration" description="Show regristration status">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</param>
-		<param name="raidshowRole" type="radio" default="1" label="Show Role" description="Show raid role (confirmed by Raidleader)">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</param>
-		<param name="raidshowChar" type="radio" default="1" label="Show Character" description="Show signed up character">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</param>
-		<param name="raidshowNumber" type="text" default="5" label="Number" description="How many events should be displayed" />
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="showInvitationAlert" type="list" default="1" label="Show invitation alert" description="Show invitation alert">
-			<option value="0">JDISABLED</option>
-			<option value="1">JSHOW</option>
-			<option value="2">JBROWSERTARGET_MODAL</option>
-		</param>
-		<param name="alertTimer" type="text" default="24" label="Invitation alert timer" description="How many hours before raid froozen start displaying invitation alerts." />
-	</params>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
@@ -67,4 +44,4 @@
 			</fieldset>
 		</fields>
 	</config>
-</install>
+</extension>

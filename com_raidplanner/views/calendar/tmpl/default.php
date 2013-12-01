@@ -12,6 +12,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.utilities.date');
+JHtml::_('behavior.tooltip');
 ?>
 <script type="text/javascript">
 <?php if ( (JRequest::getVar('modalevent')) && ($this->canView) ) : ?>
@@ -36,10 +37,10 @@ window.addEvent('domready',function(){
 <?php endif; ?>
 <table class="rp_container">
 	<tr class="rp_header">
-		<td class="rp_header_left">
-			<a class="rp_button_prev" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->prevmonth);?>"> ◄ </a>
-			<a class="rp_button_next" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->nextmonth);?>"> ► </a>
-			<a class="rp_button_today" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"> <?php echo JText::_('COM_RAIDPLANNER_TODAY');?> </a>
+		<td class="rp_header_left btn-group">
+			<a class="rp_button_prev btn" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->prevmonth);?>"> ◄ </a>
+			<a class="rp_button_today btn" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.date("Y-m"));?>"><?php echo JText::_('COM_RAIDPLANNER_TODAY');?></a>
+			<a class="rp_button_next btn" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&month='.$this->nextmonth);?>"> ► </a>
 		</td>
 		<td class="rp_header_center">
 			<h3><?php echo $this->year." ".RaidPlannerModelRaidPlanner::monthToString($this->monthonly); ?></h3>
@@ -51,10 +52,10 @@ window.addEvent('domready',function(){
 		<input type="text" value="<?php echo JURI::base()."index.php?option=com_raidplanner&view=feed&task=feed&user=".$this->user_id."&secret=".$this->calendar_secret;?>" size="40" />
 	</label>
 <?php else: ?>
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button btn"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
 <?php endif; ?>
 <?php if ($this->isOfficer) : ?>
-	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new"><?php echo JText::_('COM_RAIDPLANNER_NEW_EVENT');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=edit&task=edit&id=-1');?>" class="rp_button new btn"><?php echo JText::_('COM_RAIDPLANNER_NEW_EVENT');?></a>
 <?php endif; ?>
 		</td>
 	</tr>
@@ -96,12 +97,23 @@ window.addEvent('domready',function(){
 										<?php else: ?>
 									<a class="rpevent" id="event_<?php echo $event->raid_id;?>" href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id='.$event->raid_id.'&Itemid='.$this->menuitemid); ?>">
 										<?php endif; ?>
+										<?php if ($this->params['show_tooltips']==1) : ?>
+										<?php
+											$tooltipTitle = '' . ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description . '';
+											$tooltip = '<img src="' . JURI::base() . "media/com_raidplanner/raid_icons/" . $event->icon_name . '" alt="' . $event->location . '" style="float:left; margin:0 5px 5px 0;"/>';
+											$tooltip.= '<small><b>' . JText::_('COM_RAIDPLANNER_RAID_LEADER') . ':</b> ' . $event->raid_leader . '<br />';
+											if ($event->attendants) {
+												$tooltip.= '<b>' . JText::_('COM_RAIDPLANNER_STATUSES_1') . '</b> (' . count($event->attendants) . '): ' . join(", ", $event->attendants);
+											}
+											$tooltip.= '</small>';
+											echo JHTML::tooltip( $tooltip, $tooltipTitle, '', '<strong>' . JHTML::_('date', $event->start_time, $this->timeformat ) . '</strong> ' . $event->location );
+										?>
+										<?php else: ?>
+										<?php echo JHTML::_('date', $event->start_time, $this->timeformat );?></strong> <?php echo $event->location;?>
+										<?php endif; ?>
 									<?php else: ?>
-									<a>
+									<a><strong><?php echo JHTML::_('date', $event->start_time, $this->timeformat );?></strong> <?php echo $event->location;?>
 									<?php endif; ?>
-										<strong><?php
-											echo JHTML::_('date', $event->start_time, $this->timeformat );
-										?></strong> <?php echo $event->location;?>
 									</a>
 								</div>
 					<?php

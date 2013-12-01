@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="community" method="upgrade">
+	<name>Community - RaidPlanner</name>
+	<author>Taracque</author>
+	<creationDate>2013-11-25</creationDate>
+	<copyright>Copyright 2013 - Taracque</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>taracque@taracque.hu</authorEmail>
+	<authorUrl>http://taracque.hu/</authorUrl>
+	<version>0.0.1</version>
+	<isapplication>true</isapplication>
+	<description>Adds RaidPlanner Characters field to JomSocial field types</description>
+	<files>
+		<file plugin="raidplanner">raidplanner.php</file>
+		<folder plugin="raidplanner">fields</folder>
+	</files>
+	<config>
+	</config>
+</extension>

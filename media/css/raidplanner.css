@@ -1,0 +1,448 @@
+.rp_container,.rp_header_container {
+	min-width: 480px;
+	width: 100%;
+	border-spacing:0;
+	border-collapse:collapse;
+}
+.rp_header_container td {
+	vertical-align: top;
+	padding:0;
+}
+.rp_container td {
+	vertical-align: middle;
+	padding:0;
+}
+.rp_header_container {
+	border-bottom: 1px inset #ccc;
+	margin-bottom: 5px;
+}
+.rp_header td {
+	text-align: center;
+}
+.rp_header_center,
+.rp_header_right {
+	width: 33%;
+}
+.rp_header ul {
+	text-align: left;
+}
+.rp_header_left {
+	width: auto;
+}
+.rp_header_left a, a.rp_button {
+	background: #E8E8E8;
+	border-color: #777;
+	color: #333;
+	display: block;
+	height: 18px;
+	float: left;
+	width: auto;
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	padding: 4px 8px;
+	border: 1px outset #d1d1d1;
+	text-decoration: none !important;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-transition: background-color 0.2s ease-out;
+}
+
+.rp_header_left a:hover, a.rp_button:hover {
+	background: #888;
+	border: 1px inset #d1d1d1;
+}
+
+.rp_calendar_body,
+.rp_roster_table table {
+	width: 100%;
+	border-spacing: 0px 0px;
+	border-collapse: collapse;
+	border-color: gray;
+	border: 1px solid #CCC;
+}
+
+.rp_calendar_body td {
+	border-width: 1px 0px 0px 1px;
+	border-color: #CCC;
+	border-style: solid;
+	width: 14%;
+	height: 100px;
+	vertical-align: top;
+	padding: 2px;
+}
+
+.rp_calendar_body td.today {
+	background: #FFC;
+}
+
+.rp_calendar_body td.noncurrent {
+	background: #E8E8E8;
+}
+
+.rp_calendar_body tr {
+	border-width: 0px 0px 1px 0px;
+	border-color: #CCC;
+	border-style: solid;
+}
+
+.rp_calendar_body tr th {
+	background: #33383C;
+	color: #BBBFC3;
+	font-weight: bold;
+	text-align: center;
+}
+
+.rp_calendar_body td .day_no {
+	float: right;
+	padding: 0px 2px;
+	position: relative;
+	top:0;
+	right:0;
+	vertical-align: baseline;
+	height: 14px;
+	line-height: 14px;
+	display: block;
+}
+
+.rp_calendar_body td.noncurrent .day_no {
+	color: #4083A9;
+}
+
+.rp_calendar_body td .event {
+	background-color: #33383C;
+	width: 98%;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	margin: 1px;
+}
+.rp_calendar_body td .events {
+	margin: 18px 0 0 0;
+}
+
+.rp_calendar_body td .event a {
+	color: #bbb;
+	text-decoration: none;
+	font-family: Tahoma, Geneva, Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1.5em;
+	margin: 0 4px;
+	display: block;
+	-webkit-transition: color 0.2s ease-out;
+	position: relative;
+}
+
+.rp_calendar_body td .event.signed_0 {
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+}
+
+.rp_calendar_body td .event a:hover {
+	color: white;
+}
+
+.rp_event_roles ul,.rp_header ul, .rp_event_signup ul {
+	margin: 0;
+	list-style-type: none;
+	padding: 0;
+}
+.rp_event_description {
+	display: block;
+	float: left;
+	clear: left;
+}
+
+.rp_event_roles {
+	width: 180px;
+	padding-left: 5px !important;
+	border-left: 1px solid #ccc;
+}
+
+.rp_event_buttons div a {
+	color: #bbb;
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	-webkit-transition: color 0.2s ease-out;
+	float: left;
+	background-color: #888;
+	text-align: center;
+	text-decoration: none;
+	margin: 0 2px;
+	padding: 2px 10px;
+	font-weight: bold;
+	border-top-left-radius : 6px;
+	-moz-border-radius-topleft : 6px;
+	-webkit-border-top-left-radius : 6px;
+	border-top-right-radius : 6px;
+	-moz-border-radius-topright : 6px;
+	-webkit-border-top-right-radius : 6px;
+}
+
+
+.rp_event_buttons div a:hover, .rp_event_buttons div a.active {
+	color: white;
+	background-color: #33383C;
+}
+
+.rp_event_attendants table,
+.rp_event_signup table,
+.rp_event_rating table {
+	margin: 0 0 0.5em 0;
+	padding: 0;
+	width: 100%;
+	border-spacing: 0px 0px;
+	border-collapse: collapse;
+}
+.rp_event_attendants table th,
+.rp_event_signup table th,
+.rp_event_rating table th {
+	background: #33383C;
+	color: #BBBFC3;
+	font-weight: bold;
+	text-align: center;
+	width: 20%;
+}
+
+.rp_event_signup table td {
+	vertical-align: top;
+}
+
+.rp_event_attendants table tr {
+	border-bottom: 1px solid #33383C;
+}
+
+.rp_event_attendants td .rp_tooltips, .rp_event_attendants td .attendance {
+	cursor: default;
+	text-decoration: none;
+	font-size:110%;
+}
+
+.rp_event_attendants td a.edit_button {
+	background: transparent url(../images/edit_butt.gif) no-repeat right center;
+	width: 15px;
+	height: 15px;
+	display: block;
+	float: left;
+}
+
+.rp_event_attendants td .attendance.rp_tooltips {
+	padding-right: 20px;
+	background: transparent url(../images/has_comment.png) no-repeat right center;
+	border-bottom: 1px dotted black;
+	cursor: default;
+}
+
+.rp_event_signup ul {
+	float: left;
+	width: 120px;
+	display: block;
+}
+
+a.rp_button.edit, a.rp_button.new {
+	float: right;
+}
+
+.rp_preview {
+	margin: 15px 5px 5px 5px;
+	border: 2px dotted #33383C;
+	width: 95%;
+	padding: 0;
+}
+
+.rp_tool-tip {
+	color: #fff;
+	width: 139px;
+	z-index: 67000;
+	background-color: black;
+	padding: 3px;
+	border: 2px solid #33383C;
+	border-radius: 4px 4px;
+}
+
+.rp_history_editor {
+	float: right;
+}
+
+tr.rp_header {
+	color: #333;
+}
+
+.rp_container div.rp_header ul {
+	margin:0;
+	padding:0;
+	display:block;
+}
+
+.rp_container ul.rp_left {
+	float:left;
+	clear:none;
+}
+.rp_container ul.rp_right {
+	float:right;
+	clear:none;
+}
+.rp_container li.rp_control span {
+	cursor: pointer;
+	color: #bbb;
+}
+.rp_container li.rp_control.li-pagination-current span,
+.rp_container li.rp_control.li-numOfRows-current span
+{
+	color: #333;
+}
+.rp_container li.rp_control span.static {
+	pointer: auto;
+}
+.rp_container li.rp_control {
+	margin:0 5px;
+	float: left;
+	list-style-type: none;
+}
+.rp_header span.table-th-sort-span {
+	padding-left: 15px;
+	background: transparent url(../images/sort-default.png) no-repeat left center;
+}
+
+.rp_header.table-th-sort span.table-th-sort-span {
+	background-image: url(../images/sort-desc.png);
+}
+
+.rp_header.table-th-sort-rev span.table-th-sort-span {
+	background-image: url(../images/sort-asc.png);
+}
+.rp_roster_table {
+	clear:both;
+}
+.rp_roster_table tr th.rp_header {
+	background: #33383C;
+	color: #BBBFC3;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+}
+.rp_roster_table tr.table-tr-odd {
+	background-color: #E8E8E8;
+}
+.rp_roster_table tr.table-tr-selected {
+	background-color: #FFC;
+}
+.rp_container .rp_filter {
+	float:left;
+	margin-left:40px;
+}
+
+.rp_extended_tooltip {
+	background-color: black;
+	color: white;
+	width: 300px;
+	transition: all 2s;
+	-webkit-transition: all 2s;
+}
+
+.rp_extended_tooltip img {
+	margin-right: 5px;
+}
+
+/**
+ * CSS arrows Based on Jon Rohan's post Creating Triangles in CSS
+ * @see http://www.dinnermint.org/css/creating-triangles-in-css/
+ */
+.css-arrow-left {
+	border-color: transparent #000 transparent transparent;
+	border-style: solid;
+	border-width: 10px 20px 10px 0;
+	height: 0;
+	margin: 10px 0;
+	width: 0;
+}
+.css-arrow-down {
+	border-color: #000 transparent transparent;
+	border-style: solid;
+	border-width: 20px 20px 0;
+	height: 0;
+	margin: 0 10px;
+	width: 0;
+}
+.css-arrow-up {
+	border-color: transparent transparent #000;
+	border-style: solid;
+	border-width: 0 20px 20px;
+	height: 0;
+	margin: 0 10px;
+	width: 0;
+}
+.css-arrow-right {
+	border-color: transparent transparent transparent #000;
+	border-style: solid;
+	border-width: 10px 0 10px 20px;
+	height: 0;
+	margin: 10px 0;
+	width: 0;
+}
+.rp_tooltip {
+	background: #000;
+	border-radius: 5px;
+	box-shadow: 2px 2px 10px rgba(0,0,0,.3);
+	color: #fff;
+	max-width: 500px;
+	padding: 5px 8px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 2px 2px 10px rgba(0,0,0,.3);
+	-webkit-box-shadow: 2px 2px 10px rgba(0,0,0,.3);
+}
+.rp_tooltip a {
+	color: #fff;
+}
+.rp_tooltip div.close {
+	background: url(../images/tooltip-close.png) no-repeat;
+	border: 1px solid #000;
+	float: right;
+	height: 6px;
+	margin-left: 5px;
+	width: 7px;
+}
+.rp_tooltip div.close:hover {
+	border-style: outset;
+}
+
+.rp-vote input[type=radio]:checked + label { 
+	background-image: none;
+	color: blue;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+
+.rp_rating {
+	width: 60px;
+	background-color: white;
+	height: 1.2em;
+	border: 1px solid black;
+	text-align: center;
+	padding: 0;
+	display:inline-block;
+	margin: 7px;
+	float:left;
+}
+.rp_rating span {
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
+.rp_hover {
+	transition: all 1s;
+	-webkit-transition: all 1s;
+}
+tr.rp_hover td {
+	vertical-align: middle;
+}
+.rp_hover:hover {
+	background-color:#ddd;
+}

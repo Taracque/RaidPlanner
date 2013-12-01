@@ -15,14 +15,19 @@ jimport( 'joomla.application.component.model' );
 jimport( 'joomla.application.component.helper' );
 jimport( 'joomla.utilities.date' );
 
-class RaidPlannerModelCharacter extends JModel
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelCharacter extends JModelLegacy
 {
 	/**
 	* Save a new character, or create a new one
 	*/
 	function saveCharacter() {
 		$character_id = JRequest::getVar('character_id', null, 'INT');
-		$user =& JFactory::getUser();
+		$user =JFactory::getUser();
 		$user_id = $user->id;
 
 		// check if user have edit_characters privilegs
@@ -36,7 +41,7 @@ class RaidPlannerModelCharacter extends JModel
 			$rank = JRequest::getVar('rank', null, 'default', 'INT');
 			$guild_id = JRequest::getVar('guild_id', null, 'default', 'INT');
 
-			$db = & JFactory::getDBO();
+			$db = JFactory::getDBO();
 
 			if ($character_id <= 0)
 			{
@@ -90,8 +95,8 @@ class RaidPlannerModelCharacter extends JModel
 	* Gets the list of own/unasigned characters
 	*/
 	function getCharacters( $ownOnly = false) {
-		$db = & JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user = JFactory::getUser();
 		
 		$query = "SELECT c.character_id,c.char_name,g.guild_id,g.guild_name
 					FROM #__raidplanner_character AS c
@@ -105,8 +110,8 @@ class RaidPlannerModelCharacter extends JModel
 	}
 
 	function getCharacter( $char_name, $char_id = null ) {
-		$db = & JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user = JFactory::getUser();
 		
 		if (intval($char_id) <= 0)
 		{

@@ -12,8 +12,13 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 jimport( 'joomla.application.component.model' );
- 
-class RaidPlannerModelRaid extends JModel
+
+/* create JModelLegacy if not exist */
+if (!class_exists('JModelLegacy')) {
+	class JModelLegacy extends JModel {}
+}
+
+class RaidPlannerModelRaid extends JModelLegacy
 {
 
 	function __construct()
@@ -65,8 +70,8 @@ class RaidPlannerModelRaid extends JModel
 		if ($data['minimum_rank']=='') { $data['minimum_rank'] = NULL; }
 
 		// convert datetimes to UTC
-		$data['start_time'] = RaidPlannerHelper::getDate($data['start_time'])->toMySQL();
-		$data['invite_time'] = RaidPlannerHelper::getDate($data['invite_time'])->toMySQL();
+		$data['start_time'] = RaidPlannerHelper::getDate($data['start_time'], null, 'sql');
+		$data['invite_time'] = RaidPlannerHelper::getDate($data['invite_time'], null, 'sql');
 	
 		// Bind the form fields to the table
 		if (!$row->bind($data)) {

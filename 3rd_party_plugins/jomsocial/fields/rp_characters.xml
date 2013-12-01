@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>
+		<param name="cols" type="text" default="" label="Columns" description="" />
+		<param name="rows" type="text" default="" label="Rows" description="" />
+	</params>
+</config>
