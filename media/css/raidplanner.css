@@ -440,7 +440,7 @@ tr.rp_header {
 	transition: all 1s;
 	-webkit-transition: all 1s;
 }
-.rp_hover td {
+tr.rp_hover td {
 	vertical-align: middle;
 }
 .rp_hover:hover {
