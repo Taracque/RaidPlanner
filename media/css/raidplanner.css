@@ -437,9 +437,11 @@ tr.rp_header {
 }
 
 .rp_hover {
-	vertical-align: middle;
 	transition: all 1s;
 	-webkit-transition: all 1s;
+}
+.rp_hover td {
+	vertical-align: middle;
 }
 .rp_hover:hover {
 	background-color:#ddd;
