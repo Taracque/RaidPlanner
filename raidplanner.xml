@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://www.joomla.org/xml/dtd/1.5/component-install.dtd">
 <extension type="component" version="2.5.0" method="upgrade">
 	<name>RaidPlanner</name>
 	<creationDate>2011-03-05</creationDate>
@@ -8,9 +7,9 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.7.9</version>
-	<releaseDate>2013-11-13</releaseDate>
-	<releaseType>Developer release</releaseType>
+	<version>0.8.0</version>
+	<releaseDate>2013-12-01</releaseDate>
+	<releaseType>Release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
 	<description>RaidPlanner component for Joomla, to organize MMORPG raids, and events</description>
