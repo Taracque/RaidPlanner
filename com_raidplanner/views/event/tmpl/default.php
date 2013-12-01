@@ -328,7 +328,7 @@ $hasChars = !empty($this->characters);
 							<?php } ?>
 						</td>
 						<td>
-							<textarea name="comments" rows="5" style="width:95%;padding:0;"><?php echo $this->selfstatus->comments; ?></textarea></label>
+							<textarea name="comments" rows="5" style="width:95%;padding:0;"><?php echo $this->selfstatus->comments; ?></textarea>
 						</td>
 					</tr>
 <?php if ($this->params['multi_raid_signup']==1) : ?>
@@ -343,8 +343,8 @@ $hasChars = !empty($this->characters);
 					<tr>
 	<?php foreach ($this->upcoming as $upcoming) : ?>
 		<?php if ($upcoming->raid_id != $this->event->raid_id) : ?>
-					<tr>
-						<td><?php echo JHTML::_('date', $upcoming->start_time, $dateFormat); ?></td>
+					<tr class="rp_hover">
+						<td><label for="signup_raid_<?php echo $upcoming->raid_id; ?>" class="checkbox"><?php echo JHTML::_('date', $upcoming->start_time, $dateFormat); ?></label></td>
 						<td><a href="#" title="<?php echo $upcoming->description; ?>"><?php echo $upcoming->location; ?><?php if (@$upcoming->guild_name) { echo " - " . $upcoming->guild_name;}?></a></td>
 						<td><?php echo JText::_('COM_RAIDPLANNER_STATUSES_' . intval($upcoming->queue) );?></td>
 						<td><label for="signup_raid_<?php echo $upcoming->raid_id; ?>" class="checkbox"><input type="checkbox" value="1" name="signup_raid[<?php echo $upcoming->raid_id;?>]" id="signup_raid_<?php echo $upcoming->raid_id; ?>"><?php echo JText::_( 'COM_RAIDPLANNER_SIGNUP' );?></label>

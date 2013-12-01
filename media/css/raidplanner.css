@@ -433,3 +433,11 @@ tr.rp_header {
 	font-size: 0.9em;
 	font-weight: bold;
 }
+
+.rp_hover {
+	transition: all 1s;
+	-webkit-transition: all 1s;
+}
+.rp_hover:hover {
+	background-color:#ddd;
+}
