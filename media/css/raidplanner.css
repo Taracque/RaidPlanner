@@ -157,11 +157,8 @@
 }
 
 .rp_event_roles {
-	display: block;
-	float: right;
 	width: 180px;
-	vertical-align:text-top;
-	padding-left: 5px;
+	padding-left: 5px !important;
 	border-left: 1px solid #ccc;
 }
 

@@ -40,74 +40,72 @@ $hasChars = !empty($this->characters);
 				<p><?php echo $this->event->description;?></p>
 			</div>
 		</td>
-		<td>
-			<div class="rp_event_roles">
-				<ul>
-					<li>
-						<strong><?php echo JText::_('COM_RAIDPLANNER_ATTENDING_ROLES');?> (<?php echo (isset($this->confirmed_roles[0]) && is_array($this->confirmed_roles[0]))?array_sum(@$this->confirmed_roles[0]):"0";?>):</strong><br />
-						<?php if ( (isset($this->confirmed_roles[0])) && (@$this->confirmed_roles[0]) ) : ?>
-							<?php foreach ($this->confirmed_roles[0] as $key => $role) : ?>
-								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
-								<?php else: ?>
-								<strong><?php echo $key;?></strong>
-								<?php endif; ?>
-								: <?php echo $role; ?>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</li>
-					<li>
-						<hr />
-					</li>
-					<li>
-						<strong><?php echo JText::_('COM_RAIDPLANNER_CONFIRMED_ROLES');?>:</strong><br />
-						<?php if (@$this->confirmed_roles[1]) : ?>
-							<?php foreach ($this->confirmed_roles[1] as $key => $role) : ?>
-								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
-								<?php else: ?>
-								<strong><?php echo $key;?></strong>
-								<?php endif; ?>
-								: <?php echo $role; ?>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</li>
-					<li>
-						<strong><?php echo JText::_('COM_RAIDPLANNER_SITTING_ROLES');?>:</strong><br />
-						<?php if (@$this->confirmed_roles[2]) : ?>
-							<?php foreach ($this->confirmed_roles[2] as $key => $role) : ?>
-								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
-								<?php else: ?>
-								<strong><?php echo $key;?></strong>
-								<?php endif; ?>
-								: <?php echo $role; ?>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</li>
-					<li>
-						<strong><?php echo JText::_('COM_RAIDPLANNER_WAITLIST_ROLES');?>:</strong><br />
-						<?php if (@$this->confirmed_roles[-1]) :?>
-							<?php foreach ($this->confirmed_roles[-1] as $key => $role) : ?>
-								<?php if ($this->roles[$key]->icon_name != '') : ?>
-								<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
-								<?php else: ?>
-								<strong><?php echo $key;?></strong>
-								<?php endif; ?>
-								: <?php echo $role; ?>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</li>
-					<?php if (@$this->onvacation) :?>
-					<li>
-						<strong><?php echo JText::_('COM_RAIDPLANNER_USERS_ON_VACATION');?>:</strong><br />
-						<?php foreach ($this->onvacation as $vacationusers) : ?>
-						<?php echo $vacationusers; ?> 
+		<td class="rp_event_roles">
+			<ul>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_ATTENDING_ROLES');?> (<?php echo (isset($this->confirmed_roles[0]) && is_array($this->confirmed_roles[0]))?array_sum(@$this->confirmed_roles[0]):"0";?>):</strong><br />
+					<?php if ( (isset($this->confirmed_roles[0])) && (@$this->confirmed_roles[0]) ) : ?>
+						<?php foreach ($this->confirmed_roles[0] as $key => $role) : ?>
+							<?php if ($this->roles[$key]->icon_name != '') : ?>
+							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+							<?php else: ?>
+							<strong><?php echo $key;?></strong>
+							<?php endif; ?>
+							: <?php echo $role; ?>
 						<?php endforeach; ?>
-					</li>
 					<?php endif; ?>
-				</ul>
-			</div>
+				</li>
+				<li>
+					<hr />
+				</li>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_CONFIRMED_ROLES');?>:</strong><br />
+					<?php if (@$this->confirmed_roles[1]) : ?>
+						<?php foreach ($this->confirmed_roles[1] as $key => $role) : ?>
+							<?php if ($this->roles[$key]->icon_name != '') : ?>
+							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+							<?php else: ?>
+							<strong><?php echo $key;?></strong>
+							<?php endif; ?>
+							: <?php echo $role; ?>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</li>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_SITTING_ROLES');?>:</strong><br />
+					<?php if (@$this->confirmed_roles[2]) : ?>
+						<?php foreach ($this->confirmed_roles[2] as $key => $role) : ?>
+							<?php if ($this->roles[$key]->icon_name != '') : ?>
+							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+							<?php else: ?>
+							<strong><?php echo $key;?></strong>
+							<?php endif; ?>
+							: <?php echo $role; ?>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</li>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_WAITLIST_ROLES');?>:</strong><br />
+					<?php if (@$this->confirmed_roles[-1]) :?>
+						<?php foreach ($this->confirmed_roles[-1] as $key => $role) : ?>
+							<?php if ($this->roles[$key]->icon_name != '') : ?>
+							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
+							<?php else: ?>
+							<strong><?php echo $key;?></strong>
+							<?php endif; ?>
+							: <?php echo $role; ?>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</li>
+				<?php if (@$this->onvacation) :?>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_USERS_ON_VACATION');?>:</strong><br />
+					<?php foreach ($this->onvacation as $vacationusers) : ?>
+					<?php echo $vacationusers; ?> 
+					<?php endforeach; ?>
+				</li>
+				<?php endif; ?>
+			</ul>
 		</td>
 	</tr>
 </table>
