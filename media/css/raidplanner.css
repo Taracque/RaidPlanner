@@ -437,6 +437,7 @@ tr.rp_header {
 }
 
 .rp_hover {
+	vertical-align: middle;
 	transition: all 1s;
 	-webkit-transition: all 1s;
 }
