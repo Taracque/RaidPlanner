@@ -35,8 +35,12 @@ $hasChars = !empty($this->characters);
 					<strong><?php echo JText::_('COM_RAIDPLANNER_RAID_LEADER');?>:</strong> <?php echo $this->event->raid_leader;?>
 				</li>
 			</ul>
+			<div class="rp_event_description">
+				<strong><?php echo JText::_('JGLOBAL_DESCRIPTION');?>:</strong><br />
+				<p><?php echo $this->event->description;?></p>
+			</div>
 		</td>
-		<td rowspan="3">
+		<td>
 			<div class="rp_event_roles">
 				<ul>
 					<li>
@@ -103,14 +107,6 @@ $hasChars = !empty($this->characters);
 					</li>
 					<?php endif; ?>
 				</ul>
-			</div>
-		</td>
-	</tr>
-	<tr class="rp_event_details">
-		<td>
-			<div class="rp_event_description">
-				<strong><?php echo JText::_('JGLOBAL_DESCRIPTION');?>:</strong><br />
-				<p><?php echo $this->event->description;?></p>
 			</div>
 		</td>
 	</tr>

@@ -4,8 +4,12 @@
 	border-spacing:0;
 	border-collapse:collapse;
 }
-.rp_container td,.rp_header_container td {
+.rp_header_container td {
 	vertical-align: top;
+	padding:0;
+}
+.rp_container td {
+	vertical-align: middle;
 	padding:0;
 }
 .rp_header_container {
