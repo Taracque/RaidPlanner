@@ -112,7 +112,6 @@ $function	= JRequest::getCmd('function', '');
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="controller" value="guilds" />
 	<input type="hidden" name="view" value="guilds" />
-	<input type="hidden" name="tmpl" id="tmpl" value="<?php echo JRequest::getVar('tmpl');?>" />
 	<?php if(JRequest::getVar('tmpl')) :?>
 	<input type="hidden" name="tmpl" id="tmpl" value="<?php echo JRequest::getVar('tmpl');?>" />
 	<?php endif; ?>
