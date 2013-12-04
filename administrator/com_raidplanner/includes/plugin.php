@@ -19,7 +19,7 @@ class RaidPlannerPlugin
 	
 	public $provide_sync = false;
 	
-	function __construct( $guild_id, $guild_name, $params)
+	function __construct( $guild_id, $guild_name = '', $params = array())
 	{
 		$this->params = $params;
 		$this->guild_name = $guild_name;
