@@ -497,6 +497,8 @@ class RaidPlannerHelper
 
 	public static function downloadData( $url )
 	{
+		$data = false;
+
 		if(function_exists('curl_init') && function_exists('curl_exec')) {
 			$ch = @curl_init();
 
@@ -511,7 +513,7 @@ class RaidPlannerHelper
 			@curl_close($ch);
 		}
 
-		if(function_exists('fsockopen') && $data == '') {
+		if ((!$data) && (function_exists('fsockopen') && $data == '')) {
 			$errno = 0;
 			$errstr = '';
 
@@ -539,7 +541,7 @@ class RaidPlannerHelper
 			}
 		}
 
-		if (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '') {
+		if ((!$data) && (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '')) {
 			ini_set('default_socket_timeout', 15);
 			
 			$handle = @fopen ($url, 'r');
