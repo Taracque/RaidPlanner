@@ -18,8 +18,6 @@ jimport( 'joomla.error.error' );
 jimport( 'joomla.filesystem.file' );
 jimport( 'joomla.filesystem.folder' );
 
-require_once ( JPATH_ADMINISTRATOR . '/components/com_raidplanner/includes/plugin.php' );
-
 class RaidPlannerHelper
 {
 	private static $invite_alert_requested = false;
@@ -101,8 +99,6 @@ class RaidPlannerHelper
 				
 					return $plugin;
 				}
-			} else {
-				return new RaidPlannerPlugin( $guild_id );
 			}
 		}
 	}
