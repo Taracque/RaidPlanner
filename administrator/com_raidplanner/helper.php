@@ -100,18 +100,6 @@ class RaidPlannerHelper
 					$plugin->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
 				
 					return $plugin;
-				} elseif (JFolder::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin ) && JFile::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' )) {
-					/* old way loading, DEPRECATED will be removed as of 0.9 */
-					$plug_class = "RaidPlannerPlugin" . ucfirst( $guild->sync_plugin);
-					JLoader::register( $plug_class, JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $guild->sync_plugin . '/' . $guild->sync_plugin . '.php' );
-					if ( class_exists( $plug_class ) ) {
-						self::$rp_plugin = new $plug_class( $guild_id, $guild->guild_name, $guild->params );
-						
-						return self::$rp_plugin;
-					} else {
-						JError::raiseNotice( 500, 'RaidPlanner theme (' . $plug_class .') not found' );
-						return new RaidPlannerPlugin( $guild_id, $guild->guild_name, $guild->params );
-					}
 				}
 			} else {
 				return new RaidPlannerPlugin( $guild_id );
@@ -144,11 +132,6 @@ class RaidPlannerHelper
 		foreach ($j_plugs as $jplug) {
 			$plugins[] = $jplug->name;
 		}
-		if (JFolder::exists( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins' ) )
-		{
-			/* load older version of plugins for backward compatibility DEPRECATED will be removed as of 0.9 */
-			$plugins = array_merge($plugins, JFolder::folders( JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins', '.', false ) );
-		}
 		
 		return $plugins;
 	}
@@ -159,10 +142,6 @@ class RaidPlannerHelper
 		
 		$plugin = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin);
 		$plug_xml_file = JPATH_SITE . '/plugins/raidplanner/' . $plugin . '/' . $plugin .'.xml';
-		if (!JFile::exists( $plug_xml_file )) {
-			// old type plugin, DEPRECATED, will be removed at 0.9
-			$plug_xml_file = JPATH_ADMINISTRATOR . '/components/com_raidplanner/plugins/' . $plugin . '/' . $plugin . '.xml';
-		}
 		if (JFile::exists( $plug_xml_file )) {
 			$plug_xml = simplexml_load_file( $plug_xml_file );
 			foreach( $plug_xml->params->param as $param ) {
