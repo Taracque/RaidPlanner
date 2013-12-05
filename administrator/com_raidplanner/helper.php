@@ -472,7 +472,15 @@ class RaidPlannerHelper
 
 	public static function downloadData( $url )
 	{
-		if(function_exists('curl_init') && function_exists('curl_exec')) {
+		$data = false;
+		
+		/* try JHttp first */
+		$http = JHttpFactory::getHttp();
+		if (($http) && ($response = $http->get($url))) {
+			$data = $response->body;
+		}
+		
+		if ((!$data) && (function_exists('curl_init') && function_exists('curl_exec'))) {
 			$ch = @curl_init();
 
 			@curl_setopt($ch, CURLOPT_URL, $url);
@@ -485,8 +493,8 @@ class RaidPlannerHelper
 			$data = @curl_exec($ch);
 			@curl_close($ch);
 		}
-
-		if(function_exists('fsockopen') && $data == '') {
+		
+		if ((!$data) && (function_exists('fsockopen') && $data == '')) {
 			$errno = 0;
 			$errstr = '';
 
@@ -513,8 +521,7 @@ class RaidPlannerHelper
 				@fclose($fsock);
 			}
 		}
-
-		if (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '') {
+		if ((!$data) && (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '')) {
 			ini_set('default_socket_timeout', 15);
 			
 			$handle = @fopen ($url, 'r');
