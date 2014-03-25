@@ -26,7 +26,7 @@ class RaidPlannerViewCharacter extends JViewLegacy
 		$model = &$this->getModel();
 		$canEdit = ( $model->canEdit() == 1 );
 
-		$this->assignRef( 'character', $model->getCharacter( JRequest::getVar('character'), JRequest::getInt('character_id') ) );
+		$this->assignRef( 'character', $model->getCharacter( JRequest::getVar('character'), JRequest::getInt('char_id') ) );
 		$this->assignRef( 'characters', $model->getCharacters( ) );		
 		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds( ) );		
 		$this->assignRef( 'genders', RaidPlannerHelper::getGenders( ) );		
