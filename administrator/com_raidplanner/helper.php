@@ -476,9 +476,9 @@ class RaidPlannerHelper
 		return JText::_('DATE_FORMAT_LC4') . ' H:i';
 	}
 
-	public static function sqlDateFormat()
+	public static function sqlDateFormat( $time = false )
 	{
-		return 'Y-m-d';
+		return 'Y-m-d' . ($time)?' H:i':'';
 	}
 
 	public static function date2Sql( $date )
