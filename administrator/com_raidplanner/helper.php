@@ -478,7 +478,11 @@ class RaidPlannerHelper
 
 	public static function sqlDateFormat( $time = false )
 	{
-		return 'Y-m-d' . ($time)?' H:i':'';
+		$format = 'Y-m-d';
+		if ($time) {
+			$format = $format . ' H:i';
+		}
+		return $format;
 	}
 
 	public static function date2Sql( $date )
