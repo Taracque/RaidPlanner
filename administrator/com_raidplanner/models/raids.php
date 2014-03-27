@@ -96,7 +96,7 @@ class RaidPlannerModelRaids extends JModelLegacy
 			$where_arr[] = "r.start_time <= DATE_ADD(".$db->Quote($filter_raid_start_time_max).", INTERVAL 1 DAY)";
 		}
 		if ($filter_raid_search!='') {
-			$where_arr[] = "(r.location LIKE '%".$db->getEscaped($filter_raid_search)."%' OR r.description LIKE '%".$db->getEscaped($filter_raid_search)."%')";
+			$where_arr[] = "(r.location LIKE '%".$db->escape($filter_raid_search)."%' OR r.description LIKE '%".$db->escape($filter_raid_search)."%')";
 		}
 		if (intval($filter_guild_filter)>0) {
 			$where_arr[] = "r.guild_id = " . intval($filter_guild_filter);

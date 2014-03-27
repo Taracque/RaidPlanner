@@ -98,7 +98,7 @@ class RaidPlannerModelCharacters extends JModelLegacy
 			$where_arr[] = "c.char_level <= ".$db->Quote($filter_char_level_max);
 		}
 		if ($filter_char_search!='') {
-			$where_arr[] = "(c.char_name LIKE '%".$db->getEscaped($filter_char_search)."%' OR u.name LIKE '%".$db->getEscaped($filter_char_search)."%')";
+			$where_arr[] = "(c.char_name LIKE '%".$db->escape($filter_char_search)."%' OR u.name LIKE '%".$db->escape($filter_char_search)."%')";
 		}
 		if (intval($filter_guild_filter)>0) {
 			$where_arr[] = "c.guild_id = " . intval($filter_guild_filter);

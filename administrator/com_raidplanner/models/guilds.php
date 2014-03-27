@@ -83,7 +83,7 @@ class RaidPlannerModelGuilds extends JModelLegacy
 		
 		$where_arr = array();
 		if ($filter_guild_search!='') {
-			$where_arr[] = " guild.guild_name LIKE '%".$db->getEscaped($filter_guild_search)."%'";
+			$where_arr[] = " guild.guild_name LIKE '%".$db->escape($filter_guild_search)."%'";
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);

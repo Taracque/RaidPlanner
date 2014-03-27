@@ -89,9 +89,9 @@ class getRaidPlannerTab extends cbTabHandler {
 					foreach ($chars as $char)
 					{
 						if ($char['char_id']=='') {
-							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE char_name='". $db->getEscaped( $char['char_name'] ) ."'";
+							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE char_name='". $db->escape( $char['char_name'] ) ."'";
 						} else {
-							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE character_id=" . intval($char['char_id']) ." AND char_name='". $db->getEscaped( $char['char_name'] ) ."'";
+							$query = "UPDATE #__raidplanner_character SET profile_id=".$userId." WHERE character_id=" . intval($char['char_id']) ." AND char_name='". $db->escape( $char['char_name'] ) ."'";
 						}
 						$db->setQuery($query);
 						$db->query();
