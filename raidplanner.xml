@@ -46,6 +46,8 @@
 		<language tag="fr-FR">fr-FR.com_raidplanner.ini</language>
 		<language tag="sk-SK">sk-SK.com_raidplanner.ini</language>
 		<language tag="cs-CZ">cs-CZ.com_raidplanner.ini</language>
+		<language tag="it-IT">it-IT.com_raidplanner.ini</language>
+		<language tag="da-DK">da-DK.com_raidplanner.ini</language>
 	</languages>
 	<!-- Site Main Media File Copy Section -->
     <media folder="media" destination="com_raidplanner">
@@ -104,6 +106,10 @@
 			<language tag="sk-SK">sk-SK.com_raidplanner.sys.ini</language>
 			<language tag="cs-CZ">cs-CZ.com_raidplanner.ini</language>
 			<language tag="cs-CZ">cs-CZ.com_raidplanner.sys.ini</language>
+			<language tag="da-DK">da-DK.com_raidplanner.ini</language>
+			<language tag="da-DK">da-DK.com_raidplanner.sys.ini</language>
+			<language tag="it-IT">it-IT.com_raidplanner.ini</language>
+			<language tag="it-IT">it-IT.com_raidplanner.sys.ini</language>
 		</languages>
 	</administration>
 	<!-- UPDATESERVER DEFINITION -->
