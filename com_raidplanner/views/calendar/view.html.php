@@ -40,7 +40,8 @@ class RaidPlannerViewCalendar extends JViewLegacy
 			'popup_height'		=> $paramsObj->get('popup_height', 500),
 			'show_history'		=> $paramsObj->get('show_history', 0),
 			'use_modal'			=> $paramsObj->get('use_modal', 1),
-			'show_tooltips'		=> $paramsObj->get('show_tooltips', 1)
+			'show_tooltips'		=> $paramsObj->get('show_tooltips', 1),
+			'show_icons'		=> $paramsObj->get('show_icons', 1)
 		);
 		$is_mobile = RaidPlannerHelper::detectMobile();
 		if ((!$is_mobile) && ($params['use_modal']==1))
