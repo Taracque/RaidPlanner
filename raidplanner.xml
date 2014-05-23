@@ -112,6 +112,6 @@
 	</administration>
 	<!-- UPDATESERVER DEFINITION -->
 	<updateservers>
-		<server type="extension" priority="1" name="RaidPlanner GitHub Site">https://raw.github.com/Taracque/RaidPlanner/master/raidplanner-updates.xml</server>
+		<server type="extension" priority="1" name="RaidPlanner GitHub Site">https://raw.githubusercontent.com/Taracque/RaidPlanner/master/raidplanner-updates.xml</server>
 	</updateservers>
 </extension>
