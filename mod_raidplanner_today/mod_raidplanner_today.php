@@ -39,6 +39,7 @@ $raidshowReg 			= $params->get('raidshowReg',1);
 $raidshowRole 			= $params->get('raidshowRole',1);
 $raidshowChar 			= $params->get('raidshowChar',1);
 $raidshowDate			= $params->get('raidshowDate',1);
+$raidshowAttendants		= $params->get('raidshowAttendants',0);
 
 $itemid = RaidPlannerHelper::getRaidPlannerItemId('calendar');
 if ($showInvitationAlerts>0)

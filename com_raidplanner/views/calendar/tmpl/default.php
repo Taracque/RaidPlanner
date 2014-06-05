@@ -102,17 +102,7 @@ window.addEvent('domready',function(){
 										<?php endif; ?>
 										<?php if ($this->params['show_tooltips']==1) : ?>
 										<?php
-											$tooltipTitle = '' . ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description . '';
-											$tooltip = '';
-											if ($event->icon_name!='') {
-												$tooltip .= '<img src="' . JURI::base() . "media/com_raidplanner/raid_icons/" . $event->icon_name . '" alt="' . $event->location . '" style="float:left; margin:0 5px 5px 0;"/>';
-											}
-											$tooltip.= '<small><b>' . JText::_('COM_RAIDPLANNER_RAID_LEADER') . ':</b> ' . $event->raid_leader . '<br />';
-											if ($event->attendants) {
-												$tooltip.= '<b>' . JText::_('COM_RAIDPLANNER_STATUSES_1') . '</b> (' . count($event->attendants) . '): ' . join(", ", $event->attendants);
-											}
-											$tooltip.= '</small>';
-											echo JHTML::tooltip( $tooltip, $tooltipTitle, '', '<strong>' . JHTML::_('date', $event->start_time, $this->timeformat ) . '</strong> ' . $event->location );
+											echo RaidPlannerHelper::raidTooltip( $event->raid_id );
 										?>
 										<?php else: ?>
 										<?php echo JHTML::_('date', $event->start_time, $this->timeformat );?></strong> <?php echo $event->location;?>

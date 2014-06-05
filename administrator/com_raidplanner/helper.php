@@ -677,6 +677,42 @@ class RaidPlannerHelper
 		}
 	}
 
+	public static function raidTooltip( $raid_id = 0, $showAttendants = true, $additional = '', $timeformat = 'H:i')
+	{
+		$db = JFactory::getDBO();
+		/* get event details */
+		$query = "SELECT description, icon_name, location, raid_leader, start_time FROM #__raidplanner_raid WHERE raid_id=" . intval( $raid_id );
+		$db->setQuery( $query );
+		$event = $db->loadObject();
+		
+
+		$tooltipTitle = '' . ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description . '';
+		$tooltip = '';
+		if ($event->icon_name!='') {
+			$tooltip .= '<img src="' . JURI::base() . "media/com_raidplanner/raid_icons/" . $event->icon_name . '" alt="' . $event->location . '" style="float:left; margin:0 5px 5px 0;"/>';
+		}
+		$tooltip.= '<small><b>' . JText::_('COM_RAIDPLANNER_RAID_LEADER') . ':</b> ' . $event->raid_leader . '<br />';
+		if ($showAttendants) {
+			/* get attendants */
+			$query = "SELECT c.char_name
+					FROM #__raidplanner_signups AS s
+					LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
+					WHERE s.raid_id=".intval($raid_id)." AND s.queue=1
+					ORDER BY s.confirmed DESC, c.char_name ASC";
+			$db->setQuery($query);
+			$attendants = $db->loadResultArray();
+			if ($attendants) {
+				$tooltip.= '<b>' . JText::_('COM_RAIDPLANNER_STATUSES_1') . '</b> (' . count($attendants) . '): ' . join(", ", $attendants);
+			}
+		}
+		if ($additional != '') {
+			$tooltip.= "<br />" . $additional;
+		}
+		$tooltip.= '</small>';
+
+		return JHTML::tooltip( $tooltip, $tooltipTitle, '', '<strong>' . JHTML::_('date', $event->start_time, $timeformat ) . '</strong> ' . $event->location );
+	}
+
 	public static function detectMobile()
 	{
 		$isMobile	= false;
