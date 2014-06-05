@@ -92,8 +92,6 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$monthonly = date("m",mktime(0,0,0,$display_month,1,$display_year));
 		$shift = date("w",mktime(0,0,0,$display_month,1,$display_year));
 
-		$timeformat = 'H:i';
-
 		if ($user->getParam('calendar_secret', '') != '') {
 			$calendar_mode = 'subscribe';
 			$this->assignRef( 'user_id', $user->id );
@@ -112,9 +110,8 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$this->assignRef( 'monthonly', $monthonly);
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		
-        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null, true ) );
+        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null ) );
         $this->assignRef( 'eventmodel', $eventmodel );
-		$this->assignRef( 'timeformat', $timeformat );
 	
         parent::display($tpl);
     }
