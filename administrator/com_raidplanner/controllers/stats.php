@@ -18,11 +18,12 @@ class RaidPlannerControllerStats extends RaidPlannerController
 	 */
 	function display()
 	{
-		$start_time = JRequest::getVar('start_time', '', 'get', 'date');
-		$end_time	= JRequest::getVar('end_time', '', 'get', 'date');
-		$char_id	= JRequest::getVar('character_id', '', 'get', 'int');
-		$group_id	= JRequest::getVar('group_id', '', 'get', 'int');
-		
+		$start_time 	= JRequest::getVar('start_time', '', 'get', 'date');
+		$end_time		= JRequest::getVar('end_time', '', 'get', 'date');
+		$char_id		= JRequest::getVar('character_id', '', 'get', 'int');
+		$group_id		= JRequest::getVar('group_id', 0, 'get', 'int');
+		$show_rating	= JRequest::getVar('show_rating', 0, 'get', 'int');
+
 		$where = array();
 		$type = 'bychar';
 		$where[] = 'c.char_name IS NOT NULL';
@@ -45,6 +46,10 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			5	=>	JText::_( 'COM_RAIDPLANNER_RAIDS'),
 			6	=>	JText::_( 'COM_RAIDPLANNER_RATING')
 		);
+		if ($show_rating == 0) {
+			unset( $titles[6] );
+			unset( $stat_x[6] );
+		}
 
 		$db = JFactory::getDBO();
 		if ($group_id > 0) {

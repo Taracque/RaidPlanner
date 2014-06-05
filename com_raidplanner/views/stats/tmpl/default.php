@@ -18,7 +18,7 @@ if (RaidPlannerHelper::getJVersion() >= '3.0') {
 ?>
 <script type="text/javascript">
 var colors = [
-	'black','green','orange','red',''
+	'','green','orange','red',''
 ];
 var months = [];
 months[ 1] = '<?php echo JText::_( 'JANUARY' );?>';
@@ -74,10 +74,11 @@ function drawBars()
 		});
 		
 		/* draw the bars itself */
-		total = bars[bars.length-3];
 		delete bars[bars.length-1];
-		delete bars[bars.length-2];
-		delete bars[bars.length-3];
+<?php if ($this->show_rating != 0) : ?>
+		delete bars[bars.length-1];
+<?php endif; ?>
+		total = bars[bars.length-2];
 		total_div = new Element('div',{ style : 'width:' + Math.round(100*total/biggest) + '%;height:16px;overflow:hidden;position:relative;'});
 		bars.each(function(bar,idx){
 			if (colors[idx+1]!='') {
@@ -102,7 +103,7 @@ window.addEvent('domready', function() {
 	}
 
 	statReq = new Request.JSON({
-		url : '<?php echo JRoute::_( 'index.php?option=com_raidplanner&view=stats&task=getjson' ,false ); ?>',
+		url : '<?php echo JRoute::_( 'index.php?option=com_raidplanner&view=stats&task=getjson&show_rating=' . $this->show_rating  ,false ); ?>',
 		method : 'get',
 		onSuccess : function (responseJSON, responseText)
 		{
@@ -111,9 +112,9 @@ window.addEvent('domready', function() {
 			var thead = new Element('thead');
 			tr = new Element('tr');
 			Object.each(responseJSON.titles,(function(value,key){
-				tr.grab(new Element('td',{'text':value}));
+				tr.grab(new Element('th',{'text':value}));
 			}));
-			tr.grab(new Element('td',{style:'width:100%',text:'' }));
+			tr.grab(new Element('th',{style:'width:100%',text:'' }));
 			thead.grab(tr);
 			document.id('chart').grab(thead);
 			
@@ -142,7 +143,7 @@ window.addEvent('domready', function() {
 </script>
 <div id="filter-bar" class="btn-toolbar">
 	<div class="filter-search btn-group pull-left">
-		<label for="start_time_min" class="element-invisible"><?php echo JText::_('COM_RAIDPLANNER_START_TIME'); ?></label>
+		<label for="start_time_min" class="element-invisible"><?php echo JText::_('JDATE'); ?></label>
 		<div class="input-append input-prepend">
 			<?php echo JHTML::_('calendar', RaidPlannerHelper::getDate(strtotime('-3 month'), null, RaidPlannerHelper::sqlDateFormat() ), 'start_time', 'start_time', '%Y-%m-%d',array('class' => 'input-small' ) ); ?>
 			<span class="add-on">-</span>
@@ -161,6 +162,7 @@ window.addEvent('domready', function() {
 		<?php else: ?>
 		<input type="hidden" name="character_id" id="character_id" value="" >
 		<?php endif; ?>
+		<?php if (count($this->groups) <= 1) : ?>
 		<label for="group_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GROUP' ); ?></label>
 		<select name="group_id" id="group_id" class="input-small">
 			<option></option>
@@ -168,6 +170,9 @@ window.addEvent('domready', function() {
 			<option value="<?php echo $group_id;?>"><?php echo $group->group_name;?></option>
 			<?php endforeach; ?>
 		</select>
+		<?php else: ?>
+		<input type="hidden" name="group_id" id="group_id" value="<?php echo $group_id;?>" >
+		<?php endif; ?>
 		<?php if ($this->guild_id == 0) : ?>
 		<label for="guild_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GUILD' ); ?></label>
 		<select name="guild_id" id="guild_id" class="input-small">
@@ -191,5 +196,5 @@ window.addEvent('domready', function() {
 	</div>
 </div>
 <div class="clearfix clr clear"></div>
-<table style="width:100%" id="chart">
+<table style="width:100%" id="chart" class="rp_stats_table">
 </table>
