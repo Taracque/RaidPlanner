@@ -7,8 +7,8 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.8.7</version>
-	<releaseDate>2014-05-23</releaseDate>
+	<version>0.8.8</version>
+	<releaseDate>2014-06-05</releaseDate>
 	<releaseType>Release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
