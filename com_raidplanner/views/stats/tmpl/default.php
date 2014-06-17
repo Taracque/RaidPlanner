@@ -162,7 +162,7 @@ window.addEvent('domready', function() {
 		<?php else: ?>
 		<input type="hidden" name="character_id" id="character_id" value="" >
 		<?php endif; ?>
-		<?php if (count($this->groups) <= 1) : ?>
+		<?php if (count($this->groups) > 1) : ?>
 		<label for="group_id" class="element-invisible"><?php echo JText::_( 'COM_RAIDPLANNER_GROUP' ); ?></label>
 		<select name="group_id" id="group_id" class="input-small">
 			<option></option>
