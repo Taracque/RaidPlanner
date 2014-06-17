@@ -76,7 +76,7 @@ $use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
 			<?php else: ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . $item->raid_id . '&Itemid=' . $itemid);?>">
 			<?php endif; ?>
-			<?php echo RaidPlannerHelper::raidTooltip( $item->raid_id, $raidshowAttendants, $tip ); ?>
+			<?php echo RaidPlannerHelper::raidTooltip( $item->raid_id, $raidshowAttendants, $tip, RaidPlannerHelper::shortDateFormat() ); ?>
 			</a><br />
 		</td>
 	</tr>
