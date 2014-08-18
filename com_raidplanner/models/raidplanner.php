@@ -31,7 +31,7 @@ class RaidPlannerModelRaidPlanner extends JModelLegacy
 		if (!$user_id) {
 			$user = JFactory::getUser();
 		} else {
-			$user =& JUser::getInstance( intval( $user_id ) );
+			$user = JUser::getInstance( intval( $user_id ) );
 		}
     	if ($year_month == null) {
     		$year_month = date("Y-m-")."01";

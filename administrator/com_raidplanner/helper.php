@@ -456,7 +456,7 @@ class RaidPlannerHelper
 	
 	public static function getRanks( $transposed = false )
 	{
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 		$ranks = array();
 		for ($i=0; $i<=9; $i++)
 		{
@@ -645,7 +645,7 @@ class RaidPlannerHelper
 		$db->setQuery( $query );
 		if ($raids = $db->loadObjectList()) {
 			JTable::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_raidplanner/tables');
-			$row =& JTable::getInstance('raid', 'Table');
+			$row = JTable::getInstance('raid', 'Table');
 
 			foreach ($raids as $raid) {
 				/* Duplicate it, but 7 day later */

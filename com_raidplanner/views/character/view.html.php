@@ -23,7 +23,7 @@ class RaidPlannerViewCharacter extends JViewLegacy
 {
     function display($tpl = null)
     {
-		$model = &$this->getModel();
+		$model = $this->getModel();
 		$canEdit = ( $model->canEdit() == 1 );
 
 		$this->assignRef( 'character', $model->getCharacter( JRequest::getVar('character'), JRequest::getInt('char_id') ) );

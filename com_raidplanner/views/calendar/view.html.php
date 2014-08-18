@@ -25,9 +25,9 @@ class RaidPlannerViewCalendar extends JViewLegacy
 {
     function display($tpl = null)
     {
-		$eventmodel = &$this->getModel('event');
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
-		$menuitemid = JSite::getMenu()->getActive()->id;
+		$eventmodel = $this->getModel('event');
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+		$menuitemid = JFactory::getApplication()->getMenu()->getActive()->id;
 		if ($menuitemid)
 		{
 			$menu = JSite::getMenu();
@@ -61,7 +61,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
  		$this->assignRef( 'isOfficer', $eventmodel->userIsOfficer() );
 		$this->assignRef( 'canView', $canView );
-		$model = &$this->getModel();
+		$model = $this->getModel();
 		
 		$month = JRequest::getVar('month', null);
 		if ($month=='') {

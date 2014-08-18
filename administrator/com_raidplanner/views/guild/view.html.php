@@ -24,7 +24,7 @@ class RaidPlannerViewGuild extends JViewLegacy
 	function display($tpl = null)
 	{
 		//get the guild
-		$guild	=& $this->get('Data');
+		$guild	= $this->get('Data');
 		$isNew	= ($guild->guild_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
@@ -38,7 +38,7 @@ class RaidPlannerViewGuild extends JViewLegacy
 			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
-		$model =& $this->getModel();
+		$model = $this->getModel();
 		
 		$plugins = RaidPlannerHelper::getSyncPlugins();
 		

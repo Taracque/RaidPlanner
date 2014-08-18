@@ -253,7 +253,7 @@ $hasChars = !empty($this->characters);
 					</div>
 
 					<input type="hidden" name="option" value="com_raidplanner" />
-					<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
+					<input type="hidden" name="Itemid" value="<?php if ( isset( JFactory::getApplication()->getMenu()->getActive()->id ) ) { echo JFactory::getApplication()->getMenu()->getActive()->id; } ?>" />
 					<input type="hidden" name="task" value="confirm" />
 					<input type="hidden" name="layout" value="default" />
 					<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
@@ -459,7 +459,7 @@ $hasChars = !empty($this->characters);
 								<div class="form-actions">
 									<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
 									<input type="hidden" name="option" value="com_raidplanner" />
-									<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
+									<input type="hidden" name="Itemid" value="<?php if ( isset( JFactory::getApplication()->getMenu()->getActive()->id ) ) { echo JFactory::getApplication()->getMenu()->getActive()->id; } ?>" />
 									<input type="hidden" name="task" value="rate" />
 									<input type="hidden" name="layout" value="default" />
 									<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />

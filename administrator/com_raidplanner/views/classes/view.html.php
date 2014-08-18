@@ -32,7 +32,7 @@ class RaidPlannerViewClasses extends JViewLegacy
 		RaidPlannerHelper::showToolbarButtons();
 
         // Get data from the model
-        $classes =& $this->get( 'Data');
+        $classes = $this->get( 'Data');
  
         $this->assignRef( 'classes', $classes );
  

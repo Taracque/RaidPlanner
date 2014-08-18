@@ -34,7 +34,7 @@ class RaidPlannerModelCharacters extends JModelLegacy
 		parent::__construct();
 		
 		$option = JRequest::getCmd('option');
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 
 		$filter_char_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'level', 'cmd' );
 		$filter_char_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );

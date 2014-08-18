@@ -27,12 +27,12 @@ class RaidPlannerViewRoster extends JViewLegacy
 		RaidPlannerHelper::loadJSFramework( true );
 		JHTML::script('com_raidplanner/HtmlTable.Extended.js', false, true);
 
-		$model = &$this->getModel();
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$model = $this->getModel();
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JRequest::getInt( 'Itemid' );
 		if ($menuitemid)
 		{
-			$menu = JSite::getMenu();
+			$menu = JFactory::getApplication()->getMenu();
 			$menuparams = $menu->getParams( $menuitemid );
 			$paramsObj->merge( $menuparams );
 		}

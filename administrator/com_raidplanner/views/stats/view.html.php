@@ -39,7 +39,7 @@ class RaidPlannerViewStats extends JViewLegacy
 		RaidPlannerHelper::showToolbarButtons();
 
 		 /* Call the state object */
-		$state =& $this->get( 'state' );
+		$state = $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
 		$lists['filter_start_time'] = $state->get( 'filter_start_time' );

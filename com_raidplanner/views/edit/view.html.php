@@ -24,7 +24,7 @@ class RaidPlannerViewEdit extends JViewLegacy
 {
     function display($tpl = null)
     {
-		$model = &$this->getModel();
+		$model = $this->getModel();
 
 		if (! $model->userIsOfficer( JRequest::getVar('id') ) ) {
 			$app = JFactory::getApplication();
@@ -49,23 +49,23 @@ class RaidPlannerViewEdit extends JViewLegacy
 			/* display the event in detail */
 			$vName = 'event';
 			$mName = 'event';
-			$document = &JFactory::getDocument();
-			$vType		= $document->getType();
+			$document = JFactory::getDocument();
+			$vType = $document->getType();
 			$vLayout = 'preview';
 			
 			$controller = new RaidPlannerController();
-			$view = &$controller->getView( $vName, $vType);
+			$view = $controller->getView( $vName, $vType);
 			$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR . '/views/' . strtolower($vName) . '/tmpl');
 	
 			// Get/Create the model
-			if ($model = &$this->getModel($mName)) {
+			if ($model = $this->getModel($mName)) {
 				// Push the model into the view (as default)
 				$view->setModel($model, true);
 			}
 			
 			// add event model to calendar view
 			if ($vName == 'calendar') {
-				$eventmodel = &$this->getModel('event');
+				$eventmodel = $this->getModel('event');
 				$view->setModel($eventmodel, false);
 			}
 	

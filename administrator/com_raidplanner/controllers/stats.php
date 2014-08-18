@@ -95,7 +95,7 @@ class RaidPlannerControllerStats extends RaidPlannerController
 			)
 		);
 		
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$app->close();
 	}
 	

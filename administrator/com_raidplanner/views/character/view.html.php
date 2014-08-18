@@ -24,7 +24,7 @@ class RaidPlannerViewCharacter extends JViewLegacy
 	function display($tpl = null)
 	{
 		//get the character
-		$char	=& $this->get('Data');
+		$char	= $this->get('Data');
 		$isNew	= ($char->character_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
@@ -38,14 +38,14 @@ class RaidPlannerViewCharacter extends JViewLegacy
 			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
-		$model =& $this->getModel();
+		$model = $this->getModel();
 
-		$this->assignRef('users', RaidPlannerHelper::getUsers() );
+		$this->assign('users', RaidPlannerHelper::getUsers() );
 		$this->assignRef('character', $char);
-		$this->assignRef('classes', RaidPlannerHelper::getClasses() );
-		$this->assignRef('genders', RaidPlannerHelper::getGenders() );
-		$this->assignRef('races', RaidPlannerHelper::getRaces() );
-		$this->assignRef('guilds', RaidPlannerHelper::getGuilds() );
+		$this->assign('classes', RaidPlannerHelper::getClasses() );
+		$this->assign('genders', RaidPlannerHelper::getGenders() );
+		$this->assign('races', RaidPlannerHelper::getRaces() );
+		$this->assign('guilds', RaidPlannerHelper::getGuilds() );
 
 		parent::display($tpl);
 	}

@@ -61,7 +61,7 @@ class RaidPlannerModelClass extends JModelLegacy
 	 */
 	function store()
 	{	
-		$row =& $this->getTable();
+		$row = $this->getTable();
 
 		$data = JRequest::get( 'post' );
 
@@ -96,7 +96,7 @@ class RaidPlannerModelClass extends JModelLegacy
 	{
 		$cids = JRequest::getVar( 'cid', array(0), 'post', 'array' );
 
-		$row =& $this->getTable();
+		$row = $this->getTable();
 
 		if (count( $cids )) {
 			foreach($cids as $cid) {

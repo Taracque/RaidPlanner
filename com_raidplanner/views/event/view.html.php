@@ -22,13 +22,13 @@ class RaidPlannerViewEvent extends JViewLegacy
 {
     function display($tpl = null)
     {
-		$model = &$this->getModel();
+		$model = $this->getModel();
 
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JRequest::getInt( 'Itemid' );
 		if ($menuitemid)
 		{
-			$menu = JSite::getMenu();
+			$menu = JFactory::getApplication()->getMenu();
 			$menuparams = $menu->getParams( $menuitemid );
 			$paramsObj->merge( $menuparams );
 		}
@@ -88,18 +88,18 @@ class RaidPlannerViewEvent extends JViewLegacy
 			$this->assignRef( 'macro', $macro);
 			$this->assignRef( 'event', $event );
 			$this->assignRef( 'attendants' , $attendants );
-			$this->assignRef( 'confirmed_roles' , $model->getConfirmedRoles( $attendants ) );
-			$this->assignRef( 'xml_history', $model->getHistory( $event->raid_id, true ) );
-			$this->assignRef( 'roles' , $model->getRoles() );
+			$this->assign( 'confirmed_roles' , $model->getConfirmedRoles( $attendants ) );
+			$this->assign( 'xml_history', $model->getHistory( $event->raid_id, true ) );
+			$this->assign( 'roles' , $model->getRoles() );
 			$this->assignRef( 'characters' , $characters );
 			$this->assignRef( 'all_characters' , $all_characters );
-			$this->assignRef( 'selfstatus' , $model->getUserStatus( $event->raid_id ) );
+			$this->assign( 'selfstatus' , $model->getUserStatus( $event->raid_id ) );
 			$this->assignRef( 'isOfficer' , $isOfficer );
-			$this->assignRef( 'canSignup' , $model->userCanSignUp( $event->raid_id ) );
-			$this->assignRef( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
+			$this->assign( 'canSignup' , $model->userCanSignUp( $event->raid_id ) );
+			$this->assign( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
 			$this->assignRef( 'finished' , $event->finished );
-			$this->assignRef( 'canRate' , $model->userCanRate( $event->raid_id ) );
-			$this->assignRef( 'ratings' , $model->getRates( $event->raid_id ) ); 
+			$this->assign( 'canRate' , $model->userCanRate( $event->raid_id ) );
+			$this->assign( 'ratings' , $model->getRates( $event->raid_id ) ); 
 			
 			parent::display($tpl);
 		}

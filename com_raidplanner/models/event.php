@@ -74,7 +74,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		foreach ($results as $result) {
-			$user =& JUser::getInstance( $result->id );
+			$user = JUser::getInstance( $result->id );
 			$vac = $user->getParam('vacation', '');
 			$vacs = explode("\n", $vac);
 			foreach ($vacs as $vac)

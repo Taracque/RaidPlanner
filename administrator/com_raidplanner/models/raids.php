@@ -34,7 +34,7 @@ class RaidPlannerModelRaids extends JModelLegacy
 		parent::__construct();
 		
 		$option = JRequest::getCmd('option');
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 		
 		$filter_raid_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'r.start_time', 'cmd' );
 		$filter_raid_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );

@@ -60,7 +60,7 @@ class com_raidplannerInstallerScript
 		$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
 		if ( file_exists( $_CB_adminpath . '/plugin.foundation.php' ) )
 		{
-			$cbComp = &JComponentHelper::getComponent( 'com_comprofiler' );
+			$cbComp = JComponentHelper::getComponent( 'com_comprofiler' );
 			if ( ( $cbComp ) && ( $cbComp->enabled ) )
 			{
 				try {

@@ -150,7 +150,7 @@ $start_time = array(
 		</div>
 	
 		<input type="hidden" name="option" value="com_raidplanner" />
-		<input type="hidden" name="Itemid" value="<?php echo JSite::getMenu()->getActive()->id; ?>" />
+		<input type="hidden" name="Itemid" value="<?php echo JFactory::getApplication()->getMenu()->getActive()->id; ?>" />
 		<input type="hidden" name="task" id="task" value="saveevent" />
 		<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
 	</form>

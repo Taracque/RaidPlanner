@@ -106,8 +106,8 @@ function RaidPlannerParseRoute( $segments )
 		break;
 		default:
 			$app =JFactory::getApplication();
-			$menu =& $app->getMenu();
-			$item =& $menu->getActive();
+			$menu = $app->getMenu();
+			$item = $menu->getActive();
 			if ($item)
 			{
 				// no view defined, needs to figure out

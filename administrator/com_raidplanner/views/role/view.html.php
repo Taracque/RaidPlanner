@@ -26,7 +26,7 @@ class RaidPlannerViewRole extends JViewLegacy
 	function display($tpl = null)
 	{
 		//get the character
-		$role	=& $this->get('Data');
+		$role	= $this->get('Data');
 		$isNew	= ($role->role_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
@@ -40,7 +40,7 @@ class RaidPlannerViewRole extends JViewLegacy
 			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
-		$model =& $this->getModel();
+		$model = $this->getModel();
 
 		$this->assignRef('role', $role);
 		$this->assignRef('icons', $this->getIcons() );
