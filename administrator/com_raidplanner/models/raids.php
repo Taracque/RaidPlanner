@@ -73,6 +73,8 @@ class RaidPlannerModelRaids extends JModelLegacy
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
+		} else { // default order is now descending raid start time
+			$orderby = ' ORDER BY r.start_time desc';
 		}
 		return $orderby;
 	}
