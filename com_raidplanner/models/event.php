@@ -80,7 +80,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			foreach ($vacs as $vac)
 			{
 				$vac_period = explode(" ", $vac);
-				if (($vac_period[0]<= $date) && ($vac_period[1] >= $date)) {
+				if ((@$vac_period[0]<= $date) && (@$vac_period[1] >= $date)) {
 					$onvacation[] = $user->name;
 					break;
 				}
