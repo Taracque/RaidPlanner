@@ -35,7 +35,7 @@ class RaidPlannerViewRaids extends JViewLegacy
         $raids = $this->get( 'Data' );
 		$pagination = $this->get('Pagination');
 
-		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
+		$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
         $this->assignRef( 'raids', $raids );
 		$this->assignRef( 'pagination', $pagination);
 

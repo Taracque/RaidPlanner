@@ -46,9 +46,9 @@ class RaidPlannerViewStats extends JViewLegacy
 		$lists['filter_character_id'] = $state->get( 'filter_character_id' );
 		$lists['filter_group_id'] = $state->get( 'filter_group_id' );
 
-		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
-		$this->assignRef( 'groups', RaidPlannerHelper::getGroups( true, $groups ) );
-		$this->assignRef( 'characters', RaidPlannerHelper::getCharacters() );
+		$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
+		$this->assign( 'groups', RaidPlannerHelper::getGroups( true, $groups ) );
+		$this->assign( 'characters', RaidPlannerHelper::getCharacters() );
 		$this->assignRef( 'lists', $lists );
 		$this->assignRef( 'by_chars', $by_chars );
 		$this->assignRef( 'show_rating', $show_rating );

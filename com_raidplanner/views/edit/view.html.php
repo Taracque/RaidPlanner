@@ -37,12 +37,12 @@ class RaidPlannerViewEdit extends JViewLegacy
 			} else {
 				$event = $model->getEvent(JRequest::getVar('id') );
 			}
-			$this->assignRef( 'icons', $this->getIcons() );
-			$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
-			$this->assignRef( 'groups', RaidPlannerHelper::getGroups( false ) );
+			$this->assign( 'icons', $this->getIcons() );
+			$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
+			$this->assign( 'groups', RaidPlannerHelper::getGroups( false ) );
 			$this->assignRef( 'event', $event );
-			$this->assignRef( 'templates', $model->getTemplates() );
-			$this->assignRef( 'candelete', $model->canDelete( $event->raid_id ) );
+			$this->assign( 'templates', $model->getTemplates() );
+			$this->assign( 'candelete', $model->canDelete( $event->raid_id ) );
 
 			parent::display($tpl);
 			

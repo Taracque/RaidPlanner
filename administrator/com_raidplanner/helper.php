@@ -684,9 +684,9 @@ class RaidPlannerHelper
 		$query = "SELECT description, icon_name, location, raid_leader, start_time FROM #__raidplanner_raid WHERE raid_id=" . intval( $raid_id );
 		$db->setQuery( $query );
 		$event = $db->loadObject();
-		
-
-		$tooltipTitle = '' . ($event->description == "") ? ( ucwords ( str_replace("_"," ",basename( array_shift( explode(".",$event->icon_name) ) ) ) ) ) : $event->description . '';
+		list($icon_name) = explode(".",$event->icon_name);
+		$icon_name = ucwords ( str_replace("_"," ",basename( $icon_name ) ) );
+		$tooltipTitle = '' . ($event->description == "") ? ( $icon_name ) : $event->description . '';
 		$tooltip = '';
 		if ($event->icon_name!='') {
 			$tooltip .= '<img src="' . JURI::base() . "media/com_raidplanner/raid_icons/" . $event->icon_name . '" alt="' . $event->location . '" style="float:left; margin:0 5px 5px 0;"/>';

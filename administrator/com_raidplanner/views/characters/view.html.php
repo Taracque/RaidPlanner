@@ -35,7 +35,7 @@ class RaidPlannerViewCharacters extends JViewLegacy
         $characters = $this->get( 'Data');
  		$pagination = $this->get( 'Pagination' );
 
-		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
+		$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
         $this->assignRef( 'characters', $characters );
  		$this->assignRef( 'pagination', $pagination);
  		

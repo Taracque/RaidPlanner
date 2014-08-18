@@ -58,9 +58,9 @@ class RaidPlannerViewRoster extends JViewLegacy
 		}
 
 		$this->assignRef( 'guild_plugin', $guild_plugin );
-		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
-		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
-		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );
+		$this->assign( 'characters', $model->getGuildCharacters( $guild_id ) );
+		$this->assign( 'guildinfo', $model->getGuildInfo( $guild_id ) );
+		$this->assign( 'ranks', RaidPlannerHelper::getRanks() );
 		$this->assignRef( 'show_account', $show_account );
 		$this->assignRef( 'initial_sort', $initial_sort );
 
