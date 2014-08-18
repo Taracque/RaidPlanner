@@ -437,9 +437,9 @@ class RaidPlannerHelper
 
 	public static function getRaidPlannerItemId( $view = 'calendar' )
 	{
-		$menu = &JSite::getMenu()->getItems( 'component', 'com_raidplanner', false );
+		$menu = JFactory::getApplication()->getMenu()->getItems( 'component', 'com_raidplanner', false );
 		if (empty($menu)) {
-			$itemid = &JSite::getMenu()->getActive()->id;
+			$itemid = JFactory::getApplication()->getMenu()->getActive()->id;
 		} else {
 			foreach ($menu as $menuItem)
 			{
@@ -700,7 +700,7 @@ class RaidPlannerHelper
 					WHERE s.raid_id=".intval($raid_id)." AND s.queue=1
 					ORDER BY s.confirmed DESC, c.char_name ASC";
 			$db->setQuery($query);
-			$attendants = $db->loadResultArray();
+			$attendants = $db->loadColumn();
 			if ($attendants) {
 				$tooltip.= '<b>' . JText::_('COM_RAIDPLANNER_STATUSES_1') . '</b> (' . count($attendants) . '): ' . join(", ", $attendants);
 			}

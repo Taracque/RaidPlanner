@@ -71,7 +71,7 @@ class RaidPlannerModelRaidPlanner extends JModelLegacy
 						WHERE s.raid_id=".intval($row->raid_id)." AND s.queue=1
 						ORDER BY s.confirmed DESC, c.char_name ASC";
 		    	$db->setQuery($query);
-				$row->attendants = $db->loadResultArray();
+				$row->attendants = $db->loadColumn();
 
 			}
     		$result[$date][] = $row;
