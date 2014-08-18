@@ -23,7 +23,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 		// Load the javascript
 		JHtml::_('behavior.framework');
-		JHtml::_('behavior.modal', 'a.modal');
+		JHtml::_('behavior.modal', 'a.open-modal');
 
 		// Build the script.
 		$script = array();
@@ -83,7 +83,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 		$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_0">';
 		$html .= '<img src="' . JURI::root() . 'media/com_raidplanner/images/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
-		$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
+		$html .= '<a class="open-modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
 		$html .= '<input type="hidden" value="" />';
 		$html .= '</li>';
 		
@@ -95,7 +95,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 
 			$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;" id="rp_characterEditorField_' . $this->id . '_' . $idx . '">';
 			$html .= '<img src="' . JURI::root() . 'media/com_raidplanner/images/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$this->id.'();" style="float:right;margin:0;" />';
-			$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
+			$html .= '<a class="open-modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
 			if ($char['guild_name']!='') {
 				$html .= '<span> &lsaquo;' . $char['guild_name'] . '&rsaquo;</span>';
 			}
@@ -103,7 +103,7 @@ class JFormFieldRPCharacterEditor extends JFormField {
 			$html .= '</li>';
 		}
 		$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$this->id.'&amp;character=&amp;fieldidx=';
-		$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'media/com_raidplanner/images/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('PLG_USER_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
+		$html .= '<li style="display:block;float:left;clear:left;width:100%;"><a class="open-modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'media/com_raidplanner/images/new.png" alt="' . JText::_('JACTION_NEW') . '" style="margin:0;" /> '. JText::_('PLG_USER_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
 
 		$html .= '</ul>';
 		$html .= '</div>';

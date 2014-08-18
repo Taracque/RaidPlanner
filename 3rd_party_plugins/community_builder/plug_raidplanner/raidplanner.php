@@ -155,7 +155,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						JFactory::getLanguage()->load('com_raidplanner', JPATH_SITE );
 						
 						// Load the javascript
-						JHtml::_('behavior.modal', 'a.modal');
+						JHtml::_('behavior.modal', 'a.open-modal');
 				
 						// Build the script.
 						$script = array();
@@ -220,7 +220,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				
 						$html .= '<li style="display:none;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_0">';
 						$html .= '<img src="' . JURI::root() . 'media/com_raidplanner/images/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();" style="float:right;margin:0;" />';
-						$html .= '<a class="modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
+						$html .= '<a class="open-modal" href="" rel="{handler: \'iframe\', size: {x: 450, y: 300}}"></a>';
 						$html .= '<input type="hidden" value="" />';
 						$html .= '</li>';
 						
@@ -232,7 +232,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 				
 							$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;background-image:none;" id="rp_characterEditorField_' . $field->fieldid . '_' . $idx . '">';
 							$html .= '<img src="' . JURI::root() . 'media/com_raidplanner/images/delete.png" alt="' . JText::_('JACTION_DELETE') . '" onclick="this.getParent(\'li\').dispose();jRecalCharacterValue_'.$field->fieldid.'();" style="float:right;margin:0;" />';
-							$html .= '<a class="modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
+							$html .= '<a class="open-modal" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 450, y: 300}}">' . $char['char_name'] . '</a>';
 							if ($char['guild_name']!='') {
 								$html .= '<span> &lsaquo;' . $char['guild_name'] . '&rsaquo;</span>';
 							}
@@ -240,7 +240,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 							$html .= '</li>';
 						}
 						$link = JURI::root() . 'index.php?option=com_raidplanner&amp;view=character&amp;layout=modal&amp;tmpl=component&amp;function=jSelectCharacter_'.$field->fieldid.'&amp;character=&amp;char_id=&amp;fieldidx=';
-						$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;background-image:none;"><a class="modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'media/com_raidplanner/images/new.png" alt="' . JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '" style="margin:0;" /> '. JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
+						$html .= '<li style="display:block;float:left;clear:left;width:100%;padding:0;background-image:none;"><a class="open-modal" rel="{handler: \'iframe\', size: {x: 450, y: 300}}" href="' . $link . '"><img src="' . JURI::root() . 'media/com_raidplanner/images/new.png" alt="' . JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '" style="margin:0;" /> '. JText::_('COM_RAIDPLANNER_ADD_NEW_CHARACTER') . '</a></li>';
 				
 						$html .= '</ul>';
 						$html .= '</div>';

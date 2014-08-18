@@ -10,7 +10,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-JHtml::_('behavior.modal', 'a.modal');
+JHtml::_('behavior.modal', 'a.open-modal');
 
 // register RaidPlanner Helper
 JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );

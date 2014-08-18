@@ -36,7 +36,7 @@ class JFormFieldModal_Guilds extends JFormField
 	{
 		// Load the javascript
 		JHtml::_('behavior.framework');
-		JHtml::_('behavior.modal', 'a.modal');
+		JHtml::_('behavior.modal', 'a.open-modal');
 
 		// Build the script.
 		$script = array();
@@ -66,7 +66,7 @@ class JFormFieldModal_Guilds extends JFormField
 
 		$html = "\n".'<div class="fltlft input-append">';
 		$html .= '<input type="text" id="'.$this->id.'_name" value="'.htmlspecialchars($title, ENT_QUOTES, 'UTF-8').'" disabled="disabled" placeholder="' . JText::_('COM_RAIDPLANNER_SELECT_A_GUILD') . '" />';
-		$html .= '<a class="modal btn btn-primary" title="'.JText::_('COM_RAIDPLANNER_CHANGE_GUILD_BUTTON').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-list icon-white"></i>'.JText::_('COM_RAIDPLANNER_CHANGE_GUILD_BUTTON').'</a>';
+		$html .= '<a class="open-modal btn btn-primary" title="'.JText::_('COM_RAIDPLANNER_CHANGE_GUILD_BUTTON').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-list icon-white"></i>'.JText::_('COM_RAIDPLANNER_CHANGE_GUILD_BUTTON').'</a>';
 		$html .= '<a class="btn" href="#" onclick="document.id(\''.$this->id.'_name\').value=\'\';"><i class="icon-remove"></i></a>'."\n";
 		$html .= '</div>'."\n";
 		// The active contact id field.
