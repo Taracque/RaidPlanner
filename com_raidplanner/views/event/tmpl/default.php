@@ -144,7 +144,7 @@ $hasChars = !empty($this->characters);
 						<tr>
 							<td class="<?php echo $attendant->class_css;?>">
 								<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
-								<a href="<?php if ($this->guild_plugin) { echo implode(" ", $this->guild_plugin->trigger( 'onRPGetCharacterLink', array($attendant->char_name) ) ); } else { echo '#" onclick="javascript:rpShowTooltip(\'att_char_name_' . $attendant->character_id . '\');return false;" '; }?> onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
+								<a href="<?php if ($this->guild_plugin) { echo implode(" ", $this->guild_plugin->trigger( 'onRPGetCharacterLink', array($attendant->char_name) ) ); } else { echo '#" onclick="javascript:rpShowTooltip(\'att_char_name_' . $attendant->character_id . '\');return false;" '; }?>" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
 									<strong><?php echo $attendant->char_name;?></strong>
 								</a>
 							</td>
