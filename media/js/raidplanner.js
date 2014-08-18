@@ -25,7 +25,7 @@ function rpShowTooltip(el) {
 				'top': pos.y + 20,
 				'visibility': 'visible'
 		});
-		document.id('rpTip').setOpacity(0.8);
+		document.id('rpTip').setStyle('opacity',0.8);
 	}
 }
 
@@ -36,7 +36,7 @@ function rpEditQueue(char_id) {
 }
 
 function rpHideTooltip() {
-	document.id('rpTip').setOpacity(0);
+	document.id('rpTip').setStyle('opacity',0);
 	document.id('rpTip').setStyle('visibility','hidden');
 }
 
