@@ -7,10 +7,10 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.9.0</version>
-	<releaseDate>2014-08-18</releaseDate>
-	<releaseType>Release</releaseType>
-	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
+	<version>0.9.9</version>
+	<releaseDate>2014-08-20</releaseDate>
+	<releaseType>Development</releaseType>
+	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/development</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
 	<description>RaidPlanner component for Joomla, to organize MMORPG raids, and events</description>
 	<!-- Install Database Section -->
