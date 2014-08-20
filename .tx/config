@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = en: en-GB, hu_HU: hu-HU, sk_SK: sk-SK, de_DE: de-DE, fr_FR: fr-FR, cs_CZ: cs-CZ, dk_DK: da-DK, it_IT: it-IT
+lang_map = en: en-GB, hu_HU: hu-HU, sk_SK: sk-SK, de_DE: de-DE, fr_FR: fr-FR, cs_CZ: cs-CZ, it_IT: it-IT, da_DK: da-DK, hr_HR: hr-HR
 
 [raidplanner.com_raidplanner_front]
 file_filter = language/<lang>.com_raidplanner.ini

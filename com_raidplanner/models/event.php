@@ -74,13 +74,13 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		foreach ($results as $result) {
-			$user =& JUser::getInstance( $result->id );
+			$user = JUser::getInstance( $result->id );
 			$vac = $user->getParam('vacation', '');
 			$vacs = explode("\n", $vac);
 			foreach ($vacs as $vac)
 			{
 				$vac_period = explode(" ", $vac);
-				if (($vac_period[0]<= $date) && ($vac_period[1] >= $date)) {
+				if ((@$vac_period[0]<= $date) && (@$vac_period[1] >= $date)) {
 					$onvacation[] = $user->name;
 					break;
 				}

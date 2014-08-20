@@ -7,9 +7,9 @@
 	<authorUrl>http://taracque.hu</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>http://www.gnu.org/licenseses/gpl-2.0.html GNU/GPL</license>
-	<version>0.8.9</version>
-	<releaseDate>2013-12-03</releaseDate>
-	<releaseType>Development Release</releaseType>
+	<version>0.9.0</version>
+	<releaseDate>2014-08-18</releaseDate>
+	<releaseType>Release</releaseType>
 	<downloadUrl>https://nodeload.github.com/Taracque/RaidPlanner/zipball/master</downloadUrl>
 	<!-- The description is optional and defaults to the name -->
 	<description>RaidPlanner component for Joomla, to organize MMORPG raids, and events</description>
@@ -48,6 +48,7 @@
 		<language tag="cs-CZ">cs-CZ.com_raidplanner.ini</language>
 		<language tag="it-IT">it-IT.com_raidplanner.ini</language>
 		<language tag="da-DK">da-DK.com_raidplanner.ini</language>
+		<language tag="hr-HR">hr-HR.com_raidplanner.ini</language>
 	</languages>
 	<!-- Site Main Media File Copy Section -->
     <media folder="media" destination="com_raidplanner">
@@ -106,14 +107,16 @@
 			<language tag="sk-SK">sk-SK.com_raidplanner.sys.ini</language>
 			<language tag="cs-CZ">cs-CZ.com_raidplanner.ini</language>
 			<language tag="cs-CZ">cs-CZ.com_raidplanner.sys.ini</language>
-			<language tag="da-DK">da-DK.com_raidplanner.ini</language>
-			<language tag="da-DK">da-DK.com_raidplanner.sys.ini</language>
 			<language tag="it-IT">it-IT.com_raidplanner.ini</language>
 			<language tag="it-IT">it-IT.com_raidplanner.sys.ini</language>
+			<language tag="da-DK">da-DK.com_raidplanner.ini</language>
+			<language tag="da-DK">da-DK.com_raidplanner.sys.ini</language>
+			<language tag="hr-HR">hr-HR.com_raidplanner.ini</language>
+			<language tag="hr-HR">hr-HR.com_raidplanner.sys.ini</language>
 		</languages>
 	</administration>
 	<!-- UPDATESERVER DEFINITION -->
 	<updateservers>
-		<server type="extension" priority="1" name="RaidPlanner GitHub Site">https://raw.github.com/Taracque/RaidPlanner/master/raidplanner-updates.xml</server>
+		<server type="extension" priority="1" name="RaidPlanner GitHub Site">https://raw.githubusercontent.com/Taracque/RaidPlanner/master/raidplanner-updates.xml</server>
 	</updateservers>
 </extension>

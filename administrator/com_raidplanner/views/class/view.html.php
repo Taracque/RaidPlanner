@@ -24,7 +24,7 @@ class RaidPlannerViewClass extends JViewLegacy
 	function display($tpl = null)
 	{
 		//get the character
-		$class	=& $this->get('Data');
+		$class	= $this->get('Data');
 		$isNew	= ($class->class_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );
@@ -38,7 +38,7 @@ class RaidPlannerViewClass extends JViewLegacy
 			JToolBarHelper::cancel( 'cancel', 'JTOOLBAR_CLOSE' );
 		}
 
-		$model =& $this->getModel();
+		$model = $this->getModel();
 
 		$this->assignRef('class', $class);
 

@@ -27,12 +27,12 @@ class RaidPlannerViewRoster extends JViewLegacy
 		RaidPlannerHelper::loadJSFramework( true );
 		JHTML::script('com_raidplanner/HtmlTable.Extended.js', false, true);
 
-		$model = &$this->getModel();
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$model = $this->getModel();
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 		$menuitemid = JRequest::getInt( 'Itemid' );
 		if ($menuitemid)
 		{
-			$menu = JSite::getMenu();
+			$menu = JFactory::getApplication()->getMenu();
 			$menuparams = $menu->getParams( $menuitemid );
 			$paramsObj->merge( $menuparams );
 		}
@@ -58,9 +58,9 @@ class RaidPlannerViewRoster extends JViewLegacy
 		}
 
 		$this->assignRef( 'guild_plugin', $guild_plugin );
-		$this->assignRef( 'characters', $model->getGuildCharacters( $guild_id ) );
-		$this->assignRef( 'guildinfo', $model->getGuildInfo( $guild_id ) );
-		$this->assignRef( 'ranks', RaidPlannerHelper::getRanks() );
+		$this->assign( 'characters', $model->getGuildCharacters( $guild_id ) );
+		$this->assign( 'guildinfo', $model->getGuildInfo( $guild_id ) );
+		$this->assign( 'ranks', RaidPlannerHelper::getRanks() );
 		$this->assignRef( 'show_account', $show_account );
 		$this->assignRef( 'initial_sort', $initial_sort );
 

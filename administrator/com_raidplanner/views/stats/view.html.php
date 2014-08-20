@@ -39,7 +39,7 @@ class RaidPlannerViewStats extends JViewLegacy
 		RaidPlannerHelper::showToolbarButtons();
 
 		 /* Call the state object */
-		$state =& $this->get( 'state' );
+		$state = $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
 		$lists['filter_start_time'] = $state->get( 'filter_start_time' );
@@ -47,9 +47,9 @@ class RaidPlannerViewStats extends JViewLegacy
 		$lists['filter_character_id'] = $state->get( 'filter_character_id' );
 		$lists['filter_group_id'] = $state->get( 'filter_group_id' );
 
-		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
-		$this->assignRef( 'groups', RaidPlannerHelper::getGroups() );
-		$this->assignRef( 'characters', RaidPlannerHelper::getCharacters() );
+		$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
+		$this->assign( 'groups', RaidPlannerHelper::getGroups() );
+		$this->assign( 'characters', RaidPlannerHelper::getCharacters() );
 		$this->assignRef( 'lists', $lists );
 
 		parent::display($tpl);

@@ -27,7 +27,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$user =JFactory::getUser();
 		if($user->id == 0) {
 			// user not logged in
-			$user =& JUser::getInstance( intval(@$_REQUEST['user']) );
+			$user = JUser::getInstance( intval(@$_REQUEST['user']) );
 			if ( ($user->getParam('calendar_secret', '') != '') && ($user->getParam('calendar_secret', '') == $_REQUEST['secret'] ) ) {
 				// access validated
 			} else {
@@ -36,7 +36,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		}
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
 
-		$model = &$this->getModel();
+		$model = $this->getModel();
 		
 		$this->assignRef( 'canView', $canView );
         $this->assignRef( 'events', $model->getEvents('own', $user->id) );
@@ -46,7 +46,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 
         parent::display($tpl);
         
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$app->close();
     }
     

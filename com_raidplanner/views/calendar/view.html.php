@@ -25,12 +25,12 @@ class RaidPlannerViewCalendar extends JViewLegacy
 {
     function display($tpl = null)
     {
-		$eventmodel = &$this->getModel('event');
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
-		$menuitemid = JSite::getMenu()->getActive()->id;
+		$eventmodel = $this->getModel('event');
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
+		$menuitemid = JFactory::getApplication()->getMenu()->getActive()->id;
 		if ($menuitemid)
 		{
-			$menu = JSite::getMenu();
+			$menu = JFactory::getApplication()->getMenu();
 			$menuparams = $menu->getParams( $menuitemid );
 			$paramsObj->merge( $menuparams );
 		}
@@ -40,7 +40,8 @@ class RaidPlannerViewCalendar extends JViewLegacy
 			'popup_height'		=> $paramsObj->get('popup_height', 500),
 			'show_history'		=> $paramsObj->get('show_history', 0),
 			'use_modal'			=> $paramsObj->get('use_modal', 1),
-			'show_tooltips'		=> $paramsObj->get('show_tooltips', 1)
+			'show_tooltips'		=> $paramsObj->get('show_tooltips', 1),
+			'show_icons'		=> $paramsObj->get('show_icons', 1)
 		);
 		$is_mobile = RaidPlannerHelper::detectMobile();
 		if ((!$is_mobile) && ($params['use_modal']==1))
@@ -58,9 +59,9 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$user =JFactory::getUser();
 		
 		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
- 		$this->assignRef( 'isOfficer', $eventmodel->userIsOfficer() );
+ 		$this->assign( 'isOfficer', $eventmodel->userIsOfficer() );
 		$this->assignRef( 'canView', $canView );
-		$model = &$this->getModel();
+		$model = $this->getModel();
 		
 		$month = JRequest::getVar('month', null);
 		if ($month=='') {
@@ -91,17 +92,15 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$monthonly = date("m",mktime(0,0,0,$display_month,1,$display_year));
 		$shift = date("w",mktime(0,0,0,$display_month,1,$display_year));
 
-		$timeformat = 'H:i';
-
 		if ($user->getParam('calendar_secret', '') != '') {
 			$calendar_mode = 'subscribe';
 			$this->assignRef( 'user_id', $user->id );
-			$this->assignRef( 'calendar_secret', $user->getParam('calendar_secret', '') );
+			$this->assign( 'calendar_secret', $user->getParam('calendar_secret', '') );
 		} else {
 			$calendar_mode = 'download';
 		}
 		$this->assignRef( 'mobile_browser', $is_mobile );
-		$this->assignRef( 'invitations', RaidPlannerHelper::checkInvitations() );
+		$this->assign( 'invitations', RaidPlannerHelper::checkInvitations() );
 		$this->assignRef( 'menuitemid', $menuitemid );
 		$this->assignRef( 'calendar_mode', $calendar_mode );
 		$this->assignRef( 'prevmonth', $prevmonth );
@@ -111,9 +110,8 @@ class RaidPlannerViewCalendar extends JViewLegacy
 		$this->assignRef( 'monthonly', $monthonly);
 		$this->assignRef( 'shift', $shift);
 		$this->assignRef( 'params', $params);		
-        $this->assignRef( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null, true ) );
+        $this->assign( 'events', $model->getEvents( $display_year . "-" . $display_month . "-01", null ) );
         $this->assignRef( 'eventmodel', $eventmodel );
-		$this->assignRef( 'timeformat', $timeformat );
 	
         parent::display($tpl);
     }

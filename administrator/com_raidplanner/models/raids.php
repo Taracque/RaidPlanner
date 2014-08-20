@@ -34,7 +34,7 @@ class RaidPlannerModelRaids extends JModelLegacy
 		parent::__construct();
 		
 		$option = JRequest::getCmd('option');
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 		
 		$filter_raid_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'r.start_time', 'cmd' );
 		$filter_raid_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
@@ -73,6 +73,8 @@ class RaidPlannerModelRaids extends JModelLegacy
 			(in_array($filter_order_Dir, array('asc', 'desc') ) )
 		) {
 			$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
+		} else { // default order is now descending raid start time
+			$orderby = ' ORDER BY r.start_time desc';
 		}
 		return $orderby;
 	}
@@ -96,7 +98,7 @@ class RaidPlannerModelRaids extends JModelLegacy
 			$where_arr[] = "r.start_time <= DATE_ADD(".$db->Quote($filter_raid_start_time_max).", INTERVAL 1 DAY)";
 		}
 		if ($filter_raid_search!='') {
-			$where_arr[] = "(r.location LIKE '%".$db->getEscaped($filter_raid_search)."%' OR r.description LIKE '%".$db->getEscaped($filter_raid_search)."%')";
+			$where_arr[] = "(r.location LIKE '%".$db->escape($filter_raid_search)."%' OR r.description LIKE '%".$db->escape($filter_raid_search)."%')";
 		}
 		if (intval($filter_guild_filter)>0) {
 			$where_arr[] = "r.guild_id = " . intval($filter_guild_filter);

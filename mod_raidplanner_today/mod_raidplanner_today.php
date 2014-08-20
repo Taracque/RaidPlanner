@@ -10,7 +10,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-JHtml::_('behavior.modal', 'a.modal');
+JHtml::_('behavior.modal', 'a.open-modal');
 
 // register RaidPlanner Helper
 JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
@@ -19,7 +19,7 @@ JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_ra
 require_once(dirname(__FILE__) . '/helper.php');
 
 // load CSS and JS from component
-$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 if ($paramsObj->get('load_css', '1')) {
 	JHTML::stylesheet('com_raidplanner/raidplanner.css', false, true, false);
 }
@@ -39,6 +39,7 @@ $raidshowReg 			= $params->get('raidshowReg',1);
 $raidshowRole 			= $params->get('raidshowRole',1);
 $raidshowChar 			= $params->get('raidshowChar',1);
 $raidshowDate			= $params->get('raidshowDate',1);
+$raidshowAttendants		= $params->get('raidshowAttendants',0);
 
 $itemid = RaidPlannerHelper::getRaidPlannerItemId('calendar');
 if ($showInvitationAlerts>0)

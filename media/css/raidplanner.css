@@ -446,3 +446,19 @@ tr.rp_hover td {
 .rp_hover:hover {
 	background-color:#ddd;
 }
+
+table.rp_stats_table {
+	border-collapse: collapse;
+}
+table.rp_stats_table th {
+	white-space: nowrap;
+}
+table.rp_stats_table tr {
+	-webkit-transition: background-color 1s ease-in-out;
+	-moz-transition: background-color 1s ease-in-out;
+	transition: background-color 1s ease-in-out;
+}
+
+table.rp_stats_table tr:hover {
+	background-color: #ddd;
+}

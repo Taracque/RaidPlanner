@@ -26,7 +26,7 @@ class RaidPlannerModelStats extends JModelLegacy
 		parent::__construct();
 		
 		$option = JRequest::getCmd('option');
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 		
 		$filter_min_time	= $app->getUserStateFromRequest( $option.'filter_min_time',	'min_time', null,	'date');
 		$filter_max_time	= $app->getUserStateFromRequest( $option.'filter_max_time',	'max_time', null,	'date');

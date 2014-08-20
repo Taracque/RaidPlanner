@@ -116,7 +116,7 @@ class RaidPlannerModelCharacter extends JModelLegacy
 		if (intval($char_id) <= 0)
 		{
 			$query = "SELECT * FROM #__raidplanner_character AS c 
-						WHERE (c.profile_id = 0 OR c.profile_id=".$user->id.") AND char_name='".$db->getEscaped( $char_name )."'";
+						WHERE (c.profile_id = 0 OR c.profile_id=".$user->id.") AND char_name='".$db->escape( $char_name )."'";
 		} else {
 			$query = "SELECT * FROM #__raidplanner_character AS c 
 						WHERE (c.profile_id = 0 OR c.profile_id=".$user->id.") AND character_id=".intval($char_id)."";

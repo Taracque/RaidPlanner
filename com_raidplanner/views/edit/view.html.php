@@ -24,7 +24,7 @@ class RaidPlannerViewEdit extends JViewLegacy
 {
     function display($tpl = null)
     {
-		$model = &$this->getModel();
+		$model = $this->getModel();
 
 		if (! $model->userIsOfficer( JRequest::getVar('id') ) ) {
 			$app = JFactory::getApplication();
@@ -37,35 +37,35 @@ class RaidPlannerViewEdit extends JViewLegacy
 			} else {
 				$event = $model->getEvent(JRequest::getVar('id') );
 			}
-			$this->assignRef( 'icons', $this->getIcons() );
-			$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
-			$this->assignRef( 'groups', RaidPlannerHelper::getGroups( false ) );
+			$this->assign( 'icons', $this->getIcons() );
+			$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
+			$this->assign( 'groups', RaidPlannerHelper::getGroups( false ) );
 			$this->assignRef( 'event', $event );
-			$this->assignRef( 'templates', $model->getTemplates() );
-			$this->assignRef( 'candelete', $model->canDelete( $event->raid_id ) );
+			$this->assign( 'templates', $model->getTemplates() );
+			$this->assign( 'candelete', $model->canDelete( $event->raid_id ) );
 
 			parent::display($tpl);
 			
 			/* display the event in detail */
 			$vName = 'event';
 			$mName = 'event';
-			$document = &JFactory::getDocument();
-			$vType		= $document->getType();
+			$document = JFactory::getDocument();
+			$vType = $document->getType();
 			$vLayout = 'preview';
 			
 			$controller = new RaidPlannerController();
-			$view = &$controller->getView( $vName, $vType);
+			$view = $controller->getView( $vName, $vType);
 			$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR . '/views/' . strtolower($vName) . '/tmpl');
 	
 			// Get/Create the model
-			if ($model = &$this->getModel($mName)) {
+			if ($model = $this->getModel($mName)) {
 				// Push the model into the view (as default)
 				$view->setModel($model, true);
 			}
 			
 			// add event model to calendar view
 			if ($vName == 'calendar') {
-				$eventmodel = &$this->getModel('event');
+				$eventmodel = $this->getModel('event');
 				$view->setModel($eventmodel, false);
 			}
 	

@@ -34,7 +34,7 @@ class RaidPlannerModelGuilds extends JModelLegacy
 		parent::__construct();
 		
 		$option = JRequest::getCmd('option');
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 
 		$filter_guild_order     = $app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'level', 'cmd' );
 		$filter_guild_order_Dir = $app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
@@ -83,7 +83,7 @@ class RaidPlannerModelGuilds extends JModelLegacy
 		
 		$where_arr = array();
 		if ($filter_guild_search!='') {
-			$where_arr[] = " guild.guild_name LIKE '%".$db->getEscaped($filter_guild_search)."%'";
+			$where_arr[] = " guild.guild_name LIKE '%".$db->escape($filter_guild_search)."%'";
 		}
 		if (!empty($where_arr)) {
 			$where = " WHERE ".implode(" AND ",$where_arr);

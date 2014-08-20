@@ -144,7 +144,7 @@ $hasChars = !empty($this->characters);
 						<tr>
 							<td class="<?php echo $attendant->class_css;?>">
 								<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
-								<a href="#" onclick="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');return false;" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
+								<a href="<?php if ($this->guild_plugin) { echo implode(" ", $this->guild_plugin->trigger( 'onRPGetCharacterLink', array($attendant->char_name) ) ); } else { echo '#" onclick="javascript:rpShowTooltip(\'att_char_name_' . $attendant->character_id . '\');return false;" '; }?>" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
 									<strong><?php echo $attendant->char_name;?></strong>
 								</a>
 							</td>
@@ -253,7 +253,7 @@ $hasChars = !empty($this->characters);
 					</div>
 
 					<input type="hidden" name="option" value="com_raidplanner" />
-					<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
+					<input type="hidden" name="Itemid" value="<?php if ( isset( JFactory::getApplication()->getMenu()->getActive()->id ) ) { echo JFactory::getApplication()->getMenu()->getActive()->id; } ?>" />
 					<input type="hidden" name="task" value="confirm" />
 					<input type="hidden" name="layout" value="default" />
 					<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />
@@ -459,7 +459,7 @@ $hasChars = !empty($this->characters);
 								<div class="form-actions">
 									<input type="submit" name="SubmitButton" value="<?php echo JText::_('JSAVE');?>" class="btn btn-primary">
 									<input type="hidden" name="option" value="com_raidplanner" />
-									<input type="hidden" name="Itemid" value="<?php if ( isset( JSite::getMenu()->getActive()->id ) ) { echo JSite::getMenu()->getActive()->id; } ?>" />
+									<input type="hidden" name="Itemid" value="<?php if ( isset( JFactory::getApplication()->getMenu()->getActive()->id ) ) { echo JFactory::getApplication()->getMenu()->getActive()->id; } ?>" />
 									<input type="hidden" name="task" value="rate" />
 									<input type="hidden" name="layout" value="default" />
 									<input type="hidden" name="raid_id" value="<?php echo $this->event->raid_id; ?>" />

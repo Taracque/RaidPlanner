@@ -31,12 +31,16 @@ class RaidPlannerViewStats extends JViewLegacy
 		$guild_id = $params->get('guild_id', '0');
 		$groups = $params->get('allowed_groups');
 		$by_chars = $params->get('stats_by_chars', 0);
+		$show_rating = $params->get('show_rating', 0);
 
 		if ($guild_id != 0) {
 			JRequest::setVar('guild_id', $guild_id, 'get', true);
 		}
 		if ($by_chars == 0) {
 			JRequest::setVar('character_id', 0, 'get', true);
+		}
+		if ($show_rating != 0) {
+			JRequest::setVar('show_rating', 1, 'get', true);
 		}
 		if (JRequest::getVar('group_id', '', 'get', 'int') != '') {
 			if (!in_array(JRequest::getVar('group_id', '', 'get', 'int'), $groups)) {

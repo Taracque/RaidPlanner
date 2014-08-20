@@ -65,17 +65,18 @@ $use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
 				// show registered role
 				$tip .= $item->role_name . " ";
 			}
+			if ($tip != '') {
+				$tip = '<hr />' . $tip;
+			}
 	?>
 	<tr>
 		<td>
 			<?php if ($use_modal) : ?>
-			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $item->raid_id . '&Itemid=' . $itemid);?>" class="modal">
+			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $item->raid_id . '&Itemid=' . $itemid);?>" class="open-modal">
 			<?php else: ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . $item->raid_id . '&Itemid=' . $itemid);?>">
 			<?php endif; ?>
-				<span<?php if ($tip != '') { echo ' class="hasTip" title="'.$tip.'"'; } ?>>
-					<strong><?php echo JHTML::_('date', $item->start_time, RaidPlannerHelper::shortDateFormat() );?> </strong><?php echo $item->location;?>
-				</span>
+			<?php echo RaidPlannerHelper::raidTooltip( $item->raid_id, $raidshowAttendants, $tip, RaidPlannerHelper::shortDateFormat() ); ?>
 			</a><br />
 		</td>
 	</tr>

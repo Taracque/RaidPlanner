@@ -28,15 +28,15 @@ class RaidPlannerController extends JControllerLegacy
      *
      * @access    public
      */
-    function display()
+    public function display($cachable = false, $urlparams = Array())
     {
 
-		$document = &JFactory::getDocument();
-		$vType		= $document->getType();
+		$document = JFactory::getDocument();
+		$vType	= $document->getType();
 		$mName	= '';
 
 		// Get Itemid
-		$menuItemid	= &JSite::getMenu()->getActive()->id;
+		$menuItemid	= JFactory::getApplication()->getMenu()->getActive()->id;
 		$menuItemid = JRequest::getInt( 'Itemid' , $menuItemid );
 
 		switch ($this->getTask())
@@ -49,7 +49,7 @@ class RaidPlannerController extends JControllerLegacy
 			case 'signup':
 				$vName = 'calendar';
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
-				$model = &$this->getModel('event');
+				$model = $this->getModel('event');
 				$model->signupEvent();
 				$month = $model->getMonth();
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
@@ -57,7 +57,7 @@ class RaidPlannerController extends JControllerLegacy
 			case 'rate':
 				$vName = 'calendar';
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
-				$model = &$this->getModel('event');
+				$model = $this->getModel('event');
 				$model->rateEvent();
 				$month = $model->getMonth();
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
@@ -71,7 +71,7 @@ class RaidPlannerController extends JControllerLegacy
 				} else {
 					$vName = 'calendar';
 					$vLayout = JRequest::getCmd( 'layout', 'default' );
-					$model = &$this->getModel('event');
+					$model = $this->getModel('event');
 					$raid_id = $model->saveEvent();
 					$month = $model->getMonth();
 					$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.$raid_id , false ) );
@@ -80,7 +80,7 @@ class RaidPlannerController extends JControllerLegacy
 			case 'deleteevent':
 				$vName = 'calendar';
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
-				$model = &$this->getModel('event');
+				$model = $this->getModel('event');
 				$month = $model->getMonth();
 				$model->deleteEvent();
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month, false ) );
@@ -88,7 +88,7 @@ class RaidPlannerController extends JControllerLegacy
 			case 'confirm':
 				$vName = 'calendar';
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
-				$model = &$this->getModel('event');
+				$model = $this->getModel('event');
 				$model->confirmEvent();
 				$month = $model->getMonth();
 				$this->setRedirect(JRoute::_('index.php?option=com_raidplanner&view=calendar&Itemid='.$menuItemid.'&month='.$month.'&modalevent='.JRequest::getVar('raid_id') , false ) );
@@ -106,7 +106,7 @@ class RaidPlannerController extends JControllerLegacy
 			case 'savecharacter':
 				$vName = 'character';
 				$mName = 'character';
-				$model = &$this->getModel('character');
+				$model = $this->getModel('character');
 				JRequest::setVar('character_id', $model->saveCharacter());
 				$vLayout = JRequest::getCmd( 'layout', 'default' );
 			break;
@@ -140,10 +140,10 @@ class RaidPlannerController extends JControllerLegacy
 		}
 		
 		// Get/Create the view
-		$view = &$this->getView( $vName, $vType);
+		$view = $this->getView( $vName, $vType);
 
 		// Get/Create the model
-		if ($model = &$this->getModel($mName)) {
+		if ($model = $this->getModel($mName)) {
 			// Push the model into the view (as default)
 			$view->setModel($model, true);
 		}
@@ -153,7 +153,7 @@ class RaidPlannerController extends JControllerLegacy
 			/* Auto repeat raids if needed */
 			RaidPlannerHelper::autoRepeatRaids();
 			
-			$eventmodel = &$this->getModel('event');
+			$eventmodel = $this->getModel('event');
 			$view->setModel($eventmodel, false);
 		}
 

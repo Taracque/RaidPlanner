@@ -32,14 +32,14 @@ class RaidPlannerViewGuilds extends JViewLegacy
 		RaidPlannerHelper::showToolbarButtons();
 
         // Get data from the model
-        $guilds =& $this->get( 'Data');
- 		$pagination =& $this->get('Pagination');
+        $guilds = $this->get( 'Data');
+ 		$pagination = $this->get('Pagination');
 
         $this->assignRef( 'guilds', $guilds );
  		$this->assignRef( 'pagination', $pagination);
  		
 		 /* Call the state object */
-		$state =& $this->get( 'state' );
+		$state = $this->get( 'state' );
 		
 		/* Get the values from the state object that were inserted in the model's construct function */
 		$lists['search'] = $state->get( 'filter_guild_search' );;

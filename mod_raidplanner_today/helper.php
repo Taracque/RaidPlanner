@@ -20,11 +20,11 @@ class modRaidPlannerTodayHelper
 	/**
 	 * Returns a list of post items
 	*/
-	public function getItems($user_id)
+	public static function getItems($user_id)
 	{
 
 		// get a reference to the database
-		$db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
 		
 		// get a list of raids ordered by start_time
 		$query = "SELECT r.raid_id,r.location,r.start_time,s.confirmed,c.char_name,ro.role_name

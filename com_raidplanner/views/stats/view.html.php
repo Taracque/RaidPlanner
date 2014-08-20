@@ -38,6 +38,7 @@ class RaidPlannerViewStats extends JViewLegacy
 		$guild_id = $params->get('guild_id', '0');
 		$groups = $params->get('allowed_groups');
 		$by_chars = $params->get('stats_by_chars', 0);
+		$show_rating = $params->get('show_rating', 0);
 
 		/* Get the values from the state object that were inserted in the model's construct function */
 		$lists['filter_start_time'] = $state->get( 'filter_start_time' );
@@ -45,11 +46,12 @@ class RaidPlannerViewStats extends JViewLegacy
 		$lists['filter_character_id'] = $state->get( 'filter_character_id' );
 		$lists['filter_group_id'] = $state->get( 'filter_group_id' );
 
-		$this->assignRef( 'guilds', RaidPlannerHelper::getGuilds() );
-		$this->assignRef( 'groups', RaidPlannerHelper::getGroups( true, $groups ) );
-		$this->assignRef( 'characters', RaidPlannerHelper::getCharacters() );
+		$this->assign( 'guilds', RaidPlannerHelper::getGuilds() );
+		$this->assign( 'groups', RaidPlannerHelper::getGroups( true, $groups ) );
+		$this->assign( 'characters', RaidPlannerHelper::getCharacters() );
 		$this->assignRef( 'lists', $lists );
 		$this->assignRef( 'by_chars', $by_chars );
+		$this->assignRef( 'show_rating', $show_rating );
 		$this->assignRef( 'guild_id', $guild_id );
 
 		parent::display($tpl);

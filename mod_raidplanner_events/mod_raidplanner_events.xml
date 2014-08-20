@@ -21,6 +21,10 @@
 			<fieldset name="basic">
 				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
 				<field name="@spacer" type="spacer" default="" label="" description="" />
+				<field name="raidshowAttendants" type="radio" default="0" class="btn-group btn-group-yesno" label="Show full tooltip" description="Show full RaidPlanner tooltip with attendants">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
 				<field name="raidshowReg" type="radio" default="1" label="Show Regristration" description="Show regristration status">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>

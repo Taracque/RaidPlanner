@@ -412,9 +412,9 @@ class RaidPlannerHelper
 
 	public static function getRaidPlannerItemId( $view = 'calendar' )
 	{
-		$menu = &JSite::getMenu()->getItems( 'component', 'com_raidplanner', false );
+		$menu = JFactory::getApplication()->getMenu()->getItems( 'component', 'com_raidplanner', false );
 		if (empty($menu)) {
-			$itemid = &JSite::getMenu()->getActive()->id;
+			$itemid = JFactory::getApplication()->getMenu()->getActive()->id;
 		} else {
 			foreach ($menu as $menuItem)
 			{
@@ -431,7 +431,7 @@ class RaidPlannerHelper
 	
 	public static function getRanks( $transposed = false )
 	{
-		$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+		$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 		$ranks = array();
 		for ($i=0; $i<=9; $i++)
 		{
@@ -451,9 +451,13 @@ class RaidPlannerHelper
 		return JText::_('DATE_FORMAT_LC4') . ' H:i';
 	}
 
-	public static function sqlDateFormat()
+	public static function sqlDateFormat( $time = false )
 	{
-		return 'Y-m-d';
+		$format = 'Y-m-d';
+		if ($time) {
+			$format = $format . ' H:i';
+		}
+		return $format;
 	}
 
 	public static function date2Sql( $date )
@@ -473,7 +477,7 @@ class RaidPlannerHelper
 	public static function downloadData( $url )
 	{
 		$data = false;
-		
+
 		/* try JHttp first */
 		$http = JHttpFactory::getHttp();
 		if (($http) && ($response = $http->get($url))) {
@@ -493,7 +497,7 @@ class RaidPlannerHelper
 			$data = @curl_exec($ch);
 			@curl_close($ch);
 		}
-		
+
 		if ((!$data) && (function_exists('fsockopen') && $data == '')) {
 			$errno = 0;
 			$errstr = '';
@@ -521,6 +525,7 @@ class RaidPlannerHelper
 				@fclose($fsock);
 			}
 		}
+
 		if ((!$data) && (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '')) {
 			ini_set('default_socket_timeout', 15);
 			
@@ -621,7 +626,7 @@ class RaidPlannerHelper
 		$db->setQuery( $query );
 		if ($raids = $db->loadObjectList()) {
 			JTable::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_raidplanner/tables');
-			$row =& JTable::getInstance('raid', 'Table');
+			$row = JTable::getInstance('raid', 'Table');
 
 			foreach ($raids as $raid) {
 				/* Duplicate it, but 7 day later */
@@ -651,6 +656,42 @@ class RaidPlannerHelper
 				}
 			}
 		}
+	}
+
+	public static function raidTooltip( $raid_id = 0, $showAttendants = true, $additional = '', $timeformat = 'H:i')
+	{
+		$db = JFactory::getDBO();
+		/* get event details */
+		$query = "SELECT description, icon_name, location, raid_leader, start_time FROM #__raidplanner_raid WHERE raid_id=" . intval( $raid_id );
+		$db->setQuery( $query );
+		$event = $db->loadObject();
+		list($icon_name) = explode(".",$event->icon_name);
+		$icon_name = ucwords ( str_replace("_"," ",basename( $icon_name ) ) );
+		$tooltipTitle = '' . ($event->description == "") ? ( $icon_name ) : $event->description . '';
+		$tooltip = '';
+		if ($event->icon_name!='') {
+			$tooltip .= '<img src="' . JURI::base() . "media/com_raidplanner/raid_icons/" . $event->icon_name . '" alt="' . $event->location . '" style="float:left; margin:0 5px 5px 0;"/>';
+		}
+		$tooltip.= '<small><b>' . JText::_('COM_RAIDPLANNER_RAID_LEADER') . ':</b> ' . $event->raid_leader . '<br />';
+		if ($showAttendants) {
+			/* get attendants */
+			$query = "SELECT c.char_name
+					FROM #__raidplanner_signups AS s
+					LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
+					WHERE s.raid_id=".intval($raid_id)." AND s.queue=1
+					ORDER BY s.confirmed DESC, c.char_name ASC";
+			$db->setQuery($query);
+			$attendants = $db->loadColumn();
+			if ($attendants) {
+				$tooltip.= '<b>' . JText::_('COM_RAIDPLANNER_STATUSES_1') . '</b> (' . count($attendants) . '): ' . join(", ", $attendants);
+			}
+		}
+		if ($additional != '') {
+			$tooltip.= "<br />" . $additional;
+		}
+		$tooltip.= '</small>';
+
+		return JHTML::tooltip( $tooltip, $tooltipTitle, '', '<strong>' . JHTML::_('date', $event->start_time, $timeformat ) . '</strong> ' . $event->location );
 	}
 
 	public static function detectMobile()

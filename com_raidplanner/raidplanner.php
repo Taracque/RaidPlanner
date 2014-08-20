@@ -15,7 +15,7 @@ JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_ra
 RaidPlannerHelper::loadJSFramework();
 
 // add css and js
-$paramsObj = &JComponentHelper::getParams( 'com_raidplanner' );
+$paramsObj = JComponentHelper::getParams( 'com_raidplanner' );
 if ($paramsObj->get('load_css', '1')) {
 	JHTML::stylesheet('com_raidplanner/raidplanner.css', false, true, false);
 }

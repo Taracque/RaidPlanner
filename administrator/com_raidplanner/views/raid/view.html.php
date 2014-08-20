@@ -30,7 +30,7 @@ class RaidPlannerViewRaid extends JViewLegacy
 	function display($tpl = null)
 	{
 		//get the raid
-		$raid		=& $this->get('Data');
+		$raid		= $this->get('Data');
 		$isNew		= ($raid->raid_id < 1);
 
 		$text = $isNew ? JText::_( 'JTOOLBAR_NEW' ) : JText::_( 'JTOOLBAR_EDIT' );

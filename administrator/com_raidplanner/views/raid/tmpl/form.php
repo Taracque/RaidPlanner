@@ -11,7 +11,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$dateformat = RaidPlannerHelper::shortDateFormat();
+$dateformat = RaidPlannerHelper::sqlDateFormat( true );
 
 if (RaidPlannerHelper::getJVersion() < '3.0') {
 	RaidPlannerHelper::fixBootstrap();

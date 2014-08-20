@@ -10,7 +10,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-JHtml::_('behavior.modal', 'a.modal');
+JHtml::_('behavior.modal', 'a.open-modal');
 
 // register RaidPlanner Helper
 JLoader::register('RaidPlannerHelper', JPATH_ADMINISTRATOR . '/components/com_raidplanner/helper.php' );
@@ -25,12 +25,13 @@ $user =JFactory::getUser();
 $user_id = ($user->id);
 
 // get the parameters from the module's configuration
-$alertTimer			= $params->get('alertTimer', 24);
+$alertTimer				= $params->get('alertTimer', 24);
 $showInvitationAlerts	= $params->get('showInvitationAlert',0);
-$raidshowNumber		= $params->get('raidshowNumber',5);
-$raidshowReg 		= $params->get('raidshowReg',1);
-$raidshowRole 		= $params->get('raidshowRole',1);
-$raidshowChar 		= $params->get('raidshowChar',1);
+$raidshowNumber			= $params->get('raidshowNumber',5);
+$raidshowReg 			= $params->get('raidshowReg',1);
+$raidshowRole 			= $params->get('raidshowRole',1);
+$raidshowChar 			= $params->get('raidshowChar',1);
+$raidshowAttendants		= $params->get('raidshowAttendants',0);
 
 $itemid = RaidPlannerHelper::getRaidPlannerItemId('calendar');
 if ($showInvitationAlerts>0)

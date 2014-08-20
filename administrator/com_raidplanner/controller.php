@@ -31,7 +31,7 @@ class RaidPlannerController extends JControllerLegacy
 	 *
 	 * @access	public
 	 */
-	function display()
+	function display($cachable = false, $urlparams = Array())
 	{
 		if ($this->getTask() == 'service') {
 			$db	= JFactory::getDBO();
