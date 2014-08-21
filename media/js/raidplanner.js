@@ -1,3 +1,26 @@
+function initSignup() {
+	var crSelector = document.getElement('select[name=character_id]');
+	if (crSelector) {
+		var storedRole = Cookie.read('rp_character_role_' + crSelector.get('value'));
+		if (storedRole) {
+			document.getElements('input[name=role]').each(function(el) { el.checked=(el.get('value')==storedRole); });
+		}
+		crSelector.removeEvents('change');
+		crSelector.addEvent('change',function() {
+			storedRole = Cookie.read('rp_character_role_' + crSelector.get('value'));
+			if (storedRole) {
+				document.getElements('input[name=role]').each(function(el) { el.checked=(el.get('value')==storedRole); })
+			}
+		});
+	}
+	document.getElements('input[name=role]').each(function(el) {
+		el.removeEvents('change');
+		el.addEvent('change',function() {
+			Cookie.write('rp_character_role_' + document.getElement('select[name=character_id]').get('value'),el.get('value'),{duration: 60});
+		});
+	});
+}
+
 function rpSwitchTab(switchto) {
 	$$('.rp_switchers').each(function(el){
 		el.removeClass('active');
@@ -8,6 +31,9 @@ function rpSwitchTab(switchto) {
 	if (document.id('rp_event_' + switchto) && document.id('rp_switcher_' + switchto)) {
 		document.id('rp_event_' + switchto).setStyle('display','');
 		document.id('rp_switcher_' + switchto).addClass('active');
+	}
+	if (switchto == 'signup') {
+		initSignup();
 	}
 	return false;
 }
