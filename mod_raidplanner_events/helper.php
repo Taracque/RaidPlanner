@@ -4,7 +4,7 @@
 # mod_raidplanner_events - RaidPlanner Events Module
 # ------------------------------------------------------------------------
 # author    Taracque
-# copyright Copyright (C) 2011 Taracque. All Rights Reserved.
+# copyright Copyright (C) 2014 Taracque. All Rights Reserved.
 # @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 # Website: http://www.taracque.hu/raidplanner
 -------------------------------------------------------------------------*/
@@ -30,7 +30,9 @@ class modRaidPlannerEventsHelper
 					FROM `#__raidplanner_raid` AS r
 					LEFT JOIN (`#__raidplanner_signups` AS s,`#__raidplanner_character` AS c) ON (s.raid_id = r.raid_id AND c.character_id = s.character_id AND c.profile_id = " . intval($user_id) . ")
 					LEFT JOIN `#__raidplanner_role` AS ro ON ro.role_id = s.role_id
-					WHERE DATE(DATE_ADD(start_time, INTERVAL " . intval(RaidPlannerHelper::getTimezone()) . " HOUR))>=NOW() ORDER BY start_time ASC, location ASC LIMIT ".intval($raidshowNumber);
+					WHERE DATE(DATE_ADD(start_time, INTERVAL " . intval(RaidPlannerHelper::getTimezone()) . " HOUR))>=NOW()
+					GROUP BY r.raid_id
+					ORDER BY start_time ASC, location ASC LIMIT ".intval($raidshowNumber);
 
 		$db->setQuery($query);
 		$items = ($items = $db->loadObjectList())?$items:array();
