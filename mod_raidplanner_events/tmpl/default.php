@@ -18,6 +18,8 @@ $lang =JFactory::getLanguage();
 $lang->load('com_raidplanner');
 
 jimport('joomla.application.component.helper');
+JHtml::_('behavior.tooltip');
+
 $use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
 ?>
 <?php if ($invitationAlerts): ?>
