@@ -462,3 +462,8 @@ table.rp_stats_table tr {
 table.rp_stats_table tr:hover {
 	background-color: #ddd;
 }
+
+/* darktip hack for calendar view */
+.darktip-tooltip-wow {
+	z-index: 65560 !important;
+}
