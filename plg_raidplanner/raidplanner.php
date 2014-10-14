@@ -246,7 +246,7 @@ class plgUserRaidPlanner extends JPlugin
 				$form->setFieldAttribute('characters', 'required', false, $profile_prefix);
 				$form->setFieldAttribute('calendar_secret', 'required', false, $profile_prefix);
 				$form->setFieldAttribute('vacation', 'required', false, $profile_prefix);
-			} else {
+			} elseif ($form->getName()=='com_users.registration') {	//registration form
 				$form->removeField('characters', $profile_prefix);
 				$form->removeField('calendar_secret', $profile_prefix);
 				$form->removeField('vacation', $profile_prefix);
