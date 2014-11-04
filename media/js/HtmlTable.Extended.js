@@ -72,13 +72,10 @@ HtmlTable = Class.refactor(HtmlTable, {
 		this.options.pageCtrl = new Element('ul',{'class':this.options.classHeaderPaginationContorlUL}).inject(this.options.controlDiv);
 		
 		if(this.options.filterable){
-			this.options.filterEl = new Element('input',{'type':'text','size':20});
+			this.options.filterEl = new Element('input',{'type':'text','size':20,'placeholder':this.options.strings.search});
 			this.options.filterEl.addEvent('keyup',(function(e){ this.filter(this.options.filterEl.get('value')); }).bind(this));
 			var div = new Element('div',{'class':this.options.classHeaderFilterContorlDiv}).inject(this.options.controlDiv);
 			this.options.filterEl.inject(div);
-			if (window.OverText){
-				new OverText(this.options.filterEl,{textOverride:this.options.strings.search});
-			}
 		}
 
 		this.options.rowsCtrl = new Element('ul',{'class':this.options.classHeaderNumOfRowsContorlUL}).inject(this.options.controlDiv);
@@ -121,41 +118,47 @@ HtmlTable = Class.refactor(HtmlTable, {
 					var endIndex = Math.max((numOfLi),Math.min(numOfPages,this.options.paginatePage+Math.floor((numOfLi-1)/2)));
 					
 					var liPrevious = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(this.options.pageCtrl);
-					var liPreviousSpan = new Element('span').inject(liPrevious);
+					var liPreviousSpan = new Element('a').inject(liPrevious);
 					liPreviousSpan.set('html',this.options.strings.previous);
 					liPrevious.store('pagination',this.options.paginatePage-1);
 					liPreviousSpan.addEvent('click',function(){
 						this.updatePagination(arguments[0].retrieve('pagination'));
 					}.bind(this).pass(liPrevious));
 					if(this.options.paginatePage==1){
-						liPrevious.setStyle('visibility','hidden');
+						liPrevious.addClass('disabled');
 					}
 
 					if((endIndex-startIndex)>1){//avoid 1 page pagination
-						for(var i=startIndex;i<endIndex;i++){
+						var disStartIndex = Math.max(this.options.paginatePage-5,startIndex);
+						var disEndIndex = Math.min(this.options.paginatePage+5,endIndex);
+						for(var i=disStartIndex;i<disEndIndex;i++){
 							var li = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(this.options.pageCtrl);
-							var span = new Element('span').inject(li);
-							span.set('html',i+1);
+							var span = new Element('a',{'title':i+1,'class':'pagenav'}).inject(li);
+							if ((i+1==disEndIndex && disEndIndex!=endIndex) || (i==disStartIndex && disStartIndex!=startIndex)) {
+								span.set('html','...');
+							} else {
+								span.set('html',i+1);
+							}
 							li.store('pagination',i+1);
 							if(this.options.paginatePage!=i+1){
 								 span.addEvent('click',function(){
 									this.updatePagination(arguments[0].retrieve('pagination'));
 								}.bind(this).pass(li));
 							}else{
-								li.addClass('li-pagination-current');
+								li.addClass('active');
 							}
 						}
 					}
 					
 					var liNext = new Element('li',{'class':this.options.classHeaderPaginationContorlLI}).inject(this.options.pageCtrl);
-					var liNextSpan = new Element('span').inject(liNext);
+					var liNextSpan = new Element('a').inject(liNext);
 					liNextSpan.set('html',this.options.strings.next);
 					liNext.store('pagination',this.options.paginatePage+1);
 					liNextSpan.addEvent('click',function(){
 						this.updatePagination(arguments[0].retrieve('pagination'));
 					}.bind(this).pass(liNext));
 					if(numOfPages<=this.options.paginatePage){
-						liNext.setStyle('visibility','hidden');
+						liNext.addClass('disabled');
 					}
 
 					//add number of rows selector
@@ -167,10 +170,10 @@ HtmlTable = Class.refactor(HtmlTable, {
 						this.options.paginateRowsSelector.each(function(curVal){
 						   var li = new Element('li',{'class':this.options.classHeaderNumOfRowsContorlLI}).inject(this.options.rowsCtrl);
 						   li.store('rowCount',curVal);
-						   var span = new Element('span').inject(li);
+						   var span = new Element('a').inject(li);
 						   span.set('html',curVal);
 						   if(this.options.paginateRows==curVal){
-							   li.addClass('li-numOfRows-current');
+							   li.addClass('active');
 						   }else{
 							   span.addEvent('click',function(){
 								   this.options.paginateRows = arguments[0].retrieve('rowCount');
@@ -178,10 +181,6 @@ HtmlTable = Class.refactor(HtmlTable, {
 							   }.bind(this).pass(li));
 						   }
 						}.bind(this));
-					}
-					
-					if (window.OverText){
-						this.options.filterEl.retrieve('OverText').reposition();
 					}
 				}
 			}

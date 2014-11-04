@@ -37,18 +37,19 @@ jimport( 'joomla.utilities.date');
 							paginationControlPages:25,
 							filterable:true,
 							strings:{
-								next:'<?php echo JText::_('JNEXT');?>',
-								previous:'<?php echo JText::_('JPREV');?>',
-								rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>'
+								next:'<i class="icon-next" title="<?php echo JText::_('JNEXT');?>"></i>',
+								previous:'<i class="icon-previous" title="<?php echo JText::_('JPREVIOUS');?>"></i>',
+								rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>',
+								search : '<?php echo JText::_('JGLOBAL_LOOKING_FOR');?>'
 							},
 							classHeaderPaginationContorlTH:'',
 							classHeaderPaginationContorlTR:'',
-							classHeaderPaginationContorlDiv:'rp_header',
-							classHeaderPaginationContorlUL:'rp_left',
-							classHeaderPaginationContorlLI:'rp_control',
-							classHeaderNumOfRowsContorlUL:'rp_right',
-							classHeaderNumOfRowsContorlLI:'rp_control',
-							classHeaderFilterContorlDiv:'rp_filter'
+							classHeaderPaginationContorlDiv:'rp_header pagination',
+							classHeaderPaginationContorlUL:'rp_right pagination-list',
+							classHeaderPaginationContorlLI:'',
+							classHeaderNumOfRowsContorlUL:'rp_left',
+							classHeaderNumOfRowsContorlLI:'',
+							classHeaderFilterContorlDiv:'rp_filter',
 						}
 					).updatePagination();
 				}
@@ -85,7 +86,7 @@ jimport( 'joomla.utilities.date');
 					<td><?php echo $character['gender_name']; ?></td>
 					<td><?php echo $character['race_name']; ?></td>
 					<td class="<?php echo $character['class_css'];?>"><?php echo $character['class_name']; ?></td>
-					<td><?php echo $this->ranks[$character['rank']]; ?></td>
+					<td><span style="display:none;"><?php echo $character['rank'];?></span><?php echo $this->ranks[$character['rank']]; ?></td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>

@@ -334,7 +334,7 @@ tr.rp_header {
 }
 .rp_container .rp_filter {
 	float:left;
-	margin-left:40px;
+	margin-right:40px;
 }
 
 .rp_extended_tooltip {
