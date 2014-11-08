@@ -125,8 +125,7 @@ $hasChars = !empty($this->characters);
 		<?php endif; ?>
 		</div>
 	</div>
-	<?php endif; ?>
-	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
+	<?php else: ?>
 	<?php echo JHtml::_('bootstrap.startTabSet', 'rp_tab', array('active' => 'rp_event_attendants')); ?>
 		<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_attendants', JText::_('COM_RAIDPLANNER_ATTENDANTS', true)); ?>
 	<?php else: ?>
@@ -494,6 +493,7 @@ $hasChars = !empty($this->characters);
 		</form>
 	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
 	<?php echo JHtml::_('bootstrap.endTab'); ?>
+	<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 	<?php else: ?>
 	</div>
 	<?php endif; ?>
