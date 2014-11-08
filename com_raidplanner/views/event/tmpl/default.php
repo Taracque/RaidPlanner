@@ -125,11 +125,10 @@ $hasChars = !empty($this->characters);
 		<?php endif; ?>
 		</div>
 	</div>
+	<div class="rp_event_attendants" id="rp_event_attendants">
 	<?php else: ?>
 	<?php echo JHtml::_('bootstrap.startTabSet', 'rp_tab', array('active' => 'rp_event_attendants')); ?>
 		<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_attendants', JText::_('COM_RAIDPLANNER_ATTENDANTS', true)); ?>
-	<?php else: ?>
-	<div class="rp_event_attendants" id="rp_event_attendants">
 	<?php endif; ?>
 		<form action="index.php" method="post">
 			<table onclick="javascript:rpMakeSortable(this);">
