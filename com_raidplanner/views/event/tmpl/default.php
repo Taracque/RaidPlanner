@@ -21,9 +21,9 @@ $hasChars = !empty($this->characters);
 		<?php if ($this->event->icon_name) : ?>
 			<img src="<?php echo JURI::base()."media/com_raidplanner/raid_icons/".$this->event->icon_name;?>" style="float:left; margin: 0 5px 5px 0;" alt="<?php echo $this->event->icon_name; ?>" />
 		<?php endif; ?>
-		<?php if ($this->isOfficer) { ?>
+		<?php if ($this->isOfficer) : ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&task=edit&view=edit&id='.$this->event->raid_id);?>" class="rp_button edit btn"><?php echo JText::_('JGLOBAL_EDIT');?></a>
-		<?php } ?>
+		<?php endif; // isOfficer ?>
 			<ul>
 				<li><h2><?php echo $this->event->location; ?><?php if ($this->event->guild_name) { echo " - " . $this->event->guild_name;}?></h2></li>
 				<li>
@@ -110,7 +110,7 @@ $hasChars = !empty($this->characters);
 	</tr>
 </table>
 <div class="rp_container">
-	<?php if (RaidPlannerHelper::getJVersion() < '3.0') : ?>
+<?php if (RaidPlannerHelper::getJVersion() < '3.0') : ?>
 	<div class="rp_event_buttons">
 		<div>
 			<a href="#" id="rp_switcher_attendants" class="active rp_switchers" onclick="javascript:rpSwitchTab('attendants');return false;"><?php echo JText::_('COM_RAIDPLANNER_ATTENDANTS');?></a>
@@ -126,10 +126,10 @@ $hasChars = !empty($this->characters);
 		</div>
 	</div>
 	<div class="rp_event_attendants" id="rp_event_attendants">
-	<?php else: ?>
+<?php else: ?>
 	<?php echo JHtml::_('bootstrap.startTabSet', 'rp_tab', array('active' => 'rp_event_attendants')); ?>
 		<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_attendants', JText::_('COM_RAIDPLANNER_ATTENDANTS', true)); ?>
-	<?php endif; ?>
+<?php endif; ?>
 		<form action="index.php" method="post">
 			<table onclick="javascript:rpMakeSortable(this);">
 				<thead>
@@ -269,7 +269,7 @@ $hasChars = !empty($this->characters);
 	<?php endif; ?>
 <?php if (($hasChars) && ($this->canSignup)) : ?>
 	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
-		<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_signup', JText::_('COM_RAIDPLANNER_SIGNUP', true)); ?>
+	<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_signup', JText::_('COM_RAIDPLANNER_SIGNUP', true)); ?>
 	<?php else: ?>
 	<div class="rp_event_signup" id="rp_event_signup" style="display:none;">
 	<?php endif; ?>
@@ -374,7 +374,7 @@ $hasChars = !empty($this->characters);
 <?php endif; ?>
 <?php if ( ($this->params['show_history']==1) && ($this->event->raid_history!='') ) : ?>
 	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
-		<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_history', JText::_('COM_RAIDPLANNER_HISTORY', true)); ?>
+	<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_history', JText::_('COM_RAIDPLANNER_HISTORY', true)); ?>
 	<?php else: ?>
 	<div class="rp_event_history" id="rp_event_history" style="display:none;">
 	<?php endif; ?>
@@ -389,7 +389,7 @@ $hasChars = !empty($this->characters);
 <?php endif; ?>
 <?php if (($this->finished) && ($hasChars) && ($this->params['allow_rating']==1)) : ?>
 	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
-		<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_rating', JText::_('COM_RAIDPLANNER_RATING', true)); ?>
+	<?php echo JHtml::_('bootstrap.addTab', 'rp_tab', 'rp_event_rating', JText::_('COM_RAIDPLANNER_RATING', true)); ?>
 	<?php else: ?>
 	<div class="rp_event_rating" id="rp_event_rating" style="display:none;">
 	<?php endif; ?>
@@ -492,9 +492,11 @@ $hasChars = !empty($this->characters);
 		</form>
 	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
 	<?php echo JHtml::_('bootstrap.endTab'); ?>
-	<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 	<?php else: ?>
 	</div>
 	<?php endif; ?>
 <?php endif; ?>
+	<?php if (RaidPlannerHelper::getJVersion() >= '3.0') : ?>
+	<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+	<?php endif; ?>
 </div>
