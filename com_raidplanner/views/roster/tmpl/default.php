@@ -40,7 +40,7 @@ jimport( 'joomla.utilities.date');
 								next:'<i class="icon-next" title="<?php echo JText::_('JNEXT');?>"></i>',
 								previous:'<i class="icon-previous" title="<?php echo JText::_('JPREVIOUS');?>"></i>',
 								rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>',
-								search : '<?php echo JText::_('JGLOBAL_LOOKING_FOR');?>'
+								search : '<?php echo JText::_('JSEARCH_FILTER_SUBMIT');?>'
 							},
 							classHeaderPaginationContorlTH:'',
 							classHeaderPaginationContorlTR:'',

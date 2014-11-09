@@ -47,7 +47,7 @@ window.addEvent('domready',function(){
 		</td>
 		<td class="rp_header_right">
 <?php if ($this->calendar_mode == 'subscribe') : ?>
-			<a href="<?php echo str_replace(array('http://','https://'),'webcal://',JURI::base()."index.php?option=com_raidplanner&view=feed&task=feed&user=".$this->user_id."&secret=".$this->calendar_secret;?>" title="<?php echo JText::_('COM_RAIDPLANNER_SUBSCRIBE_CALENDAR_URL');?>"><?php echo JText::_('COM_RAIDPLANNER_SUBSCRIBE');?></a>
+			<a href="<?php echo str_replace(array('http://','https://'),'webcal://',JURI::base())."index.php?option=com_raidplanner&view=feed&task=feed&user=".$this->user_id."&secret=".$this->calendar_secret;?>" title="<?php echo JText::_('COM_RAIDPLANNER_SUBSCRIBE_CALENDAR_URL');?>"><?php echo JText::_('COM_RAIDPLANNER_SUBSCRIBE');?></a>
 <?php else: ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=calendar&task=feed');?>" class="rp_button btn"><?php echo JText::_('COM_RAIDPLANNER_DOWNLOAD_CALENDAR');?></a>
 <?php endif; ?>
