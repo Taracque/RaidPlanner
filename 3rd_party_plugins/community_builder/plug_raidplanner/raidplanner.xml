@@ -11,7 +11,7 @@
 * @beta 1.0
 */
 -->
-<cbinstall version="1.0.0" type="plugin" group="user">
+<cbinstall version="1.0" type="plugin" group="user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:../../../../../validation/ahawow.xsd">
 	<name>RaidPlanner Plugin</name>
 	<author>Taracque</author>
 	<creationDate>2011-09-28</creationDate>
@@ -19,7 +19,7 @@
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>taracque@taracque.hu</authorEmail>
 	<authorUrl>taracque.hu</authorUrl>
-	<version>1.0</version>
+	<version>2.0.3</version>
 	<description>
 		Synchronizes CB fields with RaidPlanner user fields.
 	</description>
@@ -57,4 +57,6 @@
 	</install>
 	<uninstall>
 	</uninstall>
+	<database>
+	</database>
 </cbinstall>
