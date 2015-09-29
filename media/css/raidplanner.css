@@ -162,7 +162,9 @@
 	padding-left: 5px !important;
 	border-left: 1px solid #ccc;
 }
-
+.rp_event_buttons {
+	clear: left;
+}
 .rp_event_buttons div a {
 	color: #bbb;
 	display: block;
@@ -192,7 +194,8 @@
 
 .rp_event_attendants table,
 .rp_event_signup table,
-.rp_event_rating table {
+.rp_event_rating table,
+.rp_event_history table {
 	margin: 0 0 0.5em 0;
 	padding: 0;
 	width: 100%;
@@ -201,7 +204,8 @@
 }
 .rp_event_attendants table th,
 .rp_event_signup table th,
-.rp_event_rating table th {
+.rp_event_rating table th,
+.rp_event_history table th {
 	background: #33383C;
 	color: #BBBFC3;
 	font-weight: bold;
