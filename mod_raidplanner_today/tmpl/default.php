@@ -82,13 +82,29 @@ if (count($items) == 0): ?>
 	?>
 	<tr>
 		<td>
+			<?php if (substr($item->start_time,0,10)!=date('Y-m-d')) : ?>
+			<small>
+			<?php endif; ?>
 			<?php if ($use_modal) : ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&tmpl=component&id=' . $item->raid_id . '&Itemid=' . $itemid);?>" class="open-modal">
 			<?php else: ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . $item->raid_id . '&Itemid=' . $itemid);?>">
 			<?php endif; ?>
+			<?php if (substr($item->start_time,0,10)!=date('Y-m-d')) : ?>
+			<?php echo substr($item->start_time,5,5); ?>
+			<?php endif; ?>
 			<?php echo RaidPlannerHelper::raidTooltip( $item->raid_id, $raidshowAttendants, $tip ); ?>
+			<?php if ($item->invited) : ?>
+				<?php if ($item->signed) : ?>
+				<span class="icon-checkmark">​</span>​
+				<?php else: ?>
+				<span class="icon-question">​</span>​
+				<?php endif; ?>
+			<?php endif; ?>
 			</a><br />
+			<?php if (substr($item->start_time,0,10)!=date('Y-m-d')) : ?>
+			</small>
+			<?php endif; ?>
 		</td>
 	</tr>
 	<?php } //endforeach ?>

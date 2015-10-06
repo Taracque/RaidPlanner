@@ -35,6 +35,7 @@ $user_id = ($user->id);
 // get the parameters from the module's configuration
 $alertTimer				= $params->get('alertTimer', 24);
 $showInvitationAlerts	= $params->get('showInvitationAlert',0);
+$raidShowDays 			= $params->get('raidShowDays',1);
 $raidshowReg 			= $params->get('raidshowReg',1);
 $raidshowRole 			= $params->get('raidshowRole',1);
 $raidshowChar 			= $params->get('raidshowChar',1);
@@ -49,7 +50,7 @@ if ($showInvitationAlerts>0)
 	$invitationAlerts = false;
 }
 // get the items to display from the helper
-$items = modRaidPlannerTodayHelper::getItems( $user_id );
+$items = modRaidPlannerTodayHelper::getItems( $user_id, $raidShowDays );
 
 // include the template for display
 require( JModuleHelper::getLayoutPath('mod_raidplanner_today') );

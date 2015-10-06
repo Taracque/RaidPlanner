@@ -20,6 +20,15 @@
 			<fieldset name="basic">
 				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
 				<field name="@spacer" type="spacer" default="" label="" description="" />
+				<field name="raidShowDays" type="list" default="1" label="Show days" description="How many days needs to be displayed including the current one">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+				</field>
 				<field name="raidshowAttendants" type="radio" default="0" class="btn-group btn-group-yesno" label="Show full tooltip" description="Show full RaidPlanner tooltip with attendants">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
