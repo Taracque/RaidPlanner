@@ -54,7 +54,7 @@ class RaidPlannerPlugin
 	
 	public function characterLink()
 	{
-		return "#";
+		return array("#");
 	}
 	
 	public function guildHeader()

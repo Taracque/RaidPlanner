@@ -225,7 +225,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     {
     	$db = JFactory::getDBO();
 
-    	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
+    	$query = "SELECT s.character_id,c.char_name,c.guild_id,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
     				cl.class_name,cl.class_color,c.char_level,c.profile_id,s.role_id,s.queue,cl.class_css
     			FROM #__raidplanner_signups AS s 
     				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id
