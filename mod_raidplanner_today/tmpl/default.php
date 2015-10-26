@@ -56,11 +56,12 @@ $use_modal = JComponentHelper::getParams('com_raidplanner')->get('use_modal');
 		</td>
 	</tr>
 <?php endif;
-if (count($items) == 0): ?>
+if ((count($items) == 0) || (substr($items[0]->start_time,0,10)!=date('Y-m-d'))): ?>
 	<tr>
 		<td><?php echo JText::_('MOD_RAIDPLANNER_NO_EVENTS_TODAY');?><br /></td>
 	</tr>
-<?php else: ?>
+<?php endif; ?>
+<?php if (count($items) > 0) : ?>
 	<?php
 	foreach ($items as $item) {
 		$tip = '';
@@ -91,14 +92,14 @@ if (count($items) == 0): ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&view=event&task=viewevent&id=' . $item->raid_id . '&Itemid=' . $itemid);?>">
 			<?php endif; ?>
 			<?php if (substr($item->start_time,0,10)!=date('Y-m-d')) : ?>
-			<?php echo substr($item->start_time,5,5); ?>
+				<?php echo JHTML::_('date', $item->start_time,'m-d'); ?>
 			<?php endif; ?>
 			<?php echo RaidPlannerHelper::raidTooltip( $item->raid_id, $raidshowAttendants, $tip ); ?>
-			<?php if ($item->invited) : ?>
-				<?php if ($item->signed) : ?>
-				<span class="icon-checkmark">​</span>​
-				<?php else: ?>
-				<span class="icon-question">​</span>​
+			<?php if ($item->signed) : ?>
+			<span class="icon-checkmark"></span>​
+			<?php else: ?>
+				<?php if ($item->invited) : ?>
+				<span class="icon-question"></span>​
 				<?php endif; ?>
 			<?php endif; ?>
 			</a><br />
