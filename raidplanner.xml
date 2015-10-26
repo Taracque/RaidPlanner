@@ -87,7 +87,6 @@
 			<filename>controller.php</filename>
 			<filename>config.xml</filename>
 			<filename>access.xml</filename>
-			<folder>includes</folder>
 			<folder>models</folder>
 			<folder>views</folder>
 			<folder>controllers</folder>
