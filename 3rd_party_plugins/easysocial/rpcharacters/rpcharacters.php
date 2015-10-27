@@ -10,10 +10,9 @@ defined('_JEXEC') or die('Unauthorized Access');
 Foundry::import('admin:/includes/fields/dependencies');
 
 /**
- * Field application for Textbox
+ * Field application for RaidPlanner Characters
  *
  * @since	1.0
- * @author	Jason Rey <jasonrey@stackideas.com>
  */
 class SocialFieldsUserRPCharacters extends SocialFieldItem
 {
@@ -82,6 +81,10 @@ class SocialFieldsUserRPCharacters extends SocialFieldItem
 		// use isset instead of !empty because we do not even wan empty string or false value here
 		if ($this->params->get('readonly') && isset($post[ $this->inputName ])) {
 			unset($post[ $this->inputName ]);
+		} else {
+			$value = $post[$this->inputName];
+
+			$user->setParam( 'characters', $value );
 		}
 
 		return true;
@@ -184,6 +187,10 @@ class SocialFieldsUserRPCharacters extends SocialFieldItem
 		// use isset instead of !empty because we do not even wan empty string or false value here
 		if ($this->params->get('readonly') && isset($post[ $this->inputName ])) {
 			unset($post[ $this->inputName ]);
+		} else {
+			$value = $post[$this->inputName];
+
+			$user->setParam( 'characters', $value );
 		}
 
 		return true;
@@ -201,6 +208,10 @@ class SocialFieldsUserRPCharacters extends SocialFieldItem
 	public function onAdminEditBeforeSave(&$post, &$user)
 	{
 		// Regardless of readonly parameter, we allow admin to edit this field
+		$value = $post[$this->inputName];
+
+		$user->setParam( 'characters', $value );
+
 		return true;
 	}
 
@@ -230,27 +241,6 @@ class SocialFieldsUserRPCharacters extends SocialFieldItem
 	{
 		if ($this->isRequired() && empty($value)) {
 			return $this->setError(JText::_('PLG_FIELDS_TEXTBOX_VALIDATION_INPUT_REQUIRED'));
-		}
-
-		if (!empty($value) && $this->params->get('min') > 0 && JString::strlen($value) < $this->params->get('min')) {
-			return $this->setError(JText::_('PLG_FIELDS_TEXTBOX_VALIDATION_INPUT_TOO_SHORT'));
-		}
-
-		if ($this->params->get('max') > 0 && JString::strlen($value) > $this->params->get('max')) {
-			return $this->setError(JText::_('PLG_FIELDS_TEXTBOX_VALIDATION_INPUT_TOO_LONG'));
-		}
-
-		if (!empty($value) && $this->params->get('regex_validate')) {
-			$format = $this->params->get('regex_format');
-			$modifier = $this->params->get('regex_modifier');
-
-			$pattern = '/' . $format . '/' . $modifier;
-
-			$result = preg_match($pattern, $value);
-
-			if (empty($result)) {
-				return $this->setError(JText::_('PLG_FIELDS_TEXTBOX_VALIDATION_INPUT_INVALID_FORMAT'));
-			}
 		}
 
 		return true;

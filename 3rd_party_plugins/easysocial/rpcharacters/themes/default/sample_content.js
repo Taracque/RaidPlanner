@@ -9,7 +9,7 @@ defined( '_JEXEC' ) or die( 'Unauthorized Access' );
 ?>
 EasySocial
 	.require()
-	.app('fields/user/textbox/sample_content')
+	.app('fields/user/rpcharacters/sample_content')
 	.done(function($) {
-		$('[data-field-<?php echo $field->id; ?>]').addController('EasySocial.Controller.Field.Textbox.Sample');
+		$('[data-field-<?php echo $field->id; ?>]').addController('EasySocial.Controller.Field.RPCharacters.Sample');
 	});

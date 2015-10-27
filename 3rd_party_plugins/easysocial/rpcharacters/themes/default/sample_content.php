@@ -6,13 +6,14 @@
 */
 defined( '_JEXEC' ) or die( 'Unauthorized Access' );
 ?>
-<div data-field-textbox>
-	<input type="text" id="<?php echo $inputName;?>"
-		name="<?php echo $inputName;?>"
-		class="form-control input-sm"
-		value="<?php echo JText::_( $params->get( 'default' ), true ); ?>"
-		placeholder="<?php echo JText::_( $params->get( 'placeholder' ), true ); ?>"
-		data-input
-		<?php if( $params->get( 'readonly' ) ) { ?>disabled="disabled"<?php } ?>
-	/>
+<div data-field-characters>
+	<ul class="form-control" style="display:block;float:left;clear:left;width:100%;padding:0;margin:0;height:10em;" id="rp_characterEditorList_<?php echo $field->id;?>">
+<?php for($idx = 1; $idx <= 5; $idx++) : ?>
+		<li style="display:block;float:left;clear:left;width:100%;padding:0;border-bottom:1px solid gray;">
+			<img src="<?php echo(JURI::root());?>media/com_raidplanner/images/delete.png" alt="<?php echo JText::_('JACTION_DELETE');?>" style="float:right;margin:0;" />
+			<a href="#">Character<?php echo $idx;?></a>
+			<span> &lsaquo;Guild name&rsaquo;</span>
+		</li>
+<?php endfor; ?>
+	</ul>
 </div>
