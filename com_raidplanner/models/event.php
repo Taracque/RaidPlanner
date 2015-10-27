@@ -399,14 +399,17 @@ class RaidPlannerModelEvent extends JModelLegacy
 	/**
 	*
 	*/
-	function getUpcomingEvents( $date )
+	function getUpcomingEvents( $date, $invited_only = false )
 	{
     	$db = JFactory::getDBO();
 		$user = JFactory::getUser();
 		$query = "SELECT r.raid_id,r.location,r.description,r.icon_name,r.status,r.raid_leader,r.start_time,s.queue
 					FROM #__raidplanner_raid AS r
-					LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id=r.raid_id AND c.character_id=s.character_id AND c.profile_id=".$user->id.")
-					WHERE r.start_time>='" . $date . "'
+					LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id=r.raid_id AND c.character_id=s.character_id AND c.profile_id=" . intval($user->id) . ")";
+		if ($invited_only) {
+			$query.="	LEFT JOIN `#__user_usergroup_map` AS p ON p.group_id = r.invited_group_id AND p.user_id = " .intval($user->id). "";
+		}
+		$query.="	WHERE r.start_time>='" . $date . "'
 					GROUP BY raid_id
 					ORDER BY r.start_time ASC, r.location ASC";
 		$db->setQuery( $query );
