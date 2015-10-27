@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<social type="fields" group="user">
+	<name>RaidPlanner Characters</name>
+	<element>rpcharacters</element>
+	<author>Taracque</author>
+	<url>http://stackideas.com</url>
+	<created>27/10/2015</created>
+	<version>1.0.0</version>
+	<copyright>Copyright (c) 2015 Taracque</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>RaidPlanner Characters field for EasySocial</description>
+	<core>false</core>
+	<unique>false</unique>
+	<files>
+		<folder>config</folder>
+		<folder>scripts</folder>
+		<folder>themes</folder>
+		<file>characters.php</file>
+		<file>characters.xml</file>
+	</files>
+</social>
