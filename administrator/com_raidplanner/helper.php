@@ -96,18 +96,13 @@ class RaidPlannerHelper
 						$plugin = JEventDispatcher::getInstance();
 					}
 					$plugin->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
-				
-<<<<<<< HEAD
-					return $plugin;
-				}
-=======
+
 					self::$rp_plugin[ $guild_id ] = $plugin;
-					
+
 					return self::$rp_plugin[ $guild_id ];
 				}
 			} else {
 				return false;
->>>>>>> master
 			}
 		}
 	}
