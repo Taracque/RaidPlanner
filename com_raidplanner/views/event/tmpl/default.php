@@ -320,7 +320,7 @@ $hasChars = !empty($this->characters);
 						<textarea name="comments" rows="5" style="width:95%;padding:0;"><?php echo $this->selfstatus->comments; ?></textarea>
 					</td>
 				</tr>
-<?php if ($this->params['multi_raid_signup']==1) : ?>
+<?php if ($this->params['multi_raid_signup']>0) : ?>
 				<tr>
 					<th colspan="4"><?php echo JText::_( 'COM_RAIDPLANNER_MULTIRAIDSIGNUP_EXPLANATION' );?></th>
 				</tr>
