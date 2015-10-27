@@ -80,7 +80,7 @@ class RaidPlannerHelper
 
 	public static function getGuildPlugin( $guild_id )
 	{
-		if ((array_key_exists(self::$rp_plugin, $guild_id)) && (self::$rp_plugin[ $guild_id ]->guild_id == $guild_id)) {
+		if ((array_key_exists($guild_id, self::$rp_plugin)) && (self::$rp_plugin[ $guild_id ]->guild_id == $guild_id)) {
 			return self::$rp_plugin[ $guild_id ];
 		} else {
 			$db = JFactory::getDBO();
