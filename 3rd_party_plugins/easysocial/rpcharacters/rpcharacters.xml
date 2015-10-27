@@ -15,7 +15,7 @@
 		<folder>config</folder>
 		<folder>scripts</folder>
 		<folder>themes</folder>
-		<file>characters.php</file>
-		<file>characters.xml</file>
+		<file>rpcharacters.php</file>
+		<file>rpcharacters.xml</file>
 	</files>
 </social>
