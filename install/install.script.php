@@ -113,7 +113,6 @@ class com_raidplannerInstallerScript
 				$esInstaller->load( $source . '/3rd_party_plugins/easysocial/' );
 
 				$ret = $esInstaller->install();
-				print_r($ret);
 				$out .= "\nEasySocial is installed in Joomla. RaidPlanner EasySocial plugin installation:" . (($ret)?"[OK]":"[Failed]") . "<br />";
 			}
 		}
