@@ -37,18 +37,19 @@ jimport( 'joomla.utilities.date');
 							paginationControlPages:25,
 							filterable:true,
 							strings:{
-								next:'<?php echo JText::_('JNEXT');?>',
-								previous:'<?php echo JText::_('JPREV');?>',
-								rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>'
+								next:'<i class="icon-next" title="<?php echo JText::_('JNEXT');?>"></i>',
+								previous:'<i class="icon-previous" title="<?php echo JText::_('JPREVIOUS');?>"></i>',
+								rows:'<?php echo JText::_('COM_RAIDPLANNER_ROW_COUNT');?>',
+								search : '<?php echo JText::_('JSEARCH_FILTER_SUBMIT');?>'
 							},
 							classHeaderPaginationContorlTH:'',
 							classHeaderPaginationContorlTR:'',
-							classHeaderPaginationContorlDiv:'rp_header',
-							classHeaderPaginationContorlUL:'rp_left',
-							classHeaderPaginationContorlLI:'rp_control',
-							classHeaderNumOfRowsContorlUL:'rp_right',
-							classHeaderNumOfRowsContorlLI:'rp_control',
-							classHeaderFilterContorlDiv:'rp_filter'
+							classHeaderPaginationContorlDiv:'rp_header pagination',
+							classHeaderPaginationContorlUL:'rp_right pagination-list',
+							classHeaderPaginationContorlLI:'',
+							classHeaderNumOfRowsContorlUL:'rp_left',
+							classHeaderNumOfRowsContorlLI:'',
+							classHeaderFilterContorlDiv:'rp_filter',
 						}
 					).updatePagination();
 				}

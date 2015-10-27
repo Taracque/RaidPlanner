@@ -95,7 +95,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     * Process, formats raid history XML
     * @return string HTML converted raid history
     */
-    function getHistory($raid_id,$xml = false)
+    function getHistory($raid_id,$source = false)
     {
     	$html = '';
 
@@ -103,42 +103,117 @@ class RaidPlannerModelEvent extends JModelLegacy
 		$query = "SELECT history FROM #__raidplanner_history WHERE raid_id=".intval($raid_id);
 		$db->setQuery($query);
 		$string = $db->loadResult();
-		if ($xml) {
+		if ($source) {
 			$html = $string;
 		} elseif ($string!='') {
-			$xml = @simplexml_load_string(str_replace("&","&amp;",$string));
-			$html .= "Start: ".$xml->start."<br />";
-			$html .= "End: ".$xml->end."<br />";
-			$html .= "Zone: ".$xml->zone."<br />";
-			$html .= '<fieldset class="rp_history_block"><legend>Bosskills</legend><div>';
-			if ($xml->BossKills) {
-				foreach ($xml->BossKills->children() as $bosskill) {
-					$html .= $bosskill->time . " : " . $bosskill->name . "<br />";
+			$xml = json_decode($string);
+			if (json_last_error()===JSON_ERROR_NONE) {
+				$html .= '<style>th.table-th-sort{text-decoration:underline}</style>';
+				$html .= '<table style="margin-bottom:0">';
+				$html .= '<tr><th colspan="4">Roster</th></tr>';
+				$html .= '</table>';
+				$html .= '<table class="sortable">';
+				$html .= '<thead>';
+				$html .= '<tr><th>' . JText::_( 'COM_RAIDPLANNER_CHARACTER_NAME') . '</th><th>EP</th><th>GP</th><th>PR</th></tr>';
+				$html .= '</thead>';
+				$html .= '<tbody>';
+				foreach ($xml->roster as $char) {
+					$html .= '<tr>';
+					$html .= '<td>' . $char[0] . '</td><td>' . $char[1] . '</td><td>' . $char[2] . '</td><td>' . round($char[1]/$char[2],3) . '</td>';
+					$html .= '</tr>';
+				}
+				$html .= '</tbody>';
+				$html .= '</table>';
+				$html .= '<table style="margin-bottom:0">';
+				$html .= '<tr><th colspan="4">Loot</th></tr>';
+				$html .= '</table>';
+				$html .= '<table class="sortable">';
+				$html .= '<thead>';
+				$html .= '<tr><th>' . JText::_( 'COM_RAIDPLANNER_CHARACTER_NAME') . '</th><th>' .  JText::_( 'TIME') . '</td><th>Item</th><th>GP Price</th></tr>';
+				$html .= '</thead>';
+				$html .= '<tbody>';
+				foreach ($xml->loot as $loot) {
+					$html .= '<tr>';
+					// process item
+					$item = explode(":",$loot[2]);
+					
+					$html .= '<td>' . $loot[1] . '</td><td>' . date('m/d H:i', $loot[0]) . '</td><td><a href="http://www.wowhead.com/item=' . $item[1] . '&bonus=' . $item[14] .':' . $item[15] .'" target="_blank" class="__rename_this" data-itemid="' .$item[1]. '">ITEM</a></td><td>' . $loot[3] . '</td>';
+					$html .= '</tr>';
+				}
+				$html .= '</tbody>';
+				$html .= '</table>';
+				$html .= '<script>
+	function itemNameCallback(itemData) {
+		jQuery("table.sortable").each(function(idx,el){
+			rpMakeSortable(el);
+		});
+		jQuery("a[data-itemid=" + itemData.id + "]").each(function(idx,el) {
+			el = jQuery(el);
+			if (el.hasClass("__rename_this")) {
+				if (itemData.name) {
+					el.text( itemData.name );
+					el.removeClass("__rename_this");
+				} else {
+					if (itemData.availableContexts[0] != "") {
+						jQuery.ajax({
+							url: "http://eu.battle.net/api/wow/item/" + el.data("itemid") + "/" + itemData.availableContexts[0] + "?locale=en_GB&jsonp=itemNameCallback",
+							dataType: "jsonp",
+							success: function(response) {
+							}
+						})
+					}
 				}
 			}
-			$html .= '</div></fieldset>';
-			$html .= '<fieldset class="rp_history_block"><legend>Loot</legend><div>';
-			if ($xml->Loot) {
-				foreach ($xml->Loot->children() as $loot) {
-					$html .= $loot->Player . " : <a href=\"http://www.wowhead.com/item=" . $loot->ItemID . "\">" .  $loot->ItemName . "</a> (" . $loot->Boss . ")<br />";
-				}
-			}
-			$html .= '</div></fieldset>';
-			$html .= '<fieldset class="rp_history_block"><legend>Character join</legend><div>';
-			if ($xml->Join) {
-				foreach ($xml->Join->children() as $Join) {
-					$html .= $Join->player . " : " .  $Join->time . "<br />";
-				}
-			}
-			$html .= '</div></fieldset>';
-			$html .= '<fieldset class="rp_history_block"><legend>Character leave</legend><div>';
-			if ($xml->Leave) {
-				foreach ($xml->Leave->children() as $Leave) {
-					$html .= $Leave->player . " : " .  $Leave->time . "<br />";
-				}
-			}
-			$html .= '</div></fieldset>';
+		});
+	}
+	jQuery("a.__rename_this").each(function(idx,el){
+		el = jQuery(el);
+		if (el.hasClass("__rename_this")) {
+			jQuery.ajax({
+			    url: "http://eu.battle.net/api/wow/item/" + el.data("itemid") + "?locale=en_GB&jsonp=itemNameCallback",
+			    dataType: "jsonp",
+			    success: function(response) {
+			    }
+			})
 		}
+	})
+	</script>';
+			} else {	// json not works, maybe XML
+				$xml = @simplexml_load_string(str_replace("&","&amp;",$string));
+				$html .= "Start: ".$xml->start."<br />";
+				$html .= "End: ".$xml->end."<br />";
+				$html .= "Zone: ".$xml->zone."<br />";
+				$html .= '<fieldset class="rp_history_block"><legend>Bosskills</legend><div>';
+				if ($xml->BossKills) {
+					foreach ($xml->BossKills->children() as $bosskill) {
+						$html .= $bosskill->time . " : " . $bosskill->name . "<br />";
+					}
+				}
+				$html .= '</div></fieldset>';
+				$html .= '<fieldset class="rp_history_block"><legend>Loot</legend><div>';
+				if ($xml->Loot) {
+					foreach ($xml->Loot->children() as $loot) {
+						$html .= $loot->Player . " : <a href=\"http://www.wowhead.com/item=" . $loot->ItemID . "\">" .  $loot->ItemName . "</a> (" . $loot->Boss . ")<br />";
+					}
+				}
+				$html .= '</div></fieldset>';
+				$html .= '<fieldset class="rp_history_block"><legend>Character join</legend><div>';
+				if ($xml->Join) {
+					foreach ($xml->Join->children() as $Join) {
+						$html .= $Join->player . " : " .  $Join->time . "<br />";
+					}
+				}
+				$html .= '</div></fieldset>';
+				$html .= '<fieldset class="rp_history_block"><legend>Character leave</legend><div>';
+				if ($xml->Leave) {
+					foreach ($xml->Leave->children() as $Leave) {
+						$html .= $Leave->player . " : " .  $Leave->time . "<br />";
+					}
+				}
+				$html .= '</div></fieldset>';
+			}
+		}
+		$html .= '';
 		return ($html);
     }
     
@@ -150,7 +225,7 @@ class RaidPlannerModelEvent extends JModelLegacy
     {
     	$db = JFactory::getDBO();
 
-    	$query = "SELECT s.character_id,c.char_name,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
+    	$query = "SELECT s.character_id,c.char_name,c.guild_id,r.role_name,s.queue,s.confirmed,s.timestamp,s.comments,s.class_id,
     				cl.class_name,cl.class_color,c.char_level,c.profile_id,s.role_id,s.queue,cl.class_css
     			FROM #__raidplanner_signups AS s 
     				LEFT JOIN #__raidplanner_character AS c ON c.character_id=s.character_id

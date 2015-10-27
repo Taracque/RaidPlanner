@@ -29,7 +29,7 @@ class RaidPlannerHelper
 		'raidplanner.delete_raid_any'	=>	'raidplanner.delete',
 		'raidplanner.delete_raid_own'	=>	'raidplanner.delete.own',
 	);
-	private static $rp_plugin = null;
+	private static $rp_plugin = array();
 
 	/* Fixes bootstrap css elements in Joomla 2.5 */
 	public static function fixBootstrap( $direct_write = false )
@@ -80,8 +80,8 @@ class RaidPlannerHelper
 
 	public static function getGuildPlugin( $guild_id )
 	{
-		if ((self::$rp_plugin != null) && (self::$rp_plugin->guild_id == $guild_id)) {
-			return self::$rp_plugin;
+		if ((array_key_exists($guild_id, self::$rp_plugin)) && (self::$rp_plugin[ $guild_id ]->guild_id == $guild_id)) {
+			return self::$rp_plugin[ $guild_id ];
 		} else {
 			$db = JFactory::getDBO();
 			$query = "SELECT guild_id, guild_name, sync_plugin, params FROM #__raidplanner_guild WHERE guild_id=" . intval($guild_id); 
@@ -97,8 +97,17 @@ class RaidPlannerHelper
 					}
 					$plugin->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
 				
+<<<<<<< HEAD
 					return $plugin;
 				}
+=======
+					self::$rp_plugin[ $guild_id ] = $plugin;
+					
+					return self::$rp_plugin[ $guild_id ];
+				}
+			} else {
+				return false;
+>>>>>>> master
 			}
 		}
 	}

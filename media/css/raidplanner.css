@@ -162,7 +162,9 @@
 	padding-left: 5px !important;
 	border-left: 1px solid #ccc;
 }
-
+.rp_event_buttons {
+	clear: left;
+}
 .rp_event_buttons div a {
 	color: #bbb;
 	display: block;
@@ -192,7 +194,8 @@
 
 .rp_event_attendants table,
 .rp_event_signup table,
-.rp_event_rating table {
+.rp_event_rating table,
+.rp_event_history table {
 	margin: 0 0 0.5em 0;
 	padding: 0;
 	width: 100%;
@@ -201,7 +204,8 @@
 }
 .rp_event_attendants table th,
 .rp_event_signup table th,
-.rp_event_rating table th {
+.rp_event_rating table th,
+.rp_event_history table th {
 	background: #33383C;
 	color: #BBBFC3;
 	font-weight: bold;
@@ -334,7 +338,7 @@ tr.rp_header {
 }
 .rp_container .rp_filter {
 	float:left;
-	margin-left:40px;
+	margin-right:40px;
 }
 
 .rp_extended_tooltip {
@@ -461,4 +465,9 @@ table.rp_stats_table tr {
 
 table.rp_stats_table tr:hover {
 	background-color: #ddd;
+}
+
+/* darktip hack for calendar view */
+.darktip-tooltip-wow {
+	z-index: 65560 !important;
 }

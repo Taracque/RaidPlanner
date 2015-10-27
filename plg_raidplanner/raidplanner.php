@@ -235,16 +235,21 @@ class plgUserRaidPlanner extends JPlugin
 		//In this example, we treat the frontend registration and the back end user create or edit as the same.
 		elseif ($form->getName()=='com_users.registration' || $form->getName()=='com_users.user' )
 		{		
-
+			if ($this->params->get('raidplanner-profile-group', 1) == 0)
+			{
+				$profile_prefix = 'params';
+			} else {
+				$profile_prefix = 'profile';
+			}
 			// Toggle whether the characters field is required.
 			if ($this->params->get('register-require_raidplanner', 1) > 0) {
-				$form->setFieldAttribute('characters', 'required', false, 'profile');
-				$form->setFieldAttribute('calendar_secret', 'required', false, 'profile');
-				$form->setFieldAttribute('vacation', 'required', false, 'profile');
-			} else {
-				$form->removeField('characters', 'profile');
-				$form->removeField('calendar_secret', 'profile');
-				$form->removeField('vacation', 'profile');
+				$form->setFieldAttribute('characters', 'required', false, $profile_prefix);
+				$form->setFieldAttribute('calendar_secret', 'required', false, $profile_prefix);
+				$form->setFieldAttribute('vacation', 'required', false, $profile_prefix);
+			} elseif ($form->getName()=='com_users.registration') {	//registration form
+				$form->removeField('characters', $profile_prefix);
+				$form->removeField('calendar_secret', $profile_prefix);
+				$form->removeField('vacation', $profile_prefix);
 			}
 		}
 	}
