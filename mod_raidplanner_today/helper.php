@@ -32,7 +32,7 @@ class modRaidPlannerTodayHelper
 					LEFT JOIN `#__user_usergroup_map` AS p ON p.group_id = r.invited_group_id AND p.user_id = " .intval($user_id). "
 					LEFT JOIN (`#__raidplanner_signups` AS s,`#__raidplanner_character` AS c) ON (s.raid_id = r.raid_id AND c.character_id = s.character_id AND c.profile_id = ".intval($user_id).")
 					LEFT JOIN `#__raidplanner_role` AS ro ON ro.role_id = s.role_id
-					WHERE DATE(DATE_ADD(start_time, INTERVAL " . intval(RaidPlannerHelper::getTimezone()) . " HOUR))>=DATE(NOW()) AND DATE(DATE_ADD(start_time, INTERVAL " . intval(RaidPlannerHelper::getTimezone()) . " HOUR))<DATE(NOW())+" . $days . " GROUP BY r.raid_id ORDER BY start_time ASC, location ASC";
+					WHERE DATE(DATE_ADD(start_time, INTERVAL " . intval(RaidPlannerHelper::getTimezone()) . " HOUR))>=DATE(NOW()) AND DATE(DATE_ADD(start_time, INTERVAL " . intval(RaidPlannerHelper::getTimezone()) . " HOUR))<DATE_ADD(DATE(NOW()), INTERVAL " . $days . " DAY) GROUP BY r.raid_id ORDER BY start_time ASC, location ASC";
 
 		$db->setQuery($query);
 		$items = ($items = $db->loadObjectList())?$items:array();
