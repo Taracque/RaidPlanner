@@ -105,6 +105,14 @@ $hasChars = !empty($this->characters);
 					<?php endforeach; ?>
 				</li>
 				<?php endif; ?>
+				<?php if (@$this->missingSignups) :?>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_NOT_SIGNED');?>:</strong><br />
+					<?php foreach ($this->missingSignups as $missingUser) : ?>
+					<?php echo $missingUser; ?> 
+					<?php endforeach; ?>
+				</li>
+				<?php endif;?>
 			</ul>
 		</td>
 	</tr>

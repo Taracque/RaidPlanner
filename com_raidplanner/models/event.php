@@ -278,7 +278,27 @@ class RaidPlannerModelEvent extends JModelLegacy
 		
 		return $reply;
 	}
-	
+
+	function getMissingSignUps($raid_id = null)
+	{
+		$result = array();
+
+		if ($raid_id>0) {
+			$db = JFactory::getDBO();
+			$query = "SELECT u.name FROM #__raidplanner_raid AS r
+						LEFT JOIN #__user_usergroup_map AS p ON p.group_id = r.invited_group_id
+						LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id = r.raid_id AND c.character_id = s.character_id AND c.profile_id = p.user_id)
+						LEFT JOIN #__users AS u ON u.id=p.user_id
+						WHERE r.raid_id = " . intval($raid_id) . "
+						AND s.raid_id IS NULL";
+
+			$db->setQuery($query);
+			$result = $db->loadColumn();
+			return $result;
+		}
+		return false;
+	}
+
     function getTemplates()
     {
     	$db = JFactory::getDBO();
