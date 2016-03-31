@@ -97,6 +97,7 @@ class RaidPlannerViewEvent extends JViewLegacy
 			$this->assignRef( 'isOfficer' , $isOfficer );
 			$this->assign( 'canSignup' , $model->userCanSignUp( $event->raid_id ) );
 			$this->assign( 'onvacation' , $model->usersOnVacation( $event->start_time ) );
+			$this->assign( 'missingSignups' , $model->getMissingSignUps( $event->raid_id ) );
 			$this->assignRef( 'finished' , $event->finished );
 			$this->assign( 'canRate' , $model->userCanRate( $event->raid_id ) );
 			$this->assign( 'ratings' , $model->getRates( $event->raid_id ) ); 
