@@ -58,9 +58,9 @@ $hasChars = !empty($this->characters);
 				<li>
 					<hr />
 				</li>
-				<li>
-					<strong><?php echo JText::_('COM_RAIDPLANNER_CONFIRMED_ROLES');?>:</strong><br />
-					<?php if (@$this->confirmed_roles[1]) : ?>
+				<?php if (@$this->confirmed_roles[1]) : ?>
+					<li>
+						<strong><?php echo JText::_('COM_RAIDPLANNER_CONFIRMED_ROLES');?>:</strong><br />
 						<?php foreach ($this->confirmed_roles[1] as $key => $role) : ?>
 							<?php if ($this->roles[$key]->icon_name != '') : ?>
 							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
@@ -69,11 +69,11 @@ $hasChars = !empty($this->characters);
 							<?php endif; ?>
 							: <?php echo $role; ?>
 						<?php endforeach; ?>
-					<?php endif; ?>
-				</li>
-				<li>
-					<strong><?php echo JText::_('COM_RAIDPLANNER_SITTING_ROLES');?>:</strong><br />
-					<?php if (@$this->confirmed_roles[2]) : ?>
+					</li>
+				<?php endif; ?>
+				<?php if (@$this->confirmed_roles[2]) : ?>
+					<li>
+						<strong><?php echo JText::_('COM_RAIDPLANNER_SITTING_ROLES');?>:</strong><br />
 						<?php foreach ($this->confirmed_roles[2] as $key => $role) : ?>
 							<?php if ($this->roles[$key]->icon_name != '') : ?>
 							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
@@ -82,11 +82,11 @@ $hasChars = !empty($this->characters);
 							<?php endif; ?>
 							: <?php echo $role; ?>
 						<?php endforeach; ?>
-					<?php endif; ?>
-				</li>
-				<li>
-					<strong><?php echo JText::_('COM_RAIDPLANNER_WAITLIST_ROLES');?>:</strong><br />
-					<?php if (@$this->confirmed_roles[-1]) :?>
+					</li>
+				<?php endif; ?>
+				<?php if (@$this->confirmed_roles[-1]) :?>
+					<li>
+						<strong><?php echo JText::_('COM_RAIDPLANNER_WAITLIST_ROLES');?>:</strong><br />
 						<?php foreach ($this->confirmed_roles[-1] as $key => $role) : ?>
 							<?php if ($this->roles[$key]->icon_name != '') : ?>
 							<img src="<?php echo JURI::base()."media/com_raidplanner/role_icons/".$this->roles[$key]->icon_name;?>" alt="<?php echo $key;?>" />
@@ -95,8 +95,8 @@ $hasChars = !empty($this->characters);
 							<?php endif; ?>
 							: <?php echo $role; ?>
 						<?php endforeach; ?>
-					<?php endif; ?>
-				</li>
+					</li>
+				<?php endif; ?>
 				<?php if (@$this->onvacation) :?>
 				<li>
 					<strong><?php echo JText::_('COM_RAIDPLANNER_USERS_ON_VACATION');?>:</strong><br />
