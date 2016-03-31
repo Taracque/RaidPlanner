@@ -124,7 +124,11 @@ if (RaidPlannerHelper::getJVersion() >= '3.0') {
                 <?php echo $row->char_level; ?>
             </td>
             <td>
-                <a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]='.$row->guild_id);?>"><?php echo $row->guild_name; ?></a>
+            	<?php if ($row->removed): ?>
+            		<?php echo JText::_('JUNPUBLISHED');?>
+            	<?php else: ?>
+                	<a href="<?php echo JRoute::_('index.php?option=com_raidplanner&controller=guilds&view=guild&task=edit&cid[]='.$row->guild_id);?>"><?php echo $row->guild_name; ?></a>
+                <?php endif; ?>
             </td>
             <td>
                 <?php echo $row->character_id; ?>

@@ -116,7 +116,7 @@ class RaidPlannerModelCharacters extends JModelLegacy
      */
     function _buildQuery()
     {
-        $query = ' SELECT c.*, u.name AS user_name, cl.class_name, rc.race_name, ge.gender_name, cl.class_color, g.guild_name '
+        $query = ' SELECT c.*, u.name AS user_name, cl.class_name, rc.race_name, ge.gender_name, cl.class_color, g.guild_name, (c.guild_id<0) AS removed '
             . ' FROM #__raidplanner_character AS c'
             . ' LEFT JOIN #__users AS u ON u.id = c.profile_id'
             . ' LEFT JOIN #__raidplanner_class AS cl ON cl.class_id = c.class_id'
