@@ -30,6 +30,7 @@ class RaidPlannerViewRaidPlanner extends JViewLegacy
 
 		$installModel->setState('filter.type','plugin');
 		$installModel->setState('filter.group','raidplanner');
+		$installModel->setState('filter.folder','raidplanner');
 		$installModel->setState('filter.search','');
 		$installModel->setState('filter.access','0');
 		$installModel->setState('filter.enabled','');
@@ -39,6 +40,7 @@ class RaidPlannerViewRaidPlanner extends JViewLegacy
 
 		$installModel->setState( 'filter.type',$plugin_state->{'filter.type'} );
 		$installModel->setState( 'filter.group',$plugin_state->{'filter.group'} );
+		$installModel->setState( 'filter.folder',$plugin_state->{'filter.folder'} );
 		$installModel->setState( 'filter.search',$plugin_state->{'filter.search'} );
 		$installModel->setState( 'filter.access',$plugin_state->{'filter.access'} );
 		$installModel->setState( 'filter.enabled',$plugin_state->{'filter.enabled'} );
