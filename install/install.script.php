@@ -55,8 +55,9 @@ class com_raidplannerInstallerScript
 			$out .= 'RaidPlanner User plugin installation failed!<br />';
 		}
 
-		/* Detect Community Builder */
 		jimport( 'joomla.application.component.helper' );
+
+		/* Detect Community Builder */
 		$_CB_adminpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler';
 		if ( file_exists( $_CB_adminpath . '/plugin.foundation.php' ) )
 		{
@@ -100,6 +101,19 @@ class com_raidplannerInstallerScript
 				$newfield->addChild('name','RaidPlanner Characters');
 				$xml->saveXML( JPATH_SITE . '/components/com_community/libraries/fields/customfields.xml' );
 				$out .= "<small>- RaidPlanner Characters fieldtype added to JomSocial</small><br>\n";
+			}
+		}
+		/* Detect EasySocial */
+		if ( file_exists( JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/installer/installer.php' ) )
+		{
+			/* load easysocial apps controller */
+			$esComp = JComponentHelper::getComponent( 'com_easysocial' );
+			if ( ( $esComp ) && ( $esComp->enabled ) ) {
+				$esInstaller 	= FD::get( 'Installer' );
+				$esInstaller->load( $source . '/3rd_party_plugins/easysocial/' );
+
+				$ret = $esInstaller->install();
+				$out .= "\nEasySocial is installed in Joomla. RaidPlanner EasySocial plugin installation:" . (($ret)?"[OK]":"[Failed]") . "<br />";
 			}
 		}
 

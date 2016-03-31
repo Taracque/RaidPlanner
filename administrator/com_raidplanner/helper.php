@@ -96,9 +96,9 @@ class RaidPlannerHelper
 						$plugin = JEventDispatcher::getInstance();
 					}
 					$plugin->trigger( 'onRPInitGuild', array( $guild_id, $guild->params ) );
-				
+
 					self::$rp_plugin[ $guild_id ] = $plugin;
-					
+
 					return self::$rp_plugin[ $guild_id ];
 				}
 			} else {
@@ -482,7 +482,13 @@ class RaidPlannerHelper
 	{
 		$data = false;
 
-		if(function_exists('curl_init') && function_exists('curl_exec')) {
+		/* try JHttp first */
+		$http = JHttpFactory::getHttp();
+		if (($http) && ($response = $http->get($url))) {
+			$data = $response->body;
+		}
+		
+		if ((!$data) && (function_exists('curl_init') && function_exists('curl_exec'))) {
 			$ch = @curl_init();
 
 			@curl_setopt($ch, CURLOPT_URL, $url);

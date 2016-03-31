@@ -278,7 +278,27 @@ class RaidPlannerModelEvent extends JModelLegacy
 		
 		return $reply;
 	}
-	
+
+	function getMissingSignUps($raid_id = null)
+	{
+		$result = array();
+
+		if ($raid_id>0) {
+			$db = JFactory::getDBO();
+			$query = "SELECT u.name FROM #__raidplanner_raid AS r
+						LEFT JOIN #__user_usergroup_map AS p ON p.group_id = r.invited_group_id
+						LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id = r.raid_id AND c.character_id = s.character_id AND c.profile_id = p.user_id)
+						LEFT JOIN #__users AS u ON u.id=p.user_id
+						WHERE r.raid_id = " . intval($raid_id) . "
+						AND s.raid_id IS NULL";
+
+			$db->setQuery($query);
+			$result = $db->loadColumn();
+			return $result;
+		}
+		return false;
+	}
+
     function getTemplates()
     {
     	$db = JFactory::getDBO();
@@ -399,15 +419,20 @@ class RaidPlannerModelEvent extends JModelLegacy
 	/**
 	*
 	*/
-	function getUpcomingEvents( $date )
+	function getUpcomingEvents( $date, $invited_only = false )
 	{
     	$db = JFactory::getDBO();
 		$user = JFactory::getUser();
 		$query = "SELECT r.raid_id,r.location,r.description,r.icon_name,r.status,r.raid_leader,r.start_time,s.queue
 					FROM #__raidplanner_raid AS r
-					LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id=r.raid_id AND c.character_id=s.character_id AND c.profile_id=".$user->id.")
-					WHERE r.start_time>='" . $date . "'
-					GROUP BY raid_id
+					LEFT JOIN (#__raidplanner_signups AS s,#__raidplanner_character AS c) ON (s.raid_id=r.raid_id AND c.character_id=s.character_id AND c.profile_id=" . intval($user->id) . ")";
+		if ($invited_only) {
+			$query.="	LEFT JOIN `#__user_usergroup_map` AS p ON p.group_id = r.invited_group_id AND p.user_id = " .intval($user->id). "";
+			$query.="	WHERE r.start_time>='" . $date . "' AND p.user_id IS NOT NULL";
+		} else {
+			$query.="	WHERE r.start_time>='" . $date . "'";
+		}
+		$query.="	GROUP BY raid_id
 					ORDER BY r.start_time ASC, r.location ASC";
 		$db->setQuery( $query );
 		return $db->loadObjectList();

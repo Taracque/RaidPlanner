@@ -56,7 +56,7 @@ $hasChars = !empty($this->characters);
 					<?php endif; ?>
 				</li>
 				<li>
-					<hr />
+					<hr style="margin:0.4em 0;"/>
 				</li>
 				<?php if (@$this->confirmed_roles[1]) : ?>
 					<li>
@@ -105,6 +105,16 @@ $hasChars = !empty($this->characters);
 					<?php endforeach; ?>
 				</li>
 				<?php endif; ?>
+				<?php if (@$this->missingSignups) :?>
+				<li>
+					<strong><?php echo JText::_('COM_RAIDPLANNER_NOT_SIGNED');?>:</strong><br />
+					<?php if (count($this->missingSignups)>5): ?>
+					<a href="#" id="missing_signups" class="rp_tooltips" onclick="var tmp=this.title;this.title=this.innerText;this.innerText=tmp;return false;" onmouseenter="javascript:rpShowTooltip('missing_signups');" title="<?php echo implode($this->missingSignups,", "); ?>" alt="<?php echo count($this->missingSignups);?>">&sum; <?php echo count($this->missingSignups);?></a>
+					<?php else: ?>
+					<?php echo implode($this->missingSignups,", "); ?>
+					<?php endif; ?>
+				</li>
+				<?php endif;?>
 			</ul>
 		</td>
 	</tr>
@@ -141,7 +151,7 @@ $hasChars = !empty($this->characters);
 					<tr>
 						<td class="<?php echo $attendant->class_css;?>">
 							<input type="hidden" name="characters[]" value="<?php echo $attendant->character_id;?>" />
-							<a href="<?php if ($guild_plugin = RaidPlannerHelper::getGuildPlugin( $attendant->guild_id) ) { echo implode(" ", $guild_plugin->trigger( 'onRPGetCharacterLink', array($attendant->char_name) ) ); } else { echo '#" onclick="javascript:rpShowTooltip(\'att_char_name_' . $attendant->character_id . '\');return false;" '; }?>" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
+							<a href="<?php if ($this->guild_plugin) { echo implode(" ", $this->guild_plugin->trigger( 'onRPGetCharacterLink', array($attendant->char_name) ) ); } else { echo '#" onclick="javascript:rpShowTooltip(\'att_char_name_' . $attendant->character_id . '\');return false;" '; }?>" onmouseenter="javascript:rpShowTooltip('att_char_name_<?php echo $attendant->character_id;?>');" id="att_char_name_<?php echo $attendant->character_id;?>" style="color:<?php echo $attendant->class_color;?>" class="rp_tooltips" title="<?php echo $attendant->char_level." lvl. ".$attendant->class_name;?>">
 								<strong><?php echo $attendant->char_name;?></strong>
 							</a>
 						</td>
@@ -320,7 +330,7 @@ $hasChars = !empty($this->characters);
 						<textarea name="comments" rows="5" style="width:95%;padding:0;"><?php echo $this->selfstatus->comments; ?></textarea>
 					</td>
 				</tr>
-<?php if ($this->params['multi_raid_signup']==1) : ?>
+<?php if ($this->params['multi_raid_signup']>0) : ?>
 				<tr>
 					<th colspan="4"><?php echo JText::_( 'COM_RAIDPLANNER_MULTIRAIDSIGNUP_EXPLANATION' );?></th>
 				</tr>
