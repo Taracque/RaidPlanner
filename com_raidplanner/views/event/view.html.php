@@ -76,12 +76,14 @@ class RaidPlannerViewEvent extends JViewLegacy
 			}
 
 			RaidPlannerHelper::loadGuildCSS( @$event->guild_id );
+			$guild_plugin = RaidPlannerHelper::getGuildPlugin( @$event->guild_id );
 
 			if ( $params['multi_raid_signup'] > 0 ) {
 				$upcoming = $model->getUpcomingEvents( $event->start_time, ($params['multi_raid_signup'] == 2) );
 				$this->assignRef( 'upcoming', $upcoming );
 			}
 
+			$this->assignRef( 'guild_plugin', $guild_plugin );
 			$this->assignRef( 'params', $params);
 			$this->assignRef( 'macro', $macro);
 			$this->assignRef( 'event', $event );
