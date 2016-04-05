@@ -108,7 +108,7 @@ class com_raidplannerInstallerScript
 		{
 			/* load easysocial apps controller */
 			$esComp = JComponentHelper::getComponent( 'com_easysocial' );
-			if ( ( $esComp ) && ( $esComp->enabled ) ) {
+			if ( ( $esComp ) && ( $esComp->enabled ) && ( class_exists('FD')) ) {
 				$esInstaller 	= FD::get( 'Installer' );
 				$esInstaller->load( $source . '/3rd_party_plugins/easysocial/' );
 
