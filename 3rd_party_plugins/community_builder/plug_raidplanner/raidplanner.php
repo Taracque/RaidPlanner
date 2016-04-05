@@ -62,8 +62,8 @@ class getRaidPlannerTab extends cbTabHandler {
 				}
 
 				$juser =JFactory::getUser($row->user_id);
+/*
 				if (!$juser->block) {
-
 					$ju_params = $juser->getParameters(false)->toObject();
 					foreach ($data as $k => $v) {
 						$juser->setParam($k, $v);
@@ -76,7 +76,7 @@ class getRaidPlannerTab extends cbTabHandler {
 					$table->bind($juser->getProperties());
 					$table->store();
 				}
-
+*/
 				if ( (isset($data['characters'])) && ($params->get('rpPlugDirectSync', "0") == 1) )
 				{
 					$userId = $juser->id;
@@ -214,7 +214,7 @@ class CBfield_rpcharacters extends CBfield_textarea {
 						$chars = RaidPlannerHelper::getProfileChars( $value, true, true );
 				
 						$html = '<input type="hidden" name="' . $field->name. '" value="' . htmlspecialchars ( $value, ENT_COMPAT, 'UTF-8' ) . '" id="rp_characterEditorValue_' . $field->fieldid . '" />';
-						$html .= '<div style="width:' . $field->params->get('cols', 40) . 'em;height:' . $field->params->get('rows',5) . 'em;overflow-y:auto;overflow-x:hidden;border:1px inset gray;">';
+						$html .= '<div style="width:' . $field->params->get('cols', '100%') . 'em;height:' . $field->params->get('rows',5) . 'em;overflow-y:auto;overflow-x:hidden;border:1px inset gray;">';
 						$html .= '<ul style="display:block;float:left;clear:left;width:100%;padding:0;margin:0;" id="rp_characterEditorList_' . $field->fieldid . '">';
 						$idx = 0;
 				

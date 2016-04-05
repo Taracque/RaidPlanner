@@ -15,11 +15,11 @@
 	<name>RaidPlanner Plugin</name>
 	<author>Taracque</author>
 	<creationDate>2011-09-28</creationDate>
-	<copyright>(C) 2011 Taracque, http://taracque.hu</copyright>
+	<copyright>(C) 2011-16 Taracque, http://taracque.hu</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>taracque@taracque.hu</authorEmail>
 	<authorUrl>taracque.hu</authorUrl>
-	<version>2.0.3</version>
+	<version>2.0.4</version>
 	<description>
 		Synchronizes CB fields with RaidPlanner user fields.
 	</description>
@@ -31,7 +31,7 @@
 		<field type="rpcharactersfield" label="RaidPlanner Characters">
 			<data name="" nametype="namesuffix" type="sql:mediumtext" null="true" default="NULL" strict="false" />
 			<params>
-				<param name="cols" type="text" default="40" label="Width of field" description="Width of field in characters" />
+				<param name="cols" type="text" default="40" label="Width of field" description="Width of field in characters, or in percentage. Default is 100%" />
 				<param name="rows" type="text" default="5" label="Height of field" description="Height of field in characters" />
 				<param name="fieldValidateForbiddenList_register" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words at registration" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field for registration. Use comma twice (,,) to add comma as bad character." />
 				<param name="fieldValidateForbiddenList_edit" type="text" default="http:,https:,mailto:,//.[url],&lt;a,&lt;/a&gt;,&amp;#" label="Forbidden words in user profile edits" description="You can set a list of bad words (separated by comma ,) which are not allowed in this field when user updates his profile in profile edits. Use comma twice (,,) to add comma as bad character." />
