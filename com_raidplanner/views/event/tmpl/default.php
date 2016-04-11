@@ -100,16 +100,17 @@ $hasChars = !empty($this->characters);
 				<?php if (@$this->onvacation) :?>
 				<li>
 					<strong><?php echo JText::_('COM_RAIDPLANNER_USERS_ON_VACATION');?>:</strong><br />
-					<?php foreach ($this->onvacation as $vacationusers) : ?>
-					<?php echo $vacationusers; ?> 
-					<?php endforeach; ?>
+					<?php echo implode($this->onvacation,", "); ?>
 				</li>
 				<?php endif; ?>
 				<?php if (@$this->missingSignups) :?>
 				<li>
 					<strong><?php echo JText::_('COM_RAIDPLANNER_NOT_SIGNED');?>:</strong><br />
+					<?php if (@$this->onvacation) { $this->missingSignups = array_diff($this->missingSignups,$this->onvacation); } ?>
 					<?php if (count($this->missingSignups)>5): ?>
-					<a href="#" id="missing_signups" class="rp_tooltips" onclick="var tmp=this.title;this.title=this.innerText;this.innerText=tmp;return false;" onmouseenter="javascript:rpShowTooltip('missing_signups');" title="<?php echo implode($this->missingSignups,", "); ?>" alt="<?php echo count($this->missingSignups);?>">&sum; <?php echo count($this->missingSignups);?></a>
+					<a href="#" id="missing_signups" class="rp_tooltips" onclick="var tmp=this.title;this.title=this.innerText;this.innerText=tmp;return false;" onmouseenter="javascript:rpShowTooltip('missing_signups');" title="<?php echo implode($this->missingSignups,", "); ?>" alt="<?php echo count($this->missingSignups);?>">
+						&sum; <?php echo count($this->missingSignups);?>
+					</a>
 					<?php else: ?>
 					<?php echo implode($this->missingSignups,", "); ?>
 					<?php endif; ?>
