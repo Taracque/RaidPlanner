@@ -14,6 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 if (RaidPlannerHelper::getJVersion() < '3.0') {
 	RaidPlannerHelper::fixBootstrap();
 }
+JHTML::_('behavior.tooltip');
 ?>
 <form action="index.php" method="post" name="adminForm" id="adminForm" class="form-horizontal">
 	<fieldset class="adminform">
@@ -42,17 +43,17 @@ if (RaidPlannerHelper::getJVersion() < '3.0') {
 		<div id="plugin_settings">
 			<?php foreach ($this->sync_params as $param) : ?>
 			<div class="control-group">
-				<label class="control-label" for="params_<?php echo $param['name'];?>"><?php echo JText::_( $param['label'] ); ?></label>
+				<label class="control-label hasTip" title="<strong><?php echo JText::_( $param['label'] ); ?></strong><br /><?php echo @$param['description'];?>" for="params_<?php echo $param['name'];?>"><?php echo JText::_( $param['label'] ); ?></label>
 				<div class="controls">
 				<?php if ($param['type'] == 'list') :?>
-					<select name="params[<?php echo $param['name'];?>]" id="params_<?php echo $param['name'];?>">
+					<select name="params[<?php echo $param['name'];?>]" id="params_<?php echo $param['name'];?>" title="<?php echo @$param['description'];?>" >
 						<option></option>
 					<?php foreach ($param['data'] as $option) :?>
 						<option value="<?php echo $option['value'];?>" <?php if ($option['value'] == $this->guild->params[$param['name']]) { echo "selected=\"selected\" ";}?>><?php echo JText::_( $option['label'] ); ?></option>
 					<?php endforeach; ?>
 					</select>
 				<?php else: ?>
-					<input type="text" name="params[<?php echo $param['name'];?>]" id="params_<?php echo $param['name'];?>" value="<?php echo $this->guild->params[$param['name']];?>" />
+					<input type="text" class="hasTip" name="params[<?php echo $param['name'];?>]" id="params_<?php echo $param['name'];?>" value="<?php echo $this->guild->params[$param['name']];?>" title="<strong><?php echo JText::_( $param['label'] ); ?></strong><br /><?php echo @$param['description'];?>" />
 				<?php endif; ?>
 				</div>
 			</div>
