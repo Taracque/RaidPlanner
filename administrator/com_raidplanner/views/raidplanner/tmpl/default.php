@@ -44,7 +44,7 @@ if (RaidPlannerHelper::getJVersion() < '3.0') {
 					<td><a href="<?php echo JRoute::_( 'index.php?option=com_plugins&task=plugin.edit&extension_id=' . $plugin->extension_id );?>"><?php echo $plugin->name; ?></a></td>
 					<td><?php echo $plugin->version; ?></td>
 					<td><?php echo $plugin->author; ?></td>
-					<td><?php echo $plugin->creationDate; ?></td>
+					<td><?php echo $plugin->releaseDate; ?></td>
 					<td><?php if ($plugin->status == 1) { echo '<i class="icon-publish"></i>'; } else { echo '<i class="icon-unpublish"></i>'; } ?></td>
 				</tr>
 				<?php endforeach; ?>
