@@ -7,9 +7,9 @@
 		<action name="raidplanner.delete.own" title="COM_RAIDPLANNER_DELETE_OWN" description="COM_RAIDPLANNER_DELETE_OWN_DESC" />
 		<action name="raidplanner.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="raidplanner.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
-		<action name="raidplanner.allow_signup" title="COM_RAIDPLANNER_ALLOW_SIGNUP" description="COM_RAIDPLANNER_ALLOW_SIGNUP_DESC" />
-		<action name="raidplanner.view_raids" title="COM_RAIDPLANNER_VIEW_RAIDS" description="COM_RAIDPLANNER_VIEW_RAIDS_DESC" />
-		<action name="raidplanner.view_calendar" title="COM_RAIDPLANNER_VIEW_CALENDAR" description="COM_RAIDPLANNER_VIEW_CALENDAR_DESC" />
-		<action name="raidplanner.edit_characters" title="COM_RAIDPLANNER_EDIT_CHARACTERS" description="COM_RAIDPLANNER_EDIT_CHARACTERS_DESC" />
+		<action name="raidplanner.signup" title="COM_RAIDPLANNER_ALLOW_SIGNUP" description="COM_RAIDPLANNER_ALLOW_SIGNUP_DESC" />
+		<action name="raidplanner.viewraid" title="COM_RAIDPLANNER_VIEW_RAIDS" description="COM_RAIDPLANNER_VIEW_RAIDS_DESC" />
+		<action name="raidplanner.viewcalendar" title="COM_RAIDPLANNER_VIEW_CALENDAR" description="COM_RAIDPLANNER_VIEW_CALENDAR_DESC" />
+		<action name="raidplanner.editcharacters" title="COM_RAIDPLANNER_EDIT_CHARACTERS" description="COM_RAIDPLANNER_EDIT_CHARACTERS_DESC" />
 	</section>
 </access>

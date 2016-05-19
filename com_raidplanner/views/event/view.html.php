@@ -39,7 +39,7 @@ class RaidPlannerViewEvent extends JViewLegacy
 			'multi_raid_signup'	=> $paramsObj->get('multi_raid_signup', 0)
 		);
 
-		if ( RaidPlannerHelper::getPermission('view_raids') != 1 ) {
+		if ( RaidPlannerHelper::getPermission('viewraid') != 1 ) {
 			$mainframe = JFactory::getApplication();
 			$mainframe->redirect(JRoute::_('index.php?option=com_raidplanner&view=default' ) );
 		} else {

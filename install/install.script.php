@@ -244,12 +244,43 @@ class com_raidplannerInstallerScript
 				$out .= '</span>';
 			}
 		}
+		/* fix old ACL names */
+		$query = "SELECT id,rules FROM #__assets WHERE name='com_raidplanner' and title='raidplanner'";
+		$db->setQuery($query);
+		if ( $aclRaw = $db->loadObject() )
+		{
+			$aclObject = json_decode($aclRaw->rules, true);
+			
+			if (isset($aclObject['raidplanner.edit_characters'])) {
+				$aclObject['raidplanner.characteredit'] = $aclObject['raidplanner.edit_characters'];
+				unset($aclObject['raidplanner.edit_characters']);
+			}
+			if (isset($aclObject['raidplanner.allow_signup'])) {
+				$aclObject['raidplanner.signup'] = $aclObject['raidplanner.allow_signup'];
+				unset($aclObject['raidplanner.allow_signup']);
+			}
+			if (isset($aclObject['raidplanner.view_raids'])) {
+				$aclObject['raidplanner.viewraid'] = $aclObject['raidplanner.view_raids'];
+				unset($aclObject['raidplanner.view_raids']);
+			}
+			if (isset($aclObject['raidplanner.view_calendar'])) {
+				$aclObject['raidplanner.viewcalendar'] = $aclObject['raidplanner.view_calendar'];
+				unset($aclObject['raidplanner.view_calendar']);
+			}
+
+			$query = "UPDATE #__assets SET rules='" . $db->escape( json_encode($aclObject) ) . "' WHERE name='com_raidplanner' and title='raidplanner' AND id=" . intval($aclRaw->id);
+			$db->setQuery($query);
+			$db->query();
+		}
 
 		/* drop raidplanner_groups */
 		$query = "DROP TABLE IF EXISTS `#__raidplanner_groups`;";
 		$db->setQuery($query);
 		$db->query();
 		$query = "DROP TABLE IF EXISTS `#__raidplanner_profile`;";
+		$db->setQuery($query);
+		$db->query();
+		$query = "DROP TABLE IF EXISTS `#__raidplanner_permissions`;";
 		$db->setQuery($query);
 		$db->query();
 

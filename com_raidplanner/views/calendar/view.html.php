@@ -49,7 +49,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 			JHtml::_('behavior.modal', 'a.rpevent', array('size' => array('x' => $params['popup_width'],'y' => $params['popup_height'])));
 		}
 
-		if (RaidPlannerHelper::getPermission('view_calendar') != 1) {
+		if (RaidPlannerHelper::getPermission('viewcalendar') != 1) {
 			// redirect to the index page
 			$app = JFactory::getApplication();
 			$msg = JText::_('JGLOBAL_AUTH_ACCESS_DENIED');
@@ -58,7 +58,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 
 		$user =JFactory::getUser();
 		
-		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
+		$canView = (RaidPlannerHelper::getPermission('viewraid') == 1);
  		$this->assign( 'isOfficer', $eventmodel->userIsOfficer() );
 		$this->assignRef( 'canView', $canView );
 		$model = $this->getModel();

@@ -548,7 +548,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$own_raid = ($db->loadResult() == $user_id);
 		}
 		
-		return (RaidPlannerHelper::getPermission('edit_raids_any') || (RaidPlannerHelper::getPermission('edit_raids_own') && ($own_raid)));
+		return (RaidPlannerHelper::getPermission('edit') || (RaidPlannerHelper::getPermission('edit.own') && ($own_raid)));
 	}
 	
 	function canDelete($raid_id = null) {
@@ -564,7 +564,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$own_raid = ($db->loadResult() == $user_id);
 		}
 
-		return (RaidPlannerHelper::getPermission('delete_raid_any') || (RaidPlannerHelper::getPermission('delete_raid_own') && ($own_raid)));
+		return (RaidPlannerHelper::getPermission('delete') || (RaidPlannerHelper::getPermission('delete.own') && ($own_raid)));
 	}
 	
 	function userCanSignUp($raid_id = null) {
@@ -577,7 +577,7 @@ class RaidPlannerModelEvent extends JModelLegacy
 			$query = "SELECT DATE_SUB(start_time,interval freeze_time minute) > '" . RaidPlannerHelper::date2Sql( $date ) . "' FROM #__raidplanner_raid WHERE raid_id = ".intval($raid_id);
 			$db->setQuery($query);
 			if ($db->loadResult() == 1) {
-				$can_signup = RaidPlannerHelper::getPermission('allow_signup', $user_id);
+				$can_signup = RaidPlannerHelper::getPermission('signup', $user_id);
 			}
 		}
 		return $can_signup;
