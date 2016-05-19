@@ -213,11 +213,11 @@ class RaidPlannerHelper
 			'core.admin', 'core.manage',
 		/* frontend actions */
 			'core.delete', 'core.edit', 'core.edit.own',
-			'raidplanner.delete', 'raidplanner.delete.own', 'raidplanner.edit', 'raidplanner.edit.own', 'raidplanner.signup', 'raidplanner.viewraid', 'raidplanner.viewcalendar', 'raidplanner.characteredit'
+			'raidplanner.delete', 'raidplanner.delete.own', 'raidplanner.edit', 'raidplanner.edit.own', 'raidplanner.signup', 'raidplanner.viewraid', 'raidplanner.viewcalendar', 'raidplanner.editcharacters'
 		);
 
 		foreach ($actions as $action) {
-			$result->set($action,	$user->authorise($action, $assetName));
+			$result->set($action, $user->authorise($action, $assetName));
 		}
 
 		return $result;
@@ -325,14 +325,8 @@ class RaidPlannerHelper
 	{
 		$reply = false;
 		
-		if ($permission!='') {
-			$permission = 'raidplanner.' . $permission;
-			if (isset(self::$acl_map[ $permission ])) {
-				$permission = self::$acl_map[ $permission ];
-			}
-			if (JFactory::getUser()->authorise($permission, 'com_raidplanner')) {
-				$reply = true;
-			}
+		if (JFactory::getUser()->authorise('raidplanner.' . $permission, 'com_raidplanner')) {
+			$reply = true;
 		}
 		return $reply;
 	}

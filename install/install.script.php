@@ -252,8 +252,12 @@ class com_raidplannerInstallerScript
 			$aclObject = json_decode($aclRaw->rules, true);
 			
 			if (isset($aclObject['raidplanner.edit_characters'])) {
-				$aclObject['raidplanner.characteredit'] = $aclObject['raidplanner.edit_characters'];
+				$aclObject['raidplanner.editcharacters'] = $aclObject['raidplanner.edit_characters'];
 				unset($aclObject['raidplanner.edit_characters']);
+			}
+			if (isset($aclObject['raidplanner.characteredit'])) {
+				$aclObject['raidplanner.editcharacters'] = $aclObject['raidplanner.characteredit'];
+				unset($aclObject['raidplanner.characteredit']);
 			}
 			if (isset($aclObject['raidplanner.allow_signup'])) {
 				$aclObject['raidplanner.signup'] = $aclObject['raidplanner.allow_signup'];

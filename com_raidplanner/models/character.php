@@ -87,7 +87,7 @@ class RaidPlannerModelCharacter extends JModelLegacy
 	}
 	
 	function canEdit($user_id=null) {
-		return RaidPlannerHelper::getPermission( 'characteredit', $user_id );
+		return RaidPlannerHelper::getPermission( 'editcharacters', $user_id );
 	}
 
 
