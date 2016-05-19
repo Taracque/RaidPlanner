@@ -213,7 +213,7 @@ class RaidPlannerHelper
 			'core.admin', 'core.manage',
 		/* frontend actions */
 			'core.delete', 'core.edit', 'core.edit.own',
-			'raidplanner.delete_raid_own', 'raidplanner.allow_signup', 'raidplanner.view_raids', 'raidplanner.view_calendar', 'raidplanner.edit_characters'
+			'raidplanner.delete', 'raidplanner.delete.own', 'raidplanner.edit', 'raidplanner.edit.own', 'raidplanner.signup', 'raidplanner.viewraid', 'raidplanner.viewcalendar', 'raidplanner.characteredit'
 		);
 
 		foreach ($actions as $action) {

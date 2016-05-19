@@ -34,7 +34,7 @@ class RaidPlannerViewCalendar extends JViewLegacy
 				die('Invalid access!');
 			}
 		}
-		$canView = (RaidPlannerHelper::getPermission('view_raids') == 1);
+		$canView = (RaidPlannerHelper::getPermission('viewraid') == 1);
 
 		$model = $this->getModel();
 		

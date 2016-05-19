@@ -33,13 +33,6 @@ CREATE TABLE IF NOT EXISTS `#__raidplanner_gender` (
 INSERT IGNORE INTO `#__raidplanner_gender` (`gender_id`, `gender_name`) VALUES (1,	'Male');
 INSERT IGNORE INTO `#__raidplanner_gender` (`gender_id`, `gender_name`) VALUES (2,	'Female');
 
-CREATE TABLE IF NOT EXISTS `#__raidplanner_permissions` (
-  `permission_name` varchar(45) NOT NULL DEFAULT '',
-  `permission_value` tinyint(1) NOT NULL DEFAULT '0',
-  `group_id` int(10) unsigned NOT NULL DEFAULT '0',
-  KEY `group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `#__raidplanner_race` (
   `race_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `race_name` varchar(45) NOT NULL DEFAULT '',
